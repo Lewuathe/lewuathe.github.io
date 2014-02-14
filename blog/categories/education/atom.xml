@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Education | The first cry of Atom]]></title>
   <link href="http://Lewuathe.github.io/blog/categories/education/atom.xml" rel="self"/>
   <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-15T01:07:03+09:00</updated>
+  <updated>2014-02-15T01:21:23+09:00</updated>
   <id>http://Lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -18,7 +18,10 @@
     <link href="http://Lewuathe.github.io/blog/2014/02/15/yes-you-are-malala/"/>
     <updated>2014-02-15T21:56:00+09:00</updated>
     <id>http://Lewuathe.github.io/blog/2014/02/15/yes-you-are-malala</id>
-    <content type="html"><![CDATA[<p><img src="/images/posts/2014-02-14-you-are-malala/malala.jpg" alt="malala" /></p>
+    <content type="html"><![CDATA[<div style="text-align:center" markdown="1">
+<img src="http://Lewuathe.github.io/images/posts/2014-02-14-you-are-malala/malala.jpg" />
+</div>
+
 
 <p>We, Japanese have built high level democratic society. We have an universal suffrage system,
 the rights to discuss through a lot of type media, and the constitution which guarantees our liberty of expression.
