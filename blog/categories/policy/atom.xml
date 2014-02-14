@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Policy | My Octopress Blog]]></title>
+  <link href="http://Lewuathe.github.io/blog/categories/policy/atom.xml" rel="self"/>
+  <link href="http://Lewuathe.github.io/"/>
+  <updated>2014-02-15T00:48:19+09:00</updated>
+  <id>http://Lewuathe.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[The LEFT ONE]]></title>
+    <link href="http://Lewuathe.github.io/blog/2013/12/04/the-left-one/"/>
+    <updated>2013-12-04T23:07:00+09:00</updated>
+    <id>http://Lewuathe.github.io/blog/2013/12/04/the-left-one</id>
+    <content type="html"><![CDATA[<iframe src="http://www.slideshare.net/slideshow/embed_code/28845284" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/lewuathe/left-one" title="THE LEFT ONE" target="_blank">THE LEFT ONE</a> </strong> from <strong><a href="http://www.slideshare.net/lewuathe" target="_blank">Kai Sasaki</a></strong> </div></p>
+
+<p>I decided to do. I always did so.
+It&rsquo;s my challenge for my future, and my hapiness.</p>
+
+<p>So I wrote it. Not to forget my footsteps.</p>
+]]></content>
+  </entry>
+  
+</feed>

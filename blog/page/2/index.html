@@ -1,0 +1,1629 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="In developing iOS application, have you wanted to make your own cutomized segue? UIKit provides bare segues such as
+push, modal, popover and replace &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://Lewuathe.github.io/blog/page/2">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:Lewuathe.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/12/17/making-custom-segue/">Making Custom Segue</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-17T23:21:00+09:00" pubdate data-updated="true">Dec 17<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In developing iOS application, have you wanted to make your own cutomized segue? UIKit provides bare segues such as
+<code>push</code>, <code>modal</code>, <code>popover</code> and <code>replace</code>. These are useful in any situations. But sometimes I want to make my own transition.
+So, I wrote down some tips for making your own custom animation used by segue.</p>
+
+<h2>Make custom segue class</h2>
+
+<p>In Xcode, add new files. The name of this class, anything is OK. But you have to set super class <code>UIStoryboardSegue</code>. Otherwise storyboard
+cannot find this custom class subsequently.</p>
+
+<p><img src="/images/posts/2013-12-17-customsegue/create-segue.png" alt="create" /></p>
+
+<p>In this case, I named <code>FlipSegue</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='objective-c'><span class='line'><span class="cp">#import &lt;UIKit/UIKit.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@interface</span> <span class="nc">FlipSegue</span> : <span class="nc">UIStoryboardSegue</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And write animations like below.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='objective-c'><span class='line'><span class="cp">#import &quot;FlipSegue.h&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@implementation</span> <span class="nc">FlipSegue</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">perform</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">UIViewController</span> <span class="o">*</span><span class="n">sourceController</span> <span class="o">=</span> <span class="p">(</span><span class="n">UIViewController</span><span class="o">*</span><span class="p">)</span><span class="n">self</span><span class="p">.</span><span class="n">sourceViewController</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">UIViewController</span> <span class="o">*</span><span class="n">destinationController</span> <span class="o">=</span> <span class="p">(</span><span class="n">UIViewController</span><span class="o">*</span><span class="p">)</span><span class="n">self</span><span class="p">.</span><span class="n">destinationViewController</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">CATransition</span> <span class="o">*</span><span class="n">transition</span> <span class="o">=</span> <span class="p">[</span><span class="n">CATransition</span> <span class="n">animation</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">transition</span><span class="p">.</span><span class="n">duration</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">transition</span><span class="p">.</span><span class="n">timingFunction</span> <span class="o">=</span> <span class="p">[</span><span class="n">CAMediaTimingFunction</span> <span class="nl">functionWithName:</span><span class="n">kCAMediaTimingFunctionEaseInEaseOut</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Set transition animation type</span>
+</span><span class='line'>    <span class="n">transition</span><span class="p">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">kCATransitionFade</span><span class="p">;</span>
+</span><span class='line'>    <span class="c1">// Set transition animation subtype</span>
+</span><span class='line'>    <span class="n">transition</span><span class="p">.</span><span class="n">subtype</span> <span class="o">=</span> <span class="n">kCATransitionFromTop</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Change animation</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">sourceController</span><span class="p">.</span><span class="n">navigationController</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">layer</span> <span class="nl">addAnimation:</span><span class="n">transition</span> <span class="nl">forKey:</span><span class="s">@&quot;mytransition&quot;</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Transition </span>
+</span><span class='line'>    <span class="p">[</span><span class="n">sourceController</span><span class="p">.</span><span class="n">navigationController</span> <span class="nl">pushViewController:</span><span class="n">destinationController</span> <span class="nl">animated:</span><span class="n">NO</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When this segue is called, these animation settings are executed automatically. If you want to change animation, <code>type</code> and <code>subtype</code> is the core
+of how the animation moves. These presets are documented in <a href="https://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CATransition_Class/Introduction/Introduction.html">here</a>
+Please see official document for detail. And then we&rsquo;ll use this segue on storyboard.</p>
+
+<h2>Make segue with story board</h2>
+
+<p>You need to draw your custom segue on storyboard.</p>
+
+<p><img src="/images/posts/2013-12-17-customsegue/storyboard-segue.png" alt="storyboard" /></p>
+
+<p>You can see <code>flip</code>, when you drag the arrow of segue on storyboard. This is your custom <code>FlipSegue</code>.
+So choose this segue. And run!! Pusing source button of flip segue, your will see your custom animated transition.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/12/13/making-widget-plugin/">Making Jenkins Widget Plugin</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-13T21:14:00+09:00" pubdate data-updated="true">Dec 13<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This article was written for <a href="http://qiita.com/advent-calendar/2013/jenkinsci">Jenkins Advent Calendar</a> 14th day.</p>
+
+<h2>Making Jenkins plugin</h2>
+
+<p>Have you ever made Jenkins plugin? This is about my experience developing Jenkins plugin.
+I have not written Java ever, and of course didn&rsquo;t know how to make maven projects. So while writing plugin codes,
+I went this way and that, googling and trying code snippets. Then I felt that there were not enough documents for
+first Jenkins plugin developers. This post however I only made widget plugin, I would be glad that this article will be useful
+to the same developers as me.</p>
+
+<h2>Getting started</h2>
+
+<p>First, it is needed to download skelton of Jenkins plugin by using maven plugin. I used maven-3.0.5, and OSX machine.
+Write below xml in <code>~/.m2/settings.xml</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;settings&gt;
+</span><span class='line'>  &lt;pluginGroups&gt;
+</span><span class='line'>    &lt;pluginGroup&gt;org.jenkins-ci.tools&lt;/pluginGroup&gt;
+</span><span class='line'>  &lt;/pluginGroups&gt;
+</span><span class='line'>
+</span><span class='line'>  &lt;profiles&gt;
+</span><span class='line'>    &lt;!-- Give access to Jenkins plugins --&gt;
+</span><span class='line'>    &lt;profile&gt;
+</span><span class='line'>      &lt;id&gt;jenkins&lt;/id&gt;
+</span><span class='line'>      &lt;activation&gt;
+</span><span class='line'>        &lt;activeByDefault&gt;true&lt;/activeByDefault&gt; &lt;!-- change this to false, if you don't like to have it on per default --&gt;
+</span><span class='line'>      &lt;/activation&gt;
+</span><span class='line'>      &lt;repositories&gt;
+</span><span class='line'>        &lt;repository&gt;
+</span><span class='line'>          &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
+</span><span class='line'>          &lt;url&gt;http://repo.jenkins-ci.org/public/&lt;/url&gt;
+</span><span class='line'>        &lt;/repository&gt;
+</span><span class='line'>      &lt;/repositories&gt;
+</span><span class='line'>      &lt;pluginRepositories&gt;
+</span><span class='line'>        &lt;pluginRepository&gt;
+</span><span class='line'>          &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
+</span><span class='line'>          &lt;url&gt;http://repo.jenkins-ci.org/public/&lt;/url&gt;
+</span><span class='line'>        &lt;/pluginRepository&gt;
+</span><span class='line'>      &lt;/pluginRepositories&gt;
+</span><span class='line'>    &lt;/profile&gt;
+</span><span class='line'>  &lt;/profiles&gt;
+</span><span class='line'>  &lt;mirrors&gt;
+</span><span class='line'>    &lt;mirror&gt;
+</span><span class='line'>      &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
+</span><span class='line'>      &lt;url&gt;http://repo.jenkins-ci.org/public/&lt;/url&gt;
+</span><span class='line'>      &lt;mirrorOf&gt;m.g.o-public&lt;/mirrorOf&gt;
+</span><span class='line'>    &lt;/mirror&gt;
+</span><span class='line'>  &lt;/mirrors&gt;
+</span><span class='line'>&lt;/settings&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Create skelton.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mvn hpi:create</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Project name and artifactId will be asked as below.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[INFO] Scanning for projects...
+</span><span class='line'>[INFO]
+</span><span class='line'>[INFO] ------------------------------------------------------------------------
+</span><span class='line'>[INFO] Building Maven Stub Project (No POM) 1
+</span><span class='line'>[INFO] ------------------------------------------------------------------------
+</span><span class='line'>[INFO]
+</span><span class='line'>[INFO] --- maven-hpi-plugin:1.106:create (default-cli) @ standalone-pom ---
+</span><span class='line'>Enter the groupId of your plugin [org.jenkins-ci.plugins]: com.lewuathe.plugins
+</span><span class='line'>Enter the artifactId of your plugin (normally without '-plugin' suffix): mytest</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then under current directory, <code>mytest</code> project might be made. The directory tree looks like.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>% tree mytest
+</span><span class='line'>mytest
+</span><span class='line'>├── pom.xml
+</span><span class='line'>└── src
+</span><span class='line'>    └── main
+</span><span class='line'>        ├── java
+</span><span class='line'>        │   └── com
+</span><span class='line'>        │       └── lewuathe
+</span><span class='line'>        │           └── plugins
+</span><span class='line'>        │               └── mytest
+</span><span class='line'>        │                   └── HelloWorldBuilder.java
+</span><span class='line'>        └── resources
+</span><span class='line'>            ├── com
+</span><span class='line'>            │   └── lewuathe
+</span><span class='line'>            │       └── plugins
+</span><span class='line'>            │           └── mytest
+</span><span class='line'>            │               └── HelloWorldBuilder
+</span><span class='line'>            │                   ├── config.jelly
+</span><span class='line'>            │                   ├── global.jelly
+</span><span class='line'>            │                   ├── help-name.html
+</span><span class='line'>            │                   └── help-useFrench.html
+</span><span class='line'>            └── index.jelly
+</span><span class='line'>
+</span><span class='line'>13 directories, 7 files</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This sample project uses Builder extension point of Jenkins plugin. <a href="https://wiki.jenkins-ci.org/display/JENKINS/Extension+points#Extensionpoints-hudson.tasks.Builder">Builder extension</a> point is executed inside of the build process. If you have any process run on the way of building, you have to write the class which extends Builder. But in this article, I introduce Widget plugin. If you want to know what kind of extension points exist, please search on <a href="https://wiki.jenkins-ci.org/display/JENKINS/Extension+points">this page</a></p>
+
+<p>Before explaining about Widget plugin, let me say how to run this plugins.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mvn hpi:run</span></code></pre></td></tr></table></div></figure>
+
+
+<p>With above command, maven can download packages on which this plugin project depends and run Jenkins test server on 8080 port.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># Access below host!
+</span><span class='line'>http://localhost:8080/jenkins/</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can look at Jenkins server! There is all you have to do before developing your own Jenkins plugin. Let&rsquo;s get started.</p>
+
+<h2>Write Widget plugin</h2>
+
+<p>My Jenkins plugin is put on <a href="https://github.com/jenkinsci/hckrnews-plugin">this repository</a>. With this plugin you can see hacker news top time-line on Jenkins dashboard.
+From <a href="https://wiki.jenkins-ci.org/display/JENKINS/Hckrnews+Plugin">there</a>, it can be downloaded.
+Screen shot was taken as below.</p>
+
+<p><img src="/images/posts/2013-12-13-jenkins-widget-plugin/hckrnews-screenshot.png" alt="screenshot" /></p>
+
+<p>By examing this plugin&rsquo;s source code, I want to list up the points I had trouble in completing this plugin.</p>
+
+<h2>Correspondence of Jelly file and Java class</h2>
+
+<p>In Jenkins, <a href="http://stapler.kohsuke.org/what-is.html">Stapler</a> is used in order to map URL and Java objects.</p>
+
+<blockquote><p>Stapler is a library that &ldquo;staples&rdquo; your application objects to URLs, making it easier to write web applications. The core idea of Stapler is to automatically assign URLs for your objects, creating an intuitive URL hierarchy.</p></blockquote>
+
+<p>At first, I cannot grasp what that means and practically which objects are mapped to jelly files. In conclusion, this is the correspond directory files.
+Please look at <code>src/main/java</code> and <code>src/main/resources</code> directory of your project. It looks the same structure, doesn&rsquo;t it? So, in these directory, the correnspondence between Java class and jelly filesis made.
+For example on hckrnews-plugin source tree, <code>java/com/lewuathe/plugins/hckrnews/HckrnewsWidget.java</code> corresponds to <code>com/lewuathe/plugins/hckrnews/HckrnewsWidget/</code>.
+The former is what model or controller, and the latter is view in the context of MVC.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>├── java
+</span><span class='line'>│   └── com
+</span><span class='line'>│       └── lewuathe
+</span><span class='line'>│           └── plugins
+</span><span class='line'>│               └── hckrnews
+</span><span class='line'>│                   └── HckrnewsWidget.java  // &lt;-- This is controller
+</span><span class='line'>└── resources
+</span><span class='line'>    ├── com
+</span><span class='line'>    │   └── lewuathe
+</span><span class='line'>    │       └── plugins
+</span><span class='line'>    │           └── hckrnews
+</span><span class='line'>    │               └── HckrnewsWidget
+</span><span class='line'>    │                   └── index.jelly     // &lt;-- This is view which corresponds to above controller, HckrnewsWidget.java
+</span><span class='line'>    └── index.jelly</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Calling view method</h2>
+
+<p>In <code>HckrnewsWidget.java</code>, news static class in child class of Widget extension points is written.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Extension</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HckrnewsWidget</span> <span class="kd">extends</span> <span class="n">Widget</span> <span class="o">{</span>
+</span><span class='line'><span class="c1">// ....</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">News</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kd">private</span> <span class="n">String</span> <span class="n">title</span><span class="o">;</span>
+</span><span class='line'>        <span class="kd">private</span> <span class="n">String</span> <span class="n">url</span><span class="o">;</span>
+</span><span class='line'>        <span class="kd">private</span> <span class="n">String</span> <span class="n">points</span><span class="o">;</span>
+</span><span class='line'>        <span class="kd">private</span> <span class="n">String</span> <span class="n">postedBy</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kd">public</span> <span class="n">String</span> <span class="nf">getTitle</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">title</span><span class="o">;</span> <span class="o">}</span>
+</span><span class='line'>        <span class="kd">public</span> <span class="n">String</span> <span class="nf">getUrl</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">url</span><span class="o">;</span> <span class="o">}</span>
+</span><span class='line'>        <span class="kd">public</span> <span class="n">String</span> <span class="nf">getPoints</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">points</span><span class="o">;</span> <span class="o">}</span>
+</span><span class='line'>        <span class="kd">public</span> <span class="n">String</span> <span class="nf">getPostedBy</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">postedBy</span><span class="o">;</span> <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="c1">// ....</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ordinary getter of News object. So it comes to index.jelly file.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="o">&lt;</span><span class="nl">j:</span><span class="n">jelly</span> <span class="nl">xmlns:</span><span class="n">j</span><span class="o">=</span><span class="s">&quot;jelly:core&quot;</span> <span class="nl">xmlns:</span><span class="n">st</span><span class="o">=</span><span class="s">&quot;jelly:stapler&quot;</span> <span class="nl">xmlns:</span><span class="n">d</span><span class="o">=</span><span class="s">&quot;jelly:define&quot;</span> <span class="nl">xmlns:</span><span class="n">l</span><span class="o">=</span><span class="s">&quot;/lib/layout&quot;</span> <span class="nl">xmlns:</span><span class="n">t</span><span class="o">=</span><span class="s">&quot;/lib/hudson&quot;</span> <span class="nl">xmlns:</span><span class="n">f</span><span class="o">=</span><span class="s">&quot;/lib/form&quot;</span> <span class="nl">xmlns:</span><span class="n">i</span><span class="o">=</span><span class="s">&quot;jelly:fmt&quot;</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nl">l:</span><span class="n">pane</span> <span class="n">width</span><span class="o">=</span><span class="s">&quot;3&quot;</span> <span class="n">title</span><span class="o">=</span><span class="s">&quot;Hacker News Top&quot;</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="n">th</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;pane&quot;</span><span class="o">&gt;</span><span class="n">Title</span><span class="o">&lt;/</span><span class="n">th</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="n">th</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;pane&quot;</span><span class="o">&gt;</span><span class="n">Points</span><span class="o">&lt;/</span><span class="n">th</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="n">th</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;pane&quot;</span><span class="o">&gt;</span><span class="n">Posted</span> <span class="n">by</span><span class="o">&lt;/</span><span class="n">th</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nl">j:</span><span class="n">forEach</span> <span class="n">var</span><span class="o">=</span><span class="s">&quot;news&quot;</span> <span class="n">items</span><span class="o">=</span><span class="s">&quot;${it.newslist}&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="n">td</span> <span class="n">align</span><span class="o">=</span><span class="s">&quot;left&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;pane&quot;</span> <span class="n">style</span><span class="o">=</span><span class="s">&quot;width:10px;&quot;</span><span class="o">&gt;&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;${news.url}&quot;</span><span class="o">&gt;</span><span class="n">$</span><span class="o">{</span><span class="n">news</span><span class="o">.</span><span class="na">title</span><span class="o">}&lt;/</span><span class="n">a</span><span class="o">&gt;&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="n">td</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;pane&quot;</span> <span class="n">align</span><span class="o">=</span><span class="s">&quot;right&quot;</span><span class="o">&gt;</span><span class="n">$</span><span class="o">{</span><span class="n">news</span><span class="o">.</span><span class="na">points</span><span class="o">}&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="n">td</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;pane&quot;</span> <span class="n">align</span><span class="o">=</span><span class="s">&quot;right&quot;</span><span class="o">&gt;</span><span class="n">$</span><span class="o">{</span><span class="n">news</span><span class="o">.</span><span class="na">postedBy</span><span class="o">}&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="nl">j:</span><span class="n">forEach</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="nl">l:</span><span class="n">pane</span><span class="o">&gt;</span>
+</span><span class='line'><span class="n">Last</span> <span class="nl">Updated:</span> <span class="n">$</span><span class="o">{</span><span class="n">it</span><span class="o">.</span><span class="na">lastupdatedstr</span><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="nl">j:</span><span class="n">jelly</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The detail of Jelly syntax is not explained in this time. In this template file, <code>it</code> refers to the correspondence object in logic of stapler,
+in other words that&rsquo;s <code>HckrnewsWidget.java</code>. So when you writes as <code>it.newslist</code>, this calls</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Extension</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HckrnewsWidget</span> <span class="kd">extends</span> <span class="n">Widget</span> <span class="o">{</span>
+</span><span class='line'><span class="c1">//...</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">News</span><span class="o">&gt;</span> <span class="nf">getNewslist</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">newsList</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="c1">//...</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then <code>index.jelly</code> can get newslist. But you should take care of the casing of method name. If you write <code>getNewsList</code>, it can be called. Types are below.</p>
+
+<ul>
+<li>getNewslist : it.newslist is called</li>
+<li>getNewsList : it.newList is called</li>
+<li>getNewslist : it.newsList is <em>not</em> called</li>
+</ul>
+
+
+<p>So it looks like auto casting to a captal letter is only applied to the first letter. It is necessary to arrange the type of posteror letters.</p>
+
+<h2>Making Wiki</h2>
+
+<p>It might be rare case which only I experienced. Jenkins wiki page can not be created automatically.
+Of course, it is taken for granted that writing down your wiki url on pom.xml.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="o">&lt;</span><span class="n">project</span> <span class="n">xmlns</span><span class="o">=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="nl">xmlns:</span><span class="n">xsi</span><span class="o">=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="nl">xsi:</span><span class="n">schemaLocation</span><span class="o">=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;</span><span class="o">&gt;</span>
+</span><span class='line'><span class="c1">//...</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="n">url</span><span class="o">&gt;</span><span class="nl">http:</span><span class="c1">//wiki.jenkins-ci.org/display/JENKINS/Hckrnews+Plugin&lt;/url&gt;</span>
+</span><span class='line'><span class="c1">//...</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">project</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But this is not the trigger of creating Jenkins wiki page :( You have to make your own page yourself.
+I misunderstood about making wiki pages on this point. After you make your own wiki page, let&rsquo;s add a tag.</p>
+
+<p><img src="/images/posts/2013-12-13-jenkins-widget-plugin/add-tag.png" alt="add-tag" /></p>
+
+<p>After you add tag, your wiki page will be listed on <a href="https://wiki.jenkins-ci.org/display/JENKINS/Plugins">this page</a>. It will be easier to search for users.</p>
+
+<h1>After all</h1>
+
+<p>This experience taught me many things about plugin development, Jenkins extension points and of course <strong>Java</strong> !!
+Conversly if you have no experience of Java, you can also make your own Jenkins plugin about two weeks.
+And I want to keep making Jenkins plugins when idea comes to me.</p>
+
+<p>Last but not least, write your test codes in your plugin. With maven, you can run JUnit very easily.
+If there are no test codes in the plugin of continuous integration tool, Jenkins, it sounds like mistaking the means for the end, doesn&rsquo;t it?</p>
+
+<p>Viva great continuous integration! Thank you.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/12/09/agile-samurai-basecamp-in-tokyo/">Agile Samurai Basecamp in Tokyo <2></a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-09T20:16:00+09:00" pubdate data-updated="true">Dec 9<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This entry follows previous post.
+The practical methods about TDD are explained in this section.</p>
+
+<p>And also, it is written as an article of <a href="http://qiita.com/advent-calendar/2013/tddadventjp">TDD advent calendar on 10th day</a>.</p>
+
+<h2>How to start TDD? Takuto Wada(twada)</h2>
+
+<p>The left wing of agile is what about team environment, management, scrum, iteration and standup meeting. On the other hand, the right wing of agile is not perceived enough to ordinary people.
+It&rsquo;s CI/CD and automation. These are also as important as the formers. There is apparent difference between making software and keeping making software. Agile programming always requires refactoring.
+In TDD process, refactoring is the core process. You cannot say that you achieve TDD without refactoring your program.</p>
+
+<h3>Write running code, and then write clean code</h3>
+
+<p>Making Good design previously is difficult task. Besides we don&rsquo;t know what is good design on the system undefined yet. Software and program are too complex for us to understand perfectly.
+So we cannot avoid progressing development with positivism notion. In other words, write code first! However we cannot solve all problems yet. The codes once confirmed as what runs with no bugs
+are not willing to be refactored. We are afraid of changing running code. TDD enables us to pass over these fears. The concrete cycle of TDD is below.</p>
+
+<h3>TDD cycle</h3>
+
+<ol>
+<li>Make TODO list</li>
+<li>Write test code first</li>
+<li>Running test and fail (<em>Red phase</em>)</li>
+<li>Write product code</li>
+<li>Running test and success (<em>Green phase</em>)</li>
+<li>Refactoring product code with keeping Green</li>
+<li>Repeat 1~6 process</li>
+</ol>
+
+
+<p>The most important process in these 7 phases is refactoring. If you result in failure of TDD, the main reason is to neglect refactoring your product code. It needs more power of the will.
+So it is better to insert refactoring into TDD process. You don&rsquo;t do refactoring as an addition, but do as necessary process.</p>
+
+<p><img src="/images/posts/2013-12-10-samurai-2/golden_cycle.jpg" alt="Golden Cycle" /></p>
+
+<h3>The secrets of TDD</h3>
+
+<p>To achive TDD, you should know how to start TDD at your daily work.</p>
+
+<h3><em>Small start one by one</em></h3>
+
+<p>You should make small TODO list as possible. It is good to reduce each task within the span which you can complete red, green and refactoring cycle in 15~30minutes.
+The more fast you can complete, the better your TODO list is.</p>
+
+<h3><em>Tackle one enemy in one time</em></h3>
+
+<p>However, if you can reduce each task in small unit, starting all tasks at one time is not good work. As Samurai(Musashi Miyamoto) did, you have to also complete tasks one by one.
+You can concentrate the essentials of each task,</p>
+
+<h3><em>You are the first user</em></h3>
+
+<p>When you write test code, you should take care of the usability. The interface of your product code is determined when you write your test code.
+So before write your test code and while writing your test code, your should try and make the interface better bacause you are the first user of your product.
+The only way to know how user friendly your product is using it yourself. In other words, let&rsquo;s test it.</p>
+
+<h3><em>Test your uncertain</em></h3>
+
+<p>The purpose of TDD is not mainly to guarantee software quality, but to take your ease in order to sleep peacefully. If there are no automatic test codes, it is horror.
+The every time you release your products, you are to end up with praying for the success of the release. Or in order to assure that there are no bugs in your software,
+you might have to many overtime work. That&rsquo;s too bad :(. To avoid this situation, test codes are selected and written under the criteria of how this test makes you peaceful.</p>
+
+<h3><em>Knit a lifeline</em></h3>
+
+<p>This is relevant to previous item. Compiled a lot of test codes will help you when you are in danger or crisis. This test codes become a lifeline knitted over many layers
+It will support you in any situation strongly.</p>
+
+<h3><em>The essencial goal of TDD</em></h3>
+
+<p>The best goal of TDD is keeping your health. This means your code health, your team health and of course your code health. Bacause of TDD, all developers can go home early,
+take a meal with your family and friends, make your product with peaceful mind. This is the essential goal of TDD for all software engineers. Conquering your anxiety and keeping you healthy.</p>
+
+<h1>After session</h1>
+
+<p>This goal made me realize why I am a software engineer again. Programming, writing code should always be fun. It should always be what makes me happy.
+If you are unhappy with writing code as work, it mistakes the means for the end, doesn&rsquo;t it? TDD is the one way of making my life as software engineer more joyful.
+That mind must not be forgot whenever I type my test code.</p>
+
+<p>The each line of your test codes makes you happy, I believe.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/12/08/whatt-going-on-at-agile-samurai-basecamp/">Agile Samurai Basecamp in Tokyo <1></a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-08T19:29:00+09:00" pubdate data-updated="true">Dec 8<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>At work, I am a scrum padawan, not yet master :&ndash;)</p>
+
+<p>Through developing with agile team, I was taught what scrum is, product backlog is, sprint is.</p>
+
+<p>In order to accelerate this growth as an agile programmer, I took part in TDD section of <a href="http://www.agilesamuraibasecamp.org/">Agile Samurai Basecamp</a>.
+TDD(Test Driven Development) is the most interesting method in my mind. So I wanted to know how to progress TDD in my daily work.
+This article includes TDD core process which I study in basecamp and what I thought for the future career as a programmer.</p>
+
+<h2>Keynote : Shintarou Kakutani</h2>
+
+<p>He is the translator of <em><a href="http://pragprog.com/book/jtrap/the-agile-samurai">The Agile Samurai</a></em> .
+He answered the questions  who is agile samurai, what agile teams are for.</p>
+
+<h3>Who is agile samurai?</h3>
+
+<p><img src="/images/posts/2013-12-08-samurai-1/samurai.jpg" alt="samurai" /></p>
+
+<p>Agile team must keep to delivering valuable software every week. It doesn&rsquo;t mean just delivering lecture or lesson,
+but codes which run as what you and your customer expects. To achieve this, it is very important to tackle problems as <em>&ldquo;whole one team&rdquo;</em>  which includes
+your customers. Customers decide what you make, then your decide how you make. Delivering values to customer and tackling problems as whole one team is the
+core concept of <em><a href="http://pragprog.com/book/jtrap/the-agile-samurai">The Agile Samurai</a></em> .</p>
+
+<h3>Why did you write more Agile book?</h3>
+
+<p>There were already many agile books in stores. Why another agile book is needed at that time?
+In the past, there were no books which compiled main below 7 books which explains agile practice for detail.</p>
+
+<ul>
+<li><a href="http://www.amazon.co.jp/XP%E3%82%A8%E3%82%AF%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E3%83%BB%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E5%85%A5%E9%96%80%E2%80%95%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E9%96%8B%E7%99%BA%E3%81%AE%E7%A9%B6%E6%A5%B5%E3%81%AE%E6%89%8B%E6%B3%95-%E3%82%B1%E3%83%B3%E3%83%88-%E3%83%99%E3%83%83%E3%82%AF/dp/489471275X">Extream programming explained</a></li>
+<li><a href="http://www.amazon.co.jp/Refactoring-Improving-Existing-Addison-Wesley-Technology/dp/0201485672/ref=sr_1_1?s=english-books&amp;ie=UTF8&amp;qid=1386502275&amp;sr=1-1&amp;keywords=refactoring">Refactoring</a></li>
+<li><a href="http://www.amazon.co.jp/XP%E3%82%A8%E3%82%AF%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E3%83%BB%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E5%AE%9F%E8%A1%8C%E8%A8%88%E7%94%BB-The-Series-%E3%82%B1%E3%83%B3%E3%83%88-%E3%83%99%E3%83%83%E3%82%AF/dp/4894713411/ref=sr_1_cc_1?s=aps&amp;ie=UTF8&amp;qid=1386502308&amp;sr=1-1-catcorr&amp;keywords=%E3%82%A8%E3%82%AF%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E3%80%80%E5%AE%9F%E8%A1%8C%E8%A8%88%E7%94%BB">Extream programming planning</a></li>
+<li><a href="http://www.amazon.co.jp/XP%E3%82%A8%E3%82%AF%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E3%83%BB%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E5%B0%8E%E5%85%A5%E7%B7%A8-XP%E5%AE%9F%E8%B7%B5%E3%81%AE%E6%89%8B%E5%BC%95%E3%81%8D-The-XP-Series/dp/4894714914/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1386502350&amp;sr=1-1&amp;keywords=%E3%82%A8%E3%82%AF%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E3%80%80%E5%B0%8E%E5%85%A5%E7%B7%A8">Extream programming installed</a></li>
+<li><a href="http://www.amazon.co.jp/%E3%83%86%E3%82%B9%E3%83%88%E9%A7%86%E5%8B%95%E9%96%8B%E7%99%BA%E5%85%A5%E9%96%80-%E3%82%B1%E3%83%B3%E3%83%88-%E3%83%99%E3%83%83%E3%82%AF/dp/4894717115/ref=sr_1_2?s=books&amp;ie=UTF8&amp;qid=1386502385&amp;sr=1-2&amp;keywords=Test+Driven+Development+by+example">Test Driven Development by example</a></li>
+<li><a href="http://www.amazon.co.jp/User-Stories-Applied-Software-Development-ebook/dp/B0054KOL74/ref=sr_1_cc_1?s=aps&amp;ie=UTF8&amp;qid=1386502435&amp;sr=1-1-catcorr&amp;keywords=User+Stories+applied">User stories applied</a></li>
+<li><a href="http://www.amazon.co.jp/%E3%82%A2%E3%82%B8%E3%83%A3%E3%82%A4%E3%83%AB%E3%81%AA%E8%A6%8B%E7%A9%8D%E3%82%8A%E3%81%A8%E8%A8%88%E7%94%BB%E3%81%A5%E3%81%8F%E3%82%8A-~%E4%BE%A1%E5%80%A4%E3%81%82%E3%82%8B%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%82%92%E8%82%B2%E3%81%A6%E3%82%8B%E6%A6%82%E5%BF%B5%E3%81%A8%E6%8A%80%E6%B3%95~-Mike-Cohn/dp/4839924023/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1386502473&amp;sr=1-1&amp;keywords=%E3%82%A2%E3%82%B8%E3%83%A3%E3%82%A4%E3%83%AB%E3%81%AA%E8%A6%8B%E7%A9%8D%E3%82%82%E3%82%8A%E3%81%A8%E8%A8%88%E7%94%BB%E4%BD%9C%E3%82%8A">Agile Estimating and Planning</a></li>
+</ul>
+
+
+<p><em><a href="http://pragprog.com/book/jtrap/the-agile-samurai">The Agile Samurai</a></em> collects the essences of these books. In addition to these concepts, this book add new stuff.
+So it&rsquo;s inception deck. If you want to know about inception deck, read this book. And the session of inception deck was also held at this bootcamp. This is important concept of agile practice.</p>
+
+<h3>Why a hero in this book is called &ldquo;Samurai&rdquo;?</h3>
+
+<p>The author, Jonathan Rasmusson likes <em>&ldquo;<a href="http://www.amazon.com/Way-Peaceful-Warrior-Changes-Lives/dp/0915811898">Peaceful Warrior</a>&rdquo;</em> . Initial title of &ldquo;Agile samurai&rdquo; was &ldquo;Agile peaceful warrior&rdquo; after this novel title. But it was not grasped by other people who have not read this book. So collaborators recommended him the word, &ldquo;Samurai&rdquo; which means same notion as peaceful warrior. &ldquo;Samurai&rdquo; is more perspicuous than &ldquo;peaceful warrior&rdquo; to the people of all over the world. Master sensei is also only the notion, not real samurai characters who lived in Japan.</p>
+
+<h3>What is the agile practice?</h3>
+
+<p>Agile development means the way of keeping feedback under the cooperative environment. To achieve team&rsquo;s goal, taking action requires cooperative environment of your team. All members must have the sense of ownership of their products. This thought makes good mood and necessary environment. But this practice can be accomplished only by your learning with on-the-job training. There is no secret ingredient. It&rsquo;s just you.</p>
+
+<h3>Last but not least</h3>
+
+<ol>
+<li>Sharing what you learn with others</li>
+<li>Keep searching the better answers</li>
+<li>Enjoy!</li>
+</ol>
+
+
+<p>Enjoy your agile life!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/12/05/closure-with-async-dot-js/">Closure With Async.js</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-05T20:29:00+09:00" pubdate data-updated="true">Dec 5<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>You may use <a href="https://npmjs.org/package/async">Async.js</a> at least one time when you develop with nodejs.</p>
+
+<blockquote><p>Async is a utility module which provides straight-forward, powerful functions for working with asynchronous JavaScript.</p></blockquote>
+
+<p>So if you want to write asynchronous code with JavaScript, I recommend you to use it. It&rsquo;s easy to use, simple syntax.
+However I had trouble with using Async.js in the context of giving dynamic task array. In this article, I want to share
+how to write dynamic task array given to Async.js module.</p>
+
+<h2>Problem</h2>
+
+<p>I wrote like a below code with nodejs.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">async</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;async&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Total task is 10 which is executed in parallel</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">TASK_NUM</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// All task functions are put in taskList</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">taskList</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">TASK_NUM</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">taskList</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">callback</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">i</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">async</span><span class="p">.</span><span class="nx">parallel</span><span class="p">(</span><span class="nx">taskList</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">results</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">results</span><span class="p">);</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When you run this code, I obtained below output.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="mi">10</span>
+</span><span class='line'><span class="mi">10</span>
+</span><span class='line'><span class="mi">10</span>
+</span><span class='line'><span class="mi">10</span>
+</span><span class='line'><span class="mi">10</span>
+</span><span class='line'><span class="mi">10</span>
+</span><span class='line'><span class="mi">10</span>
+</span><span class='line'><span class="mi">10</span>
+</span><span class='line'><span class="mi">10</span>
+</span><span class='line'><span class="mi">10</span>
+</span><span class='line'><span class="p">[</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span> <span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This didn&rsquo;t fit my expectation. I thought all tasks should get i-th argument. So each task&rsquo;s output
+is i-th number, if i-th task runs. However in this case, all task&rsquo;s output is 10. Why closure in function(In JavaScript, <code>function</code> makes variable scope, called closure) might not be effective?</p>
+
+<h2>Answer</h2>
+
+<p>There is answer in <a href="http://stackoverflow.com/questions/12472448/async-parallel-with-functions-dynamic-array">StackOverflow</a>.</p>
+
+<blockquote><p>A closure doesn&rsquo;t &ldquo;trap&rdquo; the value that an outer variable had at the time it was created; it &ldquo;traps&rdquo; a reference to whatever value the outer variable has at the time it&rsquo;s executed (which in this case won&rsquo;t be until well after your for loop has finished.</p></blockquote>
+
+<p>So in this case, closure does not make scope when it is <strong>declared</strong>, but <strong>executed</strong>. The variable <code>i</code> resulted in 10 after <code>for</code> loop in this code. And then each tasks will be executed under the condition that variable <code>i</code> is 10. I understood why these odd phenomenon was occured.</p>
+
+<h2>How to write</h2>
+
+<p>How should I write in order to execute this code as I expected in advance. Same page showed me the answer.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">deleteFunction</span> <span class="o">=</span> <span class="nx">makeDeleteFunction</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">callback</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Writing wrapper function which wraps my original tasks makes scope under given argument <code>i</code>. When you declare task, you should not make task function directly, but should give parameters which trapped in declaration context to the wrapper function. Here is my sample that is corresponds to above code.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">async</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;async&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Wrapper function</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">makeTask</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">callback</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">i</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Total task is 10 which is executed in parallel</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">TASK_NUM</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// All task functions are put in taskList</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">taskList</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">TASK_NUM</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">taskList</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">makeTask</span><span class="p">(</span><span class="nx">i</span><span class="p">));</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">async</span><span class="p">.</span><span class="nx">parallel</span><span class="p">(</span><span class="nx">taskList</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">results</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">results</span><span class="p">);</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then output is given as I expected.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="mi">0</span>
+</span><span class='line'><span class="mi">1</span>
+</span><span class='line'><span class="mi">2</span>
+</span><span class='line'><span class="mi">3</span>
+</span><span class='line'><span class="mi">4</span>
+</span><span class='line'><span class="mi">5</span>
+</span><span class='line'><span class="mi">6</span>
+</span><span class='line'><span class="mi">7</span>
+</span><span class='line'><span class="mi">8</span>
+</span><span class='line'><span class="mi">9</span>
+</span><span class='line'><span class="p">[</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span> <span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you write dynamic task function with Async.js, notice these fact.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/12/04/the-left-one/">The LEFT ONE</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-04T23:07:00+09:00" pubdate data-updated="true">Dec 4<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><iframe src="http://www.slideshare.net/slideshow/embed_code/28845284" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/lewuathe/left-one" title="THE LEFT ONE" target="_blank">THE LEFT ONE</a> </strong> from <strong><a href="http://www.slideshare.net/lewuathe" target="_blank">Kai Sasaki</a></strong> </div></p>
+
+<p>I decided to do. I always did so.
+It&rsquo;s my challenge for my future, and my hapiness.</p>
+
+<p>So I wrote it. Not to forget my footsteps.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/12/01/how-do-i-change-my-homeland-with-open-data/">How Do I Change My Homeland With Open Data?</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-01T19:09:00+09:00" pubdate data-updated="true">Dec 1<span>st</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Open data will change the world, and nations. How do I change my homeland with open data?</p>
+
+<p>I find this article today
+<a href="http://www.soumu.go.jp/menu_news/s-news/01ryutsu02_02000081.html">http://www.soumu.go.jp/menu_news/s-news/01ryutsu02_02000081.html</a></p>
+
+<p>This is the software application contest using open data given by Ministry of Internal Affairs and Communications. I am interested in this content from two view points.</p>
+
+<p>First, as a software developer, I am interested technologies used for mobile applications such as iOS or Android. For my engineer career and satisfying my interest, I want develop mobile applications this time.</p>
+
+<p>Second, I want to develop an application which is able to answer social problems such as economic gap, social security, low birthrate and longevity. Open data enables us to develop such applications easily. I think all software should be developed and used for making our society good place. Solving all problems is real hacker mind. With open data, I want to make our homeland better place.</p>
+
+<p>Given data listed below.</p>
+
+<ol>
+<li>Administration data stored local authorities.</li>
+<li>Usability and cost of social capital</li>
+<li>Information for travellers</li>
+<li>Disaster prevention data</li>
+<li>Information of transportation system</li>
+<li>A large variety of statistics data</li>
+</ol>
+
+
+<p>I cannot understand what these data is completely. This contest deadline is February, 2014. There is not much time for me, but enough.</p>
+
+<h2>My open data library.</h2>
+
+<p>Already I have developed a library for iOS.</p>
+
+<p><a href="https://github.com/Lewuathe/LEStatsRequest">https://github.com/Lewuathe/LEStatsRequest</a></p>
+
+<p>LEStatsRequest is the API client of statistics of Japan government. This library contributes open data movement in Japan. You can obtain official data with this client espacially in iOS device. iOS device is restricted memory capacity, so this library parses response XML and make useful objects. With this library, you can use Japan open data easily. If you have some interest in open data, please check it.</p>
+
+<p>In the future, open data surely changes our life. Our involvement with government and society will require our more positiveness. I think this is good thing for current closed our society.</p>
+
+<p>I want to make the use of my ability for our society.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/11/28/my-first-jenkins-plugin/">My First Jenkins Plugin</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-28T21:15:00+09:00" pubdate data-updated="true">Nov 28<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Released my first Jenkins plugin</p>
+
+<p><a href="https://github.com/jenkinsci/hckrnews-plugin">https://github.com/jenkinsci/hckrnews-plugin</a></p>
+
+<p><img src="/images/posts/2013-11-28-hckrnews-plugin/screen-shot.png" alt="Screen shot" /></p>
+
+<p>With this plugin, you can read hacker news top time line sitting in front of CI server.
+So you can read top topics about technology and so on at the same time building your project. Does it sound good?</p>
+
+<h2>How to publish Jenkins plugin?</h2>
+
+<h3>Make GitHub repository</h3>
+
+<p>Normal Maven project needs only src/ and pom.xml. Jenkins plugin project is not exception.
+Write right .gitignore, and ignore target/ and work/ directory. These are not necessary.</p>
+
+<h3>Create new jenkins-ci account</h3>
+
+<p>Visit <a href="https://jenkins-ci.org/account/">here</a>. Create your new account.</p>
+
+<h3>Write settings.xml your account information</h3>
+
+<p>Your account name, and password got from above process should be written in <code>~/.m2/settings.xml</code> like below.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;settings&gt;
+</span><span class='line'> ・・・
+</span><span class='line'>  &lt;servers&gt;
+</span><span class='line'>    &lt;server&gt;
+</span><span class='line'>      &lt;id&gt;maven.jenkins-ci.org&lt;/id&gt;
+</span><span class='line'>      &lt;username&gt;XXXXXX&lt;/username&gt;
+</span><span class='line'>      &lt;password&gt;XXXXXX&lt;/password&gt;
+</span><span class='line'>    &lt;/server&gt;
+</span><span class='line'>  &lt;/servers&gt;
+</span><span class='line'>  ・・・
+</span><span class='line'>&lt;/settings&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Application for forking repository</h3>
+
+<p>Send an email to community <a href="https://groups.google.com/forum/#!forum/jenkinsci-ja">mailing list</a> in Japan. If you want to send other community, search <a href="http://jenkins-ci.org/content/mailing-lists">here</a>
+Soon your repository is forked to original jenkinsci organization.</p>
+
+<h3>Modify pom.xml</h3>
+
+<p>Add some line. SCM repository url should be written in your project <code>pom.xml</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;scm&gt;
+</span><span class='line'>    &lt;connection&gt;scm:git:ssh://github.com/jenkinsci/XXXXXXXX.git&lt;/connection&gt;
+</span><span class='line'>    &lt;developerConnection&gt;scm:git:ssh://git@github.com/jenkinsci/XXXXXXXX.git&lt;/developerConnection&gt;
+</span><span class='line'>    &lt;url&gt;https://github.com/jenkinsci/XXXXXXXX.git&lt;/url&gt;
+</span><span class='line'>&lt;/scm&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Release!</h3>
+
+<p>Type below command.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mvn release:prepare release:perform</span></code></pre></td></tr></table></div></figure>
+
+
+<p>One this your should pay attention to is not to add <code>-Dusername</code> and <code>-Dpassword</code> options. These are not used for GitHub but jenkinsci.org
+Congratulations!!</p>
+
+<h3>Future</h3>
+
+<p>In fact, I make this plugin with no experience of writing Java, of course maven.
+Therefore I have to study these tool and Java grammar. In addition to this, I learned how to write some design patterns with coding in accordance with OO programming.</p>
+
+<p>I also wrote some test codes with JUnit in maven. TDD is the method with which I want to develop. In this time, first I wrote unit test code and second logic code. This is fun for me because my code&rsquo;s quality seems to be kept easily. I want to keep writing test code first. This is the best practice for my developing.</p>
+
+<p>This plugin has only simple functions, however, this experience is sufficient value as software engineer.
+In the future, I will seize the moment and make more my own plugins.</p>
+
+<p>Ultimately, please use this plugin. It brings to you a new continuous integration life.</p>
+
+<p>Thank you.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/11/22/maifalseriteiripoto/">マイノリティ・リポート</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-22T11:13:00+09:00" pubdate data-updated="true">Nov 22<span>nd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>この夏にあったことだ。</p>
+
+<p><img src="/images/posts/2013-11-22-minority/tie.jpg" alt="tie" /></p>
+
+<p>一般的に社会人が半ズボンを履いて会社へ行くことは「正しくない」ことだと考えられている。
+でもこの夏はとっても暑かったので、半ズボンがどれだけ許されるのか知りたいということもありいろいろなズボンで会社に行ってみた。
+長ズボン、七分丈、膝の見える短パン。長さや柄を混ぜこぜにして出勤してみた。</p>
+
+<p>そうしたところ、柄やメーカーにかかわらず膝が見えると「それ、(会社に履いてくるの)大丈夫？」と聞いてくる人がいることがわかった。
+なるほど、膝が見えるとダメらしい。というわけでいちいちめんどくさいので夏の後半はどんなに暑くても七分丈にすることにした。</p>
+
+<h2>「正しい」と「正しくない」</h2>
+
+<p>ところでどうして、短パンは「正しくない」と判断されて、長ズボンは「正しい」と判断されるんだろうか。
+どうして、規則に「反している」、「反していない」と言われないんだろうか。あるいは規則がどうして「正しい」と判断されるんだろうか。
+社会人としてスーツを着てくることが「正しい」と考える人は多いと思う。でもどうしてそれを「多くの人がやっているから」とか、「規則で決まっているから」
+とか言わないんだろう。どうして「正しい」という価値が入ってしまうんだろう。</p>
+
+<p>もし僕が社会人としてスーツは「正しくない」じゃないと言ったらどうなんだろう。</p>
+
+<p>「そんな風に思うやつはお前だけだ」と言われるかもしれない。
+だとしたら、スーツを着る理由は「正しい」からではなく、「大勢がそうしている」からだ。</p>
+
+<p>「昔からそうだったんだ」と言われるかもしれない。
+だとしたら、スーツを着る理由は「正しい」からではなく、「昔からそうしている」からだ。</p>
+
+<p>「スーツには社会人として必要な機能が備わっているからだ」と言われるかもしれない。
+だとしたら、スーツを着る理由は「正しい」からではなく、「社会人として必要な機能が備わっている」からだ。</p>
+
+<p>僕が言いたいのは「正しい」、「正しくない」という価値判断をむやみに加えて論理的な理由付けをうやむやにしてしまうのは良くないことだと思うということ。</p>
+
+<p>「正しい」、「正しくない」は人によって違う。
+でもポケットがいっぱいあって便利というのはだれにとってもほぼ同じ感覚だ。</p>
+
+<p>何か規則を決めたり、考えを広めるときに「正しい」というラベルをはらないとそれを広めることが難しいと感じることがある。
+だから人はむやみにこれは「正しい」、あれは「正しくない」ということを必ず言ってしまうのだと思う。</p>
+
+<p>別にいいと思う。「正しさ」なんて大義名分をはらなくても、理屈が通っていれば。
+「便利だから」、「暖かいから」、「毎日着る洋服に迷うことがないから」、「どんなお店にも入れるから」。
+それでいいじゃないか。</p>
+
+<h2>桃太郎がいなければ鬼もいない</h2>
+
+<p>結果として一緒じゃないかと思うかもしれない。理屈が通っていようが通っていまいが、お前がスーツを着ろと言われることは同じじゃないかと。
+でも全然違うんだ。正義の味方は悪の秘密結社を必要とする。</p>
+
+<p>アンパンマンはバイキンマンが必要だし名探偵コナンは殺人犯が必要だ。桃太郎では鬼がいなければ話ははじまらないし、ショッカー軍団がいなければ仮面ライダーは何もしないだろう。</p>
+
+<p>「正しい」意見は必ず「正しくない」意見を必要とする。</p>
+
+<p>彼らのせいで必ず悪者が作られる。確かに「作られる」。
+本当は正義の反対側はもうひとつの正義にすぎない。「正しい」といった瞬間に「正しくない」意見ができる。そして、「正しくない」意見を排除しようとする。
+本当はもうひとつの「正しさ」であるはずの意見が排除される理由になってしまう。</p>
+
+<p>「暖かい洋服だから」という意見に「寒い洋服でいい」という意見が間違っているとも劣っているとも思わない。</p>
+
+<p>ただ「正しいから」と言ってしまうと「正しくないものでいい」というのはなんだかおかしい。本人は正しくなくていいと思っているのかもしれないが、僕は言ってあげたい。</p>
+
+<p>「君の意見も同じように正しいんだ」と。</p>
+
+<p>だから決して「正しい」意見というものを言わないで欲しい。半ズボンを履くのも「不快に感じる人がいるから」とか、「風邪をひきやすいから」とかそう言って欲しい。
+決してそれらが「正しい」わけではないけれど。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/11/16/developing-jenkins-plugin-on-vagrant/">Developing Jenkins Plugin on Vagrant</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-16T21:09:00+09:00" pubdate data-updated="true">Nov 16<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Recently I investigate the scalability of Jenkins. In my idea, I want to make hot standby Jenkins server with NFS. So the plugins which enable us to do that are required. And for my study, I decided to develop on Vagrant and VirtualBox. It costs me very little because there is no need to get real server.  So in this post, I will describe how to set up your jenkins plugin environment on your vagrant Ubuntu.</p>
+
+<h2>Start vagrant</h2>
+
+<p>My <code>Vagrantfile</code> is below. Before this, you should download precise64 box on vagrant <a href="http://www.vagrantbox.es/">site</a></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># -*- mode: ruby -*-
+</span><span class='line'># vi: set ft=ruby :
+</span><span class='line'>
+</span><span class='line'>Vagrant.configure("2") do |config|
+</span><span class='line'>  # Every Vagrant virtual environment requires a box to build off of.
+</span><span class='line'>  config.vm.box = "ubuntu"
+</span><span class='line'>
+</span><span class='line'>  # Create a forwarded port mapping which allows access to a specific port
+</span><span class='line'>  # within the machine from a port on the host machine. In the example below,
+</span><span class='line'>  # accessing "localhost:8080" will access port 80 on the guest machine.
+</span><span class='line'>  config.vm.network :forwarded_port, guest: 8080, host: 8080
+</span><span class='line'>
+</span><span class='line'> end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Jenkins plugin server starts on port 8080. So you need to write guest port 8080. Host port can be written any number.
+And start vagrant.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ vagrant up</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Set up maven3</h2>
+
+<p>Jenkins plugins are build with Maven. In this time, Maven3 can build sample plugin easily, so I recommend that you download maven3.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo apt-get install maven</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Write settings.xml</h2>
+
+<p>Write settings.xml as below.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;settings&gt;
+</span><span class='line'>  &lt;pluginGroups&gt;
+</span><span class='line'>    &lt;pluginGroup&gt;org.jenkins-ci.tools&lt;/pluginGroup&gt;
+</span><span class='line'>  &lt;/pluginGroups&gt;
+</span><span class='line'>
+</span><span class='line'>  &lt;profiles&gt;
+</span><span class='line'>    &lt;!-- Give access to Jenkins plugins --&gt;
+</span><span class='line'>    &lt;profile&gt;
+</span><span class='line'>      &lt;id&gt;jenkins&lt;/id&gt;
+</span><span class='line'>      &lt;activation&gt;
+</span><span class='line'>        &lt;activeByDefault&gt;true&lt;/activeByDefault&gt; &lt;!-- change this to false, if you don't like to have it on per default --&gt;
+</span><span class='line'>      &lt;/activation&gt;
+</span><span class='line'>      &lt;repositories&gt;
+</span><span class='line'>        &lt;repository&gt;
+</span><span class='line'>          &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
+</span><span class='line'>          &lt;url&gt;http://repo.jenkins-ci.org/public/&lt;/url&gt;
+</span><span class='line'>        &lt;/repository&gt;
+</span><span class='line'>      &lt;/repositories&gt;
+</span><span class='line'>      &lt;pluginRepositories&gt;
+</span><span class='line'>        &lt;pluginRepository&gt;
+</span><span class='line'>          &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
+</span><span class='line'>          &lt;url&gt;http://repo.jenkins-ci.org/public/&lt;/url&gt;
+</span><span class='line'>        &lt;/pluginRepository&gt;
+</span><span class='line'>      &lt;/pluginRepositories&gt;
+</span><span class='line'>    &lt;/profile&gt;
+</span><span class='line'>  &lt;/profiles&gt;
+</span><span class='line'>  &lt;mirrors&gt;
+</span><span class='line'>    &lt;mirror&gt;
+</span><span class='line'>      &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
+</span><span class='line'>      &lt;url&gt;http://repo.jenkins-ci.org/public/&lt;/url&gt;
+</span><span class='line'>      &lt;mirrorOf&gt;m.g.o-public&lt;/mirrorOf&gt;
+</span><span class='line'>    &lt;/mirror&gt;
+</span><span class='line'>  &lt;/mirrors&gt;
+</span><span class='line'>&lt;/settings&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>JDK!!</h2>
+
+<p>I failed to create my plugin in this time bacause of lack of JDK. Ubuntu 12.04 LTS doesn&rsquo;t have JDK in own image. You have to install it.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo apt-get install default-jdk</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Build plugin</h2>
+
+<p>Building plugin with maven command.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mvn install</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And demonstrate your plugin.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mvn hpi:run</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can see Jenkins web UI on <a href="http://localhost:8080/jenkins">http://localhost:8080/jenkins</a> unless maven command has not exit.
+So now, I can get multi Jenkins server for mutual mount on NFS. My Jenkins study has been continued.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/3/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/02/15/yes-you-are-malala/">Yes, You Are Malala</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/14/nn-with-nodejs/">NN With Nodejs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/05/restricted-boltzmann-machine-in-node/">Restricted Boltzmann Machine in Node</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/29/stacked-denoised-autoencoder-with-nodejs/">Stacked Denoised Autoencoder With Nodejs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/26/autoencoder-with-node-dot-js/">Autoencoder With node.js</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

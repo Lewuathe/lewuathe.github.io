@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Machine Learning | My Octopress Blog]]></title>
+  <link href="http://Lewuathe.github.io/blog/categories/machine-learning/atom.xml" rel="self"/>
+  <link href="http://Lewuathe.github.io/"/>
+  <updated>2014-02-15T00:48:19+09:00</updated>
+  <id>http://Lewuathe.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[NN With Nodejs]]></title>
+    <link href="http://Lewuathe.github.io/blog/2014/02/14/nn-with-nodejs/"/>
+    <updated>2014-02-14T22:23:00+09:00</updated>
+    <id>http://Lewuathe.github.io/blog/2014/02/14/nn-with-nodejs</id>
+    <content type="html"><![CDATA[<p>2 layer newral network is added to <a href="https://github.com/Lewuathe/n42">n42</a>
+This network is simple newral network which can trained throught gradient descent optimization calculation.
+It is the same algorithm to the one of denoised autoencoder used by n42. So implementation itself was not diffucult.
+The code is showed below.</p>
+
+<p>```js
+/<em>*
+ *   Training weight parameters with supervised learning
+ *
+ *   @method train
+ *   @param  lr {float}  learning rate
+ *   @param  input {Matrix} input data (option)
+ *   @param  label {Matrix} label data (option)
+ </em>/
+NN.prototype.train = function(lr, input, label) {</p>
+
+<pre><code>var self = this;
+self.x     = (input != undefined)? input : self.input;
+self.label = (label != undefined)? label : self.label;
+
+var x = self.x;
+
+// Get hidden layer value
+var y = self.getHiddenValues(x);
+
+// The output of this network
+var z = self.getOutput(y);
+
+// The error of output layer. 
+var lH2 = self.label.subtract(z);
+
+// Restortion to the error of each hidden layer unit
+var sigma = lH2.x(self.W2.transpose());
+var lH1 = [];
+for (var i = 0; i &lt; sigma.rows(); i++) {
+    lH1.push([]);
+    for (var j = 0; j &lt; sigma.cols(); j++) {
+        lH1[i].push(sigma.e(i+1, j+1) * y.e(i+1, j+1) * (1 - y.e(i+1, j+1)));
+    }
+}
+
+// Make sylvester matrix
+lH1 = $M(lH1);
+
+// lW1 is the weight matrix from input layer to hidden layer
+var lW1 = x.transpose().x(lH1);
+
+// lW2 is the weight matrix from hidden layer to output layer
+var lW2 = y.transpose().x(lH2);
+
+// Add gradient to weight matrix respectively
+self.W1 = self.W1.add(lW1.x(lr));
+self.W2 = self.W2.add(lW2.x(lr));
+
+// vBias is the input layer bias parameters
+self.vBias = self.vBias.add(utils.mean(lH2, 0).x(lr));
+
+// hBias is the hidden layer bias parameters
+self.hBias = self.hBias.add(utils.mean(lH1, 0).x(lr));
+</code></pre>
+
+<p>}
+```</p>
+
+<p>Trying.</p>
+
+<p>```
+var input = $M([
+  [1.0, 1.0, 0.0, 0.0],
+  [1.0, 1.0, 0.2, 0.0],
+  [1.0, 0.9, 0.1, 0.0],
+  [1.0, 0.98, 0.02, 0.0],
+  [0.98, 1.0, 0.0, 0.0],
+  [0.0, 0.0, 1.0, 1.0],
+  [0.0, 0.1, 0.8, 1.0],
+  [0.0, 0.0, 0.9, 1.0],
+  [0.0, 0.0, 1.0, 0.9],
+  [0.0, 0.0, 0.98, 1.0]
+]);</p>
+
+<p>var label = $M([
+  [1.0, 0.0],
+  [1.0, 0.0],
+  [1.0, 0.0],
+  [1.0, 0.0],
+  [1.0, 0.0],
+  [0.0, 1.0],
+  [0.0, 1.0],
+  [0.0, 1.0],
+  [0.0, 1.0],
+  [0.0, 1.0]
+]);</p>
+
+<p>var nn = new NN(input, 4, 10, 2, label);</p>
+
+<p>for (var i = 0; i &lt; 100000; i++) {
+  // 0.1 is learning rate
+  nn.train(0.1);
+}</p>
+
+<p>var data = $M([
+  [1.0, 1.0, 0.0, 0.0],
+  [0.0, 0.0, 1.0, 1.0]
+]);</p>
+
+<p>console.log(nn.predict(data));
+// [0.9999597224429988, 0.000040673558435336644]
+// [0.0000455181928397141, 0.9999544455271699]
+```</p>
+
+<h2>Activation function</h2>
+
+<p>This prediction seems rather good, but the activation function was changed to sigmoid function, not softmax function in this case. In the multi class categorizing problem, soft max function usually used to predict. But I can get good result with sigmoid function rather than softmax function. With softmax function, the result is below.</p>
+
+<p><code>js
+// [0.5242635012777253, 0.47573649872227464]
+// [0.2690006890629063, 0.7309993109370937]
+</code></p>
+
+<h2>Further trying</h2>
+
+<p>Umm, this is not the result I want to get. I can&rsquo;t grasp why the result is not correct sufficiently.
+I want to keep tracking whether there are any problems in my program.
+And with this network, I want to try kaggle mnist problem. Now n42 is run to train mnist data. It takes a lot of time.
+If any good result is obtained through this process, I will introduce this blog. Welcome feedback, thank you!!</p>
+]]></content>
+  </entry>
+  
+</feed>

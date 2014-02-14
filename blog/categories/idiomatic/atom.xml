@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Idiomatic | My Octopress Blog]]></title>
+  <link href="http://Lewuathe.github.io/blog/categories/idiomatic/atom.xml" rel="self"/>
+  <link href="http://Lewuathe.github.io/"/>
+  <updated>2014-02-15T00:48:19+09:00</updated>
+  <id>http://Lewuathe.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Idiomatic Python ~I Will Write With This Style~]]></title>
+    <link href="http://Lewuathe.github.io/blog/2014/01/21/idiomatic-mython/"/>
+    <updated>2014-01-21T13:18:00+09:00</updated>
+    <id>http://Lewuathe.github.io/blog/2014/01/21/idiomatic-mython</id>
+    <content type="html"><![CDATA[<p>I read a book, <em><a href="http://www.amazon.co.jp/Writing-Idiomatic-Python-2-7-3-Knupp-ebook/dp/B00B5KG0F8">Writing Idiomatic Python</a></em>
+Although I usually write python codes, I have not paid attension to the style of these codes. By reading this book, I have noticed
+that there are pythonic style in python codes. And I think it was good mind to write python code. There were many <em>Halmful</em>, <em>Idiomaric</em>
+phrases about python code. So I&rsquo;d like to introduce some of them which I&rsquo;ll write in my own code.</p>
+
+<p>And of course, all python developers should read this book!!</p>
+
+<h2>Enumerate</h2>
+
+<p>Usually, I write loop code like below.</p>
+
+<p>```python
+index = 0
+for element in [&ldquo;Takeshi&rdquo;, &ldquo;Nobita&rdquo;, &ldquo;Masao&rdquo;]:</p>
+
+<pre><code>print('{}:{}'.format(index, element))
+index += 1
+</code></pre>
+
+<p>```</p>
+
+<p>But it is harmful according to this book. Correctly, you should write like below.</p>
+
+<p>```python
+conteiner = [&ldquo;Takeshi&rdquo;, &ldquo;Nobita&rdquo;, &ldquo;Masao&rdquo;]
+for index, element in enumerate(conteiner):</p>
+
+<pre><code>print('{}:{}'.format(index, element)
+</code></pre>
+
+<p>```</p>
+
+<h2>Arbitrary arguments</h2>
+
+<p>In python, you can write arbitrary arguments with <code>*args</code> or <code>**kwargs</code>. Arbutrary arguments are useful when you
+want to implement some types of API which is different by package versions. You can write like below.</p>
+
+<p>```python
+def make_api_call(a, b, c, *args, **kwargs):</p>
+
+<pre><code>print a
+print b
+print c
+print args
+print kwargs
+</code></pre>
+
+<p>```</p>
+
+<p>Run this</p>
+
+<p>```python</p>
+
+<h1>!/usr/bin/python</h1>
+
+<p>if <strong>name</strong> == &ldquo;<strong>main</strong>&rdquo;:</p>
+
+<pre><code>make_api_call(1, 2, 3, 4, 5, 6, name="Takeshi", age=23)
+</code></pre>
+
+<h1>&mdash;console&mdash;</h1>
+
+<h1>1</h1>
+
+<h1>2</h1>
+
+<h1>3</h1>
+
+<h1>(4, 5, 6)</h1>
+
+<h1>{&lsquo;age&rsquo;: 23, &lsquo;name&rsquo;: &lsquo;Takeshi&rsquo;}</h1>
+
+<p>#</p>
+
+<p>```</p>
+
+<h2>Avoid <em>Swallowing</em> useful exceptions</h2>
+
+<p>In python, <code>exception</code> is common phrases used in <code>for</code> loop or etc. In addition to this,
+<code>exception</code> gives you a useful information for debugging. So you should not <em>swallow</em> these exceptions
+by writing bare <code>except</code> clause. If you don&rsquo;t have any idea about what type exceptions are raised from
+third-party library, you should raise it again.</p>
+
+<p>```python
+import requests
+def get_json_response(url):</p>
+
+<pre><code>try:
+    r = requests.get(url)
+    return r.json()
+except:
+    raise
+</code></pre>
+
+<p>```</p>
+
+<h2>Avoid using a temporary variables with swapping</h2>
+
+<p>Use tuple.</p>
+
+<p><code>python
+foo = "FOO"
+bar = "BAR"
+(foo, bar) = (bar, foo)
+</code></p>
+
+<h2>Use <code>join</code> method. It&rsquo;s more faster</h2>
+
+<p><code>python
+result_list = ["Takeshi", "Nobita", "Masuo"]
+reesult_string = " ".join(result_list)
+</code></p>
+
+<h2>Use format function to make a formatted string</h2>
+
+<p>```python</p>
+
+<h1>user is a dictionary</h1>
+
+<p>def get_formatted_user_info(user):</p>
+
+<pre><code>output = 'Nama: {user.name}, Age: {user.age}, Sex: {user.sex}'.format(user=user)
+</code></pre>
+
+<p>```</p>
+
+<h2>Prefer <code>xrange</code> to <code>range</code></h2>
+
+<p>Use <code>xrange</code></p>
+
+<p>```python
+for index in xrange(10000):</p>
+
+<pre><code>print('index: {}'.format(index)
+</code></pre>
+
+<p>```</p>
+
+<h2>Default value got from dicionary</h2>
+
+<p>If there are <code>name</code> field in user, <code>get</code> returns <code>'Unknown'</code>.</p>
+
+<p><code>python
+username = user.get('name', 'Unknown')
+</code></p>
+
+<h2>Dictionary complehension</h2>
+
+<p>The list complehension is well known about python context. But dictionary complehension is as important as this.</p>
+
+<p><code>python
+user_email = {user.name: user.email for user in users_list if user.email}
+</code></p>
+
+<h2>Set complehension</h2>
+
+<p>In set syntax, you can use complehension expression.</p>
+
+<p><code>python
+users_first_names = {user.first_name for user in users}
+</code></p>
+
+<h2>Ignore unnecessary row in tuple</h2>
+
+<p>If there are any data which is not necessary for you in tuple, ignore it with <code>_</code></p>
+
+<p>```python
+(name, age, <em>, </em>) = get_user_info(user)
+if age > 20:</p>
+
+<pre><code>output = '{name} can drink!'.format(name=name)
+</code></pre>
+
+<p>```</p>
+
+<h2>Generator</h2>
+
+<p>Python list comprehension is very useful, however, processing very large list will run out of memory.
+In this case you should use <code>generator</code> which is iterative expression, but doesn&rsquo;t use memory.</p>
+
+<p>```python
+users = [&ldquo;Nobita&rdquo;, &ldquo;Takeshi&rdquo;, &ldquo;Masuo&rdquo;]
+for i in (user.upper() for user in users if user != &ldquo;Takeshi&rdquo;):</p>
+
+<pre><code>print(i)
+</code></pre>
+
+<h1>NOBITA</h1>
+
+<h1>MASUO</h1>
+
+<p>```</p>
+
+<h2>Refer PEP8</h2>
+
+<p>Python has standard set of formatting rule officially. It is called <strong>PEP8</strong>.
+You should install this plugin your editor.</p>
+
+<h2>Write as PEP252</h2>
+
+<p>PEP257 is the set of rules of document formattings.</p>
+
+<p>```python
+def calculate_statistics(value_list):</p>
+
+<pre><code>"""Return a tuple containing the mean, median and the mode of a list of integers
+
+Arguments:
+value_list -- a list of integer values
+
+"""
+</code></pre>
+
+<p>```</p>
+
+<h1>Last but not least</h1>
+
+<p>I am a pythonia. With reading this book, I am able to write more pythonic code at my work scene.</p>
+]]></content>
+  </entry>
+  
+</feed>

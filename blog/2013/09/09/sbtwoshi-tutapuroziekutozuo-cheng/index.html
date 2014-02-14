@@ -1,0 +1,370 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>SBTを使ったプロジェクト作成(1) - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="SBT(Simple Build Tool)というScalaのビルドツールを使ってみる。
+ここを参考にした。 インストール まずインストール。macの場合はHomebrewで用意されているみたい。 1
+$ brew install sbt プロジェクトの作成 ひな形は自分で作る。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://Lewuathe.github.io/blog/2013/09/09/sbtwoshi-tutapuroziekutozuo-cheng">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:Lewuathe.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">SBTを使ったプロジェクト作成(1)</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-09T21:29:00+09:00" pubdate data-updated="true">Sep 9<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>SBT(Simple Build Tool)というScalaのビルドツールを使ってみる。
+<a href="http://scalajp.github.io/sbt-getting-started-guide-ja/">ここ</a>を参考にした。</p>
+
+<h3>インストール</h3>
+
+<p>まずインストール。macの場合はHomebrewで用意されているみたい。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ brew install sbt</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>プロジェクトの作成</h3>
+
+<p>ひな形は自分で作る。ここではhelloプロジェクトを作ってみる。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mkdir hello
+</span><span class='line'>$ echo 'object Hi { def main(args: Array[String]) = println("Hi!") }' &gt; hw.scala
+</span><span class='line'>$ sbt
+</span><span class='line'># ここで必要なパッケージとか勝手にインストールしてビルドしてくれるみたい
+</span><span class='line'>&gt; run
+</span><span class='line'>・・・
+</span><span class='line'>Hi!</span></code></pre></td></tr></table></div></figure>
+
+
+<p>複雑なことはまだたくさんあるけれど、必要なことはこれだけだ。あとは蛇足と後学のため。でもきっと大事なことだ。</p>
+
+<h3>ソースコード</h3>
+
+<p>sbtではソースツリーはMavenと同じものを使うらしい。Maven知らない。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>hello/
+</span><span class='line'> build.sbt  (パッケージのmeta情報とかここにまとめる)
+</span><span class='line'> project/
+</span><span class='line'>   Build.scala (ビルド設定とかここに書く。Makefileみたいなもの？)
+</span><span class='line'> src/
+</span><span class='line'>   main/
+</span><span class='line'>     resources/
+</span><span class='line'>        &lt;メインの jar に含むファイル&gt;
+</span><span class='line'>     scala/
+</span><span class='line'>        &lt;メインの Scala ソース&gt;
+</span><span class='line'>     java/
+</span><span class='line'>        &lt;メインの Java ソース&gt;
+</span><span class='line'>   test/
+</span><span class='line'>     resources/
+</span><span class='line'>        &lt;テストの jar に含むファイル&gt;
+</span><span class='line'>     scala/
+</span><span class='line'>        &lt;テストの Scala ソース&gt;
+</span><span class='line'>     java/
+</span><span class='line'>        &lt;テストの Java ソース&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>これ以外は無視されるらしい。sbtコマンドでビルドが終わるとここにtargetディレクトリが追加されて、そこにできたclassファイルとかjarファイルが置かれる。Gitで管理したいなら<code>.gitignore</code>にはこう書くのが定石らしい。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>target/</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>インタラクティブモード</h3>
+
+<p>sbtを引数なしで実行するとインタラクティブモードになる。さっき<code>&gt;</code>が出てきて<code>run</code>と打ったらところで見ているはずだ。インタラクティブモードでは<code>compile</code>とか<code>run</code>が使える。みたまんまだ。</p>
+
+<h3>バッチモード</h3>
+
+<p>コマンド（さっきインタラクティブモードで一個一個打ってたやつ）を一度に実行できる。引数も与えられる。（test-onlyにはtestAとtestBを引数に与えている）</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sbt compile run "test-only testA testB"</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>継続的ビルド</h3>
+
+<p>ソースファイルの変更をトリガーに実行したければコマンドの先頭に<code>~</code>をつける。例えばインタラクティブモードで以下のようにすると、ソースをいじるたびに勝手にコンパイルしてくれるようになる。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt; ~ compile</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><code>clean</code>: targetの削除 <code>make clean</code>みたいなもの</li>
+<li><code>compile</code>: コンパイルする</li>
+<li><code>test</code>: コンパイルして実行</li>
+<li><code>console</code>: コンパイル済のソースを依存ライブラリにパスを通してscalaインタプリタに入る</li>
+<li><code>run</code>: プロジェクトのメインクラスを実行</li>
+<li><code>package</code>:  src/main/resources 内のファイルと src/main/scala からコンパイルされたクラスを含む jar を作る</li>
+</ul>
+
+
+<h3>build.sbtの書き方</h3>
+
+<p>ここで何書いていいかわからなかった大事なbuild.sbtが出てくる。
+はじめの方に書いたけれどビルド定義にはbuild.sbtとproject/<em>.scalaの２通りがある。ただ慣例的にはメインでbuild.sbtを使いそれでできないことを</em>.scalaファイルで行うことが多いらしい。さてビルド定義。</p>
+
+<h4>ビルド定義って？</h4>
+
+<blockquote><p>プロジェクトを調べ、全てのビルド定義ファイルを処理した後、sbt は、ビルドを記述した不可変マップ（キーと値のペア）を最終的に作る。例えば、name というキーがあり、それは文字列の値、つまり君のプロジェクト名に関連付けられる。<br/>ビルド定義ファイルは直接には sbt のマップに影響を与えない。その代わり、ビルド定義は、型が Setting[T] のオブジェクトを含んだ巨大なリストを作る。 T はマップ内の値の型だ。（Scala の Setting[T] は Java の Setting<T> と同様。） Setting は、新しいキーと値のペアや、既存の値への追加など、マップの変換を記述する。 （関数型プログラミングの精神に則り、変換は新しいマップを返し、古いマップは更新されない。）<br/>build.sbt では、プロジェクト名の Setting[String] を以下のように作る:</p><p>name := &#8220;hello&#8221;</p><p>この Setting[String] は name キーを追加（もしくは置換）して &#8220;hello&#8221; という値に設定することでマップを変換する。 変換されたマップは新しい sbt のマップとなる。マップを作るために、sbt はまず、同じキーへの変更が一緒に起き、かつ他のキーに依存する値の処理が依存するキーの後にくるように Setting のリストをソートする。 次に、sbt はソートされた Setting のリストを順番にみていって、一つづつマップに適用する。</p><p>まとめ: ビルド定義は Setting[T] のリストを定義し、Setting[T] は sbt のキー・値ペアへの変換を表し、T は値の型を指す。</p></blockquote>
+
+
+<p>何言ってるかわからない。
+例えば最初の方に出てきた<code>build.sbt</code>はこんなだった。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">name</span> <span class="o">:=</span> <span class="s">&quot;hello&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">version</span> <span class="o">:=</span> <span class="s">&quot;1.0&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scalaVersion</span> <span class="o">:=</span> <span class="s">&quot;2.9.1&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>これは<code>:=</code>の左側がSetting[T]型のオブジェクトで右側がその値だ。これらの値は組み込み型で型が決まっているので</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">name</span> <span class="o">:=</span> <span class="mi">42</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>とやるとコンパイルしてくれないそうな。
+キーの種類にはSettingとTaskがあり、nameとかversionはSetting。packageとかcompileはTaskとなる。なんだかまだ良くわからないけれど、設定値と実行命令みたいなものに２種類を設定できるっぽい。
+ライブラリ依存性とかを書く場合はこんな感じ。ほうほう。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.apache.derby&quot;</span> <span class="o">%</span> <span class="s">&quot;derby&quot;</span> <span class="o">%</span> <span class="s">&quot;10.4.1.3&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>今日は一旦このへんで。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-09T21:29:00+09:00" pubdate data-updated="true">Sep 9<span>th</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://Lewuathe.github.io/blog/2013/09/09/sbtwoshi-tutapuroziekutozuo-cheng/" data-via="" data-counturl="http://Lewuathe.github.io/blog/2013/09/09/sbtwoshi-tutapuroziekutozuo-cheng/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/09/07/scalawoshi-ukotoni/" title="Previous Post: Scalaを使うことに">&laquo; Scalaを使うことに</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/09/10/sbtwoshi-tutapuroziekutozuo-cheng-2/" title="Next Post: SBTを使ったプロジェクト作成(2)">SBTを使ったプロジェクト作成(2) &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/02/15/yes-you-are-malala/">Yes, You Are Malala</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/14/nn-with-nodejs/">NN With Nodejs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/05/restricted-boltzmann-machine-in-node/">Restricted Boltzmann Machine in Node</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/29/stacked-denoised-autoencoder-with-nodejs/">Stacked Denoised Autoencoder With Nodejs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/26/autoencoder-with-node-dot-js/">Autoencoder With node.js</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

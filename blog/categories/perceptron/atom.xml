@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Perceptron | My Octopress Blog]]></title>
+  <link href="http://Lewuathe.github.io/blog/categories/perceptron/atom.xml" rel="self"/>
+  <link href="http://Lewuathe.github.io/"/>
+  <updated>2014-02-15T00:48:19+09:00</updated>
+  <id>http://Lewuathe.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Scalaでパーセプトロンを作った]]></title>
+    <link href="http://Lewuathe.github.io/blog/2013/10/04/paseputoronfalseshi-zhuang/"/>
+    <updated>2013-10-04T23:10:00+09:00</updated>
+    <id>http://Lewuathe.github.io/blog/2013/10/04/paseputoronfalseshi-zhuang</id>
+    <content type="html"><![CDATA[<p>PRMLの線形識別モデルの章の内容。PRMLの中に書いてある線形識別モデルをざっと実装しようと思っていたけれど、
+最小二乗法に依る識別とフィッシャーの線形識別は割りとけちょんけちょんにけなされているイメージだったので、とりあえずおいておくことにします。</p>
+
+<p>というわけでパーセプトロンを作ってみたよ。
+今回もソースは<a href="https://github.com/PhysicsEngine/cpi-stats">ここ</a></p>
+
+<p>パーセプトロンは誤分類を行ったデータに対してのみパーセプトロン基準にもとづいて重みベクトルを変化させていくアルゴリズム。このアルゴリズムは基本的には
+2クラスの分類にだけしか使えないが、線形分類可能なデータ集合に対しては有限ステップで必ず分類できるモデルを構築できるという特徴と持つ。すごい！</p>
+
+<h2>パーセプトロン規準</h2>
+
+<p><code>scala
+val phi = DenseVector(1.0, point(0), point(1))
+phi * point(2) * _eta
+</code></p>
+
+<p>データ点にバイアスを加えたベクトルphiとデータ点の目的値(-1, 1)の積がパーセプトロン規準になる。この値は正しく分類されているデータに対しては常に正の値になる。つまりこの値が負の場合だけ重みベクトルを更新するように書くことができる。</p>
+
+<p>こんな感じに書いた。</p>
+
+<p>```
+plist.foreach {
+  point => {</p>
+
+<pre><code>val phi = DenseVector(1.0, point(0), point(1))
+  if ((_w.t * phi).apply(0) * point(2) &lt; 0) {
+    _w += phi * point(2) * _eta
+  }
+</code></pre>
+
+<p>  }
+}
+```</p>
+
+<p>すべての点に対してパーセプトロン規準に従い更新処理をかける。PRMLでは確率的最急降下アルゴリズムで更新をかける式が書いてあったので後でそちらも試してみる。
+ここで注意しておきたいのは、パーセプトロンでは学習中に重みベクトルが変化すると正しく分類されていたパターンも誤分類されてしまうことがある。そのため、すべてのパターンが正しく分類されているかを再度検証する必要がある。</p>
+
+<p>```
+plist.foreach {
+  point => {</p>
+
+<pre><code>val phi = DenseVector(1.0, point(0), point(1))
+  if ((_w.t * phi).apply(0) * point(2) &gt;= 0) {
+    correct += 1
+  }
+</code></pre>
+
+<p>  }
+}
+```</p>
+
+<p>この<code>correct</code>がデータ点と等しくなったら学習を終える。
+パーセプトロンははじめに線形分離可能なモデルならば<em>必ず</em>分離できるモデルを構築できるが、そうでない場合はいつまでも収束しない。そのため、もしそのようなデータ集合を与えた場合は上記の<code>correct</code>はずっとデータ点数を同じにならない。</p>
+
+<p>今回は2次元上に2クラスの学習用データ集合を生成。それぞれのクラスの平均、共分散行列は固定で書いてあとは良きにはからってpylabに生成してもらった。</p>
+
+<p>さて、実際にどのような感じか見てみる。</p>
+
+<p><img src="/images/posts/2013-10-04-perceptron/N=100.png" alt="N=100" /></p>
+
+<p>初期の重みベクトルはすべて要素が1の単純なベクトルで行った。それでもこの処理にかかったステップ数は３とかなり少ない。
+PRMLではパーセプトロン学習アルゴリズムが収束するのに必要なステップ数はかなり多いと書いてあったけれど思っていたよりは少ない。もちろん2次元空間上で、尚且つたかだかデータ点数が100なので総結論づけれれないけれど、あくまでも思っていたよりかはということ。</p>
+
+<p>結構分類が難しそうなものもやってみた。</p>
+
+<p><img src="/images/posts/2013-10-04-perceptron/difficult.png" alt="難しそう" /></p>
+
+<p>きちんと分類できている。これも重みベクトルの初期値は同じ。ステップ数も変わらない。つまりあくまでも初期値と線形分離可能性に大きく依存するので、あんまりクラス集合が近いとか遠いとか関係ないみたい。そこら辺は最小二乗法と大きく違うところ。</p>
+
+<p>線形分離不可能なものもやってみた。</p>
+
+<p><img src="/images/posts/2013-10-04-perceptron/impossible.png" alt="線形分離不可能" /></p>
+
+<p>はい、やっぱりダメ。実際には収束しないので途中でプログラムを切って得た画像。</p>
+
+<p>10minくらい走らせたけどダメだった。終わらない。</p>
+
+<h2>確率的最急降下法</h2>
+
+<p>さっきまでは全点を選んでの最急降下法で重みベクトルを更新していったけれど、PRMLに書いてあるように確立的最急降下法で計算してみるとどうだろう。計算コスト的にはかなり小さくなるはずだけれど、ステップ数も増えなければ最急降下法での計算の方が良さそう。どうなるか試してみたい。</p>
+
+<p>実装としては以下のようにした。</p>
+
+<p><code>
+val index = Math.floor(Math.random()*plist.length).toInt
+val point = plist(index)
+val phi = DenseVector(1.0, point(0), point(1))
+if ((_w.t * phi).apply(0) * point(2) &lt; 0) {
+  _w += phi * point(2) * _eta
+}
+</code></p>
+
+<p>データ点の中からランダムに1点を選び、その点に対してパーセプトロン規準に従い重みベクトルを更新する。</p>
+
+<p>さて、やってみた。</p>
+
+<p><img src="/images/posts/2013-10-04-perceptron/step=3.png" title="step=3" alt="step=3" /><img src="/images/posts/2013-10-04-perceptron/step=1069.png" title="step=1069" alt="step=1069" /></p>
+
+<p>分類結果は当然変わらない。線形分類可能なら必ず収束する。左が先ほどまでの全点選択での最急降下法。右が確率的最急降下法。</p>
+
+<p>ただしステップ数が大きく異なる。全点選択はステップ数3に対して確率的最急降下法はステップ数が1069！</p>
+
+<p>確率的に降下方向を選ぶのは全点選ぶのと対して変わらないとどっかに(PRMLではない)書いてあったのに、結構違う。
+もちろん全点選択の場合は1ステップで今回200点のループを回しているので実質600ほどのパーセプトロン規準での計算を行っている。それでも確率的最急降下法の方が多い。</p>
+
+<p>個人的には確率的最急降下法は計算コストもかからないし、精度も対して落ちないかなり良さげなアルゴリズムだと思っていたのでちょっと意外だった。まあもちろんデータ点の数や状態、あとは重みベクトルの初期値なんかでもいろいろ変わってくると思うので一概には言えないですよね。</p>
+
+<p>パーセプトロン奥が深いです</p>
+]]></content>
+  </entry>
+  
+</feed>

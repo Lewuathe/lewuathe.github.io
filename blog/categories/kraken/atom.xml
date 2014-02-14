@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Kraken | My Octopress Blog]]></title>
+  <link href="http://Lewuathe.github.io/blog/categories/kraken/atom.xml" rel="self"/>
+  <link href="http://Lewuathe.github.io/"/>
+  <updated>2014-02-15T00:48:19+09:00</updated>
+  <id>http://Lewuathe.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to Start KrakenJS]]></title>
+    <link href="http://Lewuathe.github.io/blog/2013/12/23/how-to-start-krakenjs/"/>
+    <updated>2013-12-23T11:55:00+09:00</updated>
+    <id>http://Lewuathe.github.io/blog/2013/12/23/how-to-start-krakenjs</id>
+    <content type="html"><![CDATA[<p>In this november, Paypal released KrakenJS which is web application framework based on Connect, Express.</p>
+
+<p><a href="http://krakenjs.com/">http://krakenjs.com/</a></p>
+
+<p>I had a chance to using this framework at the ending of this year. So I want to inform the facility of this framwork.</p>
+
+<p><strong>This article was written for <a href="http://www.adventar.org/calendars/56">Node.js advent calendar</a> 24th day.</strong> Please read previous articles.</p>
+
+<h2>Getting started</h2>
+
+<h3>Install generator</h3>
+
+<p>Kraken uses <a href="http://yeoman.io/">Yeoman</a> for building the bootstrap of application. So first, you need to install generator.</p>
+
+<p><code>
+$ sudo npm install -g generator-kraken
+</code></p>
+
+<h3>Create skelton</h3>
+
+<p>```
+$ yo kraken</p>
+
+<pre><code> ,'""`.
+/ _  _ \
+|(@)(@)|   Release the Kraken!
+)  __  (
+</code></pre>
+
+<p>   /,&lsquo;))((<code>.\
+  (( ((  )) ))
+  </code>\ `)(&rsquo; /'</p>
+
+<p>[?] Application name: MyTestApp
+[?] Description: My first kraken application
+[?] Author: Kai Sasaki
+[?] Use RequireJS? (Y/n) n
+```</p>
+
+<p>Write down simple configurations of your application. <a href="http://requirejs.org/">RequireJS</a> is a JavaScript file and module loader.
+If you want to optimize loading of module scripts, this is good option. This command installs dependencies automatically.
+So you don&rsquo;t need to type <code>npm install</code> again. After only these commands, you can start your application server.</p>
+
+<h3>Start your server</h3>
+
+<p>```
+$ cd MyTestApp
+$ npm start
+npm WARN package.json <a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#111;&#58;&#x6d;&#x79;&#x74;&#x65;&#x73;&#x74;&#x61;&#x70;&#112;&#x40;&#48;&#x2e;&#48;&#x2e;&#49;">&#x6d;&#x79;&#x74;&#101;&#115;&#x74;&#x61;&#112;&#x70;&#64;&#48;&#46;&#x30;&#46;&#49;</a> No repository field.</p>
+
+<blockquote><p><a href="&#109;&#x61;&#105;&#x6c;&#116;&#x6f;&#58;&#x6d;&#121;&#x74;&#x65;&#115;&#116;&#x61;&#112;&#x70;&#64;&#x30;&#46;&#48;&#x2e;&#49;">&#109;&#121;&#x74;&#101;&#115;&#x74;&#97;&#112;&#112;&#64;&#x30;&#46;&#x30;&#x2e;&#x31;</a> start /Users/sasakiumi/MyTestApp
+node index.js</p></blockquote>
+
+<p>Multipart body parsing will be disabled by default in future versions. To enable, use <code>middleware:multipart</code> configuration.
+connect.multipart() will be removed in connect 3.0
+visit <a href="https://github.com/senchalabs/connect/wiki/Connect-3.0">https://github.com/senchalabs/connect/wiki/Connect-3.0</a> for alternatives
+connect.limit() will be removed in connect 3.0
+Listening on 8000
+```</p>
+
+<p>Congratulations!! You can see your application through web browser.</p>
+
+<p><img src="/images/posts/2013-12-23-kraken/startpage.png" alt="start page" /></p>
+
+<h2>Structure</h2>
+
+<p>Directory structure is very simple. It is based on MVC framework which you might used to be.</p>
+
+<p>```
+/config
+Application and middleware configuration</p>
+
+<p>/controllers
+Routes and logic</p>
+
+<p>/lib
+Custom developer libraries and other code</p>
+
+<p>/locales
+Language specific content bundles</p>
+
+<p>/models
+Models</p>
+
+<p>/public
+Web resources that are publicly available</p>
+
+<p>/public/templates
+Server and browser-side templates</p>
+
+<p>/tests
+Unit and functional test cases</p>
+
+<p>index.js
+Application entry point
+```</p>
+
+<p>For a characteristic, locale settings are prepared as default. You can make your app international easily.
+Because KrakenJS is based on Express, you can develop your own Connect stack as you did before.
+In the <code>index.js</code> file, some functions which are prepared for each request statuses. These description is easier to understand
+than original connect framework. For example, <code>requestBeforeRout</code> means that this function will be called after request before rouring logic.
+It&rsquo;s simple, isn&rsquo;t it?</p>
+
+<p>```
+&lsquo;use strict&rsquo;;</p>
+
+<p>var kraken = require(&lsquo;kraken-js&rsquo;),</p>
+
+<pre><code>app = {};
+</code></pre>
+
+<p>// Fired when an app configures itself
+app.configure = function (nconf, next) {</p>
+
+<pre><code>next(null);
+</code></pre>
+
+<p>};</p>
+
+<p>// Fired at the beginning of an incoming request
+app.requestStart = function (server) { };</p>
+
+<p>// Fired before routing occurs
+app.requestBeforeRoute = function (server) { };</p>
+
+<p>// Fired after routing occurs
+app.requestAfterRoute = function requestAfterRoute(server) { };</p>
+
+<p>kraken.create(app).listen(function (err) {</p>
+
+<pre><code>if (err) { console.error(err); }
+</code></pre>
+
+<p>});
+```</p>
+
+<h2>Modules</h2>
+
+<p>KrankenJS can include other utility modules for enterprise use. These are also made by Paypal.</p>
+
+<ul>
+<li><a href="https://github.com/paypal/lusca">Lusca</a>: Application security for express apps.</li>
+<li><a href="https://github.com/paypal/makara">Makara</a>: An i18n module for Dust.js.</li>
+<li><a href="https://github.com/paypal/adaro">Dust</a>: A Dust.js view renderer for express</li>
+<li><a href="https://github.com/paypal/kappa">Kappa</a>: A hierarchical npm-registry proxy</li>
+</ul>
+
+
+<p>In this article, I won&rsquo;t write the detail of these modules. But these might be made for enterprise applications.
+Lusca and Kappa is necessary for secure and private development environment.</p>
+
+<h2>Examples</h2>
+
+<ul>
+<li><a href="https://github.com/lmarkus/Kraken_Example_Shopping_Cart">Kraken Shopping Cart</a></li>
+<li><a href="https://github.com/lensam69/Kraken_Example_Localization">Localization</a></li>
+<li><a href="https://github.com/lmarkus/Kraken_Example_Configuration">Custom Configuration</a></li>
+<li><a href="https://github.com/lensam69/Kraken_Example_Custom_Middleware">Middle ware</a></li>
+</ul>
+
+
+<p>In this one month, the number of examples are increasing. Would you like to add your example to this list?</p>
+
+<h2>Try it!</h2>
+
+<p>KrakenJS is on the way of development, if anything, is only on the first stage of a thing.
+I could develop an application by using KrakenJS in 2 weeks. It&rsquo;s easy to use, user friendly, and
+it has nice libraries. I&rsquo;ll bet this framework can accelerate your speed of development.</p>
+
+<p>Let&rsquo;s try it!!</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,258 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>知識表現のためのデータ構造 - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="知識表現 知識表現（ちしきひょうげん）、KR（Knowledge Representation）は、推論を導けるような知識の表現、およびその方法を開発する人工知能研究の領域である。From ja.wikipedia.org/wiki/&hellip; 人工知能って何って考えたときにぼんやりと、 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://Lewuathe.github.io/blog/2013/09/18/zhi-shi-biao-xian-falsetamefalsedetagou-zao">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:Lewuathe.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">知識表現のためのデータ構造</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-18T21:15:00+09:00" pubdate data-updated="true">Sep 18<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>知識表現</h2>
+
+<blockquote><p>知識表現（ちしきひょうげん）、KR（Knowledge Representation）は、推論を導けるような知識の表現、およびその方法を開発する人工知能研究の領域である。</p><footer><strong>From</strong> <cite><a href='http://ja.wikipedia.org/wiki/%E7%9F%A5%E8%AD%98%E8%A1%A8%E7%8F%BE'>ja.wikipedia.org/wiki/&hellip;</a></cite></footer></blockquote>
+
+
+<p>人工知能って何って考えたときにぼんやりと、何かの入力に対して何らかの&#8221;知識&#8221;を使って出力を行う機械というふうに考えていた。そもそも漠然とはしている答えではあるものの、じゃあ&#8221;知識&#8221;って何？どうやって得ればいいの？どうやって持っていればいいの？という考えになる。それに答えを与えるのが知識表現(Knowledge Representation)だ。</p>
+
+<p>この知識のデータ構造は推論がしやすい形で持っているのがいい。そしてさらに、表現力がちょうどよい方がいい。なぜなら表現力が高ければ高いほど、記述自体は簡潔になるが、推論に一貫性が持たせられないかもしれない。逆に表現力が低いと非常に煩雑な記述を行わないといけないかもしれない。そのためこのちょうどとい程度の表現力の知識表現は大事だ。</p>
+
+<h3>フレーム構造</h3>
+
+<p>RDBMSみたいなもの。知識を事柄の名称、事柄の属性、属性の値で表現する。RDBMS的にいうとPKとカラム名、カラム値に対応するのかな。</p>
+
+<p><img src="https://raw.github.com/Lewuathe/lewuathe.github.io/source/ownimage/frame.png" alt="フレーム構造" /></p>
+
+<p>ただフレーム構造はその事柄の属性をすべて列挙することが非常にむずかしいことがわかっている(フレーム問題)</p>
+
+<h3>スクリプト構造</h3>
+
+<p>スクリプト構造は手続き的な知識の知識表現に使える。</p>
+
+<p><img src="https://raw.github.com/Lewuathe/lewuathe.github.io/source/ownimage/script.png" alt="スクリプト構造" /></p>
+
+<h3>格文法</h3>
+
+<p>動詞を中心にとらえて、用言的概念と体言的概念に整理する。少しむずかしいが概念を文法として理解しようという試み。情報通信研究機構で開発が続くEDR電子化辞書などの用いられているらしい。</p>
+
+<h3>概念依存理論</h3>
+
+<p>どんな言語にも共通する根源的な意味を抽出して、それらの意味ですべてを表現しようという試み。すべての文章を11の動詞の組み合わせと名詞、修飾概念などを組み合わせて表現。各文法はどちらかというと「関係」に重きをおいた表現方法だが、概念依存理論は「概念」それ自身をを中心に据えている。</p>
+
+<p><img src="https://raw.github.com/Lewuathe/lewuathe.github.io/source/ownimage/gainen.png" alt="概念依存理論" /></p>
+
+<h3>意味ネットワーク</h3>
+
+<p>意味ネットワークは物事をその関係性から評価しようという試み。今まで出てきた属性や、承継関係、動作対象なども「関係」として表すことができるので、すべての知識をノードとエッジで表せる。この方法のよいところは、物事を関係性から理解しようとするので、その物事について関係性が現れるまで評価する必要がないところだと思う。実際人間と同じように考えるのであれば、ある物事を理解しようとするときにそれを直ちに理解しようとするよりは、まず周りとの関係性（それがどのような関係性であれ）から埋めていくことが多い。初対面の人を知ろうとするときに、その人の職業、年齢、性別、住所などから理解しようとすることと同じだ。</p>
+
+<h2>結論</h2>
+
+<p>結論というと言い過ぎかもしれない。僕自身が考えたこととしては知識を表現する上であるオブジェクトの属性や承継関係などをそれぞれ区別して理解しようとするとあまりに煩雑にすぎる気がした。そのためもっと上位のネットワーク構造という形から知識を表現できるようにするといいんじゃないかと思った。実際上記のすべての知識表現はノードとエッジという構造で表現できそうだ。つまり意味ネットワークとしての知識表現をベースにしたものが最も適していると思う。</p>
+
+<p>さて、知識の表現方法は分かった。じゃあこれをどうやってデータとして持てばいいんだろう。ちょうどいいところに最近ではNoSQLの一つとしてグラフ志向データベースというものがあるらしい。これは文字通りデータをノードとエッジの組み合わせで表現する方法。ノード間の関係性などが探索するのに非常に適していいるらしい。最も有名なところではNeo4Jというものがある。</p>
+
+<p><a href="http://www.neo4j.org/">http://www.neo4j.org/</a></p>
+
+<p>なんだかここがGraphGistコンテストみたいなものをやっているっぽいので、勉強がてらやってみようかと。多分次回はNeo4Jに関して書くかも。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kai Sasaki</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-18T21:15:00+09:00" pubdate data-updated="true">Sep 18<span>th</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://Lewuathe.github.io/blog/2013/09/18/zhi-shi-biao-xian-falsetamefalsedetagou-zao/" data-via="" data-counturl="http://Lewuathe.github.io/blog/2013/09/18/zhi-shi-biao-xian-falsetamefalsedetagou-zao/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/09/17/baiasu-bariansufen-jie/" title="Previous Post: バイアス-バリアンス分解">&laquo; バイアス-バリアンス分解</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/09/20/neo4jfalseshi-ifang-1/" title="Next Post: Neo4jの使い方(1)">Neo4jの使い方(1) &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/02/15/yes-you-are-malala/">Yes, You Are Malala</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/14/nn-with-nodejs/">NN With Nodejs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/02/05/restricted-boltzmann-machine-in-node/">Restricted Boltzmann Machine in Node</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/29/stacked-denoised-autoencoder-with-nodejs/">Stacked Denoised Autoencoder With Nodejs</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/01/26/autoencoder-with-node-dot-js/">Autoencoder With node.js</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
