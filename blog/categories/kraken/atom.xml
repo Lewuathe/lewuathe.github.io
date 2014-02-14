@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Kraken | The first cry of Atom]]></title>
   <link href="http://Lewuathe.github.io/blog/categories/kraken/atom.xml" rel="self"/>
   <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-15T00:57:37+09:00</updated>
+  <updated>2014-02-15T01:07:03+09:00</updated>
   <id>http://Lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -66,9 +66,9 @@ So you don&rsquo;t need to type <code>npm install</code> again. After only these
 <p>```
 $ cd MyTestApp
 $ npm start
-npm WARN package.json <a href="&#x6d;&#97;&#105;&#108;&#116;&#x6f;&#58;&#109;&#121;&#116;&#x65;&#x73;&#x74;&#97;&#112;&#112;&#64;&#x30;&#46;&#48;&#46;&#49;">&#109;&#x79;&#116;&#x65;&#115;&#x74;&#x61;&#x70;&#x70;&#x40;&#x30;&#x2e;&#x30;&#46;&#49;</a> No repository field.</p>
+npm WARN package.json <a href="&#109;&#97;&#105;&#108;&#x74;&#x6f;&#58;&#109;&#x79;&#116;&#x65;&#115;&#x74;&#x61;&#x70;&#x70;&#x40;&#x30;&#46;&#x30;&#x2e;&#49;">&#x6d;&#121;&#116;&#x65;&#x73;&#x74;&#97;&#112;&#x70;&#64;&#48;&#x2e;&#48;&#46;&#49;</a> No repository field.</p>
 
-<blockquote><p><a href="&#109;&#97;&#x69;&#108;&#x74;&#111;&#x3a;&#109;&#121;&#x74;&#101;&#x73;&#116;&#97;&#x70;&#112;&#64;&#x30;&#46;&#48;&#x2e;&#49;">&#x6d;&#121;&#x74;&#101;&#115;&#116;&#97;&#112;&#x70;&#64;&#48;&#46;&#48;&#46;&#49;</a> start /Users/sasakiumi/MyTestApp
+<blockquote><p><a href="&#109;&#97;&#105;&#108;&#x74;&#111;&#58;&#109;&#121;&#x74;&#x65;&#x73;&#x74;&#97;&#112;&#112;&#x40;&#x30;&#46;&#48;&#46;&#49;">&#109;&#121;&#x74;&#101;&#115;&#116;&#x61;&#112;&#x70;&#x40;&#48;&#x2e;&#48;&#x2e;&#x31;</a> start /Users/sasakiumi/MyTestApp
 node index.js</p></blockquote>
 
 <p>Multipart body parsing will be disabled by default in future versions. To enable, use <code>middleware:multipart</code> configuration.
