@@ -7,7 +7,11 @@ categories: ["Democracy", "Education"]
 author: Kai Sasaki
 ---
 
-![malala](/images/posts/2014-02-14-you-are-malala/malala.jpg) 
+<meta property=”og:image” content=”/images/posts/2014-02-14-you-are-malala/malala.jpg” />
+<div style="text-align:center" markdown="1">
+<img src="/images/posts/2014-02-14-you-are-malala/malala.jpg" />
+</div>
+
 
 We, Japanese have built high level democratic society. We have an universal suffrage system, 
 the rights to discuss through a lot of type media, and the constitution which guarantees our liberty of expression.
