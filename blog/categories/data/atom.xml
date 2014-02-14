@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Data | My Octopress Blog]]></title>
+  <title><![CDATA[Category: Data | The first cry of Atom]]></title>
   <link href="http://Lewuathe.github.io/blog/categories/data/atom.xml" rel="self"/>
   <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-15T00:48:19+09:00</updated>
+  <updated>2014-02-15T00:57:37+09:00</updated>
   <id>http://Lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
