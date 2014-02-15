@@ -11,6 +11,8 @@ autoencoder in order to extract charasteristics. In this article, I would leave 
 the detail of restricted boltzmann machine. I want to introduce how the RBM is written
 in node.
 
+<!-- more -->
+
 ```js
 /*
  *  Restricted Boltzmann machine

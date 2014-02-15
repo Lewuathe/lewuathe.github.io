@@ -12,6 +12,8 @@ Although I usually write python codes, I have not paid attension to the style of
 that there are pythonic style in python codes. And I think it was good mind to write python code. There were many *Halmful*, *Idiomaric*
 phrases about python code. So I'd like to introduce some of them which I'll write in my own code.
 
+<!-- more -->
+
 And of course, all python developers should read this book!!
 
 ## Enumerate

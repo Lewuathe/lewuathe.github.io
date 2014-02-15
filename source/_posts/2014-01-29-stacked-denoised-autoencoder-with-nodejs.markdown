@@ -12,6 +12,8 @@ This is called n42. You can train with deep learning algorithm very easily.
 
 https://npmjs.org/package/n42
 
+<!-- more -->
+
 ## How to use
 
 This is how to use it.

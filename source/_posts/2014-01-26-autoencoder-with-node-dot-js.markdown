@@ -13,6 +13,8 @@ be in trouble with choicing extracting algorithm, or doing yourself. Therefore, 
 this algorithm is used very actively. There are many implementation such as Python or Java, which are 
 used in machine learning frequently, but I cannot find this in nodejs. So this weekend, I wrote autoencoder in nodejs.
 
+<!-- more -->
+
 When I started writing this code, I referred [@yusugomori/DeepLearning](https://github.com/yusugomori/DeepLearning).
 I would like to take this opportunity to express my appreciation and gratitude to him for his great code.
 
@@ -20,6 +22,7 @@ I would like to take this opportunity to express my appreciation and gratitude t
 
 The major linear algebra library is [sylvelster](http://sylvester.jcoglan.com/) in JavaScript. This is simple and user friendly
 library. So if you cannot decide which library you should use in JavaScript, I recommend sylvester.
+
 
 ```js
 var Matrix = require('sylvester').Matrix;

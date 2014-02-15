@@ -14,6 +14,8 @@ Yesterday, I got a [tessel](http://tessel.io/). With twists and turns, I overcom
 First and unfortunately, these client modules are only used for beta testers now. 
 So these are not opend yet. Please be understanding of this point.
 
+<!-- more -->
+
 ## Environment
 
 * MacOSX 10.9.1

@@ -17,6 +17,8 @@ readonly is a simple reference restriction library between custom modules in nod
 When you want to configure access control of specific object from respective modules, this is good option.
 For example, you made two modules, both use the same object.
 
+<!-- more -->
+
 ```js
 // obj is uses from moduleA and moduleB
 // You want moduleA to read and update obj, but moduleB to read obj only.

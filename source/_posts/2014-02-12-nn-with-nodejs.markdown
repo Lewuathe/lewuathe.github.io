@@ -12,6 +12,8 @@ This network is simple newral network which can trained throught gradient descen
 It is the same algorithm to the one of denoised autoencoder used by n42. So implementation itself was not diffucult.
 The code is showed below.
 
+<!-- more -->
+
 ```js
 /**
  *   Training weight parameters with supervised learning

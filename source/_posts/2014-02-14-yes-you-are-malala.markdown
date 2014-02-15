@@ -18,6 +18,8 @@ the rights to discuss through a lot of type media, and the constitution which gu
 The end of the Edo era, we have kept to build these system gradually, sometimes destructively.
 So, yes. We are one of the most democratic citizens in the world.
 
+<!-- more -->
+
 In Japan, it is difficult to see a lot of destructive tragedies which are occured around the world as reality. 
 
 So, Malala teaches me that education is not the gift fallen from the heaven, but the achivements by our continuous

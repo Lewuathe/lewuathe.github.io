@@ -13,6 +13,8 @@ http://krakenjs.com/
 
 I had a chance to using this framework at the ending of this year. So I want to inform the facility of this framwork.
 
+<!-- more -->
+
 **This article was written for [Node.js advent calendar](http://www.adventar.org/calendars/56) 24th day.** Please read previous articles.
 
 ## Getting started

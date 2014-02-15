@@ -13,6 +13,8 @@ it was great time to me as scrum master in my project. I want to arrange
 the contents of these sessions, but as there were many sessions it is hard to me.
 So in this entry, I cite one scrum example after another which I heard in these sessions.
 
+<!-- more -->
+
 # Enterprise Scrum: the future management (Mike Beedle)
 ## Rapid change in Business environment
 * Being and Becoming
