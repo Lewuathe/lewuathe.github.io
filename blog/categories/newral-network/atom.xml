@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Newral Network | The first cry of Atom]]></title>
   <link href="http://Lewuathe.github.io/blog/categories/newral-network/atom.xml" rel="self"/>
   <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-15T01:26:03+09:00</updated>
+  <updated>2014-02-15T13:54:07+09:00</updated>
   <id>http://Lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -22,6 +22,9 @@
 This network is simple newral network which can trained throught gradient descent optimization calculation.
 It is the same algorithm to the one of denoised autoencoder used by n42. So implementation itself was not diffucult.
 The code is showed below.</p>
+
+<!-- more -->
+
 
 <p>```js
 /<em>*

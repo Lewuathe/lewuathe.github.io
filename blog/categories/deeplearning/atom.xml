@@ -4,7 +4,7 @@
   <title><![CDATA[Category: DeepLearning | The first cry of Atom]]></title>
   <link href="http://Lewuathe.github.io/blog/categories/deeplearning/atom.xml" rel="self"/>
   <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-15T01:26:03+09:00</updated>
+  <updated>2014-02-15T13:54:07+09:00</updated>
   <id>http://Lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -22,6 +22,9 @@
 autoencoder in order to extract charasteristics. In this article, I would leave out
 the detail of restricted boltzmann machine. I want to introduce how the RBM is written
 in node.</p>
+
+<!-- more -->
+
 
 <p>```js
 /<em>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Readonly | The first cry of Atom]]></title>
   <link href="http://Lewuathe.github.io/blog/categories/readonly/atom.xml" rel="self"/>
   <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-15T01:26:03+09:00</updated>
+  <updated>2014-02-15T13:54:07+09:00</updated>
   <id>http://Lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -27,6 +27,9 @@
 <p>readonly is a simple reference restriction library between custom modules in node object.
 When you want to configure access control of specific object from respective modules, this is good option.
 For example, you made two modules, both use the same object.</p>
+
+<!-- more -->
+
 
 <p>```js
 // obj is uses from moduleA and moduleB

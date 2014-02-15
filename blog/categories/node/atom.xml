@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Node | The first cry of Atom]]></title>
   <link href="http://Lewuathe.github.io/blog/categories/node/atom.xml" rel="self"/>
   <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-15T01:26:03+09:00</updated>
+  <updated>2014-02-15T13:54:07+09:00</updated>
   <id>http://Lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -22,6 +22,9 @@
 autoencoder in order to extract charasteristics. In this article, I would leave out
 the detail of restricted boltzmann machine. I want to introduce how the RBM is written
 in node.</p>
+
+<!-- more -->
+
 
 <p>```js
 /<em>
@@ -194,6 +197,9 @@ unsupervised learning. This is a kind of newral network. By using an auto encode
 be in trouble with choicing extracting algorithm, or doing yourself. Therefore, in deepleanring field,
 this algorithm is used very actively. There are many implementation such as Python or Java, which are
 used in machine learning frequently, but I cannot find this in nodejs. So this weekend, I wrote autoencoder in nodejs.</p>
+
+<!-- more -->
+
 
 <p>When I started writing this code, I referred <a href="https://github.com/yusugomori/DeepLearning">@yusugomori/DeepLearning</a>.
 I would like to take this opportunity to express my appreciation and gratitude to him for his great code.</p>
@@ -384,6 +390,9 @@ cannot be updated properly. And I skipped parameter tuning completly :)</p>
 <p>First and unfortunately, these client modules are only used for beta testers now.
 So these are not opend yet. Please be understanding of this point.</p>
 
+<!-- more -->
+
+
 <h2>Environment</h2>
 
 <ul>
@@ -535,6 +544,9 @@ So I want to try these modules more, and expand the possibility of embedded Java
 <p>readonly is a simple reference restriction library between custom modules in node object.
 When you want to configure access control of specific object from respective modules, this is good option.
 For example, you made two modules, both use the same object.</p>
+
+<!-- more -->
+
 
 <p>```js
 // obj is uses from moduleA and moduleB
