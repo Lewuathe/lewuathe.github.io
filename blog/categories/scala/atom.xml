@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Scala | The first cry of Atom]]></title>
   <link href="http://Lewuathe.github.io/blog/categories/scala/atom.xml" rel="self"/>
   <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-15T13:54:07+09:00</updated>
+  <updated>2014-02-17T22:51:13+09:00</updated>
   <id>http://Lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -12,6 +12,28 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Go and Scala, Which Should I Use?]]></title>
+    <link href="http://Lewuathe.github.io/blog/2014/02/17/go-and-scala-which-should-i-use/"/>
+    <updated>2014-02-17T22:37:59+09:00</updated>
+    <id>http://Lewuathe.github.io/blog/2014/02/17/go-and-scala-which-should-i-use</id>
+    <content type="html"><![CDATA[<p>Today, <a href="http://www.google.com/trends/explore#q=golang%2C%20clojure&amp;cmpt=q">Go and Clojure compete with each other</a>. <a href="http://golang.org/">Go</a> will be one of the
+hottest programming language in this year. This is the compiler language which can be seen as the successor C++.</p>
+
+<p>On the other hand, <a href="http://www.scala-lang.org/">Scala</a> is the successor of Java which succeeded blending two programming paradigms, object-oriented programming and
+functional programming.</p>
+
+<!-- more -->
+
+
+<p>These two languages are very similar to me. In developing deep learning module for myself, which language should I use?
+Or if I can ask more general question, which language will be the major static language in the field in which tough performance
+and maintainability are required. If you have any good idea or criteria for selecting these two languages, please send good advice to <a href="https://twitter.com/Lewuathe">@Lewuathe</a></p>
+
+<p>Thank you.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Scalaを使うことに]]></title>

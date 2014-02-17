@@ -4,7 +4,7 @@
   <title><![CDATA[The first cry of Atom]]></title>
   <link href="http://Lewuathe.github.io/atom.xml" rel="self"/>
   <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-15T13:54:07+09:00</updated>
+  <updated>2014-02-17T22:51:13+09:00</updated>
   <id>http://Lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -12,6 +12,28 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Go and Scala, Which Should I Use?]]></title>
+    <link href="http://Lewuathe.github.io/blog/2014/02/17/go-and-scala-which-should-i-use/"/>
+    <updated>2014-02-17T22:37:59+09:00</updated>
+    <id>http://Lewuathe.github.io/blog/2014/02/17/go-and-scala-which-should-i-use</id>
+    <content type="html"><![CDATA[<p>Today, <a href="http://www.google.com/trends/explore#q=golang%2C%20clojure&amp;cmpt=q">Go and Clojure compete with each other</a>. <a href="http://golang.org/">Go</a> will be one of the
+hottest programming language in this year. This is the compiler language which can be seen as the successor C++.</p>
+
+<p>On the other hand, <a href="http://www.scala-lang.org/">Scala</a> is the successor of Java which succeeded blending two programming paradigms, object-oriented programming and
+functional programming.</p>
+
+<!-- more -->
+
+
+<p>These two languages are very similar to me. In developing deep learning module for myself, which language should I use?
+Or if I can ask more general question, which language will be the major static language in the field in which tough performance
+and maintainability are required. If you have any good idea or criteria for selecting these two languages, please send good advice to <a href="https://twitter.com/Lewuathe">@Lewuathe</a></p>
+
+<p>Thank you.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Yes, You Are Malala]]></title>
@@ -3025,161 +3047,6 @@ In the future, I will seize the moment and make more my own plugins.</p>
 
 <p>だから決して「正しい」意見というものを言わないで欲しい。半ズボンを履くのも「不快に感じる人がいるから」とか、「風邪をひきやすいから」とかそう言って欲しい。
 決してそれらが「正しい」わけではないけれど。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Developing Jenkins Plugin on Vagrant]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/11/16/developing-jenkins-plugin-on-vagrant/"/>
-    <updated>2013-11-16T21:09:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/11/16/developing-jenkins-plugin-on-vagrant</id>
-    <content type="html"><![CDATA[<p>Recently I investigate the scalability of Jenkins. In my idea, I want to make hot standby Jenkins server with NFS. So the plugins which enable us to do that are required. And for my study, I decided to develop on Vagrant and VirtualBox. It costs me very little because there is no need to get real server.  So in this post, I will describe how to set up your jenkins plugin environment on your vagrant Ubuntu.</p>
-
-<h2>Start vagrant</h2>
-
-<p>My <code>Vagrantfile</code> is below. Before this, you should download precise64 box on vagrant <a href="http://www.vagrantbox.es/">site</a></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># -*- mode: ruby -*-
-</span><span class='line'># vi: set ft=ruby :
-</span><span class='line'>
-</span><span class='line'>Vagrant.configure("2") do |config|
-</span><span class='line'>  # Every Vagrant virtual environment requires a box to build off of.
-</span><span class='line'>  config.vm.box = "ubuntu"
-</span><span class='line'>
-</span><span class='line'>  # Create a forwarded port mapping which allows access to a specific port
-</span><span class='line'>  # within the machine from a port on the host machine. In the example below,
-</span><span class='line'>  # accessing "localhost:8080" will access port 80 on the guest machine.
-</span><span class='line'>  config.vm.network :forwarded_port, guest: 8080, host: 8080
-</span><span class='line'>
-</span><span class='line'> end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Jenkins plugin server starts on port 8080. So you need to write guest port 8080. Host port can be written any number.
-And start vagrant.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ vagrant up</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Set up maven3</h2>
-
-<p>Jenkins plugins are build with Maven. In this time, Maven3 can build sample plugin easily, so I recommend that you download maven3.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo apt-get install maven</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Write settings.xml</h2>
-
-<p>Write settings.xml as below.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;settings&gt;
-</span><span class='line'>  &lt;pluginGroups&gt;
-</span><span class='line'>    &lt;pluginGroup&gt;org.jenkins-ci.tools&lt;/pluginGroup&gt;
-</span><span class='line'>  &lt;/pluginGroups&gt;
-</span><span class='line'>
-</span><span class='line'>  &lt;profiles&gt;
-</span><span class='line'>    &lt;!-- Give access to Jenkins plugins --&gt;
-</span><span class='line'>    &lt;profile&gt;
-</span><span class='line'>      &lt;id&gt;jenkins&lt;/id&gt;
-</span><span class='line'>      &lt;activation&gt;
-</span><span class='line'>        &lt;activeByDefault&gt;true&lt;/activeByDefault&gt; &lt;!-- change this to false, if you don't like to have it on per default --&gt;
-</span><span class='line'>      &lt;/activation&gt;
-</span><span class='line'>      &lt;repositories&gt;
-</span><span class='line'>        &lt;repository&gt;
-</span><span class='line'>          &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
-</span><span class='line'>          &lt;url&gt;http://repo.jenkins-ci.org/public/&lt;/url&gt;
-</span><span class='line'>        &lt;/repository&gt;
-</span><span class='line'>      &lt;/repositories&gt;
-</span><span class='line'>      &lt;pluginRepositories&gt;
-</span><span class='line'>        &lt;pluginRepository&gt;
-</span><span class='line'>          &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
-</span><span class='line'>          &lt;url&gt;http://repo.jenkins-ci.org/public/&lt;/url&gt;
-</span><span class='line'>        &lt;/pluginRepository&gt;
-</span><span class='line'>      &lt;/pluginRepositories&gt;
-</span><span class='line'>    &lt;/profile&gt;
-</span><span class='line'>  &lt;/profiles&gt;
-</span><span class='line'>  &lt;mirrors&gt;
-</span><span class='line'>    &lt;mirror&gt;
-</span><span class='line'>      &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
-</span><span class='line'>      &lt;url&gt;http://repo.jenkins-ci.org/public/&lt;/url&gt;
-</span><span class='line'>      &lt;mirrorOf&gt;m.g.o-public&lt;/mirrorOf&gt;
-</span><span class='line'>    &lt;/mirror&gt;
-</span><span class='line'>  &lt;/mirrors&gt;
-</span><span class='line'>&lt;/settings&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>JDK!!</h2>
-
-<p>I failed to create my plugin in this time bacause of lack of JDK. Ubuntu 12.04 LTS doesn&rsquo;t have JDK in own image. You have to install it.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo apt-get install default-jdk</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Build plugin</h2>
-
-<p>Building plugin with maven command.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ mvn install</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And demonstrate your plugin.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ mvn hpi:run</span></code></pre></td></tr></table></div></figure>
-
-
-<p>You can see Jenkins web UI on <a href="http://localhost:8080/jenkins">http://localhost:8080/jenkins</a> unless maven command has not exit.
-So now, I can get multi Jenkins server for mutual mount on NFS. My Jenkins study has been continued.</p>
 ]]></content>
   </entry>
   
