@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: IntelliJ IDEA | The first cry of Atom]]></title>
+  <link href="http://Lewuathe.github.io/blog/categories/intellij-idea/atom.xml" rel="self"/>
+  <link href="http://Lewuathe.github.io/"/>
+  <updated>2014-02-18T22:11:23+09:00</updated>
+  <id>http://Lewuathe.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Useful Shortcuts for IntelliJ IDEA]]></title>
+    <link href="http://Lewuathe.github.io/blog/2014/02/18/useful-shortcuts-for-intellij-idea/"/>
+    <updated>2014-02-18T21:21:10+09:00</updated>
+    <id>http://Lewuathe.github.io/blog/2014/02/18/useful-shortcuts-for-intellij-idea</id>
+    <content type="html"><![CDATA[<p>In this week, I am attending a lecture for developing mobile application on android.
+Of course I had no experience writing android applications, I have not written Java code in my life.
+Through this lecture, I was so impressed by the functionality of <a href="https://www.eclipse.org/">Eclipse</a>.</p>
+
+<p>In my life, I hate using IDE because these tools always hide a mechanism for building application.
+This is why I always used emacs or vim. But today, I changed my mind. IDE is the next step for me in order to acquire new skills.
+So just now I installed <a href="http://www.jetbrains.com/idea/">IntelliJ IDEA</a> which is in fashion nowadays.</p>
+
+<!-- more -->
+
+
+<p>In this post, I&rsquo;d like to introduce some shortcuts for my kickstarting IntelliJ IDEA. If you know any other tips, please let me know.</p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th align="left"> Short Cut </th>
+<th align="left"> Function </th>
+<th align="left"> Notes </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td align="left"> Ctrl + Space  </td>
+<td align="left"> Basic Code completion </td>
+<td align="left"> With IntelliJ IDEA, however code completion is run automatically </td>
+</tr>
+<tr>
+<td></td>
+<td align="left"> Alt + Enter   </td>
+<td align="left"> Show intention actions and quick-fixes </td>
+<td align="left"> IntelliJ IDEA gives me any suggestions in each situations </td>
+</tr>
+<tr>
+<td></td>
+<td align="left"> Ctrl + Alt + L </td>
+<td align="left"> Reformat code </td>
+<td align="left"> Rearrange for readable format </td>
+</tr>
+<tr>
+<td></td>
+<td align="left"> Ctrl + Alt + O </td>
+<td align="left"> Optimize imports </td>
+<td align="left"> Remove unnecessary imports </td>
+</tr>
+<tr>
+<td></td>
+<td align="left"> Ctrl + Q </td>
+<td align="left"> Quick documentation </td>
+<td align="left"> Simple reference to javadoc </td>
+</tr>
+<tr>
+<td></td>
+<td align="left"> Ctrl + O </td>
+<td align="left"> Override methods </td>
+<td align="left"> Implements override methods of current class </td>
+</tr>
+<tr>
+<td></td>
+<td align="left"> Ctrl + / </td>
+<td align="left"> Comment out/in a line </td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td align="left"> Ctrl + W </td>
+<td align="left"> Select successively increasing code blocks </td>
+<td align="left"> You can select a meaningful code blocks </td>
+</tr>
+<tr>
+<td></td>
+<td align="left"> Ctrl + Y </td>
+<td align="left"> Delete line at caret </td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td align="left"> Shift + Enter </td>
+<td align="left"> Start new line </td>
+<td align="left"> Wherever line you are, insert new line</td>
+</tr>
+<tr>
+<td></td>
+<td align="left"> Shift + F10 </td>
+<td align="left"> Run </td>
+<td align="left"> </td>
+</tr>
+<tr>
+<td></td>
+<td align="left"> Ctrl + Alt + V </td>
+<td align="left"> Introduce variables </td>
+<td align="left"> Make variables name automatically </td>
+</tr>
+<tr>
+<td></td>
+<td align="left"> Ctrl + J </td>
+<td align="left"> Insert live templates </td>
+<td align="left"> A lot of type of templates are preinstalled </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>How do you think that? Of course, there are so many shortcuts and functions that I cannot introduce all of these.
+The only way to know how useful IntelliJ IDEA is using it throughly! From today, I&rsquo;ll switch default editor to IntelliJ IDEA.</p>
+
+<p>Thank you.</p>
+]]></content>
+  </entry>
+  
+</feed>
