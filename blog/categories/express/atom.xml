@@ -4,10 +4,10 @@
   <title><![CDATA[Category: Express | The first cry of Atom]]></title>
   <link href="http://Lewuathe.github.io/blog/categories/express/atom.xml" rel="self"/>
   <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-20T22:11:28+09:00</updated>
+  <updated>2014-02-20T22:20:13+09:00</updated>
   <id>http://Lewuathe.github.io/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[Kai Sasaki]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
@@ -69,9 +69,9 @@ So you don&rsquo;t need to type <code>npm install</code> again. After only these
 <p>```
 $ cd MyTestApp
 $ npm start
-npm WARN package.json <a href="&#109;&#97;&#105;&#108;&#x74;&#111;&#58;&#109;&#x79;&#116;&#x65;&#115;&#x74;&#97;&#112;&#112;&#64;&#48;&#x2e;&#x30;&#x2e;&#49;">&#109;&#x79;&#116;&#x65;&#x73;&#116;&#97;&#x70;&#x70;&#x40;&#48;&#x2e;&#x30;&#x2e;&#x31;</a> No repository field.</p>
+npm WARN package.json <a href="&#x6d;&#x61;&#x69;&#108;&#116;&#x6f;&#x3a;&#109;&#x79;&#116;&#101;&#x73;&#x74;&#x61;&#112;&#112;&#x40;&#x30;&#x2e;&#48;&#x2e;&#49;">&#109;&#121;&#x74;&#101;&#x73;&#x74;&#97;&#x70;&#112;&#64;&#48;&#46;&#48;&#46;&#x31;</a> No repository field.</p>
 
-<blockquote><p><a href="&#x6d;&#x61;&#x69;&#x6c;&#116;&#x6f;&#58;&#x6d;&#x79;&#116;&#x65;&#115;&#116;&#97;&#x70;&#112;&#64;&#48;&#x2e;&#x30;&#46;&#x31;">&#109;&#x79;&#116;&#x65;&#x73;&#x74;&#97;&#112;&#112;&#x40;&#48;&#x2e;&#48;&#46;&#49;</a> start /Users/sasakiumi/MyTestApp
+<blockquote><p><a href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#111;&#58;&#109;&#121;&#116;&#101;&#x73;&#x74;&#97;&#112;&#x70;&#64;&#x30;&#46;&#48;&#46;&#x31;">&#x6d;&#x79;&#116;&#x65;&#x73;&#116;&#x61;&#112;&#x70;&#64;&#x30;&#x2e;&#x30;&#46;&#x31;</a> start /Users/sasakiumi/MyTestApp
 node index.js</p></blockquote>
 
 <p>Multipart body parsing will be disabled by default in future versions. To enable, use <code>middleware:multipart</code> configuration.
