@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Android | The first cry of Atom]]></title>
+  <link href="http://Lewuathe.github.io/blog/categories/android/atom.xml" rel="self"/>
+  <link href="http://Lewuathe.github.io/"/>
+  <updated>2014-02-20T22:11:28+09:00</updated>
+  <id>http://Lewuathe.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Android SDK on IntelliJ IDEA]]></title>
+    <link href="http://Lewuathe.github.io/blog/2014/02/20/android-sdk-on-intellij-idea/"/>
+    <updated>2014-02-20T21:24:56+09:00</updated>
+    <id>http://Lewuathe.github.io/blog/2014/02/20/android-sdk-on-intellij-idea</id>
+    <content type="html"><![CDATA[<p>Eventually, I finished android lecture that is introduced on <a href="http://lewuathe.com/blog/2014/02/18/useful-shortcuts-for-intellij-idea/">previous post</a>
+In this lecture, I learned how to use <a href="https://www.eclipse.org/">Eclipse</a>, <a href="http://java.com/ja/">Java</a> and of course <a href="http://developer.android.com/sdk/index.html">Android SDK</a></p>
+
+<p>After coming home, I tried to creating a environent for android application development. However only installing Eclipse and creating same environment to lectures one
+makes me tired. So I create this environment with <a href="http://www.jetbrains.com/idea/">IntelliJ IDEA</a>.</p>
+
+<!-- more -->
+
+
+<p>I use IntelliJ IDEA community edition because it is free. Until now I don&rsquo;t think there is any lack of function with community edition</p>
+
+<h2>Install IntelliJ IDEA</h2>
+
+<p>From <a href="http://www.jetbrains.com/idea/">this page</a>, download IntelliJ IDEA community edition. Follow the instructions of wizard. Done!</p>
+
+<p><img src="/images/posts/2014-02-20-androidsdk-with-intellijidea/intellijidea-ce.png" alt="android project" /></p>
+
+<h2>Install Android SDK</h2>
+
+<p>From <a href="http://dl.google.com/android/android-sdk_r22.2.1-macosx.zip">here</a>, download android SDK. But there is one thing to pay attention. You don&rsquo;t have to install ADT bundler version, bacause this package includes Eclipse and its plugins. With IntelliJ IDEA, these are not necessary to install.</p>
+
+<p>And then, unzip this package. Put <code>android-sdk-macosx</code> on any directory. For example, I put on my home directory.</p>
+
+<p><code>
+~/android-sdk-macosx
+</code></p>
+
+<p>Run android package manager, and install requires packages.</p>
+
+<p><code>
+$ cd ~/android-sdk-macosx
+$ ./android-sdk-macosx/tools/android
+</code></p>
+
+<h2>Create project</h2>
+
+<p>Select android application module project.</p>
+
+<p><img src="/images/posts/2014-02-20-androidsdk-with-intellijidea/android-project.png" alt="android project" /></p>
+
+<p>And select android SDK version that you installed previously. In this capture, I selected API version 19.</p>
+
+<p><img src="/images/posts/2014-02-20-androidsdk-with-intellijidea/android-sdk.png" alt="android project" /></p>
+
+<p>It is very easy, isn&rsquo;t it?</p>
+
+<p>But unfortunately, android simulator is no more faster :(</p>
+
+<p>I pray for the faster android emulator to Google.</p>
+
+<p>Thank you :)</p>
+]]></content>
+  </entry>
+  
+</feed>
