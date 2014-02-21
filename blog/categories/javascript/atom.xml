@@ -4,7 +4,7 @@
   <title><![CDATA[Category: JavaScript | The first cry of Atom]]></title>
   <link href="http://Lewuathe.github.io/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-21T22:09:49+09:00</updated>
+  <updated>2014-02-21T22:14:20+09:00</updated>
   <id>http://Lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
@@ -120,6 +120,9 @@ public class JavaScriptAction {
 <p>That&rsquo;s all. When you click input button, a toast will show on screen.
 By using JavaScriptInterface, you can easily separate UI design and business logic.
 Definitely, this will be the useful option for your development.</p>
+
+<p>If you want to look into the detail of these code, please access <a href="https://github.com/Lewuathe/JavaScriptInterface-sample">here</a>
+This is my sample repository. I&rsquo;m glad to see this repository is used for further development.</p>
 
 <p>Thank you.</p>
 ]]></content>
