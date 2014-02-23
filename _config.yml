@@ -2,7 +2,7 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://Lewuathe.github.io
+url: http://lewuathe.github.io
 title: The first cry of Atom
 subtitle: The people who are crazy enough to think thay can change the world, are the ones who do
 author: Kai Sasaki
@@ -97,4 +97,8 @@ disqus_show_comment_count: false
 google_analytics_tracking_id: UA-44055098-1
 
 # Facebook Like
-facebook_like: false
+facebook_like: true
+
+default_ogp_image: /images/site_image.png
+facebook_app_id: 212934732101925
+facebook_locale: ja_JP
