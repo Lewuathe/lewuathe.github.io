@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Twitter | The first cry of Atom]]></title>
+  <link href="http://Lewuathe.github.io/blog/categories/twitter/atom.xml" rel="self"/>
+  <link href="http://Lewuathe.github.io/"/>
+  <updated>2014-02-23T19:12:16+09:00</updated>
+  <id>http://Lewuathe.github.io/</id>
+  <author>
+    <name><![CDATA[Kai Sasaki]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Trying Word2vec From Twitter Corpus]]></title>
+    <link href="http://Lewuathe.github.io/blog/2014/02/23/trying-word2vec-from-twitter-corpus/"/>
+    <updated>2014-02-23T17:47:16+09:00</updated>
+    <id>http://Lewuathe.github.io/blog/2014/02/23/trying-word2vec-from-twitter-corpus</id>
+    <content type="html"><![CDATA[<p>Do you know <a href="https://github.com/dav/word2vec">word2vec</a>? This library is one of the hottest module which provides an efficient implementation of the continuous bag-of-words and skip-gram architectures for computing vector representations of words.</p>
+
+<p>Recently, my collegues told me what word2vec is. From that time, I want to try this library in some chance. This time, I trained this skip-gram model with twitter corpus.</p>
+
+<!-- more -->
+
+
+<h2>Install word2vec</h2>
+
+<p><code>
+$ git clone https://github.com/dav/word2vec.git
+</code></p>
+
+<p>There are demo scripts. Let me see demo-word.sh.</p>
+
+<p>```
+DATA_DIR=../data
+BIN_DIR=../bin
+SRC_DIR=../src</p>
+
+<p>TEXT_DATA=$DATA_DIR/text8
+VECTOR_DATA=$DATA_DIR/text8-vector.bin</p>
+
+<p>pushd ${SRC_DIR} &amp;&amp; make; popd</p>
+
+<p>if [ ! -e $VECTOR_DATA ]; then</p>
+
+<p>  if [ ! -e $TEXT_DATA ]; then</p>
+
+<pre><code>wget http://mattmahoney.net/dc/text8.zip -O $DATA_DIR/text8.gz
+gzip -d $DATA_DIR/text8.gz -f
+</code></pre>
+
+<p>  fi
+  echo &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;
+  echo &mdash; Training vectors&hellip;
+  time $BIN_DIR/word2vec -train $TEXT_DATA -output $VECTOR_DATA -cbow 0 -size 200 -window 5 -negative 0 -hs 1 -sample 1e-3 -threads 12 -binary 1</p>
+
+<p>fi</p>
+
+<p>echo &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;
+echo &mdash; distance&hellip;</p>
+
+<p>$BIN_DIR/distance $DATA_DIR/$VECTOR_DATA
+```</p>
+
+<p>The main part of demo is below.</p>
+
+<p><code>
+ time $BIN_DIR/word2vec -train $TEXT_DATA -output $VECTOR_DATA -cbow 0 -size 200 -window 5 -negative 0 -hs 1 -sample 1e-3 -threads 12 -binary 1
+</code>
+I found that the only requirement of training data was morphological analyzed text. For example, below.</p>
+
+<p><code>
+病院
+の
+待合室
+に
+い
+たら
+隣
+の
+人
+が
+</code></p>
+
+<p>Then how can I make these corpus from twitter API?</p>
+
+<h2>Making twitter corpus</h2>
+
+<p>I wrote this script that access twiter search API. In version 1.1, public timeline API has been remove from service.
+So you should make corpus from only twitter search API if you want to categorize by language type. Because only search API has
+<code>lang</code> parameter.</p>
+
+<p>```python</p>
+
+<h1>&ndash;<em>&ndash; coding: utf-8 &ndash;</em>&ndash;</h1>
+
+<p>import os
+import sys
+import twitter
+import yaml
+import urllib</p>
+
+<p>class TwitterSearch:</p>
+
+<pre><code>def __init__(self):
+    with open('./config.yml', 'r') as f:
+        self._config = yaml.load(f)
+
+    self._lang = 'ja'
+    self._api = twitter.Api(
+        consumer_key = self._config["consumer_key"],
+        consumer_secret = self._config["consumer_secret"],
+        access_token_key = self._config["access_token_key"],
+        access_token_secret = self._config["access_token_secret"]
+    )
+
+def search(self, word):
+    search_word = urllib.quote(word.encode('utf-8'))    # OK
+    result = self._api.GetSearch(term=search_word, lang=self._lang)
+    for status in result:
+        text = status.text.encode('utf-8').replace('\n', '')
+        sys.stdout.write(text)
+        sys.stdout.write('\n')
+</code></pre>
+
+<p>if <strong>name</strong> == &lsquo;<strong>main</strong>&rsquo;:</p>
+
+<pre><code>words = u'あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん'
+t = TwitterSearch()
+for ch in words:
+    t.search(ch)
+</code></pre>
+
+<p>```</p>
+
+<p>Each line has one tweet text. These texts are searched with japanese syllabary, &ldquo;あいうえお&hellip;&rdquo;
+in order to make searching logic more simple. But there might be room for improvement in this part. If you want to create more complex search queries, change <code>words</code>.</p>
+
+<p>This script makes such outputs.</p>
+
+<p><code>
+あ、猫話はあちら様の凛ちゃんの話です。うちの凛ちゃんは鮫なので。あしからず。
+あああ乱視＆鳥目でこの時間の外出全然見えないいいいいい
+お散歩に行きたくなりますね。あ、今日は猫さんの日なんですね！
+あぷりを、いんすとーーるしたぜ。
+</code></p>
+
+<h2>Morphological analysis</h2>
+
+<p>I used <a href="http://mecab.googlecode.com/svn/trunk/mecab/doc/index.html">MeCab</a> for the morphological analysis.</p>
+
+<p><code>
+$ mecab row_text.txt &gt; morphological_output.txt
+</code></p>
+
+<p>This library generates below output.</p>
+
+<p><code>
+病院    名詞,一般,*,*,*,*,病院,ビョウイン,ビョーイン
+の      助詞,連体化,*,*,*,*,の,ノ,ノ
+待合室  名詞,一般,*,*,*,*,待合室,マチアイシツ,マチアイシツ
+に      助詞,格助詞,一般,*,*,*,に,ニ,ニ
+い      動詞,自立,*,*,一段,連用形,いる,イ,イ
+たら    助動詞,*,*,*,特殊・タ,仮定形,た,タラ,タラ
+隣      名詞,一般,*,*,*,*,隣,トナリ,トナリ
+の      助詞,連体化,*,*,*,*,の,ノ,ノ
+人      名詞,一般,*,*,*,*,人,ヒト,ヒト
+が      助詞,格助詞,一般,*,*,*,が,ガ,ガ
+「      記号,括弧開,*,*,*,*,「,「,「
+あの    連体詞,*,*,*,*,*,あの,アノ,アノ
+</code></p>
+
+<p>This outputs include a part of speech, and prununciations. So remove it with <code>awk</code>.</p>
+
+<p><code>
+$ awk '{ print $1 }' &lt; morphological_output.txt &gt; words.txt
+</code></p>
+
+<p>This is output.</p>
+
+<p><code>
+病院
+の
+待合室
+に
+い
+たら
+隣
+の
+人
+が
+</code></p>
+
+<p>Ok, now you can train skip-gram algorithm with this data.</p>
+
+<h2>Training</h2>
+
+<p>This is my training script.</p>
+
+<p>```sh
+DATA_DIR=../data
+BIN_DIR=../bin
+SRC_DIR=../src</p>
+
+<p>TEXT_DATA=$DATA_DIR/twitter_text
+VECTOR_DATA=$DATA_DIR/twitter_text-vector.bin</p>
+
+<p>pushd ${SRC_DIR} &amp;&amp; make; popd</p>
+
+<p>echo &mdash; Training vectors&hellip;
+time $BIN_DIR/word2vec -train $TEXT_DATA -output $VECTOR_DATA -cbow 0 -size 200 -window 5 -negative 0 -hs 1 -sample 1e-3 -threads 12 -binary 1</p>
+
+<p>echo &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;
+echo &mdash; distance&hellip;</p>
+
+<p>$BIN_DIR/distance $DATA_DIR/$VECTOR_DATA
+```</p>
+
+<p>It is the almost same script to <code>demo-word.sh</code>.</p>
+
+<p>Training takes about 3 seconds. It is very short time. (But it means there are not enough training data) :(</p>
+
+<p>```
+% ./twitter-script.sh
+~/Dropbox/MyWorks/algos/word2vec/src ~/Dropbox/MyWorks/algos/word2vec/scripts
+gcc word2vec.c -o ../bin/word2vec -lm -pthread -O2 -Wall -funroll-loops
+gcc word2phrase.c -o ../bin/word2phrase -lm -pthread -O2 -Wall -funroll-loops
+gcc distance.c -o ../bin/distance -lm -pthread -O2 -Wall -funroll-loops
+gcc word-analogy.c -o ../bin/word-analogy -lm -pthread -O2 -Wall -funroll-loops
+gcc compute-accuracy.c -o ../bin/compute-accuracy -lm -pthread -O2 -Wall -funroll-loops
+chmod +x ../scripts/*.sh
+~/Dropbox/MyWorks/algos/word2vec/scripts
+&mdash; Training vectors&hellip;
+Starting training using file ../data/twitter_text
+Vocab size: 1516
+Words in train file: 50979</p>
+
+<p>real    0m0.734s
+user    0m1.822s</p>
+
+<h2>sys     0m0.076s</h2>
+
+<p>&mdash; distance&hellip;
+Enter word or sentence (EXIT to break):
+```</p>
+
+<p>Enter some words.</p>
+
+<p>```
+Enter word or sentence (EXIT to break):  病院</p>
+
+<pre><code>                                          Word       Cosine distance
+</code></pre>
+
+<hr />
+
+<pre><code>                                           ぶ               0.991685
+                                        ソチ                0.990486
+                                        bottle              0.989918
+                                        点滴                0.988539
+</code></pre>
+
+<p>```</p>
+
+<p>Word &ldquo;病院&rdquo; means hostpital. The forth word that has near vector to hospital is &ldquo;点滴&rdquo;, an intravenous drip. It looks like word2vec working nice, however other data are irrelevant to hospital. That&rsquo;s too bad.</p>
+
+<p>In addition to this error, cosine distance of all data are above 0.98. These distance points suggest word2vec cannot make sound model with this training data.
+Unfortunately, there are also a lot of words that has no counterpart in training data. In many cases, target words that you want to investigate are not included in this model.
+You cannot make use of  this model with such a tiny data extracted from twitter API in practical situation.</p>
+
+<h2>Next</h2>
+
+<p>Next time, I want to try with Wikipedia JP corpus. This famous site includes huge corpus data. I am sure to obtain good results in the next time.</p>
+
+<p>Source codes used this process is <a href="https://github.com/Lewuathe/algos/tree/master/word2vec">here</a>. Please do take a look at these codes!</p>
+
+<p>Thank you.</p>
+]]></content>
+  </entry>
+  
+</feed>
