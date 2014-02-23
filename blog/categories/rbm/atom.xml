@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: RBM | The first cry of Atom]]></title>
-  <link href="http://Lewuathe.github.io/blog/categories/rbm/atom.xml" rel="self"/>
-  <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-23T19:25:40+09:00</updated>
-  <id>http://Lewuathe.github.io/</id>
+  <link href="http://lewuathe.github.io/blog/categories/rbm/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-02-23T19:44:17+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Restricted Boltzmann Machine in Node]]></title>
-    <link href="http://Lewuathe.github.io/blog/2014/02/05/restricted-boltzmann-machine-in-node/"/>
+    <link href="http://lewuathe.github.io/blog/2014/02/05/restricted-boltzmann-machine-in-node/"/>
     <updated>2014-02-05T21:18:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2014/02/05/restricted-boltzmann-machine-in-node</id>
+    <id>http://lewuathe.github.io/blog/2014/02/05/restricted-boltzmann-machine-in-node</id>
     <content type="html"><![CDATA[<p>n42 has restricted boltzmann machine. Restricted boltzmann machine is a kind of
 autoencoder in order to extract charasteristics. In this article, I would leave out
 the detail of restricted boltzmann machine. I want to introduce how the RBM is written

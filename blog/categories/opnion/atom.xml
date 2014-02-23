@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Opnion | The first cry of Atom]]></title>
-  <link href="http://Lewuathe.github.io/blog/categories/opnion/atom.xml" rel="self"/>
-  <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-23T19:25:40+09:00</updated>
-  <id>http://Lewuathe.github.io/</id>
+  <link href="http://lewuathe.github.io/blog/categories/opnion/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-02-23T19:44:17+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[The LEFT ONE]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/12/04/the-left-one/"/>
+    <link href="http://lewuathe.github.io/blog/2013/12/04/the-left-one/"/>
     <updated>2013-12-04T23:07:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/12/04/the-left-one</id>
+    <id>http://lewuathe.github.io/blog/2013/12/04/the-left-one</id>
     <content type="html"><![CDATA[<iframe src="http://www.slideshare.net/slideshow/embed_code/28845284" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen> </iframe>
 
 
@@ -32,9 +32,9 @@ It&rsquo;s my challenge for my future, and my hapiness.</p>
   
   <entry>
     <title type="html"><![CDATA[マイノリティ・リポート]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/11/22/maifalseriteiripoto/"/>
+    <link href="http://lewuathe.github.io/blog/2013/11/22/maifalseriteiripoto/"/>
     <updated>2013-11-22T11:13:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/11/22/maifalseriteiripoto</id>
+    <id>http://lewuathe.github.io/blog/2013/11/22/maifalseriteiripoto</id>
     <content type="html"><![CDATA[<p>この夏にあったことだ。</p>
 
 <p><img src="/images/posts/2013-11-22-minority/tie.jpg" alt="tie" /></p>

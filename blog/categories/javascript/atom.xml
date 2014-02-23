@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: JavaScript | The first cry of Atom]]></title>
-  <link href="http://Lewuathe.github.io/blog/categories/javascript/atom.xml" rel="self"/>
-  <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-23T19:25:40+09:00</updated>
-  <id>http://Lewuathe.github.io/</id>
+  <link href="http://lewuathe.github.io/blog/categories/javascript/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-02-23T19:44:17+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Use JavaScriptInterface on Android]]></title>
-    <link href="http://Lewuathe.github.io/blog/2014/02/21/use-javascriptinterface-on-android/"/>
+    <link href="http://lewuathe.github.io/blog/2014/02/21/use-javascriptinterface-on-android/"/>
     <updated>2014-02-21T21:34:20+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2014/02/21/use-javascriptinterface-on-android</id>
+    <id>http://lewuathe.github.io/blog/2014/02/21/use-javascriptinterface-on-android</id>
     <content type="html"><![CDATA[<p>On Android, there is a system for calling Java method from JavaScript. This is called <a href="http://developer.android.com/reference/android/webkit/JavascriptInterface.html">JavaScriptInterface</a>.
 With this class, you can call Java methods run on Android application from JavaScript written on any HTML file.</p>
 
@@ -130,9 +130,9 @@ This is my sample repository. I&rsquo;m glad to see this repository is used for 
   
   <entry>
     <title type="html"><![CDATA[Reference Configuration Library in Nodejs]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/12/30/reference-configuration-library-in-nodejs/"/>
+    <link href="http://lewuathe.github.io/blog/2013/12/30/reference-configuration-library-in-nodejs/"/>
     <updated>2013-12-30T20:24:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/12/30/reference-configuration-library-in-nodejs</id>
+    <id>http://lewuathe.github.io/blog/2013/12/30/reference-configuration-library-in-nodejs</id>
     <content type="html"><![CDATA[<p>I made npm module at the end of this year, <em>readonly</em>.</p>
 
 <p><a href="https://github.com/Lewuathe/readonly">lewuathe/readonly @GitHub</a></p>
@@ -207,9 +207,9 @@ If you find any bugs, please inform me with <a href="https://github.com/Lewuathe
   
   <entry>
     <title type="html"><![CDATA[Closure With Async.js]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/12/05/closure-with-async-dot-js/"/>
+    <link href="http://lewuathe.github.io/blog/2013/12/05/closure-with-async-dot-js/"/>
     <updated>2013-12-05T20:29:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/12/05/closure-with-async-dot-js</id>
+    <id>http://lewuathe.github.io/blog/2013/12/05/closure-with-async-dot-js</id>
     <content type="html"><![CDATA[<p>You may use <a href="https://npmjs.org/package/async">Async.js</a> at least one time when you develop with nodejs.</p>
 
 <blockquote><p>Async is a utility module which provides straight-forward, powerful functions for working with asynchronous JavaScript.</p></blockquote>

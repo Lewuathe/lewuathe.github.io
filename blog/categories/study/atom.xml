@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Study | The first cry of Atom]]></title>
-  <link href="http://Lewuathe.github.io/blog/categories/study/atom.xml" rel="self"/>
-  <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-23T19:25:40+09:00</updated>
-  <id>http://Lewuathe.github.io/</id>
+  <link href="http://lewuathe.github.io/blog/categories/study/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-02-23T19:44:17+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[頑張る理由]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/11/10/nu-li-falseli-you/"/>
+    <link href="http://lewuathe.github.io/blog/2013/11/10/nu-li-falseli-you/"/>
     <updated>2013-11-10T15:12:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/11/10/nu-li-falseli-you</id>
+    <id>http://lewuathe.github.io/blog/2013/11/10/nu-li-falseli-you</id>
     <content type="html"><![CDATA[<p>読んだ。</p>
 
 <p><a href="http://karigari.hatenablog.com/entry/2013/11/06/000000">http://karigari.hatenablog.com/entry/2013/11/06/000000</a></p>

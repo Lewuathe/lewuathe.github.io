@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Tessel | The first cry of Atom]]></title>
-  <link href="http://Lewuathe.github.io/blog/categories/tessel/atom.xml" rel="self"/>
-  <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-23T19:25:40+09:00</updated>
-  <id>http://Lewuathe.github.io/</id>
+  <link href="http://lewuathe.github.io/blog/categories/tessel/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-02-23T19:44:17+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Hack Tessel!]]></title>
-    <link href="http://Lewuathe.github.io/blog/2014/01/09/hack-tessel/"/>
+    <link href="http://lewuathe.github.io/blog/2014/01/09/hack-tessel/"/>
     <updated>2014-01-09T21:25:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2014/01/09/hack-tessel</id>
+    <id>http://lewuathe.github.io/blog/2014/01/09/hack-tessel</id>
     <content type="html"><![CDATA[<p><meta property=”og:image” content=”http://lewuathe.com/images/posts/2014-01-09-tessel-first/bootstrap_tessel.jpg” /></p>
 
 <p>Yesterday, I got a <a href="http://tessel.io/">tessel</a>. With twists and turns, I overcome some obstacles for hacking this tiny but not little possibility board. So writing this post.</p>
@@ -153,7 +153,7 @@ setInterval(function () {
 $ tessel push index.js
 </code></p>
 
-<iframe width="420" height="315" src="http://Lewuathe.github.io//www.youtube.com/embed/aKLGnU9wsTo" frameborder="0" allowfullscreen></iframe>
+<iframe width="420" height="315" src="http://lewuathe.github.io//www.youtube.com/embed/aKLGnU9wsTo" frameborder="0" allowfullscreen></iframe>
 
 
 <p><strong>BLINK!!!</strong></p>

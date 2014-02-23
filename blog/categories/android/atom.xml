@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Android | The first cry of Atom]]></title>
-  <link href="http://Lewuathe.github.io/blog/categories/android/atom.xml" rel="self"/>
-  <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-23T19:25:40+09:00</updated>
-  <id>http://Lewuathe.github.io/</id>
+  <link href="http://lewuathe.github.io/blog/categories/android/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-02-23T19:44:17+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Use JavaScriptInterface on Android]]></title>
-    <link href="http://Lewuathe.github.io/blog/2014/02/21/use-javascriptinterface-on-android/"/>
+    <link href="http://lewuathe.github.io/blog/2014/02/21/use-javascriptinterface-on-android/"/>
     <updated>2014-02-21T21:34:20+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2014/02/21/use-javascriptinterface-on-android</id>
+    <id>http://lewuathe.github.io/blog/2014/02/21/use-javascriptinterface-on-android</id>
     <content type="html"><![CDATA[<p>On Android, there is a system for calling Java method from JavaScript. This is called <a href="http://developer.android.com/reference/android/webkit/JavascriptInterface.html">JavaScriptInterface</a>.
 With this class, you can call Java methods run on Android application from JavaScript written on any HTML file.</p>
 

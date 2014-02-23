@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Python | The first cry of Atom]]></title>
-  <link href="http://Lewuathe.github.io/blog/categories/python/atom.xml" rel="self"/>
-  <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-23T19:25:40+09:00</updated>
-  <id>http://Lewuathe.github.io/</id>
+  <link href="http://lewuathe.github.io/blog/categories/python/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-02-23T19:44:17+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Idiomatic Python ~I Will Write With This Style~]]></title>
-    <link href="http://Lewuathe.github.io/blog/2014/01/21/idiomatic-mython/"/>
+    <link href="http://lewuathe.github.io/blog/2014/01/21/idiomatic-mython/"/>
     <updated>2014-01-21T13:18:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2014/01/21/idiomatic-mython</id>
+    <id>http://lewuathe.github.io/blog/2014/01/21/idiomatic-mython</id>
     <content type="html"><![CDATA[<p>I read a book, <em><a href="http://www.amazon.co.jp/Writing-Idiomatic-Python-2-7-3-Knupp-ebook/dp/B00B5KG0F8">Writing Idiomatic Python</a></em>
 Although I usually write python codes, I have not paid attension to the style of these codes. By reading this book, I have noticed
 that there are pythonic style in python codes. And I think it was good mind to write python code. There were many <em>Halmful</em>, <em>Idiomaric</em>
@@ -244,9 +244,9 @@ value_list -- a list of integer values
   
   <entry>
     <title type="html"><![CDATA[scikit-learnでCross Validation]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/11/09/scikit-learndecross-validation/"/>
+    <link href="http://lewuathe.github.io/blog/2013/11/09/scikit-learndecross-validation/"/>
     <updated>2013-11-09T21:56:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/11/09/scikit-learndecross-validation</id>
+    <id>http://lewuathe.github.io/blog/2013/11/09/scikit-learndecross-validation</id>
     <content type="html"><![CDATA[<p>だんだんとscikit-learnとMachine Learningに慣れてきた。
 今回はCross ValidationとGrid Searchをやってみた。</p>
 

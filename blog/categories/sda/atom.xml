@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: SdA | The first cry of Atom]]></title>
-  <link href="http://Lewuathe.github.io/blog/categories/sda/atom.xml" rel="self"/>
-  <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-23T19:25:40+09:00</updated>
-  <id>http://Lewuathe.github.io/</id>
+  <link href="http://lewuathe.github.io/blog/categories/sda/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-02-23T19:44:17+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Stacked Denoised Autoencoder With Nodejs]]></title>
-    <link href="http://Lewuathe.github.io/blog/2014/01/29/stacked-denoised-autoencoder-with-nodejs/"/>
+    <link href="http://lewuathe.github.io/blog/2014/01/29/stacked-denoised-autoencoder-with-nodejs/"/>
     <updated>2014-01-29T21:38:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2014/01/29/stacked-denoised-autoencoder-with-nodejs</id>
+    <id>http://lewuathe.github.io/blog/2014/01/29/stacked-denoised-autoencoder-with-nodejs</id>
     <content type="html"><![CDATA[<p>I developed deep leanring module which enables you to use stacked denoised autoencoder in nodejs.
 This is called n42. You can train with deep learning algorithm very easily.</p>
 

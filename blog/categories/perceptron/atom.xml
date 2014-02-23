@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Perceptron | The first cry of Atom]]></title>
-  <link href="http://Lewuathe.github.io/blog/categories/perceptron/atom.xml" rel="self"/>
-  <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-23T19:25:40+09:00</updated>
-  <id>http://Lewuathe.github.io/</id>
+  <link href="http://lewuathe.github.io/blog/categories/perceptron/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-02-23T19:44:17+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Scalaでパーセプトロンを作った]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/10/04/paseputoronfalseshi-zhuang/"/>
+    <link href="http://lewuathe.github.io/blog/2013/10/04/paseputoronfalseshi-zhuang/"/>
     <updated>2013-10-04T23:10:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/10/04/paseputoronfalseshi-zhuang</id>
+    <id>http://lewuathe.github.io/blog/2013/10/04/paseputoronfalseshi-zhuang</id>
     <content type="html"><![CDATA[<p>PRMLの線形識別モデルの章の内容。PRMLの中に書いてある線形識別モデルをざっと実装しようと思っていたけれど、
 最小二乗法に依る識別とフィッシャーの線形識別は割りとけちょんけちょんにけなされているイメージだったので、とりあえずおいておくことにします。</p>
 

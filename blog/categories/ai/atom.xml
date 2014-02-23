@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: AI | The first cry of Atom]]></title>
-  <link href="http://Lewuathe.github.io/blog/categories/ai/atom.xml" rel="self"/>
-  <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-23T19:25:40+09:00</updated>
-  <id>http://Lewuathe.github.io/</id>
+  <link href="http://lewuathe.github.io/blog/categories/ai/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-02-23T19:44:17+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Scalaを使うことに]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/09/07/scalawoshi-ukotoni/"/>
+    <link href="http://lewuathe.github.io/blog/2013/09/07/scalawoshi-ukotoni/"/>
     <updated>2013-09-07T23:22:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/09/07/scalawoshi-ukotoni</id>
+    <id>http://lewuathe.github.io/blog/2013/09/07/scalawoshi-ukotoni</id>
     <content type="html"><![CDATA[<p>汎用人工知能の開発をするにあたって使う言語とかを考えていた。汎用人工知能（まだそれが何を意味するのか明瞭にはわかってない)で必要なスペックは次のものなのではないかなとあげてみた。</p>
 
 <ul>

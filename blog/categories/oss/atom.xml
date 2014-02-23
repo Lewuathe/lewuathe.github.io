@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: OSS | The first cry of Atom]]></title>
-  <link href="http://Lewuathe.github.io/blog/categories/oss/atom.xml" rel="self"/>
-  <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-23T19:25:40+09:00</updated>
-  <id>http://Lewuathe.github.io/</id>
+  <link href="http://lewuathe.github.io/blog/categories/oss/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-02-23T19:44:17+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[OSSを使う、作る]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/10/25/osswoshi-u%2C-zuo-ru/"/>
+    <link href="http://lewuathe.github.io/blog/2013/10/25/osswoshi-u%2C-zuo-ru/"/>
     <updated>2013-10-25T21:53:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/10/25/osswoshi-u,-zuo-ru</id>
+    <id>http://lewuathe.github.io/blog/2013/10/25/osswoshi-u,-zuo-ru</id>
     <content type="html"><![CDATA[<p>昨日、以前作ったOSSのライブラリにpatchが送られてきた。</p>
 
 <p><a href="https://github.com/Lewuathe/passport-yj">https://github.com/Lewuathe/passport-yj</a></p>

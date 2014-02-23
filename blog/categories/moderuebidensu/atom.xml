@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: モデルエビデンス | The first cry of Atom]]></title>
-  <link href="http://Lewuathe.github.io/blog/categories/moderuebidensu/atom.xml" rel="self"/>
-  <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-23T19:25:40+09:00</updated>
-  <id>http://Lewuathe.github.io/</id>
+  <link href="http://lewuathe.github.io/blog/categories/moderuebidensu/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-02-23T19:44:17+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[モデルエビデンスの評価]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/09/29/moderuebidensufalseping-jia/"/>
+    <link href="http://lewuathe.github.io/blog/2013/09/29/moderuebidensufalseping-jia/"/>
     <updated>2013-09-29T10:17:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/09/29/moderuebidensufalseping-jia</id>
+    <id>http://lewuathe.github.io/blog/2013/09/29/moderuebidensufalseping-jia</id>
     <content type="html"><![CDATA[<p>作ったプログラムは以下においたよ。</p>
 
 <p><a href="https://github.com/PhysicsEngine/cpi-stats">https://github.com/PhysicsEngine/cpi-stats</a></p>

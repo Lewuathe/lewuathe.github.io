@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Agile | The first cry of Atom]]></title>
-  <link href="http://Lewuathe.github.io/blog/categories/agile/atom.xml" rel="self"/>
-  <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-23T19:25:40+09:00</updated>
-  <id>http://Lewuathe.github.io/</id>
+  <link href="http://lewuathe.github.io/blog/categories/agile/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-02-23T19:44:17+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Scrum Gathering Tokyo 2014]]></title>
-    <link href="http://Lewuathe.github.io/blog/2014/01/19/scrum-gathering-tokyo-2014-1/"/>
+    <link href="http://lewuathe.github.io/blog/2014/01/19/scrum-gathering-tokyo-2014-1/"/>
     <updated>2014-01-19T21:08:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2014/01/19/scrum-gathering-tokyo-2014-1</id>
+    <id>http://lewuathe.github.io/blog/2014/01/19/scrum-gathering-tokyo-2014-1</id>
     <content type="html"><![CDATA[<p>On January 14-15, I participated <strong><a href="http://scrumgatheringtokyo.org/2014/">Scrum Gathering Tokyo 2014</a></strong>.
 Though this conference cost me a little more than I can afford it,
 it was great time to me as scrum master in my project. I want to arrange
@@ -148,9 +148,9 @@ So in this entry, I cite one scrum example after another which I heard in these 
   
   <entry>
     <title type="html"><![CDATA[Agile Samurai Basecamp in Tokyo <2>]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/12/09/agile-samurai-basecamp-in-tokyo/"/>
+    <link href="http://lewuathe.github.io/blog/2013/12/09/agile-samurai-basecamp-in-tokyo/"/>
     <updated>2013-12-09T20:16:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/12/09/agile-samurai-basecamp-in-tokyo</id>
+    <id>http://lewuathe.github.io/blog/2013/12/09/agile-samurai-basecamp-in-tokyo</id>
     <content type="html"><![CDATA[<p>This entry follows previous post.
 The practical methods about TDD are explained in this section.</p>
 
@@ -234,9 +234,9 @@ That mind must not be forgot whenever I type my test code.</p>
   
   <entry>
     <title type="html"><![CDATA[Agile Samurai Basecamp in Tokyo <1>]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/12/08/whatt-going-on-at-agile-samurai-basecamp/"/>
+    <link href="http://lewuathe.github.io/blog/2013/12/08/whatt-going-on-at-agile-samurai-basecamp/"/>
     <updated>2013-12-08T19:29:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/12/08/whatt-going-on-at-agile-samurai-basecamp</id>
+    <id>http://lewuathe.github.io/blog/2013/12/08/whatt-going-on-at-agile-samurai-basecamp</id>
     <content type="html"><![CDATA[<p>At work, I am a scrum padawan, not yet master :&ndash;)</p>
 
 <p>Through developing with agile team, I was taught what scrum is, product backlog is, sprint is.</p>
@@ -301,9 +301,9 @@ So it&rsquo;s inception deck. If you want to know about inception deck, read thi
   
   <entry>
     <title type="html"><![CDATA[マスターセンセイは嘘をつかない]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/10/18/masutasenseihaxu-wotukanai/"/>
+    <link href="http://lewuathe.github.io/blog/2013/10/18/masutasenseihaxu-wotukanai/"/>
     <updated>2013-10-18T22:25:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/10/18/masutasenseihaxu-wotukanai</id>
+    <id>http://lewuathe.github.io/blog/2013/10/18/masutasenseihaxu-wotukanai</id>
     <content type="html"><![CDATA[<p>仕事で、あるアジャイルプロジェクトに関わってきた。</p>
 
 <p>スクラムマスターとなり、初めてのアジャイルプロジェクトを進めてもう3ヶ月ほどになる。</p>

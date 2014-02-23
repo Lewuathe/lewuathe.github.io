@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Twitter | The first cry of Atom]]></title>
-  <link href="http://Lewuathe.github.io/blog/categories/twitter/atom.xml" rel="self"/>
-  <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-23T19:25:40+09:00</updated>
-  <id>http://Lewuathe.github.io/</id>
+  <link href="http://lewuathe.github.io/blog/categories/twitter/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-02-23T19:44:17+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Trying Word2vec From Twitter Corpus]]></title>
-    <link href="http://Lewuathe.github.io/blog/2014/02/23/trying-word2vec-from-twitter-corpus/"/>
+    <link href="http://lewuathe.github.io/blog/2014/02/23/trying-word2vec-from-twitter-corpus/"/>
     <updated>2014-02-23T17:47:16+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2014/02/23/trying-word2vec-from-twitter-corpus</id>
+    <id>http://lewuathe.github.io/blog/2014/02/23/trying-word2vec-from-twitter-corpus</id>
     <content type="html"><![CDATA[<p>Do you know <a href="https://github.com/dav/word2vec">word2vec</a>? This library is one of the hottest module which provides an efficient implementation of the continuous bag-of-words and skip-gram architectures for computing vector representations of words.</p>
 
 <p>Recently, my collegues told me what word2vec is. From that time, I want to try this library in some chance. This time, I trained this skip-gram model with twitter corpus.</p>

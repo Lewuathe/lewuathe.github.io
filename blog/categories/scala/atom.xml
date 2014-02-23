@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Scala | The first cry of Atom]]></title>
-  <link href="http://Lewuathe.github.io/blog/categories/scala/atom.xml" rel="self"/>
-  <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-23T19:25:40+09:00</updated>
-  <id>http://Lewuathe.github.io/</id>
+  <link href="http://lewuathe.github.io/blog/categories/scala/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-02-23T19:44:17+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Useful Shortcuts for IntelliJ IDEA]]></title>
-    <link href="http://Lewuathe.github.io/blog/2014/02/18/useful-shortcuts-for-intellij-idea/"/>
+    <link href="http://lewuathe.github.io/blog/2014/02/18/useful-shortcuts-for-intellij-idea/"/>
     <updated>2014-02-18T21:21:10+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2014/02/18/useful-shortcuts-for-intellij-idea</id>
+    <id>http://lewuathe.github.io/blog/2014/02/18/useful-shortcuts-for-intellij-idea</id>
     <content type="html"><![CDATA[<p>In this week, I am attending a lecture for developing mobile application on android.
 Of course I had no experience writing android applications, I have not written Java code in my life.
 Through this lecture, I was so impressed by the functionality of <a href="https://www.eclipse.org/">Eclipse</a>.</p>
@@ -132,9 +132,9 @@ The only way to know how useful IntelliJ IDEA is using it throughly! From today,
   
   <entry>
     <title type="html"><![CDATA[Go and Scala, Which Should I Use?]]></title>
-    <link href="http://Lewuathe.github.io/blog/2014/02/17/go-and-scala-which-should-i-use/"/>
+    <link href="http://lewuathe.github.io/blog/2014/02/17/go-and-scala-which-should-i-use/"/>
     <updated>2014-02-17T22:37:59+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2014/02/17/go-and-scala-which-should-i-use</id>
+    <id>http://lewuathe.github.io/blog/2014/02/17/go-and-scala-which-should-i-use</id>
     <content type="html"><![CDATA[<p>Today, <a href="http://www.google.com/trends/explore#q=golang%2C%20clojure&amp;cmpt=q">Go and Clojure compete with each other</a>. <a href="http://golang.org/">Go</a> will be one of the
 hottest programming language in this year. This is the compiler language which can be seen as the successor C++.</p>
 
@@ -154,9 +154,9 @@ and maintainability are required. If you have any good idea or criteria for sele
   
   <entry>
     <title type="html"><![CDATA[Scalaを使うことに]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/09/07/scalawoshi-ukotoni/"/>
+    <link href="http://lewuathe.github.io/blog/2013/09/07/scalawoshi-ukotoni/"/>
     <updated>2013-09-07T23:22:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/09/07/scalawoshi-ukotoni</id>
+    <id>http://lewuathe.github.io/blog/2013/09/07/scalawoshi-ukotoni</id>
     <content type="html"><![CDATA[<p>汎用人工知能の開発をするにあたって使う言語とかを考えていた。汎用人工知能（まだそれが何を意味するのか明瞭にはわかってない)で必要なスペックは次のものなのではないかなとあげてみた。</p>
 
 <ul>

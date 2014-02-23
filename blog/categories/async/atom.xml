@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Async | The first cry of Atom]]></title>
-  <link href="http://Lewuathe.github.io/blog/categories/async/atom.xml" rel="self"/>
-  <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-23T19:25:40+09:00</updated>
-  <id>http://Lewuathe.github.io/</id>
+  <link href="http://lewuathe.github.io/blog/categories/async/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-02-23T19:44:17+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Closure With Async.js]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/12/05/closure-with-async-dot-js/"/>
+    <link href="http://lewuathe.github.io/blog/2013/12/05/closure-with-async-dot-js/"/>
     <updated>2013-12-05T20:29:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/12/05/closure-with-async-dot-js</id>
+    <id>http://lewuathe.github.io/blog/2013/12/05/closure-with-async-dot-js</id>
     <content type="html"><![CDATA[<p>You may use <a href="https://npmjs.org/package/async">Async.js</a> at least one time when you develop with nodejs.</p>
 
 <blockquote><p>Async is a utility module which provides straight-forward, powerful functions for working with asynchronous JavaScript.</p></blockquote>

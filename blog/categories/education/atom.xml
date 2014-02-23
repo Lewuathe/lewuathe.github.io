@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Education | The first cry of Atom]]></title>
-  <link href="http://Lewuathe.github.io/blog/categories/education/atom.xml" rel="self"/>
-  <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-23T19:25:40+09:00</updated>
-  <id>http://Lewuathe.github.io/</id>
+  <link href="http://lewuathe.github.io/blog/categories/education/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-02-23T19:44:17+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
     
@@ -15,13 +15,13 @@
   
   <entry>
     <title type="html"><![CDATA[Yes, You Are Malala]]></title>
-    <link href="http://Lewuathe.github.io/blog/2014/02/15/yes-you-are-malala/"/>
+    <link href="http://lewuathe.github.io/blog/2014/02/15/yes-you-are-malala/"/>
     <updated>2014-02-15T21:56:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2014/02/15/yes-you-are-malala</id>
+    <id>http://lewuathe.github.io/blog/2014/02/15/yes-you-are-malala</id>
     <content type="html"><![CDATA[<p><meta property=”og:image” content=”/images/posts/2014-02-14-you-are-malala/malala.jpg” /></p>
 
 <div style="text-align:center" markdown="1">
-<img src="http://Lewuathe.github.io/images/posts/2014-02-14-you-are-malala/malala.jpg" />
+<img src="http://lewuathe.github.io/images/posts/2014-02-14-you-are-malala/malala.jpg" />
 </div>
 
 

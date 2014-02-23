@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Java | The first cry of Atom]]></title>
-  <link href="http://Lewuathe.github.io/blog/categories/java/atom.xml" rel="self"/>
-  <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-23T19:25:40+09:00</updated>
-  <id>http://Lewuathe.github.io/</id>
+  <link href="http://lewuathe.github.io/blog/categories/java/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-02-23T19:44:17+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Useful Shortcuts for IntelliJ IDEA]]></title>
-    <link href="http://Lewuathe.github.io/blog/2014/02/18/useful-shortcuts-for-intellij-idea/"/>
+    <link href="http://lewuathe.github.io/blog/2014/02/18/useful-shortcuts-for-intellij-idea/"/>
     <updated>2014-02-18T21:21:10+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2014/02/18/useful-shortcuts-for-intellij-idea</id>
+    <id>http://lewuathe.github.io/blog/2014/02/18/useful-shortcuts-for-intellij-idea</id>
     <content type="html"><![CDATA[<p>In this week, I am attending a lecture for developing mobile application on android.
 Of course I had no experience writing android applications, I have not written Java code in my life.
 Through this lecture, I was so impressed by the functionality of <a href="https://www.eclipse.org/">Eclipse</a>.</p>
@@ -132,9 +132,9 @@ The only way to know how useful IntelliJ IDEA is using it throughly! From today,
   
   <entry>
     <title type="html"><![CDATA[My First Jenkins Plugin]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/11/28/my-first-jenkins-plugin/"/>
+    <link href="http://lewuathe.github.io/blog/2013/11/28/my-first-jenkins-plugin/"/>
     <updated>2013-11-28T21:15:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/11/28/my-first-jenkins-plugin</id>
+    <id>http://lewuathe.github.io/blog/2013/11/28/my-first-jenkins-plugin</id>
     <content type="html"><![CDATA[<p>Released my first Jenkins plugin</p>
 
 <p><a href="https://github.com/jenkinsci/hckrnews-plugin">https://github.com/jenkinsci/hckrnews-plugin</a></p>

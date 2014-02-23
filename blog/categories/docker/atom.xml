@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Docker | The first cry of Atom]]></title>
-  <link href="http://Lewuathe.github.io/blog/categories/docker/atom.xml" rel="self"/>
-  <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-23T19:25:40+09:00</updated>
-  <id>http://Lewuathe.github.io/</id>
+  <link href="http://lewuathe.github.io/blog/categories/docker/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-02-23T19:44:17+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Dockerで仮想化をはじめよう]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/10/20/dockerwoshi-tutemiyou/"/>
+    <link href="http://lewuathe.github.io/blog/2013/10/20/dockerwoshi-tutemiyou/"/>
     <updated>2013-10-20T20:30:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/10/20/dockerwoshi-tutemiyou</id>
+    <id>http://lewuathe.github.io/blog/2013/10/20/dockerwoshi-tutemiyou</id>
     <content type="html"><![CDATA[<p>仮想環境構築の方法のひとつに<a href="http://www.docker.io/">Docker</a>を使ってみた。いままではVirtualBoxを使ってVagrantからつないでいく方法をやってみたけれど、仮想マシンをいちいち立ち上げる方法はどうも遅いのでDockerというもので試してみた。</p>
 
 <p>Dockerの特徴は以下記事から抜粋。</p>

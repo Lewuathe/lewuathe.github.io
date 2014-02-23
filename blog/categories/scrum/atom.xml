@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Scrum | The first cry of Atom]]></title>
-  <link href="http://Lewuathe.github.io/blog/categories/scrum/atom.xml" rel="self"/>
-  <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-23T19:25:40+09:00</updated>
-  <id>http://Lewuathe.github.io/</id>
+  <link href="http://lewuathe.github.io/blog/categories/scrum/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-02-23T19:44:17+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Scrum Gathering Tokyo 2014]]></title>
-    <link href="http://Lewuathe.github.io/blog/2014/01/19/scrum-gathering-tokyo-2014-1/"/>
+    <link href="http://lewuathe.github.io/blog/2014/01/19/scrum-gathering-tokyo-2014-1/"/>
     <updated>2014-01-19T21:08:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2014/01/19/scrum-gathering-tokyo-2014-1</id>
+    <id>http://lewuathe.github.io/blog/2014/01/19/scrum-gathering-tokyo-2014-1</id>
     <content type="html"><![CDATA[<p>On January 14-15, I participated <strong><a href="http://scrumgatheringtokyo.org/2014/">Scrum Gathering Tokyo 2014</a></strong>.
 Though this conference cost me a little more than I can afford it,
 it was great time to me as scrum master in my project. I want to arrange

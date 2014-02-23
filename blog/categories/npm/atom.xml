@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Npm | The first cry of Atom]]></title>
-  <link href="http://Lewuathe.github.io/blog/categories/npm/atom.xml" rel="self"/>
-  <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-23T19:25:40+09:00</updated>
-  <id>http://Lewuathe.github.io/</id>
+  <link href="http://lewuathe.github.io/blog/categories/npm/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-02-23T19:44:17+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Reference Configuration Library in Nodejs]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/12/30/reference-configuration-library-in-nodejs/"/>
+    <link href="http://lewuathe.github.io/blog/2013/12/30/reference-configuration-library-in-nodejs/"/>
     <updated>2013-12-30T20:24:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/12/30/reference-configuration-library-in-nodejs</id>
+    <id>http://lewuathe.github.io/blog/2013/12/30/reference-configuration-library-in-nodejs</id>
     <content type="html"><![CDATA[<p>I made npm module at the end of this year, <em>readonly</em>.</p>
 
 <p><a href="https://github.com/Lewuathe/readonly">lewuathe/readonly @GitHub</a></p>

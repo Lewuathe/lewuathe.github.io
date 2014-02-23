@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Vagrant | The first cry of Atom]]></title>
-  <link href="http://Lewuathe.github.io/blog/categories/vagrant/atom.xml" rel="self"/>
-  <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-23T19:25:40+09:00</updated>
-  <id>http://Lewuathe.github.io/</id>
+  <link href="http://lewuathe.github.io/blog/categories/vagrant/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-02-23T19:44:17+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Developing Jenkins Plugin on Vagrant]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/11/16/developing-jenkins-plugin-on-vagrant/"/>
+    <link href="http://lewuathe.github.io/blog/2013/11/16/developing-jenkins-plugin-on-vagrant/"/>
     <updated>2013-11-16T21:09:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/11/16/developing-jenkins-plugin-on-vagrant</id>
+    <id>http://lewuathe.github.io/blog/2013/11/16/developing-jenkins-plugin-on-vagrant</id>
     <content type="html"><![CDATA[<p>Recently I investigate the scalability of Jenkins. In my idea, I want to make hot standby Jenkins server with NFS. So the plugins which enable us to do that are required. And for my study, I decided to develop on Vagrant and VirtualBox. It costs me very little because there is no need to get real server.  So in this post, I will describe how to set up your jenkins plugin environment on your vagrant Ubuntu.</p>
 
 <h2>Start vagrant</h2>

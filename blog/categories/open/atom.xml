@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Open | The first cry of Atom]]></title>
-  <link href="http://Lewuathe.github.io/blog/categories/open/atom.xml" rel="self"/>
-  <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-23T19:25:40+09:00</updated>
-  <id>http://Lewuathe.github.io/</id>
+  <link href="http://lewuathe.github.io/blog/categories/open/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-02-23T19:44:17+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[How Do I Change My Homeland With Open Data?]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/12/01/how-do-i-change-my-homeland-with-open-data/"/>
+    <link href="http://lewuathe.github.io/blog/2013/12/01/how-do-i-change-my-homeland-with-open-data/"/>
     <updated>2013-12-01T19:09:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/12/01/how-do-i-change-my-homeland-with-open-data</id>
+    <id>http://lewuathe.github.io/blog/2013/12/01/how-do-i-change-my-homeland-with-open-data</id>
     <content type="html"><![CDATA[<p>Open data will change the world, and nations. How do I change my homeland with open data?</p>
 
 <p>I find this article today

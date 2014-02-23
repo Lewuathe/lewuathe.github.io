@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[The first cry of Atom]]></title>
-  <link href="http://Lewuathe.github.io/atom.xml" rel="self"/>
-  <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-23T19:25:40+09:00</updated>
-  <id>http://Lewuathe.github.io/</id>
+  <link href="http://lewuathe.github.io/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-02-23T19:44:17+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Trying Word2vec From Twitter Corpus]]></title>
-    <link href="http://Lewuathe.github.io/blog/2014/02/23/trying-word2vec-from-twitter-corpus/"/>
+    <link href="http://lewuathe.github.io/blog/2014/02/23/trying-word2vec-from-twitter-corpus/"/>
     <updated>2014-02-23T17:47:16+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2014/02/23/trying-word2vec-from-twitter-corpus</id>
+    <id>http://lewuathe.github.io/blog/2014/02/23/trying-word2vec-from-twitter-corpus</id>
     <content type="html"><![CDATA[<p>Do you know <a href="https://github.com/dav/word2vec">word2vec</a>? This library is one of the hottest module which provides an efficient implementation of the continuous bag-of-words and skip-gram architectures for computing vector representations of words.</p>
 
 <p>Recently, my collegues told me what word2vec is. From that time, I want to try this library in some chance. This time, I trained this skip-gram model with twitter corpus.</p>
@@ -407,9 +407,9 @@ You cannot make use of  this model with such a tiny data extracted from twitter 
   
   <entry>
     <title type="html"><![CDATA[Use JavaScriptInterface on Android]]></title>
-    <link href="http://Lewuathe.github.io/blog/2014/02/21/use-javascriptinterface-on-android/"/>
+    <link href="http://lewuathe.github.io/blog/2014/02/21/use-javascriptinterface-on-android/"/>
     <updated>2014-02-21T21:34:20+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2014/02/21/use-javascriptinterface-on-android</id>
+    <id>http://lewuathe.github.io/blog/2014/02/21/use-javascriptinterface-on-android</id>
     <content type="html"><![CDATA[<p>On Android, there is a system for calling Java method from JavaScript. This is called <a href="http://developer.android.com/reference/android/webkit/JavascriptInterface.html">JavaScriptInterface</a>.
 With this class, you can call Java methods run on Android application from JavaScript written on any HTML file.</p>
 
@@ -545,7 +545,7 @@ So last let&rsquo;s write down this interface class.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p><img src="http://Lewuathe.github.io/images/posts/2014-02-21-javascriptinterface-android/demo.png" alt="demo" /></p>
+<p><img src="http://lewuathe.github.io/images/posts/2014-02-21-javascriptinterface-android/demo.png" alt="demo" /></p>
 
 <p>That&rsquo;s all. When you click input button, a toast will show on screen.
 By using JavaScriptInterface, you can easily separate UI design and business logic.
@@ -560,9 +560,9 @@ This is my sample repository. I&rsquo;m glad to see this repository is used for 
   
   <entry>
     <title type="html"><![CDATA[Android SDK on IntelliJ IDEA]]></title>
-    <link href="http://Lewuathe.github.io/blog/2014/02/20/android-sdk-on-intellij-idea/"/>
+    <link href="http://lewuathe.github.io/blog/2014/02/20/android-sdk-on-intellij-idea/"/>
     <updated>2014-02-20T21:24:56+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2014/02/20/android-sdk-on-intellij-idea</id>
+    <id>http://lewuathe.github.io/blog/2014/02/20/android-sdk-on-intellij-idea</id>
     <content type="html"><![CDATA[<p>Eventually, I finished android lecture that is introduced on <a href="http://lewuathe.com/blog/2014/02/18/useful-shortcuts-for-intellij-idea/">previous post</a>
 In this lecture, I learned how to use <a href="https://www.eclipse.org/">Eclipse</a>, <a href="http://java.com/ja/">Java</a> and of course <a href="http://developer.android.com/sdk/index.html">Android SDK</a></p>
 
@@ -578,7 +578,7 @@ makes me tired. So I create this environment with <a href="http://www.jetbrains.
 
 <p>From <a href="http://www.jetbrains.com/idea/">this page</a>, download IntelliJ IDEA community edition. Follow the instructions of wizard. Done!</p>
 
-<p><img src="http://Lewuathe.github.io/images/posts/2014-02-20-androidsdk-with-intellijidea/intellijidea-ce.png" alt="android project" /></p>
+<p><img src="http://lewuathe.github.io/images/posts/2014-02-20-androidsdk-with-intellijidea/intellijidea-ce.png" alt="android project" /></p>
 
 <h2>Install Android SDK</h2>
 
@@ -602,11 +602,11 @@ makes me tired. So I create this environment with <a href="http://www.jetbrains.
 
 <p>Select android application module project.</p>
 
-<p><img src="http://Lewuathe.github.io/images/posts/2014-02-20-androidsdk-with-intellijidea/android-project.png" alt="android project" /></p>
+<p><img src="http://lewuathe.github.io/images/posts/2014-02-20-androidsdk-with-intellijidea/android-project.png" alt="android project" /></p>
 
 <p>And select android SDK version that you installed previously. In this capture, I selected API version 19.</p>
 
-<p><img src="http://Lewuathe.github.io/images/posts/2014-02-20-androidsdk-with-intellijidea/android-sdk.png" alt="android project" /></p>
+<p><img src="http://lewuathe.github.io/images/posts/2014-02-20-androidsdk-with-intellijidea/android-sdk.png" alt="android project" /></p>
 
 <p>It is very easy, isn&rsquo;t it?</p>
 
@@ -620,9 +620,9 @@ makes me tired. So I create this environment with <a href="http://www.jetbrains.
   
   <entry>
     <title type="html"><![CDATA[Useful Shortcuts for IntelliJ IDEA]]></title>
-    <link href="http://Lewuathe.github.io/blog/2014/02/18/useful-shortcuts-for-intellij-idea/"/>
+    <link href="http://lewuathe.github.io/blog/2014/02/18/useful-shortcuts-for-intellij-idea/"/>
     <updated>2014-02-18T21:21:10+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2014/02/18/useful-shortcuts-for-intellij-idea</id>
+    <id>http://lewuathe.github.io/blog/2014/02/18/useful-shortcuts-for-intellij-idea</id>
     <content type="html"><![CDATA[<p>In this week, I am attending a lecture for developing mobile application on android.
 Of course I had no experience writing android applications, I have not written Java code in my life.
 Through this lecture, I was so impressed by the functionality of <a href="https://www.eclipse.org/">Eclipse</a>.</p>
@@ -737,9 +737,9 @@ The only way to know how useful IntelliJ IDEA is using it throughly! From today,
   
   <entry>
     <title type="html"><![CDATA[Go and Scala, Which Should I Use?]]></title>
-    <link href="http://Lewuathe.github.io/blog/2014/02/17/go-and-scala-which-should-i-use/"/>
+    <link href="http://lewuathe.github.io/blog/2014/02/17/go-and-scala-which-should-i-use/"/>
     <updated>2014-02-17T22:37:59+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2014/02/17/go-and-scala-which-should-i-use</id>
+    <id>http://lewuathe.github.io/blog/2014/02/17/go-and-scala-which-should-i-use</id>
     <content type="html"><![CDATA[<p>Today, <a href="http://www.google.com/trends/explore#q=golang%2C%20clojure&amp;cmpt=q">Go and Clojure compete with each other</a>. <a href="http://golang.org/">Go</a> will be one of the
 hottest programming language in this year. This is the compiler language which can be seen as the successor C++.</p>
 
@@ -759,13 +759,13 @@ and maintainability are required. If you have any good idea or criteria for sele
   
   <entry>
     <title type="html"><![CDATA[Yes, You Are Malala]]></title>
-    <link href="http://Lewuathe.github.io/blog/2014/02/15/yes-you-are-malala/"/>
+    <link href="http://lewuathe.github.io/blog/2014/02/15/yes-you-are-malala/"/>
     <updated>2014-02-15T21:56:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2014/02/15/yes-you-are-malala</id>
+    <id>http://lewuathe.github.io/blog/2014/02/15/yes-you-are-malala</id>
     <content type="html"><![CDATA[<p><meta property=”og:image” content=”/images/posts/2014-02-14-you-are-malala/malala.jpg” /></p>
 
 <div style="text-align:center" markdown="1">
-<img src="http://Lewuathe.github.io/images/posts/2014-02-14-you-are-malala/malala.jpg" />
+<img src="http://lewuathe.github.io/images/posts/2014-02-14-you-are-malala/malala.jpg" />
 </div>
 
 
@@ -854,9 +854,9 @@ we experienced over and over again. Now it&rsquo;s the time to build our communi
   
   <entry>
     <title type="html"><![CDATA[NN With Nodejs]]></title>
-    <link href="http://Lewuathe.github.io/blog/2014/02/14/nn-with-nodejs/"/>
+    <link href="http://lewuathe.github.io/blog/2014/02/14/nn-with-nodejs/"/>
     <updated>2014-02-14T22:23:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2014/02/14/nn-with-nodejs</id>
+    <id>http://lewuathe.github.io/blog/2014/02/14/nn-with-nodejs</id>
     <content type="html"><![CDATA[<p>2 layer newral network is added to <a href="https://github.com/Lewuathe/n42">n42</a>
 This network is simple newral network which can trained throught gradient descent optimization calculation.
 It is the same algorithm to the one of denoised autoencoder used by n42. So implementation itself was not diffucult.
@@ -1085,9 +1085,9 @@ If any good result is obtained through this process, I will introduce this blog.
   
   <entry>
     <title type="html"><![CDATA[Restricted Boltzmann Machine in Node]]></title>
-    <link href="http://Lewuathe.github.io/blog/2014/02/05/restricted-boltzmann-machine-in-node/"/>
+    <link href="http://lewuathe.github.io/blog/2014/02/05/restricted-boltzmann-machine-in-node/"/>
     <updated>2014-02-05T21:18:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2014/02/05/restricted-boltzmann-machine-in-node</id>
+    <id>http://lewuathe.github.io/blog/2014/02/05/restricted-boltzmann-machine-in-node</id>
     <content type="html"><![CDATA[<p>n42 has restricted boltzmann machine. Restricted boltzmann machine is a kind of
 autoencoder in order to extract charasteristics. In this article, I would leave out
 the detail of restricted boltzmann machine. I want to introduce how the RBM is written
@@ -1367,9 +1367,9 @@ If you find any bugs, welcome patches!!</p>
   
   <entry>
     <title type="html"><![CDATA[Stacked Denoised Autoencoder With Nodejs]]></title>
-    <link href="http://Lewuathe.github.io/blog/2014/01/29/stacked-denoised-autoencoder-with-nodejs/"/>
+    <link href="http://lewuathe.github.io/blog/2014/01/29/stacked-denoised-autoencoder-with-nodejs/"/>
     <updated>2014-01-29T21:38:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2014/01/29/stacked-denoised-autoencoder-with-nodejs</id>
+    <id>http://lewuathe.github.io/blog/2014/01/29/stacked-denoised-autoencoder-with-nodejs</id>
     <content type="html"><![CDATA[<p>I developed deep leanring module which enables you to use stacked denoised autoencoder in nodejs.
 This is called n42. You can train with deep learning algorithm very easily.</p>
 
@@ -1498,9 +1498,9 @@ for own diversity, and the number of options.</p>
   
   <entry>
     <title type="html"><![CDATA[Autoencoder With node.js]]></title>
-    <link href="http://Lewuathe.github.io/blog/2014/01/26/autoencoder-with-node-dot-js/"/>
+    <link href="http://lewuathe.github.io/blog/2014/01/26/autoencoder-with-node-dot-js/"/>
     <updated>2014-01-26T21:14:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2014/01/26/autoencoder-with-node-dot-js</id>
+    <id>http://lewuathe.github.io/blog/2014/01/26/autoencoder-with-node-dot-js</id>
     <content type="html"><![CDATA[<p><a href="https://en.wikipedia.org/wiki/Autoencoder">Auto encoder</a> is used for deep learning. Auto encoder extract characteristics of data through
 unsupervised learning. This is a kind of newral network. By using an auto encoder, you don&rsquo;t have to
 be in trouble with choicing extracting algorithm, or doing yourself. Therefore, in deepleanring field,
@@ -1782,9 +1782,9 @@ cannot be updated properly. And I skipped parameter tuning completly :)</p>
   
   <entry>
     <title type="html"><![CDATA[Idiomatic Python ~I Will Write With This Style~]]></title>
-    <link href="http://Lewuathe.github.io/blog/2014/01/21/idiomatic-mython/"/>
+    <link href="http://lewuathe.github.io/blog/2014/01/21/idiomatic-mython/"/>
     <updated>2014-01-21T13:18:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2014/01/21/idiomatic-mython</id>
+    <id>http://lewuathe.github.io/blog/2014/01/21/idiomatic-mython</id>
     <content type="html"><![CDATA[<p>I read a book, <em><a href="http://www.amazon.co.jp/Writing-Idiomatic-Python-2-7-3-Knupp-ebook/dp/B00B5KG0F8">Writing Idiomatic Python</a></em>
 Although I usually write python codes, I have not paid attension to the style of these codes. By reading this book, I have noticed
 that there are pythonic style in python codes. And I think it was good mind to write python code. There were many <em>Halmful</em>, <em>Idiomaric</em>
@@ -2032,9 +2032,9 @@ You should install this plugin your editor.</p>
   
   <entry>
     <title type="html"><![CDATA[Scrum Gathering Tokyo 2014]]></title>
-    <link href="http://Lewuathe.github.io/blog/2014/01/19/scrum-gathering-tokyo-2014-1/"/>
+    <link href="http://lewuathe.github.io/blog/2014/01/19/scrum-gathering-tokyo-2014-1/"/>
     <updated>2014-01-19T21:08:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2014/01/19/scrum-gathering-tokyo-2014-1</id>
+    <id>http://lewuathe.github.io/blog/2014/01/19/scrum-gathering-tokyo-2014-1</id>
     <content type="html"><![CDATA[<p>On January 14-15, I participated <strong><a href="http://scrumgatheringtokyo.org/2014/">Scrum Gathering Tokyo 2014</a></strong>.
 Though this conference cost me a little more than I can afford it,
 it was great time to me as scrum master in my project. I want to arrange
@@ -2165,9 +2165,9 @@ So in this entry, I cite one scrum example after another which I heard in these 
   
   <entry>
     <title type="html"><![CDATA[Hack Tessel!]]></title>
-    <link href="http://Lewuathe.github.io/blog/2014/01/09/hack-tessel/"/>
+    <link href="http://lewuathe.github.io/blog/2014/01/09/hack-tessel/"/>
     <updated>2014-01-09T21:25:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2014/01/09/hack-tessel</id>
+    <id>http://lewuathe.github.io/blog/2014/01/09/hack-tessel</id>
     <content type="html"><![CDATA[<p><meta property=”og:image” content=”http://lewuathe.com/images/posts/2014-01-09-tessel-first/bootstrap_tessel.jpg” /></p>
 
 <p>Yesterday, I got a <a href="http://tessel.io/">tessel</a>. With twists and turns, I overcome some obstacles for hacking this tiny but not little possibility board. So writing this post.</p>
@@ -2256,7 +2256,7 @@ For confirming the connection between tessel and my MAC, <code>verbose</code> su
 <p>Umm?. I cannot connect. No matter how long I wait, there are no sign of connecting.
 So here is answer.</p>
 
-<p><img src="http://Lewuathe.github.io/images/posts/2014-01-09-tessel-first/bootstrap_tessel.jpg" alt="Boostrap" /></p>
+<p><img src="http://lewuathe.github.io/images/posts/2014-01-09-tessel-first/bootstrap_tessel.jpg" alt="Boostrap" /></p>
 
 <p>I have to wait for the LED lamps off. I cannot understand why these waiting is necessary now, but anyway after the LEDs are off, I can connect to the tessel board. Great!</p>
 
@@ -2347,7 +2347,7 @@ It&rsquo;s below.</p>
 
 
 
-<iframe width="420" height="315" src="http://Lewuathe.github.io//www.youtube.com/embed/aKLGnU9wsTo" frameborder="0" allowfullscreen></iframe>
+<iframe width="420" height="315" src="http://lewuathe.github.io//www.youtube.com/embed/aKLGnU9wsTo" frameborder="0" allowfullscreen></iframe>
 
 
 <p><strong>BLINK!!!</strong></p>
@@ -2361,9 +2361,9 @@ So I want to try these modules more, and expand the possibility of embedded Java
   
   <entry>
     <title type="html"><![CDATA[Reference Configuration Library in Nodejs]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/12/30/reference-configuration-library-in-nodejs/"/>
+    <link href="http://lewuathe.github.io/blog/2013/12/30/reference-configuration-library-in-nodejs/"/>
     <updated>2013-12-30T20:24:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/12/30/reference-configuration-library-in-nodejs</id>
+    <id>http://lewuathe.github.io/blog/2013/12/30/reference-configuration-library-in-nodejs</id>
     <content type="html"><![CDATA[<p>I made npm module at the end of this year, <em>readonly</em>.</p>
 
 <p><a href="https://github.com/Lewuathe/readonly">lewuathe/readonly @GitHub</a></p>
@@ -2476,9 +2476,9 @@ If you find any bugs, please inform me with <a href="https://github.com/Lewuathe
   
   <entry>
     <title type="html"><![CDATA[How to Start KrakenJS]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/12/23/how-to-start-krakenjs/"/>
+    <link href="http://lewuathe.github.io/blog/2013/12/23/how-to-start-krakenjs/"/>
     <updated>2013-12-23T11:55:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/12/23/how-to-start-krakenjs</id>
+    <id>http://lewuathe.github.io/blog/2013/12/23/how-to-start-krakenjs</id>
     <content type="html"><![CDATA[<p>In this november, Paypal released KrakenJS which is web application framework based on Connect, Express.</p>
 
 <p><a href="http://krakenjs.com/">http://krakenjs.com/</a></p>
@@ -2566,7 +2566,7 @@ So you don&rsquo;t need to type <code>npm install</code> again. After only these
 
 <p>Congratulations!! You can see your application through web browser.</p>
 
-<p><img src="http://Lewuathe.github.io/images/posts/2013-12-23-kraken/startpage.png" alt="start page" /></p>
+<p><img src="http://lewuathe.github.io/images/posts/2013-12-23-kraken/startpage.png" alt="start page" /></p>
 
 <h2>Structure</h2>
 
@@ -2717,9 +2717,9 @@ it has nice libraries. I&rsquo;ll bet this framework can accelerate your speed o
   
   <entry>
     <title type="html"><![CDATA[Making Custom Segue]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/12/17/making-custom-segue/"/>
+    <link href="http://lewuathe.github.io/blog/2013/12/17/making-custom-segue/"/>
     <updated>2013-12-17T23:21:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/12/17/making-custom-segue</id>
+    <id>http://lewuathe.github.io/blog/2013/12/17/making-custom-segue</id>
     <content type="html"><![CDATA[<p>In developing iOS application, have you wanted to make your own cutomized segue? UIKit provides bare segues such as
 <code>push</code>, <code>modal</code>, <code>popover</code> and <code>replace</code>. These are useful in any situations. But sometimes I want to make my own transition.
 So, I wrote down some tips for making your own custom animation used by segue.</p>
@@ -2729,7 +2729,7 @@ So, I wrote down some tips for making your own custom animation used by segue.</
 <p>In Xcode, add new files. The name of this class, anything is OK. But you have to set super class <code>UIStoryboardSegue</code>. Otherwise storyboard
 cannot find this custom class subsequently.</p>
 
-<p><img src="http://Lewuathe.github.io/images/posts/2013-12-17-customsegue/create-segue.png" alt="create" /></p>
+<p><img src="http://lewuathe.github.io/images/posts/2013-12-17-customsegue/create-segue.png" alt="create" /></p>
 
 <p>In this case, I named <code>FlipSegue</code></p>
 
@@ -2811,7 +2811,7 @@ Please see official document for detail. And then we&rsquo;ll use this segue on 
 
 <p>You need to draw your custom segue on storyboard.</p>
 
-<p><img src="http://Lewuathe.github.io/images/posts/2013-12-17-customsegue/storyboard-segue.png" alt="storyboard" /></p>
+<p><img src="http://lewuathe.github.io/images/posts/2013-12-17-customsegue/storyboard-segue.png" alt="storyboard" /></p>
 
 <p>You can see <code>flip</code>, when you drag the arrow of segue on storyboard. This is your custom <code>FlipSegue</code>.
 So choose this segue. And run!! Pusing source button of flip segue, your will see your custom animated transition.</p>
@@ -2820,9 +2820,9 @@ So choose this segue. And run!! Pusing source button of flip segue, your will se
   
   <entry>
     <title type="html"><![CDATA[Making Jenkins Widget Plugin]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/12/13/making-widget-plugin/"/>
+    <link href="http://lewuathe.github.io/blog/2013/12/13/making-widget-plugin/"/>
     <updated>2013-12-13T21:14:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/12/13/making-widget-plugin</id>
+    <id>http://lewuathe.github.io/blog/2013/12/13/making-widget-plugin</id>
     <content type="html"><![CDATA[<p>This article was written for <a href="http://qiita.com/advent-calendar/2013/jenkinsci">Jenkins Advent Calendar</a> 14th day.</p>
 
 <h2>Making Jenkins plugin</h2>
@@ -3012,7 +3012,7 @@ Write below xml in <code>~/.m2/settings.xml</code></p>
 From <a href="https://wiki.jenkins-ci.org/display/JENKINS/Hckrnews+Plugin">there</a>, it can be downloaded.
 Screen shot was taken as below.</p>
 
-<p><img src="http://Lewuathe.github.io/images/posts/2013-12-13-jenkins-widget-plugin/hckrnews-screenshot.png" alt="screenshot" /></p>
+<p><img src="http://lewuathe.github.io/images/posts/2013-12-13-jenkins-widget-plugin/hckrnews-screenshot.png" alt="screenshot" /></p>
 
 <p>By examing this plugin&rsquo;s source code, I want to list up the points I had trouble in completing this plugin.</p>
 
@@ -3189,7 +3189,7 @@ Of course, it is taken for granted that writing down your wiki url on pom.xml.</
 <p>But this is not the trigger of creating Jenkins wiki page :( You have to make your own page yourself.
 I misunderstood about making wiki pages on this point. After you make your own wiki page, let&rsquo;s add a tag.</p>
 
-<p><img src="http://Lewuathe.github.io/images/posts/2013-12-13-jenkins-widget-plugin/add-tag.png" alt="add-tag" /></p>
+<p><img src="http://lewuathe.github.io/images/posts/2013-12-13-jenkins-widget-plugin/add-tag.png" alt="add-tag" /></p>
 
 <p>After you add tag, your wiki page will be listed on <a href="https://wiki.jenkins-ci.org/display/JENKINS/Plugins">this page</a>. It will be easier to search for users.</p>
 
@@ -3208,9 +3208,9 @@ If there are no test codes in the plugin of continuous integration tool, Jenkins
   
   <entry>
     <title type="html"><![CDATA[Agile Samurai Basecamp in Tokyo <2>]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/12/09/agile-samurai-basecamp-in-tokyo/"/>
+    <link href="http://lewuathe.github.io/blog/2013/12/09/agile-samurai-basecamp-in-tokyo/"/>
     <updated>2013-12-09T20:16:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/12/09/agile-samurai-basecamp-in-tokyo</id>
+    <id>http://lewuathe.github.io/blog/2013/12/09/agile-samurai-basecamp-in-tokyo</id>
     <content type="html"><![CDATA[<p>This entry follows previous post.
 The practical methods about TDD are explained in this section.</p>
 
@@ -3244,7 +3244,7 @@ are not willing to be refactored. We are afraid of changing running code. TDD en
 <p>The most important process in these 7 phases is refactoring. If you result in failure of TDD, the main reason is to neglect refactoring your product code. It needs more power of the will.
 So it is better to insert refactoring into TDD process. You don&rsquo;t do refactoring as an addition, but do as necessary process.</p>
 
-<p><img src="http://Lewuathe.github.io/images/posts/2013-12-10-samurai-2/golden_cycle.jpg" alt="Golden Cycle" /></p>
+<p><img src="http://lewuathe.github.io/images/posts/2013-12-10-samurai-2/golden_cycle.jpg" alt="Golden Cycle" /></p>
 
 <h3>The secrets of TDD</h3>
 
@@ -3294,9 +3294,9 @@ That mind must not be forgot whenever I type my test code.</p>
   
   <entry>
     <title type="html"><![CDATA[Agile Samurai Basecamp in Tokyo <1>]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/12/08/whatt-going-on-at-agile-samurai-basecamp/"/>
+    <link href="http://lewuathe.github.io/blog/2013/12/08/whatt-going-on-at-agile-samurai-basecamp/"/>
     <updated>2013-12-08T19:29:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/12/08/whatt-going-on-at-agile-samurai-basecamp</id>
+    <id>http://lewuathe.github.io/blog/2013/12/08/whatt-going-on-at-agile-samurai-basecamp</id>
     <content type="html"><![CDATA[<p>At work, I am a scrum padawan, not yet master :&ndash;)</p>
 
 <p>Through developing with agile team, I was taught what scrum is, product backlog is, sprint is.</p>
@@ -3312,7 +3312,7 @@ He answered the questions  who is agile samurai, what agile teams are for.</p>
 
 <h3>Who is agile samurai?</h3>
 
-<p><img src="http://Lewuathe.github.io/images/posts/2013-12-08-samurai-1/samurai.jpg" alt="samurai" /></p>
+<p><img src="http://lewuathe.github.io/images/posts/2013-12-08-samurai-1/samurai.jpg" alt="samurai" /></p>
 
 <p>Agile team must keep to delivering valuable software every week. It doesn&rsquo;t mean just delivering lecture or lesson,
 but codes which run as what you and your customer expects. To achieve this, it is very important to tackle problems as <em>&ldquo;whole one team&rdquo;</em>  which includes
@@ -3361,9 +3361,9 @@ So it&rsquo;s inception deck. If you want to know about inception deck, read thi
   
   <entry>
     <title type="html"><![CDATA[Closure With Async.js]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/12/05/closure-with-async-dot-js/"/>
+    <link href="http://lewuathe.github.io/blog/2013/12/05/closure-with-async-dot-js/"/>
     <updated>2013-12-05T20:29:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/12/05/closure-with-async-dot-js</id>
+    <id>http://lewuathe.github.io/blog/2013/12/05/closure-with-async-dot-js</id>
     <content type="html"><![CDATA[<p>You may use <a href="https://npmjs.org/package/async">Async.js</a> at least one time when you develop with nodejs.</p>
 
 <blockquote><p>Async is a utility module which provides straight-forward, powerful functions for working with asynchronous JavaScript.</p></blockquote>

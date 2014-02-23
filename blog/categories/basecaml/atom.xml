@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Basecaml | The first cry of Atom]]></title>
-  <link href="http://Lewuathe.github.io/blog/categories/basecaml/atom.xml" rel="self"/>
-  <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-23T19:25:40+09:00</updated>
-  <id>http://Lewuathe.github.io/</id>
+  <link href="http://lewuathe.github.io/blog/categories/basecaml/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-02-23T19:44:17+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Agile Samurai Basecamp in Tokyo <1>]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/12/08/whatt-going-on-at-agile-samurai-basecamp/"/>
+    <link href="http://lewuathe.github.io/blog/2013/12/08/whatt-going-on-at-agile-samurai-basecamp/"/>
     <updated>2013-12-08T19:29:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/12/08/whatt-going-on-at-agile-samurai-basecamp</id>
+    <id>http://lewuathe.github.io/blog/2013/12/08/whatt-going-on-at-agile-samurai-basecamp</id>
     <content type="html"><![CDATA[<p>At work, I am a scrum padawan, not yet master :&ndash;)</p>
 
 <p>Through developing with agile team, I was taught what scrum is, product backlog is, sprint is.</p>

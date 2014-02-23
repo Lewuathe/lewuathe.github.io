@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Machine Learning | The first cry of Atom]]></title>
-  <link href="http://Lewuathe.github.io/blog/categories/machine-learning/atom.xml" rel="self"/>
-  <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-23T19:25:40+09:00</updated>
-  <id>http://Lewuathe.github.io/</id>
+  <link href="http://lewuathe.github.io/blog/categories/machine-learning/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-02-23T19:44:17+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[NN With Nodejs]]></title>
-    <link href="http://Lewuathe.github.io/blog/2014/02/14/nn-with-nodejs/"/>
+    <link href="http://lewuathe.github.io/blog/2014/02/14/nn-with-nodejs/"/>
     <updated>2014-02-14T22:23:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2014/02/14/nn-with-nodejs</id>
+    <id>http://lewuathe.github.io/blog/2014/02/14/nn-with-nodejs</id>
     <content type="html"><![CDATA[<p>2 layer newral network is added to <a href="https://github.com/Lewuathe/n42">n42</a>
 This network is simple newral network which can trained throught gradient descent optimization calculation.
 It is the same algorithm to the one of denoised autoencoder used by n42. So implementation itself was not diffucult.

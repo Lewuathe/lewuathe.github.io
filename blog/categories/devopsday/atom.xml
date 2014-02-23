@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: DevOpsDay | The first cry of Atom]]></title>
-  <link href="http://Lewuathe.github.io/blog/categories/devopsday/atom.xml" rel="self"/>
-  <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-23T19:25:40+09:00</updated>
-  <id>http://Lewuathe.github.io/</id>
+  <link href="http://lewuathe.github.io/blog/categories/devopsday/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-02-23T19:44:17+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[DevOpsDay Tokyo 2013に行ってきたよ]]></title>
-    <link href="http://Lewuathe.github.io/blog/2013/09/28/devopsday-tokyo-2013nixing-tutekitayo/"/>
+    <link href="http://lewuathe.github.io/blog/2013/09/28/devopsday-tokyo-2013nixing-tutekitayo/"/>
     <updated>2013-09-28T10:37:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2013/09/28/devopsday-tokyo-2013nixing-tutekitayo</id>
+    <id>http://lewuathe.github.io/blog/2013/09/28/devopsday-tokyo-2013nixing-tutekitayo</id>
     <content type="html"><![CDATA[<p><img src="/images/posts/2013-09-28-DevOpsDay/DevOpsDay-2013.jpg" alt="ノベルティ" /></p>
 
 <p>印象に残った話しをざっとまとめてみる。なぜならBlogをかくまでがDev Ops Dayだから！！</p>

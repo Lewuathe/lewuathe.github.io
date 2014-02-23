@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Deep Leanring | The first cry of Atom]]></title>
-  <link href="http://Lewuathe.github.io/blog/categories/deep-leanring/atom.xml" rel="self"/>
-  <link href="http://Lewuathe.github.io/"/>
-  <updated>2014-02-23T19:25:40+09:00</updated>
-  <id>http://Lewuathe.github.io/</id>
+  <link href="http://lewuathe.github.io/blog/categories/deep-leanring/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-02-23T19:44:17+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Autoencoder With node.js]]></title>
-    <link href="http://Lewuathe.github.io/blog/2014/01/26/autoencoder-with-node-dot-js/"/>
+    <link href="http://lewuathe.github.io/blog/2014/01/26/autoencoder-with-node-dot-js/"/>
     <updated>2014-01-26T21:14:00+09:00</updated>
-    <id>http://Lewuathe.github.io/blog/2014/01/26/autoencoder-with-node-dot-js</id>
+    <id>http://lewuathe.github.io/blog/2014/01/26/autoencoder-with-node-dot-js</id>
     <content type="html"><![CDATA[<p><a href="https://en.wikipedia.org/wiki/Autoencoder">Auto encoder</a> is used for deep learning. Auto encoder extract characteristics of data through
 unsupervised learning. This is a kind of newral network. By using an auto encoder, you don&rsquo;t have to
 be in trouble with choicing extracting algorithm, or doing yourself. Therefore, in deepleanring field,
