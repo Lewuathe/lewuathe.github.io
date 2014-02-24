@@ -9,8 +9,7 @@
   <meta name="author" content="Kai Sasaki">
 
   
-  <meta name="description" content="仕事で、あるアジャイルプロジェクトに関わってきた。 スクラムマスターとなり、初めてのアジャイルプロジェクトを進めてもう3ヶ月ほどになる。 今日、アジャイルのススメ方についてこれまでも指導をくれていた人から幾つか言葉をもらったので
-これまでの３ヶ月、これからのこと、 &hellip;">
+  <meta name="description" content="仮想環境構築の方法のひとつにDockerを使ってみた。いままではVirtualBoxを使ってVagrantからつないでいく方法をやってみたけれど、仮想マシンをいちいち立ち上げる方法はどうも遅いのでDockerというもので試してみた。 Dockerの特徴は以下記事から抜粋。 http:// &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,14 +17,13 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta property="og:title" content=" - The first cry of Atom" >
-<meta property="og:description" content="仕事で、あるアジャイルプロジェクトに関わってきた。 スクラムマスターとなり、初めてのアジャイルプロジェクトを進めてもう3ヶ月ほどになる。 今日、アジャイルのススメ方についてこれまでも指導をくれていた人から幾つか言葉をもらったので
-これまでの３ヶ月、これからのこと、 &hellip;" />
+<meta property="og:description" content="仮想環境構築の方法のひとつにDockerを使ってみた。いままではVirtualBoxを使ってVagrantからつないでいく方法をやってみたけれど、仮想マシンをいちいち立ち上げる方法はどうも遅いのでDockerというもので試してみた。 Dockerの特徴は以下記事から抜粋。 http:// &hellip;" />
 <meta property="og:url" content="http://lewuathe.com" />
 <meta property="og:image" content="http://lewuathe.github.io/images/site_image.png" />
 <meta property="og:author" content="lewuathe" />
 <meta property="og:site_name" content="The first cry of Atom" />
 <meta property="og:locale" content="ja_JP" />
-<meta property="og:type" content="article" />
+<meta property="og:type" content="blog" />
 <meta property="fb:app_id" content="212934732101925" />
 
 
@@ -93,6 +91,159 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/10/20/dockerwoshi-tutemiyou/">Dockerで仮想化をはじめよう</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-20T20:30:00+09:00" pubdate data-updated="true">Oct 20<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>仮想環境構築の方法のひとつに<a href="http://www.docker.io/">Docker</a>を使ってみた。いままではVirtualBoxを使ってVagrantからつないでいく方法をやってみたけれど、仮想マシンをいちいち立ち上げる方法はどうも遅いのでDockerというもので試してみた。</p>
+
+<p>Dockerの特徴は以下記事から抜粋。</p>
+
+<p><a href="http://apatheia.info/blog/2013/06/17/docker/">http://apatheia.info/blog/2013/06/17/docker/</a></p>
+
+<ul>
+<li>仮想マシンを立ち上げるわけではなく、ホスト内の隔離された環境で動作するため起動が速い。<a href="http://linuxcontainers.org/">LXC</a>という技術のことらしい。ここでこの隔離されたシステムのことを <strong>コンテナ</strong> という。</li>
+<li>AUFSを使っている。起動したときはディレクトリを重ねあわせておいて、更新の際に別の場所に書き込むというファイルシステムっぽい。立ち上げ時にイメージコピーがいらないので起動が軽い。</li>
+</ul>
+
+
+<h2>動かしてみた</h2>
+
+<p>環境は以下で行った</p>
+
+<ul>
+<li>MacOSX 10.8</li>
+<li>VirtualBox 4.2</li>
+<li>vagrant 1.2.4</li>
+</ul>
+
+
+<p>他にUbuntu LTS12.04が入ったマシンを持っていたのでVagrant使わずにそっちでトライしたら32bitだとだめらしい。どうもUbuntu日本語コミュニティには32bitイメージしかなかったのでぼけーっと入れたらそっちになってしまったみたい。また入れなおすのもとりあえずめんどくさいのでMacのVagrantにUbuntu仮想マシンを立ち上げてその上にDockerを起動させるという構成。</p>
+
+<p><a href="http://docs.docker.io/en/latest/installation/vagrant/">ここ</a>に従えば特に問題なくいけた。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git clone https://github.com/dotcloud/docker.git
+</span><span class='line'>$ cd docker
+</span><span class='line'>$ vagrant up</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ここまでで10minくらいかかる。でも悪いのはVirtualBoxとvagrant。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># dockerが起動するか見てみる
+</span><span class='line'>$ docker
+</span><span class='line'># サブコマンドがだーっと出る</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>イメージをダウンロード</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo docker pull ubuntu</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>先ほどのコンテナ内でスクリプトを動作させる</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># sudo docker run &lt;実行対象コンテナ&gt; &lt;コマンド(引数あってもいい)&gt;
+</span><span class='line'>$ sudo docker run ubuntu /bin/echo hello world</span></code></pre></td></tr></table></div></figure>
+
+
+<p>別にsudoはなくてもいい
+これらはDockerのコンテナ内で実行されているコマンドだが、いまいち仮想ホスト立てている感じにならない。それを感じるためにはDockerをdaemon化させる必要がある。</p>
+
+<h2>コマンドをdaemon化させる</h2>
+
+<p>走らせるコマンドを定義する。このコマンドはコンテナのIDを返す。このIDをもとにそのコンテナで何がおきているかを見る
+-dはコマンドをdaemon化させるオプション</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ CONTAINER_ID=$(sudo docker run -d ubuntu /bin/sh -c "while true; do echo hello world; sleep 1; done")</span></code></pre></td></tr></table></div></figure>
+
+
+<p>そして起動させる。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo docker logs $CONTAINER_ID</span></code></pre></td></tr></table></div></figure>
+
+
+<p>さっきのコンテナIDが返ってくるのでこいつを<code>docker logs</code>に渡してやると実行されているコマンドの値が見えるようになる。たただしこれは実行が終わったら返ってくるのでリアルタイムにコマンドの結果を見たければ<code>attach</code>を使う</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo docker attach $CONTAINER_ID</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ここまで適当にやっていったら、いっぱいコンテナができてしまったので確認してみる。dockerが起動したコマンドたちを確認する場合は<code>ps</code>サブコマンドを使う。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ docker ps
+</span><span class='line'>ID                  IMAGE               COMMAND                CREATED             STATUS              PORTS
+</span><span class='line'>4841794938a7        ubuntu:12.04        /bin/sh -c while tru   7 minutes ago       Up 7 minutes            
+</span><span class='line'>79b862e271bc        ubuntu:12.04        /bin/sh -c while tru   8 minutes ago       Up 8 minutes                  
+</span><span class='line'>bee9d7a00611        ubuntu:12.04        /bin/sh -c while tru   9 minutes ago       Up 9 minutes           </span></code></pre></td></tr></table></div></figure>
+
+
+<p>こいつらをとめたければ<code>stop</code>を使う</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo docker stop 4841794938a7 
+</span><span class='line'>4841794938a7 
+</span><span class='line'>
+</span><span class='line'>$ sudo docker ps
+</span><span class='line'>ID                  IMAGE               COMMAND                CREATED             STATUS              PORTS
+</span><span class='line'>79b862e271bc        ubuntu:12.04        /bin/sh -c while tru   13 minutes ago      Up 13 minutes             
+</span><span class='line'>bee9d7a00611        ubuntu:12.04        /bin/sh -c while tru   14 minutes ago      Up 14 minutes                    </span></code></pre></td></tr></table></div></figure>
+
+
+<h2>まとめ</h2>
+
+<p>今回のチュートリアルは<a href="http://docs.docker.io/en/latest/examples/hello_world/#running-examples">ここ</a>からすべてとった。Dockerかなり簡単だけれど、いまいちコマンドをひとつひとつ打っているだけな気がして仮想マシンをたてて、実行している感じがあまりしない。ここで実際にWebアプリとか作ることとかもできるっぽいのでもうちょっと見ていこうかと。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1649,76 +1800,6 @@ build.sbtファイルに以下のように書いてupdateを行う</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/09/13/sbttoeclipsedescalakai-fa-huan-jing/">SBTとEclipseでScala開発環境</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-09-13T22:17:00+09:00" pubdate data-updated="true">Sep 13<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>SBTの使い方がなんとなくわかってきたので、今度はEclipseにSBTプロジェクトを導入してみる。</p>
-
-<h3>Eclipse plubin for SBTのinstall</h3>
-
-<p>プロジェクトに必要なプラグインをインストールする。この場合は<code>project/plubins.sbt</code>に以下のように記述する。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">resolvers</span> <span class="o">+=</span> <span class="nc">Classpaths</span><span class="o">.</span><span class="n">typesafeResolver</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">addSbtPlugin</span><span class="o">(</span><span class="s">&quot;com.typesafe.sbteclipse&quot;</span> <span class="o">%</span> <span class="s">&quot;sbteclipse-plugin&quot;</span> <span class="o">%</span> <span class="s">&quot;2.1.2&quot;</span><span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>ここで以下のコマンドを打てばこのプラグインがインストールされ、Eclipseプロジェクトに必要な.projectファイルができあがる</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">$</span> <span class="n">sbt</span> <span class="n">eclipse</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>これをImportすればいい。Importの方法は</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="nc">File</span> <span class="o">-&gt;</span> <span class="nc">Import</span> <span class="o">-&gt;</span> <span class="nc">General</span> <span class="o">-&gt;</span> <span class="nc">Existing</span> <span class="nc">Projects</span> <span class="n">into</span> <span class="nc">Workspace</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>でできる。</p>
-
-<p>あともっと便利にSBTを使いたければ<a href="http://d.hatena.ne.jp/qtamaki/20121210/1355167655">ここ</a>に書いてある通りにやるとテンプレート展開のためのライブラリとかも入れられる。(g8っつうらしい)</p>
-
-<p>でもどうやら実行とかテストはSBT上でやった方がいいみたい。Eclipseは純粋なエディタとして使う人が多いっぽい。
-確かにJavaのプロジェクトと認識されてしまってうまくコンパイルできないや。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -1736,6 +1817,10 @@ build.sbtファイルに以下のように書いてupdateを行う</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/02/24/optimize-octopress-for-facebook-post/">Optimize Octopress for Facebook Post</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/02/23/trying-word2vec-from-twitter-corpus/">Trying Word2vec From Twitter Corpus</a>
       </li>
     
@@ -1749,10 +1834,6 @@ build.sbtファイルに以下のように書いてupdateを行う</p>
     
       <li class="post">
         <a href="/blog/2014/02/18/useful-shortcuts-for-intellij-idea/">Useful Shortcuts for IntelliJ IDEA</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/02/17/go-and-scala-which-should-i-use/">Go and Scala, Which Should I Use?</a>
       </li>
     
   </ul>

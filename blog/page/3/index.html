@@ -9,8 +9,7 @@
   <meta name="author" content="Kai Sasaki">
 
   
-  <meta name="description" content="THE LEFT ONE from Kai Sasaki I decided to do. I always did so.
-It&rsquo;s my challenge for my future, and my hapiness. So I wrote it. Not to forget &hellip;">
+  <meta name="description" content="You may use Async.js at least one time when you develop with nodejs. Async is a utility module which provides straight-forward, powerful functions &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,14 +17,13 @@ It&rsquo;s my challenge for my future, and my hapiness. So I wrote it. Not to fo
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta property="og:title" content=" - The first cry of Atom" >
-<meta property="og:description" content="THE LEFT ONE from Kai Sasaki I decided to do. I always did so.
-It&rsquo;s my challenge for my future, and my hapiness. So I wrote it. Not to forget &hellip;" />
+<meta property="og:description" content="You may use Async.js at least one time when you develop with nodejs. Async is a utility module which provides straight-forward, powerful functions &hellip;" />
 <meta property="og:url" content="http://lewuathe.com" />
 <meta property="og:image" content="http://lewuathe.github.io/images/site_image.png" />
 <meta property="og:author" content="lewuathe" />
 <meta property="og:site_name" content="The first cry of Atom" />
 <meta property="og:locale" content="ja_JP" />
-<meta property="og:type" content="article" />
+<meta property="og:type" content="blog" />
 <meta property="fb:app_id" content="212934732101925" />
 
 
@@ -93,6 +91,214 @@ It&rsquo;s my challenge for my future, and my hapiness. So I wrote it. Not to fo
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/12/05/closure-with-async-dot-js/">Closure With Async.js</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-05T20:29:00+09:00" pubdate data-updated="true">Dec 5<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>You may use <a href="https://npmjs.org/package/async">Async.js</a> at least one time when you develop with nodejs.</p>
+
+<blockquote><p>Async is a utility module which provides straight-forward, powerful functions for working with asynchronous JavaScript.</p></blockquote>
+
+<p>So if you want to write asynchronous code with JavaScript, I recommend you to use it. It&rsquo;s easy to use, simple syntax.
+However I had trouble with using Async.js in the context of giving dynamic task array. In this article, I want to share
+how to write dynamic task array given to Async.js module.</p>
+
+<h2>Problem</h2>
+
+<p>I wrote like a below code with nodejs.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">async</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;async&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Total task is 10 which is executed in parallel</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">TASK_NUM</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// All task functions are put in taskList</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">taskList</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">TASK_NUM</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">taskList</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">callback</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">i</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">async</span><span class="p">.</span><span class="nx">parallel</span><span class="p">(</span><span class="nx">taskList</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">results</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">results</span><span class="p">);</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When you run this code, I obtained below output.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="mi">10</span>
+</span><span class='line'><span class="mi">10</span>
+</span><span class='line'><span class="mi">10</span>
+</span><span class='line'><span class="mi">10</span>
+</span><span class='line'><span class="mi">10</span>
+</span><span class='line'><span class="mi">10</span>
+</span><span class='line'><span class="mi">10</span>
+</span><span class='line'><span class="mi">10</span>
+</span><span class='line'><span class="mi">10</span>
+</span><span class='line'><span class="mi">10</span>
+</span><span class='line'><span class="p">[</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span> <span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This didn&rsquo;t fit my expectation. I thought all tasks should get i-th argument. So each task&rsquo;s output
+is i-th number, if i-th task runs. However in this case, all task&rsquo;s output is 10. Why closure in function(In JavaScript, <code>function</code> makes variable scope, called closure) might not be effective?</p>
+
+<h2>Answer</h2>
+
+<p>There is answer in <a href="http://stackoverflow.com/questions/12472448/async-parallel-with-functions-dynamic-array">StackOverflow</a>.</p>
+
+<blockquote><p>A closure doesn&rsquo;t &ldquo;trap&rdquo; the value that an outer variable had at the time it was created; it &ldquo;traps&rdquo; a reference to whatever value the outer variable has at the time it&rsquo;s executed (which in this case won&rsquo;t be until well after your for loop has finished.</p></blockquote>
+
+<p>So in this case, closure does not make scope when it is <strong>declared</strong>, but <strong>executed</strong>. The variable <code>i</code> resulted in 10 after <code>for</code> loop in this code. And then each tasks will be executed under the condition that variable <code>i</code> is 10. I understood why these odd phenomenon was occured.</p>
+
+<h2>How to write</h2>
+
+<p>How should I write in order to execute this code as I expected in advance. Same page showed me the answer.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">deleteFunction</span> <span class="o">=</span> <span class="nx">makeDeleteFunction</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">callback</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Writing wrapper function which wraps my original tasks makes scope under given argument <code>i</code>. When you declare task, you should not make task function directly, but should give parameters which trapped in declaration context to the wrapper function. Here is my sample that is corresponds to above code.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">async</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;async&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Wrapper function</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">makeTask</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+</span><span class='line'>        <span class="nx">callback</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">i</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Total task is 10 which is executed in parallel</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">TASK_NUM</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// All task functions are put in taskList</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">taskList</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">TASK_NUM</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">taskList</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">makeTask</span><span class="p">(</span><span class="nx">i</span><span class="p">));</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">async</span><span class="p">.</span><span class="nx">parallel</span><span class="p">(</span><span class="nx">taskList</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">results</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">results</span><span class="p">);</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then output is given as I expected.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="mi">0</span>
+</span><span class='line'><span class="mi">1</span>
+</span><span class='line'><span class="mi">2</span>
+</span><span class='line'><span class="mi">3</span>
+</span><span class='line'><span class="mi">4</span>
+</span><span class='line'><span class="mi">5</span>
+</span><span class='line'><span class="mi">6</span>
+</span><span class='line'><span class="mi">7</span>
+</span><span class='line'><span class="mi">8</span>
+</span><span class='line'><span class="mi">9</span>
+</span><span class='line'><span class="p">[</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span> <span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you write dynamic task function with Async.js, notice these fact.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1086,159 +1292,6 @@ patchの内容はpassport-yjの依存しているpassportモジュールの仕�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/10/20/dockerwoshi-tutemiyou/">Dockerで仮想化をはじめよう</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-20T20:30:00+09:00" pubdate data-updated="true">Oct 20<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>仮想環境構築の方法のひとつに<a href="http://www.docker.io/">Docker</a>を使ってみた。いままではVirtualBoxを使ってVagrantからつないでいく方法をやってみたけれど、仮想マシンをいちいち立ち上げる方法はどうも遅いのでDockerというもので試してみた。</p>
-
-<p>Dockerの特徴は以下記事から抜粋。</p>
-
-<p><a href="http://apatheia.info/blog/2013/06/17/docker/">http://apatheia.info/blog/2013/06/17/docker/</a></p>
-
-<ul>
-<li>仮想マシンを立ち上げるわけではなく、ホスト内の隔離された環境で動作するため起動が速い。<a href="http://linuxcontainers.org/">LXC</a>という技術のことらしい。ここでこの隔離されたシステムのことを <strong>コンテナ</strong> という。</li>
-<li>AUFSを使っている。起動したときはディレクトリを重ねあわせておいて、更新の際に別の場所に書き込むというファイルシステムっぽい。立ち上げ時にイメージコピーがいらないので起動が軽い。</li>
-</ul>
-
-
-<h2>動かしてみた</h2>
-
-<p>環境は以下で行った</p>
-
-<ul>
-<li>MacOSX 10.8</li>
-<li>VirtualBox 4.2</li>
-<li>vagrant 1.2.4</li>
-</ul>
-
-
-<p>他にUbuntu LTS12.04が入ったマシンを持っていたのでVagrant使わずにそっちでトライしたら32bitだとだめらしい。どうもUbuntu日本語コミュニティには32bitイメージしかなかったのでぼけーっと入れたらそっちになってしまったみたい。また入れなおすのもとりあえずめんどくさいのでMacのVagrantにUbuntu仮想マシンを立ち上げてその上にDockerを起動させるという構成。</p>
-
-<p><a href="http://docs.docker.io/en/latest/installation/vagrant/">ここ</a>に従えば特に問題なくいけた。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git clone https://github.com/dotcloud/docker.git
-</span><span class='line'>$ cd docker
-</span><span class='line'>$ vagrant up</span></code></pre></td></tr></table></div></figure>
-
-
-<p>ここまでで10minくらいかかる。でも悪いのはVirtualBoxとvagrant。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># dockerが起動するか見てみる
-</span><span class='line'>$ docker
-</span><span class='line'># サブコマンドがだーっと出る</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>イメージをダウンロード</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo docker pull ubuntu</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>先ほどのコンテナ内でスクリプトを動作させる</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># sudo docker run &lt;実行対象コンテナ&gt; &lt;コマンド(引数あってもいい)&gt;
-</span><span class='line'>$ sudo docker run ubuntu /bin/echo hello world</span></code></pre></td></tr></table></div></figure>
-
-
-<p>別にsudoはなくてもいい
-これらはDockerのコンテナ内で実行されているコマンドだが、いまいち仮想ホスト立てている感じにならない。それを感じるためにはDockerをdaemon化させる必要がある。</p>
-
-<h2>コマンドをdaemon化させる</h2>
-
-<p>走らせるコマンドを定義する。このコマンドはコンテナのIDを返す。このIDをもとにそのコンテナで何がおきているかを見る
--dはコマンドをdaemon化させるオプション</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ CONTAINER_ID=$(sudo docker run -d ubuntu /bin/sh -c "while true; do echo hello world; sleep 1; done")</span></code></pre></td></tr></table></div></figure>
-
-
-<p>そして起動させる。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo docker logs $CONTAINER_ID</span></code></pre></td></tr></table></div></figure>
-
-
-<p>さっきのコンテナIDが返ってくるのでこいつを<code>docker logs</code>に渡してやると実行されているコマンドの値が見えるようになる。たただしこれは実行が終わったら返ってくるのでリアルタイムにコマンドの結果を見たければ<code>attach</code>を使う</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo docker attach $CONTAINER_ID</span></code></pre></td></tr></table></div></figure>
-
-
-<p>ここまで適当にやっていったら、いっぱいコンテナができてしまったので確認してみる。dockerが起動したコマンドたちを確認する場合は<code>ps</code>サブコマンドを使う。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ docker ps
-</span><span class='line'>ID                  IMAGE               COMMAND                CREATED             STATUS              PORTS
-</span><span class='line'>4841794938a7        ubuntu:12.04        /bin/sh -c while tru   7 minutes ago       Up 7 minutes            
-</span><span class='line'>79b862e271bc        ubuntu:12.04        /bin/sh -c while tru   8 minutes ago       Up 8 minutes                  
-</span><span class='line'>bee9d7a00611        ubuntu:12.04        /bin/sh -c while tru   9 minutes ago       Up 9 minutes           </span></code></pre></td></tr></table></div></figure>
-
-
-<p>こいつらをとめたければ<code>stop</code>を使う</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo docker stop 4841794938a7 
-</span><span class='line'>4841794938a7 
-</span><span class='line'>
-</span><span class='line'>$ sudo docker ps
-</span><span class='line'>ID                  IMAGE               COMMAND                CREATED             STATUS              PORTS
-</span><span class='line'>79b862e271bc        ubuntu:12.04        /bin/sh -c while tru   13 minutes ago      Up 13 minutes             
-</span><span class='line'>bee9d7a00611        ubuntu:12.04        /bin/sh -c while tru   14 minutes ago      Up 14 minutes                    </span></code></pre></td></tr></table></div></figure>
-
-
-<h2>まとめ</h2>
-
-<p>今回のチュートリアルは<a href="http://docs.docker.io/en/latest/examples/hello_world/#running-examples">ここ</a>からすべてとった。Dockerかなり簡単だけれど、いまいちコマンドをひとつひとつ打っているだけな気がして仮想マシンをたてて、実行している感じがあまりしない。ここで実際にWebアプリとか作ることとかもできるっぽいのでもうちょっと見ていこうかと。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -1256,6 +1309,10 @@ patchの内容はpassport-yjの依存しているpassportモジュールの仕�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/02/24/optimize-octopress-for-facebook-post/">Optimize Octopress for Facebook Post</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/02/23/trying-word2vec-from-twitter-corpus/">Trying Word2vec From Twitter Corpus</a>
       </li>
     
@@ -1269,10 +1326,6 @@ patchの内容はpassport-yjの依存しているpassportモジュールの仕�
     
       <li class="post">
         <a href="/blog/2014/02/18/useful-shortcuts-for-intellij-idea/">Useful Shortcuts for IntelliJ IDEA</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/02/17/go-and-scala-which-should-i-use/">Go and Scala, Which Should I Use?</a>
       </li>
     
   </ul>

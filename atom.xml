@@ -4,7 +4,7 @@
   <title><![CDATA[The first cry of Atom]]></title>
   <link href="http://lewuathe.github.io/atom.xml" rel="self"/>
   <link href="http://lewuathe.github.io/"/>
-  <updated>2014-02-23T23:35:02+09:00</updated>
+  <updated>2014-02-24T21:37:46+09:00</updated>
   <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
@@ -12,6 +12,124 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Optimize Octopress for Facebook Post]]></title>
+    <link href="http://lewuathe.github.io/blog/2014/02/24/optimize-octopress-for-facebook-post/"/>
+    <updated>2014-02-24T20:25:45+09:00</updated>
+    <id>http://lewuathe.github.io/blog/2014/02/24/optimize-octopress-for-facebook-post</id>
+    <content type="html"><![CDATA[<p>This blog made by <a href="http://octopress.org/">octopress</a>, ruby CMS tool.
+As many others do, I also combined this tool with <a href="http://pages.github.com/">GitHub pages</a>
+But this method has one fault about posting on facebook. Octopress doesn&rsquo;t include ogp properties as default. Ogp properties privide facebook meta information such as title, author, description and url. So without this meta information, you cannot get proper images when you write a post on facebook. In order to attach thumbtail image to your post, you have to write some configuration on octopress.</p>
+
+<!-- more -->
+
+
+
+
+<div style="text-align:center" markdown="1">
+<img src="http://lewuathe.github.io/images/posts/2014-02-24-octopress-ogp/before.png" />
+</div>
+
+
+<h2>Write appid and locale</h2>
+
+<p>Append below configuration in your <code>_config.yml</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>facebook_app_id: YOUR_APP_ID
+</span><span class='line'>facebook_locale: ja_JP</span></code></pre></td></tr></table></div></figure>
+
+
+<p>YOUR_APP_ID might be listed on <code>/source/_include/facebook_like.html</code> Paste that number.</p>
+
+<h2>Change facebook like action</h2>
+
+<p>Edit <code>/source/_include/facebook_like.html</code> like below. This modification makes this JavaScript code get app_id and locale from <code>_config.yml</code> file.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>&lt;div id="fb-root"&gt;&lt;/div&gt;
+</span><span class='line'>&lt;script&gt;(function(d, s, id) {
+</span><span class='line'>  var js, fjs = d.getElementsByTagName(s)[0];
+</span><span class='line'>  if (d.getElementById(id)) {return;}
+</span><span class='line'>  js = d.createElement(s); js.id = id; js.async = true;
+</span><span class='line'>  js.src = "//connect.facebook.net/ja_JP/all.js#appId=212934732101925&xfbml=1";
+</span><span class='line'>  fjs.parentNode.insertBefore(js, fjs);
+</span><span class='line'>}(document, 'script', 'facebook-jssdk'));&lt;/script&gt;
+</span><span class='line'></span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Add top page flag</h2>
+
+<p>To ditinguish post articles and top page, add this flag to <code>source/index.html</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>---
+</span><span class='line'>layout: default
+</span><span class='line'>index: true  
+</span><span class='line'>---</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Configuration for ogp meta informations</h2>
+
+<p>Write below meta tags to <code>source/_includes/custom/facebook_ogp.html</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>% cat source/_includes/custom/facebook_ogp.html
+</span><span class='line'>&lt;meta property="og:title" content="Optimize octopress for facebook post - The first cry of Atom" &gt;
+</span><span class='line'>&lt;meta property="og:description" content="" /&gt;
+</span><span class='line'>&lt;meta property="og:url" content="http://lewuathe.com" /&gt;
+</span><span class='line'>&lt;meta property="og:image" content="http://lewuathe.github.io/images/site_image.png" /&gt;
+</span><span class='line'>&lt;meta property="og:author" content="lewuathe" /&gt;
+</span><span class='line'>&lt;meta property="og:site_name" content="The first cry of Atom" /&gt;
+</span><span class='line'>&lt;meta property="og:locale" content="ja_JP" /&gt;
+</span><span class='line'>&lt;meta property="og:type" content="article" /&gt;
+</span><span class='line'>&lt;meta property="fb:app_id" content="212934732101925" /&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Include meta tags</h2>
+
+<p>At last, make header include these meta tags. Write below on <code>source/_include/head.html</code></p>
+
+<p><img src="http://lewuathe.github.io/images/posts/2014-02-24-octopress-ogp/code.png" /></p>
+
+<p>So that&rsquo;s all. It&rsquo;s ok. Deploy this site and post any entry to facebook.</p>
+
+<div style="text-align:center" markdown="1">
+<img src="http://lewuathe.github.io/images/posts/2014-02-24-octopress-ogp/after.png" />
+</div>
+
+
+<p>Good, you can see your thumbnail. A research shows that the post that has thumbnail images attracts more people than
+the post that has no image can. If you are using octopress for writing your own blog, it must be the good option for increasing
+the access from facebook.</p>
+
+<p>Thank you.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Trying Word2vec From Twitter Corpus]]></title>
@@ -3356,187 +3474,6 @@ So it&rsquo;s inception deck. If you want to know about inception deck, read thi
 
 
 <p>Enjoy your agile life!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Closure With Async.js]]></title>
-    <link href="http://lewuathe.github.io/blog/2013/12/05/closure-with-async-dot-js/"/>
-    <updated>2013-12-05T20:29:00+09:00</updated>
-    <id>http://lewuathe.github.io/blog/2013/12/05/closure-with-async-dot-js</id>
-    <content type="html"><![CDATA[<p>You may use <a href="https://npmjs.org/package/async">Async.js</a> at least one time when you develop with nodejs.</p>
-
-<blockquote><p>Async is a utility module which provides straight-forward, powerful functions for working with asynchronous JavaScript.</p></blockquote>
-
-<p>So if you want to write asynchronous code with JavaScript, I recommend you to use it. It&rsquo;s easy to use, simple syntax.
-However I had trouble with using Async.js in the context of giving dynamic task array. In this article, I want to share
-how to write dynamic task array given to Async.js module.</p>
-
-<h2>Problem</h2>
-
-<p>I wrote like a below code with nodejs.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">async</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;async&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// Total task is 10 which is executed in parallel</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">TASK_NUM</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// All task functions are put in taskList</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">taskList</span> <span class="o">=</span> <span class="p">[];</span>
-</span><span class='line'><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">TASK_NUM</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">taskList</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
-</span><span class='line'>        <span class="nx">callback</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">i</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">});</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">async</span><span class="p">.</span><span class="nx">parallel</span><span class="p">(</span><span class="nx">taskList</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">results</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">results</span><span class="p">);</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>When you run this code, I obtained below output.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="mi">10</span>
-</span><span class='line'><span class="mi">10</span>
-</span><span class='line'><span class="mi">10</span>
-</span><span class='line'><span class="mi">10</span>
-</span><span class='line'><span class="mi">10</span>
-</span><span class='line'><span class="mi">10</span>
-</span><span class='line'><span class="mi">10</span>
-</span><span class='line'><span class="mi">10</span>
-</span><span class='line'><span class="mi">10</span>
-</span><span class='line'><span class="mi">10</span>
-</span><span class='line'><span class="p">[</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span> <span class="p">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This didn&rsquo;t fit my expectation. I thought all tasks should get i-th argument. So each task&rsquo;s output
-is i-th number, if i-th task runs. However in this case, all task&rsquo;s output is 10. Why closure in function(In JavaScript, <code>function</code> makes variable scope, called closure) might not be effective?</p>
-
-<h2>Answer</h2>
-
-<p>There is answer in <a href="http://stackoverflow.com/questions/12472448/async-parallel-with-functions-dynamic-array">StackOverflow</a>.</p>
-
-<blockquote><p>A closure doesn&rsquo;t &ldquo;trap&rdquo; the value that an outer variable had at the time it was created; it &ldquo;traps&rdquo; a reference to whatever value the outer variable has at the time it&rsquo;s executed (which in this case won&rsquo;t be until well after your for loop has finished.</p></blockquote>
-
-<p>So in this case, closure does not make scope when it is <strong>declared</strong>, but <strong>executed</strong>. The variable <code>i</code> resulted in 10 after <code>for</code> loop in this code. And then each tasks will be executed under the condition that variable <code>i</code> is 10. I understood why these odd phenomenon was occured.</p>
-
-<h2>How to write</h2>
-
-<p>How should I write in order to execute this code as I expected in advance. Same page showed me the answer.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">deleteFunction</span> <span class="o">=</span> <span class="nx">makeDeleteFunction</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">callback</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Writing wrapper function which wraps my original tasks makes scope under given argument <code>i</code>. When you declare task, you should not make task function directly, but should give parameters which trapped in declaration context to the wrapper function. Here is my sample that is corresponds to above code.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">async</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;async&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// Wrapper function</span>
-</span><span class='line'><span class="kd">function</span> <span class="nx">makeTask</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
-</span><span class='line'>        <span class="nx">callback</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">i</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">};</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// Total task is 10 which is executed in parallel</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">TASK_NUM</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// All task functions are put in taskList</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">taskList</span> <span class="o">=</span> <span class="p">[];</span>
-</span><span class='line'><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">TASK_NUM</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">taskList</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">makeTask</span><span class="p">(</span><span class="nx">i</span><span class="p">));</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">async</span><span class="p">.</span><span class="nx">parallel</span><span class="p">(</span><span class="nx">taskList</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">results</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">results</span><span class="p">);</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then output is given as I expected.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="mi">0</span>
-</span><span class='line'><span class="mi">1</span>
-</span><span class='line'><span class="mi">2</span>
-</span><span class='line'><span class="mi">3</span>
-</span><span class='line'><span class="mi">4</span>
-</span><span class='line'><span class="mi">5</span>
-</span><span class='line'><span class="mi">6</span>
-</span><span class='line'><span class="mi">7</span>
-</span><span class='line'><span class="mi">8</span>
-</span><span class='line'><span class="mi">9</span>
-</span><span class='line'><span class="p">[</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span> <span class="p">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If you write dynamic task function with Async.js, notice these fact.</p>
 ]]></content>
   </entry>
   
