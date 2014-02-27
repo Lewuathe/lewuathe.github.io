@@ -4,7 +4,7 @@
   <title><![CDATA[The first cry of Atom]]></title>
   <link href="http://lewuathe.github.io/atom.xml" rel="self"/>
   <link href="http://lewuathe.github.io/"/>
-  <updated>2014-02-27T21:29:40+09:00</updated>
+  <updated>2014-02-27T23:52:24+09:00</updated>
   <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
@@ -12,6 +12,101 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Tokyo Node Gakuen 11th Period]]></title>
+    <link href="http://lewuathe.github.io/blog/2014/02/27/tokyo-node-gakuen-11th-period/"/>
+    <updated>2014-02-27T21:34:24+09:00</updated>
+    <id>http://lewuathe.github.io/blog/2014/02/27/tokyo-node-gakuen-11th-period</id>
+    <content type="html"><![CDATA[<p>Yesterday, I took part in <a href="http://connpass.com/event/5071/">Tokyo Node Gakuen 11th period</a> for the first time.
+Though I want to attend this meeting to be a node hacker for a long time, I have not been able to get a chance to do so.
+About two weeks ago, I semi-completed <a href="https://github.com/Lewuathe/n42">n42</a> that implements some deep learning algorithms,
+stacked denoised autoencoder, deep belief network. So time has come, and I realized that I have something to tell and
+where I can convey my passions through one software stack, nodejs.</p>
+
+<!-- more -->
+
+
+<h2><strong>Talk about the future of nodejs</strong></h2>
+
+<p>Presented by <a href="https://twitter.com/yosuke_furukawa">@yosuke_furukawa</a>. He is the next representative of nodejs Japan community.
+He is young and so vital, passionate that I believe that future of nodejs.jp must be bright. Please go for it!</p>
+
+<div style="width: 65%;text-align:center;" markdown="1">
+<script async class="speakerdeck-embed" data-id="a753718081010131e5751252e28d83c2" data-ratio="1.33333333333333" src="http://lewuathe.github.io//speakerdeck.com/assets/embed.js"></script>
+</div>
+
+
+<p>He introduced some new features of nodejs v0.12 and hot libraries supported by nodejs community such as <a href="http://koajs.com/">koa</a> (Official site is so cool!) and <a href="http://primus.io/">Primus</a>. These libraries were unfamiliar to me this time. So this introduction was good to me in order to understand the current situation of nodejs roughtly. Thank you.</p>
+
+<h2><strong>Getting started browserify</strong></h2>
+
+<p>Next presenter was <a href="https://twitter.com/hitsujiwool">@hitsujiwool</a>. He looks very familiar with client JavaScript technologies. Especially in this session, he talked about the overview of <a href="http://browserify.org/">browserify</a>. This tool converts the codes written in <a href="http://en.wikipedia.org/wiki/CommonJS">CommonJS</a> style into the executable code in web browser. I cannot understand easily at that time. And unfortunately, this situation does not change now.</p>
+
+<div style="width: 65%;text-align:center;" markdown="1">
+<script async class="speakerdeck-embed" data-id="d0609f0080f90131e5751252e28d83c2" data-ratio="1.29456384323641" src="http://lewuathe.github.io//speakerdeck.com/assets/embed.js"></script>
+</div>
+
+
+<p>However, roma was not built in a day. I understand sufficiently the necessity of study client JavaScript technology stacks and trend. So I won&rsquo;t lose this chance. Even if it takes some month, I have a desire to grasp the concept of this technology at last.</p>
+
+<p>And below is LT session.</p>
+
+<h2><strong>Deep learning with nodejs</strong></h2>
+
+<p>This is my session. As I said previously, I developed deep learning module in nodejs called <a href="https://www.npmjs.org/package/n42">n42</a>. n42 was named after <a href="http://en.wikipedia.org/wiki/The_Hitchhiker's_Guide_to_the_Galaxy">The Hitchhiker&rsquo;s Guide to the Galaxy</a>. A super computer called &ldquo;deep thought&rdquo; enters in this movie. People asked one diffucult question to this computer bacause this computer is so smart that it can always answer any questions. The question was this.</p>
+
+<blockquote><p>the Answer to the Ultimate Question of Life, the Universe, and Everything</p></blockquote>
+
+<p>After 750million years, deep thought answered.</p>
+
+<blockquote><p>42</p></blockquote>
+
+<p>What? The answer of every thing is really only 42? I also doubt the validity of this answer, but I like this story very much. I want to see the day when n42 can give me the answer of everything :)</p>
+
+<iframe src="http://www.slideshare.net/slideshow/embed_code/31651520" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px 1px 0; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/lewuathe/deeplearning-with-node" title="Deeplearning with node" target="_blank">Deeplearning with node</a> </strong> from <strong><a href="http://www.slideshare.net/lewuathe" target="_blank">Kai Sasaki</a></strong> </div></p>
+
+<h2><strong>node.js as Gips for training asynchronous programming</strong></h2>
+
+<p>I&rsquo;m afraid to say, but I could not find the presentation slide.
+The presenter was <a href="https://twitter.com/niryuu">@niryuu</a>. His presentation was exciting.
+The most impressive word I can remember is</p>
+
+<blockquote><p>Do it properly</p></blockquote>
+
+<p>Asynchronous programming in nodejs becomes sometimes very halmful such as callback hell.
+He solved this problem simple concept. Return values properly. Using Primise etc.
+These motivations had stimulated me to write code properly in any situation.
+I feel that I can make use of this phrase when I was discouraged. Thank you.</p>
+
+<h2><strong>With node.js, a novice programmer can make online fighting game easily</strong></h2>
+
+<p>This session was given by <a href="https://twitter.com/pegass85">@pegass85</a>. He was so passionate that I enjoy his presentaion profoundly. He seems that he loves games very much. So he intruduced some games that released about a decade ago. Through his talking, I can feel that he really enjoy programming and games. It reminded me of the importance of enjoying programming as a hobbiest not a worker. I am looking forward the day when his game of &ldquo;paper, stone and scissors&rdquo; running properly online.</p>
+
+<iframe src="http://www.slideshare.net/slideshow/embed_code/31621477" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px 1px 0; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/yuusuketakeuchi96/nodejs-31621477" title="Node.jsなら日曜プログラマーでも簡単に通信対戦ゲームが作れる" target="_blank">Node.jsなら日曜プログラマーでも簡単に通信対戦ゲームが作れる</a> </strong> from <strong><a href="http://www.slideshare.net/yuusuketakeuchi96" target="_blank">Yuusuke Takeuchi</a></strong> </div></p>
+
+<h2>Last but not least</h2>
+
+<p>Throught these sessions, I can see the potential of nodejs in a new light.
+By the huge power of community, these softwares are given its futures.
+I was forced to realize that fact by these passionate developers of nodejs.
+The main theme of this seminor was</p>
+
+<blockquote><p>Talk about the future of nodejs</p></blockquote>
+
+<p>I have a desire of the bright future of nodejs when a lot of developers and users
+make world better place helping each other with this software.
+After meeting these passionate developers, this desire changed to confidence.</p>
+
+<p>Thank you.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Optimize Octopress for Facebook Post]]></title>
@@ -3407,73 +3502,6 @@ If you are unhappy with writing code as work, it mistakes the means for the end,
 That mind must not be forgot whenever I type my test code.</p>
 
 <p>The each line of your test codes makes you happy, I believe.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Agile Samurai Basecamp in Tokyo <1>]]></title>
-    <link href="http://lewuathe.github.io/blog/2013/12/08/whatt-going-on-at-agile-samurai-basecamp/"/>
-    <updated>2013-12-08T19:29:00+09:00</updated>
-    <id>http://lewuathe.github.io/blog/2013/12/08/whatt-going-on-at-agile-samurai-basecamp</id>
-    <content type="html"><![CDATA[<p>At work, I am a scrum padawan, not yet master :&ndash;)</p>
-
-<p>Through developing with agile team, I was taught what scrum is, product backlog is, sprint is.</p>
-
-<p>In order to accelerate this growth as an agile programmer, I took part in TDD section of <a href="http://www.agilesamuraibasecamp.org/">Agile Samurai Basecamp</a>.
-TDD(Test Driven Development) is the most interesting method in my mind. So I wanted to know how to progress TDD in my daily work.
-This article includes TDD core process which I study in basecamp and what I thought for the future career as a programmer.</p>
-
-<h2>Keynote : Shintarou Kakutani</h2>
-
-<p>He is the translator of <em><a href="http://pragprog.com/book/jtrap/the-agile-samurai">The Agile Samurai</a></em> .
-He answered the questions  who is agile samurai, what agile teams are for.</p>
-
-<h3>Who is agile samurai?</h3>
-
-<p><img src="http://lewuathe.github.io/images/posts/2013-12-08-samurai-1/samurai.jpg" alt="samurai" /></p>
-
-<p>Agile team must keep to delivering valuable software every week. It doesn&rsquo;t mean just delivering lecture or lesson,
-but codes which run as what you and your customer expects. To achieve this, it is very important to tackle problems as <em>&ldquo;whole one team&rdquo;</em>  which includes
-your customers. Customers decide what you make, then your decide how you make. Delivering values to customer and tackling problems as whole one team is the
-core concept of <em><a href="http://pragprog.com/book/jtrap/the-agile-samurai">The Agile Samurai</a></em> .</p>
-
-<h3>Why did you write more Agile book?</h3>
-
-<p>There were already many agile books in stores. Why another agile book is needed at that time?
-In the past, there were no books which compiled main below 7 books which explains agile practice for detail.</p>
-
-<ul>
-<li><a href="http://www.amazon.co.jp/XP%E3%82%A8%E3%82%AF%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E3%83%BB%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E5%85%A5%E9%96%80%E2%80%95%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E9%96%8B%E7%99%BA%E3%81%AE%E7%A9%B6%E6%A5%B5%E3%81%AE%E6%89%8B%E6%B3%95-%E3%82%B1%E3%83%B3%E3%83%88-%E3%83%99%E3%83%83%E3%82%AF/dp/489471275X">Extream programming explained</a></li>
-<li><a href="http://www.amazon.co.jp/Refactoring-Improving-Existing-Addison-Wesley-Technology/dp/0201485672/ref=sr_1_1?s=english-books&amp;ie=UTF8&amp;qid=1386502275&amp;sr=1-1&amp;keywords=refactoring">Refactoring</a></li>
-<li><a href="http://www.amazon.co.jp/XP%E3%82%A8%E3%82%AF%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E3%83%BB%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E5%AE%9F%E8%A1%8C%E8%A8%88%E7%94%BB-The-Series-%E3%82%B1%E3%83%B3%E3%83%88-%E3%83%99%E3%83%83%E3%82%AF/dp/4894713411/ref=sr_1_cc_1?s=aps&amp;ie=UTF8&amp;qid=1386502308&amp;sr=1-1-catcorr&amp;keywords=%E3%82%A8%E3%82%AF%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E3%80%80%E5%AE%9F%E8%A1%8C%E8%A8%88%E7%94%BB">Extream programming planning</a></li>
-<li><a href="http://www.amazon.co.jp/XP%E3%82%A8%E3%82%AF%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E3%83%BB%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E5%B0%8E%E5%85%A5%E7%B7%A8-XP%E5%AE%9F%E8%B7%B5%E3%81%AE%E6%89%8B%E5%BC%95%E3%81%8D-The-XP-Series/dp/4894714914/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1386502350&amp;sr=1-1&amp;keywords=%E3%82%A8%E3%82%AF%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E3%80%80%E5%B0%8E%E5%85%A5%E7%B7%A8">Extream programming installed</a></li>
-<li><a href="http://www.amazon.co.jp/%E3%83%86%E3%82%B9%E3%83%88%E9%A7%86%E5%8B%95%E9%96%8B%E7%99%BA%E5%85%A5%E9%96%80-%E3%82%B1%E3%83%B3%E3%83%88-%E3%83%99%E3%83%83%E3%82%AF/dp/4894717115/ref=sr_1_2?s=books&amp;ie=UTF8&amp;qid=1386502385&amp;sr=1-2&amp;keywords=Test+Driven+Development+by+example">Test Driven Development by example</a></li>
-<li><a href="http://www.amazon.co.jp/User-Stories-Applied-Software-Development-ebook/dp/B0054KOL74/ref=sr_1_cc_1?s=aps&amp;ie=UTF8&amp;qid=1386502435&amp;sr=1-1-catcorr&amp;keywords=User+Stories+applied">User stories applied</a></li>
-<li><a href="http://www.amazon.co.jp/%E3%82%A2%E3%82%B8%E3%83%A3%E3%82%A4%E3%83%AB%E3%81%AA%E8%A6%8B%E7%A9%8D%E3%82%8A%E3%81%A8%E8%A8%88%E7%94%BB%E3%81%A5%E3%81%8F%E3%82%8A-~%E4%BE%A1%E5%80%A4%E3%81%82%E3%82%8B%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%82%92%E8%82%B2%E3%81%A6%E3%82%8B%E6%A6%82%E5%BF%B5%E3%81%A8%E6%8A%80%E6%B3%95~-Mike-Cohn/dp/4839924023/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1386502473&amp;sr=1-1&amp;keywords=%E3%82%A2%E3%82%B8%E3%83%A3%E3%82%A4%E3%83%AB%E3%81%AA%E8%A6%8B%E7%A9%8D%E3%82%82%E3%82%8A%E3%81%A8%E8%A8%88%E7%94%BB%E4%BD%9C%E3%82%8A">Agile Estimating and Planning</a></li>
-</ul>
-
-
-<p><em><a href="http://pragprog.com/book/jtrap/the-agile-samurai">The Agile Samurai</a></em> collects the essences of these books. In addition to these concepts, this book add new stuff.
-So it&rsquo;s inception deck. If you want to know about inception deck, read this book. And the session of inception deck was also held at this bootcamp. This is important concept of agile practice.</p>
-
-<h3>Why a hero in this book is called &ldquo;Samurai&rdquo;?</h3>
-
-<p>The author, Jonathan Rasmusson likes <em>&ldquo;<a href="http://www.amazon.com/Way-Peaceful-Warrior-Changes-Lives/dp/0915811898">Peaceful Warrior</a>&rdquo;</em> . Initial title of &ldquo;Agile samurai&rdquo; was &ldquo;Agile peaceful warrior&rdquo; after this novel title. But it was not grasped by other people who have not read this book. So collaborators recommended him the word, &ldquo;Samurai&rdquo; which means same notion as peaceful warrior. &ldquo;Samurai&rdquo; is more perspicuous than &ldquo;peaceful warrior&rdquo; to the people of all over the world. Master sensei is also only the notion, not real samurai characters who lived in Japan.</p>
-
-<h3>What is the agile practice?</h3>
-
-<p>Agile development means the way of keeping feedback under the cooperative environment. To achieve team&rsquo;s goal, taking action requires cooperative environment of your team. All members must have the sense of ownership of their products. This thought makes good mood and necessary environment. But this practice can be accomplished only by your learning with on-the-job training. There is no secret ingredient. It&rsquo;s just you.</p>
-
-<h3>Last but not least</h3>
-
-<ol>
-<li>Sharing what you learn with others</li>
-<li>Keep searching the better answers</li>
-<li>Enjoy!</li>
-</ol>
-
-
-<p>Enjoy your agile life!</p>
 ]]></content>
   </entry>
   
