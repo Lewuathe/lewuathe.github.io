@@ -4,7 +4,7 @@
   <title><![CDATA[The first cry of Atom]]></title>
   <link href="http://lewuathe.github.io/atom.xml" rel="self"/>
   <link href="http://lewuathe.github.io/"/>
-  <updated>2014-03-01T02:54:00+09:00</updated>
+  <updated>2014-03-02T00:44:58+09:00</updated>
   <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
@@ -12,6 +12,119 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Object Handler Cannot Be Called in Php Extension]]></title>
+    <link href="http://lewuathe.github.io/blog/2014/03/02/oobject-handler-cannot-be-called-in-php-extension/"/>
+    <updated>2014-03-02T00:38:00+09:00</updated>
+    <id>http://lewuathe.github.io/blog/2014/03/02/oobject-handler-cannot-be-called-in-php-extension</id>
+    <content type="html"><![CDATA[<p>I have a problem.</p>
+
+<p><a href="http://stackoverflow.com/questions/22113672/object-handler-cannot-be-called-in-php-extension">object handler cannot be called in php extension</a></p>
+
+<p>I am developing PHP extension. However, I am not sufficient familiar with PHP extension.
+So in this time, I have no answer how to solve this problem by myself.</p>
+
+<!-- more -->
+
+
+<p>I cannot call destructor of my class written in C++(in below code, <code>foo</code> is that. In my inspection, I know PHP_MINIT_FUNCTION was called definitely. Inside of PHP_MINIT_FUNCTION, set code for create_object might not be done properly. When deleting foo, foo_free_strage should be called, but not called.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="k">static</span> <span class="nx">zend_class_entry</span><span class="o">*</span> <span class="nx">foo_ce</span><span class="p">;</span>
+</span><span class='line'><span class="k">static</span> <span class="nx">zend_object_handlers</span> <span class="nx">foo_object_handlers</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">void</span> <span class="nx">foo_free_storage</span><span class="p">(</span><span class="nx">void</span> <span class="o">*</span><span class="nx">object</span> <span class="nx">TSRMLS_DC</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nx">std</span><span class="o">::</span><span class="na">cout</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;php_foo destracter&quot;</span> <span class="o">&lt;&lt;</span> <span class="nx">std</span><span class="o">::</span><span class="na">endl</span><span class="p">;</span>
+</span><span class='line'>  <span class="nx">foo_object</span><span class="o">*</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">(</span><span class="nx">foo_object</span><span class="o">*</span><span class="p">)</span><span class="nx">object</span><span class="p">;</span>
+</span><span class='line'>  <span class="nx">delete</span> <span class="nx">obj</span><span class="o">-&gt;</span><span class="na">foo_pointer</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">efree</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">zend_object_value</span> <span class="nx">foo_create_handler</span><span class="p">(</span><span class="nx">zend_class_entry</span> <span class="o">*</span><span class="nx">type</span> <span class="nx">TSRMLS_DC</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="nx">std</span><span class="o">::</span><span class="na">cout</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;php_foo handler&quot;</span> <span class="o">&lt;&lt;</span> <span class="nx">std</span><span class="o">::</span><span class="na">endl</span><span class="p">;</span>
+</span><span class='line'>  <span class="nx">zval</span> <span class="o">*</span><span class="nx">tmp</span><span class="p">;</span>
+</span><span class='line'>  <span class="nx">zend_object_value</span> <span class="nx">retval</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">foo_object</span> <span class="o">*</span><span class="nx">obj</span> <span class="o">=</span> <span class="p">(</span><span class="nx">foo_object</span> <span class="o">*</span><span class="p">)</span><span class="nx">emalloc</span><span class="p">(</span><span class="nb">sizeof</span><span class="p">(</span><span class="nx">foo_object</span><span class="p">));</span>
+</span><span class='line'>  <span class="nx">memset</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">sizeof</span><span class="p">(</span><span class="nx">foo_object</span><span class="p">));</span>
+</span><span class='line'>  <span class="nx">obj</span><span class="o">-&gt;</span><span class="na">std</span><span class="o">.</span><span class="nx">ce</span> <span class="o">=</span> <span class="nx">type</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">retval</span><span class="o">.</span><span class="nx">handle</span> <span class="o">=</span> <span class="nx">zend_objects_store_put</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="k">NULL</span><span class="p">,</span> <span class="nx">foo_free_storage</span><span class="p">,</span> <span class="k">NULL</span> <span class="nx">TSRMLS</span>    <span class="nx">_CC</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">retval</span><span class="o">.</span><span class="nx">handlers</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">foo_object_handlers</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">retval</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Initialization</span>
+</span><span class='line'><span class="nx">PHP_MINIT_FUNCTION</span><span class="p">(</span><span class="nx">bar</span><span class="p">){</span>
+</span><span class='line'>  <span class="nx">zend_class_entry</span> <span class="nx">ce</span><span class="p">;</span>
+</span><span class='line'>  <span class="nx">INIT_CLASS_ENTRY</span><span class="p">(</span><span class="nx">ce</span><span class="p">,</span> <span class="s2">&quot;Foo&quot;</span><span class="p">,</span> <span class="nx">foo_functions</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">foo_ce</span> <span class="o">=</span> <span class="nx">zend_register_internal_class</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ce</span> <span class="nx">TSRMLS_CC</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">foo_ce</span><span class="o">-&gt;</span><span class="na">create_object</span> <span class="o">=</span> <span class="nx">foo_create_handler</span><span class="p">;</span>
+</span><span class='line'>  <span class="nx">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">foo_object_handlers</span><span class="p">,</span> <span class="nx">zend_get_std_object_handlers</span><span class="p">(),</span> <span class="nb">sizeof</span><span class="p">(</span><span class="nx">zend_object</span>    <span class="nx">_handlers</span><span class="p">));</span>
+</span><span class='line'>  <span class="nx">foo_object_handlers</span><span class="o">.</span><span class="nx">clone_obj</span> <span class="o">=</span> <span class="k">NULL</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">SUCCESS</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>My development enviromnment is as listed below.</p>
+
+<ul>
+<li>CentOS [x86_64]</li>
+<li>gcc 4.4.7</li>
+</ul>
+
+
+<p>Could someone lets me know the solution of this problem?
+If someone has any advice to me, please inform <a href="https://twitter.com/Lewuathe">@Lewuathe</a>.</p>
+
+<p>Thank you.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Actor Model With Node Cluster]]></title>
@@ -3161,394 +3274,6 @@ Please see official document for detail. And then we&rsquo;ll use this segue on 
 
 <p>You can see <code>flip</code>, when you drag the arrow of segue on storyboard. This is your custom <code>FlipSegue</code>.
 So choose this segue. And run!! Pusing source button of flip segue, your will see your custom animated transition.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Making Jenkins Widget Plugin]]></title>
-    <link href="http://lewuathe.github.io/blog/2013/12/13/making-widget-plugin/"/>
-    <updated>2013-12-13T21:14:00+09:00</updated>
-    <id>http://lewuathe.github.io/blog/2013/12/13/making-widget-plugin</id>
-    <content type="html"><![CDATA[<p>This article was written for <a href="http://qiita.com/advent-calendar/2013/jenkinsci">Jenkins Advent Calendar</a> 14th day.</p>
-
-<h2>Making Jenkins plugin</h2>
-
-<p>Have you ever made Jenkins plugin? This is about my experience developing Jenkins plugin.
-I have not written Java ever, and of course didn&rsquo;t know how to make maven projects. So while writing plugin codes,
-I went this way and that, googling and trying code snippets. Then I felt that there were not enough documents for
-first Jenkins plugin developers. This post however I only made widget plugin, I would be glad that this article will be useful
-to the same developers as me.</p>
-
-<h2>Getting started</h2>
-
-<p>First, it is needed to download skelton of Jenkins plugin by using maven plugin. I used maven-3.0.5, and OSX machine.
-Write below xml in <code>~/.m2/settings.xml</code></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;settings&gt;
-</span><span class='line'>  &lt;pluginGroups&gt;
-</span><span class='line'>    &lt;pluginGroup&gt;org.jenkins-ci.tools&lt;/pluginGroup&gt;
-</span><span class='line'>  &lt;/pluginGroups&gt;
-</span><span class='line'>
-</span><span class='line'>  &lt;profiles&gt;
-</span><span class='line'>    &lt;!-- Give access to Jenkins plugins --&gt;
-</span><span class='line'>    &lt;profile&gt;
-</span><span class='line'>      &lt;id&gt;jenkins&lt;/id&gt;
-</span><span class='line'>      &lt;activation&gt;
-</span><span class='line'>        &lt;activeByDefault&gt;true&lt;/activeByDefault&gt; &lt;!-- change this to false, if you don't like to have it on per default --&gt;
-</span><span class='line'>      &lt;/activation&gt;
-</span><span class='line'>      &lt;repositories&gt;
-</span><span class='line'>        &lt;repository&gt;
-</span><span class='line'>          &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
-</span><span class='line'>          &lt;url&gt;http://repo.jenkins-ci.org/public/&lt;/url&gt;
-</span><span class='line'>        &lt;/repository&gt;
-</span><span class='line'>      &lt;/repositories&gt;
-</span><span class='line'>      &lt;pluginRepositories&gt;
-</span><span class='line'>        &lt;pluginRepository&gt;
-</span><span class='line'>          &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
-</span><span class='line'>          &lt;url&gt;http://repo.jenkins-ci.org/public/&lt;/url&gt;
-</span><span class='line'>        &lt;/pluginRepository&gt;
-</span><span class='line'>      &lt;/pluginRepositories&gt;
-</span><span class='line'>    &lt;/profile&gt;
-</span><span class='line'>  &lt;/profiles&gt;
-</span><span class='line'>  &lt;mirrors&gt;
-</span><span class='line'>    &lt;mirror&gt;
-</span><span class='line'>      &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
-</span><span class='line'>      &lt;url&gt;http://repo.jenkins-ci.org/public/&lt;/url&gt;
-</span><span class='line'>      &lt;mirrorOf&gt;m.g.o-public&lt;/mirrorOf&gt;
-</span><span class='line'>    &lt;/mirror&gt;
-</span><span class='line'>  &lt;/mirrors&gt;
-</span><span class='line'>&lt;/settings&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Create skelton.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ mvn hpi:create</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Project name and artifactId will be asked as below.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[INFO] Scanning for projects...
-</span><span class='line'>[INFO]
-</span><span class='line'>[INFO] ------------------------------------------------------------------------
-</span><span class='line'>[INFO] Building Maven Stub Project (No POM) 1
-</span><span class='line'>[INFO] ------------------------------------------------------------------------
-</span><span class='line'>[INFO]
-</span><span class='line'>[INFO] --- maven-hpi-plugin:1.106:create (default-cli) @ standalone-pom ---
-</span><span class='line'>Enter the groupId of your plugin [org.jenkins-ci.plugins]: com.lewuathe.plugins
-</span><span class='line'>Enter the artifactId of your plugin (normally without '-plugin' suffix): mytest</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then under current directory, <code>mytest</code> project might be made. The directory tree looks like.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>% tree mytest
-</span><span class='line'>mytest
-</span><span class='line'>├── pom.xml
-</span><span class='line'>└── src
-</span><span class='line'>    └── main
-</span><span class='line'>        ├── java
-</span><span class='line'>        │   └── com
-</span><span class='line'>        │       └── lewuathe
-</span><span class='line'>        │           └── plugins
-</span><span class='line'>        │               └── mytest
-</span><span class='line'>        │                   └── HelloWorldBuilder.java
-</span><span class='line'>        └── resources
-</span><span class='line'>            ├── com
-</span><span class='line'>            │   └── lewuathe
-</span><span class='line'>            │       └── plugins
-</span><span class='line'>            │           └── mytest
-</span><span class='line'>            │               └── HelloWorldBuilder
-</span><span class='line'>            │                   ├── config.jelly
-</span><span class='line'>            │                   ├── global.jelly
-</span><span class='line'>            │                   ├── help-name.html
-</span><span class='line'>            │                   └── help-useFrench.html
-</span><span class='line'>            └── index.jelly
-</span><span class='line'>
-</span><span class='line'>13 directories, 7 files</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This sample project uses Builder extension point of Jenkins plugin. <a href="https://wiki.jenkins-ci.org/display/JENKINS/Extension+points#Extensionpoints-hudson.tasks.Builder">Builder extension</a> point is executed inside of the build process. If you have any process run on the way of building, you have to write the class which extends Builder. But in this article, I introduce Widget plugin. If you want to know what kind of extension points exist, please search on <a href="https://wiki.jenkins-ci.org/display/JENKINS/Extension+points">this page</a></p>
-
-<p>Before explaining about Widget plugin, let me say how to run this plugins.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ mvn hpi:run</span></code></pre></td></tr></table></div></figure>
-
-
-<p>With above command, maven can download packages on which this plugin project depends and run Jenkins test server on 8080 port.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># Access below host!
-</span><span class='line'>http://localhost:8080/jenkins/</span></code></pre></td></tr></table></div></figure>
-
-
-<p>You can look at Jenkins server! There is all you have to do before developing your own Jenkins plugin. Let&rsquo;s get started.</p>
-
-<h2>Write Widget plugin</h2>
-
-<p>My Jenkins plugin is put on <a href="https://github.com/jenkinsci/hckrnews-plugin">this repository</a>. With this plugin you can see hacker news top time-line on Jenkins dashboard.
-From <a href="https://wiki.jenkins-ci.org/display/JENKINS/Hckrnews+Plugin">there</a>, it can be downloaded.
-Screen shot was taken as below.</p>
-
-<p><img src="http://lewuathe.github.io/images/posts/2013-12-13-jenkins-widget-plugin/hckrnews-screenshot.png" alt="screenshot" /></p>
-
-<p>By examing this plugin&rsquo;s source code, I want to list up the points I had trouble in completing this plugin.</p>
-
-<h2>Correspondence of Jelly file and Java class</h2>
-
-<p>In Jenkins, <a href="http://stapler.kohsuke.org/what-is.html">Stapler</a> is used in order to map URL and Java objects.</p>
-
-<blockquote><p>Stapler is a library that &ldquo;staples&rdquo; your application objects to URLs, making it easier to write web applications. The core idea of Stapler is to automatically assign URLs for your objects, creating an intuitive URL hierarchy.</p></blockquote>
-
-<p>At first, I cannot grasp what that means and practically which objects are mapped to jelly files. In conclusion, this is the correspond directory files.
-Please look at <code>src/main/java</code> and <code>src/main/resources</code> directory of your project. It looks the same structure, doesn&rsquo;t it? So, in these directory, the correnspondence between Java class and jelly filesis made.
-For example on hckrnews-plugin source tree, <code>java/com/lewuathe/plugins/hckrnews/HckrnewsWidget.java</code> corresponds to <code>com/lewuathe/plugins/hckrnews/HckrnewsWidget/</code>.
-The former is what model or controller, and the latter is view in the context of MVC.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>├── java
-</span><span class='line'>│   └── com
-</span><span class='line'>│       └── lewuathe
-</span><span class='line'>│           └── plugins
-</span><span class='line'>│               └── hckrnews
-</span><span class='line'>│                   └── HckrnewsWidget.java  // &lt;-- This is controller
-</span><span class='line'>└── resources
-</span><span class='line'>    ├── com
-</span><span class='line'>    │   └── lewuathe
-</span><span class='line'>    │       └── plugins
-</span><span class='line'>    │           └── hckrnews
-</span><span class='line'>    │               └── HckrnewsWidget
-</span><span class='line'>    │                   └── index.jelly     // &lt;-- This is view which corresponds to above controller, HckrnewsWidget.java
-</span><span class='line'>    └── index.jelly</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Calling view method</h2>
-
-<p>In <code>HckrnewsWidget.java</code>, news static class in child class of Widget extension points is written.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Extension</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HckrnewsWidget</span> <span class="kd">extends</span> <span class="n">Widget</span> <span class="o">{</span>
-</span><span class='line'><span class="c1">// ....</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">News</span> <span class="o">{</span>
-</span><span class='line'>        <span class="kd">private</span> <span class="n">String</span> <span class="n">title</span><span class="o">;</span>
-</span><span class='line'>        <span class="kd">private</span> <span class="n">String</span> <span class="n">url</span><span class="o">;</span>
-</span><span class='line'>        <span class="kd">private</span> <span class="n">String</span> <span class="n">points</span><span class="o">;</span>
-</span><span class='line'>        <span class="kd">private</span> <span class="n">String</span> <span class="n">postedBy</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="kd">public</span> <span class="n">String</span> <span class="nf">getTitle</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">title</span><span class="o">;</span> <span class="o">}</span>
-</span><span class='line'>        <span class="kd">public</span> <span class="n">String</span> <span class="nf">getUrl</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">url</span><span class="o">;</span> <span class="o">}</span>
-</span><span class='line'>        <span class="kd">public</span> <span class="n">String</span> <span class="nf">getPoints</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">points</span><span class="o">;</span> <span class="o">}</span>
-</span><span class='line'>        <span class="kd">public</span> <span class="n">String</span> <span class="nf">getPostedBy</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">postedBy</span><span class="o">;</span> <span class="o">}</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="c1">// ....</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Ordinary getter of News object. So it comes to index.jelly file.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="o">&lt;</span><span class="nl">j:</span><span class="n">jelly</span> <span class="nl">xmlns:</span><span class="n">j</span><span class="o">=</span><span class="s">&quot;jelly:core&quot;</span> <span class="nl">xmlns:</span><span class="n">st</span><span class="o">=</span><span class="s">&quot;jelly:stapler&quot;</span> <span class="nl">xmlns:</span><span class="n">d</span><span class="o">=</span><span class="s">&quot;jelly:define&quot;</span> <span class="nl">xmlns:</span><span class="n">l</span><span class="o">=</span><span class="s">&quot;/lib/layout&quot;</span> <span class="nl">xmlns:</span><span class="n">t</span><span class="o">=</span><span class="s">&quot;/lib/hudson&quot;</span> <span class="nl">xmlns:</span><span class="n">f</span><span class="o">=</span><span class="s">&quot;/lib/form&quot;</span> <span class="nl">xmlns:</span><span class="n">i</span><span class="o">=</span><span class="s">&quot;jelly:fmt&quot;</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="nl">l:</span><span class="n">pane</span> <span class="n">width</span><span class="o">=</span><span class="s">&quot;3&quot;</span> <span class="n">title</span><span class="o">=</span><span class="s">&quot;Hacker News Top&quot;</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="n">th</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;pane&quot;</span><span class="o">&gt;</span><span class="n">Title</span><span class="o">&lt;/</span><span class="n">th</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="n">th</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;pane&quot;</span><span class="o">&gt;</span><span class="n">Points</span><span class="o">&lt;/</span><span class="n">th</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="n">th</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;pane&quot;</span><span class="o">&gt;</span><span class="n">Posted</span> <span class="n">by</span><span class="o">&lt;/</span><span class="n">th</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="nl">j:</span><span class="n">forEach</span> <span class="n">var</span><span class="o">=</span><span class="s">&quot;news&quot;</span> <span class="n">items</span><span class="o">=</span><span class="s">&quot;${it.newslist}&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="n">td</span> <span class="n">align</span><span class="o">=</span><span class="s">&quot;left&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;pane&quot;</span> <span class="n">style</span><span class="o">=</span><span class="s">&quot;width:10px;&quot;</span><span class="o">&gt;&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;${news.url}&quot;</span><span class="o">&gt;</span><span class="n">$</span><span class="o">{</span><span class="n">news</span><span class="o">.</span><span class="na">title</span><span class="o">}&lt;/</span><span class="n">a</span><span class="o">&gt;&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="n">td</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;pane&quot;</span> <span class="n">align</span><span class="o">=</span><span class="s">&quot;right&quot;</span><span class="o">&gt;</span><span class="n">$</span><span class="o">{</span><span class="n">news</span><span class="o">.</span><span class="na">points</span><span class="o">}&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="n">td</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;pane&quot;</span> <span class="n">align</span><span class="o">=</span><span class="s">&quot;right&quot;</span><span class="o">&gt;</span><span class="n">$</span><span class="o">{</span><span class="n">news</span><span class="o">.</span><span class="na">postedBy</span><span class="o">}&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="nl">j:</span><span class="n">forEach</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="nl">l:</span><span class="n">pane</span><span class="o">&gt;</span>
-</span><span class='line'><span class="n">Last</span> <span class="nl">Updated:</span> <span class="n">$</span><span class="o">{</span><span class="n">it</span><span class="o">.</span><span class="na">lastupdatedstr</span><span class="o">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="nl">j:</span><span class="n">jelly</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The detail of Jelly syntax is not explained in this time. In this template file, <code>it</code> refers to the correspondence object in logic of stapler,
-in other words that&rsquo;s <code>HckrnewsWidget.java</code>. So when you writes as <code>it.newslist</code>, this calls</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Extension</span>
-</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HckrnewsWidget</span> <span class="kd">extends</span> <span class="n">Widget</span> <span class="o">{</span>
-</span><span class='line'><span class="c1">//...</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">News</span><span class="o">&gt;</span> <span class="nf">getNewslist</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>            <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">newsList</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="c1">//...</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then <code>index.jelly</code> can get newslist. But you should take care of the casing of method name. If you write <code>getNewsList</code>, it can be called. Types are below.</p>
-
-<ul>
-<li>getNewslist : it.newslist is called</li>
-<li>getNewsList : it.newList is called</li>
-<li>getNewslist : it.newsList is <em>not</em> called</li>
-</ul>
-
-
-<p>So it looks like auto casting to a captal letter is only applied to the first letter. It is necessary to arrange the type of posteror letters.</p>
-
-<h2>Making Wiki</h2>
-
-<p>It might be rare case which only I experienced. Jenkins wiki page can not be created automatically.
-Of course, it is taken for granted that writing down your wiki url on pom.xml.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="o">&lt;</span><span class="n">project</span> <span class="n">xmlns</span><span class="o">=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="nl">xmlns:</span><span class="n">xsi</span><span class="o">=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="nl">xsi:</span><span class="n">schemaLocation</span><span class="o">=</span><span class="s">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;</span><span class="o">&gt;</span>
-</span><span class='line'><span class="c1">//...</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="n">url</span><span class="o">&gt;</span><span class="nl">http:</span><span class="c1">//wiki.jenkins-ci.org/display/JENKINS/Hckrnews+Plugin&lt;/url&gt;</span>
-</span><span class='line'><span class="c1">//...</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">project</span><span class="o">&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>But this is not the trigger of creating Jenkins wiki page :( You have to make your own page yourself.
-I misunderstood about making wiki pages on this point. After you make your own wiki page, let&rsquo;s add a tag.</p>
-
-<p><img src="http://lewuathe.github.io/images/posts/2013-12-13-jenkins-widget-plugin/add-tag.png" alt="add-tag" /></p>
-
-<p>After you add tag, your wiki page will be listed on <a href="https://wiki.jenkins-ci.org/display/JENKINS/Plugins">this page</a>. It will be easier to search for users.</p>
-
-<h1>After all</h1>
-
-<p>This experience taught me many things about plugin development, Jenkins extension points and of course <strong>Java</strong> !!
-Conversly if you have no experience of Java, you can also make your own Jenkins plugin about two weeks.
-And I want to keep making Jenkins plugins when idea comes to me.</p>
-
-<p>Last but not least, write your test codes in your plugin. With maven, you can run JUnit very easily.
-If there are no test codes in the plugin of continuous integration tool, Jenkins, it sounds like mistaking the means for the end, doesn&rsquo;t it?</p>
-
-<p>Viva great continuous integration! Thank you.</p>
 ]]></content>
   </entry>
   

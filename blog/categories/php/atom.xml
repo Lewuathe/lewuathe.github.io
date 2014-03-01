@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: PHP | The first cry of Atom]]></title>
+  <link href="http://lewuathe.github.io/blog/categories/php/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-03-02T00:44:58+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
+  <author>
+    <name><![CDATA[Kai Sasaki]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Object Handler Cannot Be Called in Php Extension]]></title>
+    <link href="http://lewuathe.github.io/blog/2014/03/02/oobject-handler-cannot-be-called-in-php-extension/"/>
+    <updated>2014-03-02T00:38:00+09:00</updated>
+    <id>http://lewuathe.github.io/blog/2014/03/02/oobject-handler-cannot-be-called-in-php-extension</id>
+    <content type="html"><![CDATA[<p>I have a problem.</p>
+
+<p><a href="http://stackoverflow.com/questions/22113672/object-handler-cannot-be-called-in-php-extension">object handler cannot be called in php extension</a></p>
+
+<p>I am developing PHP extension. However, I am not sufficient familiar with PHP extension.
+So in this time, I have no answer how to solve this problem by myself.</p>
+
+<!-- more -->
+
+
+<p>I cannot call destructor of my class written in C++(in below code, <code>foo</code> is that. In my inspection, I know PHP_MINIT_FUNCTION was called definitely. Inside of PHP_MINIT_FUNCTION, set code for create_object might not be done properly. When deleting foo, foo_free_strage should be called, but not called.</p>
+
+<p>```php
+static zend_class_entry* foo_ce;
+static zend_object_handlers foo_object_handlers;</p>
+
+<p>void foo_free_storage(void <em>object TSRMLS_DC)
+{
+  std::cout &lt;&lt; &ldquo;php_foo destracter&rdquo; &lt;&lt; std::endl;
+  foo_object</em> obj = (foo_object*)object;
+  delete obj->foo_pointer;</p>
+
+<p>  efree(obj);
+}</p>
+
+<p>zend_object_value foo_create_handler(zend_class_entry <em>type TSRMLS_DC)
+{
+  std::cout &lt;&lt; &ldquo;php_foo handler&rdquo; &lt;&lt; std::endl;
+  zval </em>tmp;
+  zend_object_value retval;</p>
+
+<p>  foo_object <em>obj = (foo_object </em>)emalloc(sizeof(foo_object));
+  memset(obj, 0, sizeof(foo_object));
+  obj->std.ce = type;</p>
+
+<p>  retval.handle = zend_objects_store_put(obj, NULL, foo_free_storage, NULL TSRMLS    _CC);
+  retval.handlers = &amp;foo_object_handlers;</p>
+
+<p>  return retval;
+}</p>
+
+<p>// Initialization
+PHP_MINIT_FUNCTION(bar){
+  zend_class_entry ce;
+  INIT_CLASS_ENTRY(ce, &ldquo;Foo&rdquo;, foo_functions);
+  foo_ce = zend_register_internal_class(&amp;ce TSRMLS_CC);
+  foo_ce->create_object = foo_create_handler;
+  memcpy(&amp;foo_object_handlers, zend_get_std_object_handlers(), sizeof(zend_object    _handlers));
+  foo_object_handlers.clone_obj = NULL;
+  return SUCCESS;
+}
+```</p>
+
+<p>My development enviromnment is as listed below.</p>
+
+<ul>
+<li>CentOS [x86_64]</li>
+<li>gcc 4.4.7</li>
+</ul>
+
+
+<p>Could someone lets me know the solution of this problem?
+If someone has any advice to me, please inform <a href="https://twitter.com/Lewuathe">@Lewuathe</a>.</p>
+
+<p>Thank you.</p>
+]]></content>
+  </entry>
+  
+</feed>
