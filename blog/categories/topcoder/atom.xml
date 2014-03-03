@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: TopCoder | The first cry of Atom]]></title>
+  <link href="http://lewuathe.github.io/blog/categories/topcoder/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-03-03T22:19:45+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
+  <author>
+    <name><![CDATA[Kai Sasaki]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[TopCoder With IntelliJ IDEA]]></title>
+    <link href="http://lewuathe.github.io/blog/2014/03/03/topcoder-with-intellij-idea/"/>
+    <updated>2014-03-03T21:45:57+09:00</updated>
+    <id>http://lewuathe.github.io/blog/2014/03/03/topcoder-with-intellij-idea</id>
+    <content type="html"><![CDATA[<p>When you try <a href="http://www.topcoder.com/">TopCoder</a>, as you know, IDE is one of the most efficient options
+to write accurate code very fast. So far, <a href="https://www.eclipse.org/">Eclipse</a> is the most famous IDE in this field.
+However today, I know <a href="http://www.jetbrains.com/idea/">IntelliJ IDEA</a> can also be the great editor to fight it out.
+So I try to install TopCoder plugin into my IntelliJ IDEA which is called <a href="https://github.com/fadeyev/intellijcoder">IntelliJCoder</a>.</p>
+
+<!-- more -->
+
+
+<h2>Install</h2>
+
+<p>By using plugin manager embedded to IntelliJ IDEA, you install IntelliJCoder. Today, its version is v1.6.
+And restart your IDE.</p>
+
+<p><img src="/images/posts/2014-03-03-intellijcoder/plugin_install.png" alt="plugin_install" /></p>
+
+<h2>Launch Arena</h2>
+
+<p><img src="/images/posts/2014-03-03-intellijcoder/topcoder_icon.png" alt="plugin_install" /></p>
+
+<p>You can see TopCoder icon inside the toolbar. If you cannot see toolbar itself, click view menu and select toolbar.
+Click this icon, and TopCoder arena will be launched. It might takes some minutes.</p>
+
+<p><img src="/images/posts/2014-03-03-intellijcoder/toolbar.png" alt="toolbar" />
+<img src="/images/posts/2014-03-03-intellijcoder/launch_arena.png" alt="launch_arena" /></p>
+
+<h2>Open problems</h2>
+
+<p>Ok now, let&rsquo;s solve any problems. In the proactive room, select one problem as you like from SRM.
+Select problem, then you can see TopCoder simple editor. If you use any language except for Java, you should select Java.
+And sckelton codes are written into your IntelliJ IDEA automatically. Now it&rsquo;s the time to solve problem. Hack it!</p>
+
+<p><img src="/images/posts/2014-03-03-intellijcoder/open_problem.png" alt="open_problem" /></p>
+
+<h2>Test and Submit</h2>
+
+<p>Suprisingly, you can also run test codes generated from this plugin. When you build this code in IntelliJ IDEA, the test codes based on problem examples
+are run. So it is easy to confirm whether your code are correct or not before submitting it.
+Compiling and Submitting is the same way to ordinary one. Definitely you can solve problems faster than your rivals with this plugin.</p>
+
+<p><img src="/images/posts/2014-03-03-intellijcoder/run_test.png" alt="run_test" /></p>
+
+<p>Thank you.</p>
+]]></content>
+  </entry>
+  
+</feed>
