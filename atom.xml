@@ -4,7 +4,7 @@
   <title><![CDATA[The first cry of Atom]]></title>
   <link href="http://lewuathe.github.io/atom.xml" rel="self"/>
   <link href="http://lewuathe.github.io/"/>
-  <updated>2014-03-03T23:25:52+09:00</updated>
+  <updated>2014-03-06T23:41:26+09:00</updated>
   <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
@@ -12,6 +12,337 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How Is HashMap Written in Java]]></title>
+    <link href="http://lewuathe.github.io/blog/2014/03/06/how-is-hashtable-written-in-java/"/>
+    <updated>2014-03-06T22:22:04+09:00</updated>
+    <id>http://lewuathe.github.io/blog/2014/03/06/how-is-hashtable-written-in-java</id>
+    <content type="html"><![CDATA[<p>Here recently, I have a chance to read Java core API, expecially <em>HashMap</em>.
+Usually, I use HashMap paying no attention to, but this code reading brought many things to me.
+I can understand that how HashMap is written in Java and more this is very simple than I expected.
+So in this post, I&rsquo;d like to introduce some ideas and code used in <code>java.util.HashMap</code>.</p>
+
+<!-- more -->
+
+
+<h2>Constructor</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HashMap</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="n">AbstractMap</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span>
+</span><span class='line'>        <span class="kd">implements</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;,</span> <span class="n">Cloneable</span><span class="o">,</span> <span class="n">Serializable</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="nf">HashMap</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>      <span class="c1">// DEFAULT_INITIAL_CAPACITY is 16</span>
+</span><span class='line'>      <span class="c1">// DEFAULT_LOAD_FACTOR is 0.75f</span>
+</span><span class='line'>      <span class="k">this</span><span class="o">(</span><span class="n">DEFAULT_INITIAL_CAPACITY</span><span class="o">,</span> <span class="n">DEFAULT_LOAD_FACTOR</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is <code>HashMap</code> constructor. <code>DEFAULT_INITIAL_CAPACITY</code> is the default size of array. This value is set as below.
+<code>DEFAULT_LOAD_FACTOR</code> is the ratio of the number of put items to maximum capacity of hash table. Default value is 0.75f.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">DEFAULT_INITIAL_CAPACITY</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span><span class="o">;</span> <span class="c1">// aka 16</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Only 16 items can be retained in HashMap. What happen if this size become insufficient for your use?
+In every code of adding item, this line was added.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">if</span> <span class="o">((</span><span class="n">size</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="kc">null</span> <span class="o">!=</span> <span class="n">table</span><span class="o">[</span><span class="n">bucketIndex</span><span class="o">]))</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">resize</span><span class="o">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">table</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">hash</span> <span class="o">=</span> <span class="o">(</span><span class="kc">null</span> <span class="o">!=</span> <span class="n">key</span><span class="o">)</span> <span class="o">?</span> <span class="n">hash</span><span class="o">(</span><span class="n">key</span><span class="o">)</span> <span class="o">:</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">bucketIndex</span> <span class="o">=</span> <span class="n">indexFor</span><span class="o">(</span><span class="n">hash</span><span class="o">,</span> <span class="n">table</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Threshold means the next size to which this table will resized. So if there are more items than an array can keep,
+array is resized by <code>resize</code> and hash value is calculated based on the new table size. <code>resize</code> is defined as below.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kt">void</span> <span class="nf">resize</span><span class="o">(</span><span class="kt">int</span> <span class="n">newCapacity</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">Entry</span><span class="o">[]</span> <span class="n">oldTable</span> <span class="o">=</span> <span class="n">table</span><span class="o">;</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">oldCapacity</span> <span class="o">=</span> <span class="n">oldTable</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">oldCapacity</span> <span class="o">==</span> <span class="n">MAXIMUM_CAPACITY</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="c1">// Setting next size to max</span>
+</span><span class='line'>        <span class="n">threshold</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">;</span>
+</span><span class='line'>        <span class="k">return</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">Entry</span><span class="o">[]</span> <span class="n">newTable</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Entry</span><span class="o">[</span><span class="n">newCapacity</span><span class="o">];</span>
+</span><span class='line'>  <span class="c1">// move all items to new hash table</span>
+</span><span class='line'>    <span class="n">transfer</span><span class="o">(</span><span class="n">newTable</span><span class="o">,</span> <span class="n">initHashSeedAsNeeded</span><span class="o">(</span><span class="n">newCapacity</span><span class="o">));</span>
+</span><span class='line'>    <span class="n">table</span> <span class="o">=</span> <span class="n">newTable</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">threshold</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span><span class="n">Math</span><span class="o">.</span><span class="na">min</span><span class="o">(</span><span class="n">newCapacity</span> <span class="o">*</span> <span class="n">loadFactor</span><span class="o">,</span> <span class="n">MAXIMUM_CAPACITY</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Create new table, and transfer all items to new table. It is simple, isn&rsquo;t it?
+So keep going to <code>put</code>. the core algorithm of this method is hashing key.</p>
+
+<h2>Put</h2>
+
+<p>Put code is written as below.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="n">V</span> <span class="nf">put</span><span class="o">(</span><span class="n">K</span> <span class="n">key</span><span class="o">,</span> <span class="n">V</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">table</span> <span class="o">==</span> <span class="n">EMPTY_TABLE</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">inflateTable</span><span class="o">(</span><span class="n">threshold</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">key</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+</span><span class='line'>       <span class="k">return</span> <span class="nf">putForNullKey</span><span class="o">(</span><span class="n">value</span><span class="o">);</span>
+</span><span class='line'>  <span class="c1">// Get hash value of this key object</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">hash</span> <span class="o">=</span> <span class="n">hash</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+</span><span class='line'>  <span class="c1">// Get index in the hash table, so called bucket</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">indexFor</span><span class="o">(</span><span class="n">hash</span><span class="o">,</span> <span class="n">table</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">e</span> <span class="o">=</span> <span class="n">table</span><span class="o">[</span><span class="n">i</span><span class="o">];</span> <span class="n">e</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">;</span> <span class="n">e</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">next</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>     <span class="c1">// Search the item that has same key object</span>
+</span><span class='line'>       <span class="n">Object</span> <span class="n">k</span><span class="o">;</span>
+</span><span class='line'>       <span class="k">if</span> <span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">hash</span> <span class="o">==</span> <span class="n">hash</span> <span class="o">&amp;&amp;</span> <span class="o">((</span><span class="n">k</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">key</span><span class="o">)</span> <span class="o">==</span> <span class="n">key</span> <span class="o">||</span> <span class="n">key</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">k</span><span class="o">)))</span> <span class="o">{</span>
+</span><span class='line'>          <span class="n">V</span> <span class="n">oldValue</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">value</span><span class="o">;</span>
+</span><span class='line'>          <span class="n">e</span><span class="o">.</span><span class="na">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">;</span>
+</span><span class='line'>          <span class="n">e</span><span class="o">.</span><span class="na">recordAccess</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+</span><span class='line'>          <span class="k">return</span> <span class="n">oldValue</span><span class="o">;</span>
+</span><span class='line'>       <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// If there no item that match the given key, create new entry.</span>
+</span><span class='line'>    <span class="n">modCount</span><span class="o">++;</span>
+</span><span class='line'>    <span class="n">addEntry</span><span class="o">(</span><span class="n">hash</span><span class="o">,</span> <span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">,</span> <span class="n">i</span><span class="o">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If table is not created yet, make it by using <code>inflateTable</code>. Then hasing with <code>hash</code>. <code>hash</code> is defined as below.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">final</span> <span class="kt">int</span> <span class="nf">hash</span><span class="o">(</span><span class="n">Object</span> <span class="n">k</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">h</span> <span class="o">=</span> <span class="n">hashSeed</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="mi">0</span> <span class="o">!=</span> <span class="n">h</span> <span class="o">&amp;&amp;</span> <span class="n">k</span> <span class="k">instanceof</span> <span class="n">String</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>       <span class="k">return</span> <span class="n">sun</span><span class="o">.</span><span class="na">misc</span><span class="o">.</span><span class="na">Hashing</span><span class="o">.</span><span class="na">stringHash32</span><span class="o">((</span><span class="n">String</span><span class="o">)</span> <span class="n">k</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">h</span> <span class="o">^=</span> <span class="n">k</span><span class="o">.</span><span class="na">hashCode</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// This function ensures that hashCodes that differ only by</span>
+</span><span class='line'>    <span class="c1">// constant multiples at each bit position have a bounded</span>
+</span><span class='line'>    <span class="c1">// number of collisions (approximately 8 at default load factor).</span>
+</span><span class='line'>    <span class="n">h</span> <span class="o">^=</span> <span class="o">(</span><span class="n">h</span> <span class="o">&gt;&gt;&gt;</span> <span class="mi">20</span><span class="o">)</span> <span class="o">^</span> <span class="o">(</span><span class="n">h</span> <span class="o">&gt;&gt;&gt;</span> <span class="mi">12</span><span class="o">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">h</span> <span class="o">^</span> <span class="o">(</span><span class="n">h</span> <span class="o">&gt;&gt;&gt;</span> <span class="mi">7</span><span class="o">)</span> <span class="o">^</span> <span class="o">(</span><span class="n">h</span> <span class="o">&gt;&gt;&gt;</span> <span class="mi">4</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If the key object is <code>String</code>, <code>sum.misc.Hashing.stringHash32</code> is used as hashing algorithm. In the other case, make use of <code>Object.hashCode()</code>.
+This method is declared in <code>Object</code> class. So all objects in Java should implements this method or defined already super classes.
+In both cases, <code>k.hashCode()</code> can be called safely. In order to make sure that hash value is unique in hash table, some bit calculations
+are operated on <code>h</code>. So now, you can get hash value correspond to key object.</p>
+
+<p>Please pay attention to the data structure used for storing items. This is implemented as chaining pattern.
+Back to <code>put</code> method.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kt">int</span> <span class="n">hash</span> <span class="o">=</span> <span class="n">hash</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">indexFor</span><span class="o">(</span><span class="n">hash</span><span class="o">,</span> <span class="n">table</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
+</span><span class='line'><span class="k">for</span> <span class="o">(</span><span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">e</span> <span class="o">=</span> <span class="n">table</span><span class="o">[</span><span class="n">i</span><span class="o">];</span> <span class="n">e</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">;</span> <span class="n">e</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">next</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">Object</span> <span class="n">k</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">hash</span> <span class="o">==</span> <span class="n">hash</span> <span class="o">&amp;&amp;</span> <span class="o">((</span><span class="n">k</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">key</span><span class="o">)</span> <span class="o">==</span> <span class="n">key</span> <span class="o">||</span> <span class="n">key</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">k</span><span class="o">)))</span> <span class="o">{</span>
+</span><span class='line'>       <span class="n">V</span> <span class="n">oldValue</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">value</span><span class="o">;</span>
+</span><span class='line'>       <span class="n">e</span><span class="o">.</span><span class="na">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">;</span>
+</span><span class='line'>       <span class="n">e</span><span class="o">.</span><span class="na">recordAccess</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+</span><span class='line'>       <span class="k">return</span> <span class="n">oldValue</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">modCount</span><span class="o">++;</span>
+</span><span class='line'><span class="n">addEntry</span><span class="o">(</span><span class="n">hash</span><span class="o">,</span> <span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">,</span> <span class="n">i</span><span class="o">);</span>
+</span><span class='line'><span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After getting index for hash value with <code>indexFor(hash, table.length)</code>, take a chain from correspond bucket item.
+<code>table[i]</code> is the first item of this linked list. In the case of existing the value which has same key, update value.
+If there are overlapped items in this table, linked list has multiple items. To reduce calculation cost, new item is prepend to this list in <code>addEntry</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kt">void</span> <span class="nf">addEntry</span><span class="o">(</span><span class="kt">int</span> <span class="n">hash</span><span class="o">,</span> <span class="n">K</span> <span class="n">key</span><span class="o">,</span> <span class="n">V</span> <span class="n">value</span><span class="o">,</span> <span class="kt">int</span> <span class="n">bucketIndex</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">((</span><span class="n">size</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="kc">null</span> <span class="o">!=</span> <span class="n">table</span><span class="o">[</span><span class="n">bucketIndex</span><span class="o">]))</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">resize</span><span class="o">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">table</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">hash</span> <span class="o">=</span> <span class="o">(</span><span class="kc">null</span> <span class="o">!=</span> <span class="n">key</span><span class="o">)</span> <span class="o">?</span> <span class="n">hash</span><span class="o">(</span><span class="n">key</span><span class="o">)</span> <span class="o">:</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>        <span class="n">bucketIndex</span> <span class="o">=</span> <span class="n">indexFor</span><span class="o">(</span><span class="n">hash</span><span class="o">,</span> <span class="n">table</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="n">createEntry</span><span class="o">(</span><span class="n">hash</span><span class="o">,</span> <span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">,</span> <span class="n">bucketIndex</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>createEntry</code> prepends this put value.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kt">void</span> <span class="nf">createEntry</span><span class="o">(</span><span class="kt">int</span> <span class="n">hash</span><span class="o">,</span> <span class="n">K</span> <span class="n">key</span><span class="o">,</span> <span class="n">V</span> <span class="n">value</span><span class="o">,</span> <span class="kt">int</span> <span class="n">bucketIndex</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">e</span> <span class="o">=</span> <span class="n">table</span><span class="o">[</span><span class="n">bucketIndex</span><span class="o">];</span>
+</span><span class='line'>  <span class="c1">// hash: hash value that belongs to new entry</span>
+</span><span class='line'>  <span class="c1">// key: key object that belongs to new entry</span>
+</span><span class='line'>  <span class="c1">// value: content value that belongs to new entry</span>
+</span><span class='line'>  <span class="c1">// e: next node that is append to new entry item</span>
+</span><span class='line'>    <span class="n">table</span><span class="o">[</span><span class="n">bucketIndex</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Entry</span><span class="o">&lt;&gt;(</span><span class="n">hash</span><span class="o">,</span> <span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">size</span><span class="o">++;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>Entry</code> constructor receives its hash value, key value, content value and next node for linked list.
+So in this line, new object which is put on the hash table is prepend to the line of linked list.
+It will be the first object of the list.</p>
+
+<h2>Get</h2>
+
+<p>When you want to get target item that is correspond to your key, how is it works?</p>
+
+<p>Now, <code>getEntry</code> is called.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">final</span> <span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">getEntry</span><span class="o">(</span><span class="n">Object</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>       <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">hash</span> <span class="o">=</span> <span class="o">(</span><span class="n">key</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">?</span> <span class="mi">0</span> <span class="o">:</span> <span class="n">hash</span><span class="o">(</span><span class="n">key</span><span class="o">);</span>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="n">Entry</span><span class="o">&lt;</span><span class="n">K</span><span class="o">,</span><span class="n">V</span><span class="o">&gt;</span> <span class="n">e</span> <span class="o">=</span> <span class="n">table</span><span class="o">[</span><span class="n">indexFor</span><span class="o">(</span><span class="n">hash</span><span class="o">,</span> <span class="n">table</span><span class="o">.</span><span class="na">length</span><span class="o">)];</span>
+</span><span class='line'>      <span class="c1">// Search through linked list</span>
+</span><span class='line'>        <span class="n">e</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">;</span> <span class="n">e</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">next</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">Object</span> <span class="n">k</span><span class="o">;</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">hash</span> <span class="o">==</span> <span class="n">hash</span> <span class="o">&amp;&amp;</span> <span class="o">((</span><span class="n">k</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">key</span><span class="o">)</span> <span class="o">==</span> <span class="n">key</span> <span class="o">||</span> <span class="o">(</span><span class="n">key</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">key</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">k</span><span class="o">))))</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">e</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Under given key, this code do linear search through linear list in the bucket item. Inside the list,
+returns the item which matches a given key object. This is simpler than I expected, but thanks to this code
+I can understand how <code>HashMap</code> works in Java programming language.</p>
+
+<p>This code reading is so fun to me that I want to keep this activity as possible.</p>
+
+<p>Thank you.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[TopCoder With IntelliJ IDEA]]></title>
@@ -2980,247 +3311,6 @@ In above example, <code>moduleB.obj.A</code> returns <code>"d"</code>. Try it.
 If you find any bugs, please inform me with <a href="https://github.com/Lewuathe/readonly/issues">GitHub</a></p>
 
 <p>Enjoy <strong>readonly</strong> !</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How to Start KrakenJS]]></title>
-    <link href="http://lewuathe.github.io/blog/2013/12/23/how-to-start-krakenjs/"/>
-    <updated>2013-12-23T11:55:00+09:00</updated>
-    <id>http://lewuathe.github.io/blog/2013/12/23/how-to-start-krakenjs</id>
-    <content type="html"><![CDATA[<p>In this november, Paypal released KrakenJS which is web application framework based on Connect, Express.</p>
-
-<p><a href="http://krakenjs.com/">http://krakenjs.com/</a></p>
-
-<p>I had a chance to using this framework at the ending of this year. So I want to inform the facility of this framwork.</p>
-
-<!-- more -->
-
-
-<p><strong>This article was written for <a href="http://www.adventar.org/calendars/56">Node.js advent calendar</a> 24th day.</strong> Please read previous articles.</p>
-
-<h2>Getting started</h2>
-
-<h3>Install generator</h3>
-
-<p>Kraken uses <a href="http://yeoman.io/">Yeoman</a> for building the bootstrap of application. So first, you need to install generator.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo npm install -g generator-kraken</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Create skelton</h3>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ yo kraken
-</span><span class='line'>
-</span><span class='line'>     ,'""`.
-</span><span class='line'>    / _  _ \
-</span><span class='line'>    |(@)(@)|   Release the Kraken!
-</span><span class='line'>    )  __  (
-</span><span class='line'>   /,'))((`.\
-</span><span class='line'>  (( ((  )) ))
-</span><span class='line'>   `\ `)(' /'
-</span><span class='line'>
-</span><span class='line'>[?] Application name: MyTestApp
-</span><span class='line'>[?] Description: My first kraken application
-</span><span class='line'>[?] Author: Kai Sasaki
-</span><span class='line'>[?] Use RequireJS? (Y/n) n</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Write down simple configurations of your application. <a href="http://requirejs.org/">RequireJS</a> is a JavaScript file and module loader.
-If you want to optimize loading of module scripts, this is good option. This command installs dependencies automatically.
-So you don&rsquo;t need to type <code>npm install</code> again. After only these commands, you can start your application server.</p>
-
-<h3>Start your server</h3>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ cd MyTestApp
-</span><span class='line'>$ npm start
-</span><span class='line'>npm WARN package.json mytestapp@0.0.1 No repository field.
-</span><span class='line'>
-</span><span class='line'>&gt; mytestapp@0.0.1 start /Users/sasakiumi/MyTestApp
-</span><span class='line'>&gt; node index.js
-</span><span class='line'>
-</span><span class='line'>Multipart body parsing will be disabled by default in future versions. To enable, use `middleware:multipart` configuration.
-</span><span class='line'>connect.multipart() will be removed in connect 3.0
-</span><span class='line'>visit https://github.com/senchalabs/connect/wiki/Connect-3.0 for alternatives
-</span><span class='line'>connect.limit() will be removed in connect 3.0
-</span><span class='line'>Listening on 8000</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Congratulations!! You can see your application through web browser.</p>
-
-<p><img src="http://lewuathe.github.io/images/posts/2013-12-23-kraken/startpage.png" alt="start page" /></p>
-
-<h2>Structure</h2>
-
-<p>Directory structure is very simple. It is based on MVC framework which you might used to be.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>/config
-</span><span class='line'>Application and middleware configuration
-</span><span class='line'>
-</span><span class='line'>/controllers
-</span><span class='line'>Routes and logic
-</span><span class='line'>
-</span><span class='line'>/lib
-</span><span class='line'>Custom developer libraries and other code
-</span><span class='line'>
-</span><span class='line'>/locales
-</span><span class='line'>Language specific content bundles
-</span><span class='line'>
-</span><span class='line'>/models
-</span><span class='line'>Models
-</span><span class='line'>
-</span><span class='line'>/public
-</span><span class='line'>Web resources that are publicly available
-</span><span class='line'>
-</span><span class='line'>/public/templates
-</span><span class='line'>Server and browser-side templates
-</span><span class='line'>
-</span><span class='line'>/tests
-</span><span class='line'>Unit and functional test cases
-</span><span class='line'>
-</span><span class='line'>index.js
-</span><span class='line'>Application entry point </span></code></pre></td></tr></table></div></figure>
-
-
-<p>For a characteristic, locale settings are prepared as default. You can make your app international easily.
-Because KrakenJS is based on Express, you can develop your own Connect stack as you did before.
-In the <code>index.js</code> file, some functions which are prepared for each request statuses. These description is easier to understand
-than original connect framework. For example, <code>requestBeforeRout</code> means that this function will be called after request before rouring logic.
-It&rsquo;s simple, isn&rsquo;t it?</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>'use strict';
-</span><span class='line'> 
-</span><span class='line'>var kraken = require('kraken-js'),
-</span><span class='line'>    app = {};
-</span><span class='line'> 
-</span><span class='line'>// Fired when an app configures itself
-</span><span class='line'>app.configure = function (nconf, next) {
-</span><span class='line'>    next(null);
-</span><span class='line'>};
-</span><span class='line'> 
-</span><span class='line'>// Fired at the beginning of an incoming request
-</span><span class='line'>app.requestStart = function (server) { };
-</span><span class='line'> 
-</span><span class='line'>// Fired before routing occurs
-</span><span class='line'>app.requestBeforeRoute = function (server) { };
-</span><span class='line'> 
-</span><span class='line'>// Fired after routing occurs
-</span><span class='line'>app.requestAfterRoute = function requestAfterRoute(server) { };
-</span><span class='line'> 
-</span><span class='line'>kraken.create(app).listen(function (err) {
-</span><span class='line'>    if (err) { console.error(err); }
-</span><span class='line'>});</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Modules</h2>
-
-<p>KrankenJS can include other utility modules for enterprise use. These are also made by Paypal.</p>
-
-<ul>
-<li><a href="https://github.com/paypal/lusca">Lusca</a>: Application security for express apps.</li>
-<li><a href="https://github.com/paypal/makara">Makara</a>: An i18n module for Dust.js.</li>
-<li><a href="https://github.com/paypal/adaro">Dust</a>: A Dust.js view renderer for express</li>
-<li><a href="https://github.com/paypal/kappa">Kappa</a>: A hierarchical npm-registry proxy</li>
-</ul>
-
-
-<p>In this article, I won&rsquo;t write the detail of these modules. But these might be made for enterprise applications.
-Lusca and Kappa is necessary for secure and private development environment.</p>
-
-<h2>Examples</h2>
-
-<ul>
-<li><a href="https://github.com/lmarkus/Kraken_Example_Shopping_Cart">Kraken Shopping Cart</a></li>
-<li><a href="https://github.com/lensam69/Kraken_Example_Localization">Localization</a></li>
-<li><a href="https://github.com/lmarkus/Kraken_Example_Configuration">Custom Configuration</a></li>
-<li><a href="https://github.com/lensam69/Kraken_Example_Custom_Middleware">Middle ware</a></li>
-</ul>
-
-
-<p>In this one month, the number of examples are increasing. Would you like to add your example to this list?</p>
-
-<h2>Try it!</h2>
-
-<p>KrakenJS is on the way of development, if anything, is only on the first stage of a thing.
-I could develop an application by using KrakenJS in 2 weeks. It&rsquo;s easy to use, user friendly, and
-it has nice libraries. I&rsquo;ll bet this framework can accelerate your speed of development.</p>
-
-<p>Let&rsquo;s try it!!</p>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Java | The first cry of Atom]]></title>
   <link href="http://lewuathe.github.io/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://lewuathe.github.io/"/>
-  <updated>2014-03-03T23:25:52+09:00</updated>
+  <updated>2014-03-06T23:41:26+09:00</updated>
   <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
@@ -12,6 +12,247 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How Is HashMap Written in Java]]></title>
+    <link href="http://lewuathe.github.io/blog/2014/03/06/how-is-hashtable-written-in-java/"/>
+    <updated>2014-03-06T22:22:04+09:00</updated>
+    <id>http://lewuathe.github.io/blog/2014/03/06/how-is-hashtable-written-in-java</id>
+    <content type="html"><![CDATA[<p>Here recently, I have a chance to read Java core API, expecially <em>HashMap</em>.
+Usually, I use HashMap paying no attention to, but this code reading brought many things to me.
+I can understand that how HashMap is written in Java and more this is very simple than I expected.
+So in this post, I&rsquo;d like to introduce some ideas and code used in <code>java.util.HashMap</code>.</p>
+
+<!-- more -->
+
+
+<h2>Constructor</h2>
+
+<p>```java
+public class HashMap&lt;K,V> extends AbstractMap&lt;K,V></p>
+
+<pre><code>    implements Map&lt;K,V&gt;, Cloneable, Serializable {
+
+public HashMap() {
+    // DEFAULT_INITIAL_CAPACITY is 16
+    // DEFAULT_LOAD_FACTOR is 0.75f
+    this(DEFAULT_INITIAL_CAPACITY, DEFAULT_LOAD_FACTOR);
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p>This is <code>HashMap</code> constructor. <code>DEFAULT_INITIAL_CAPACITY</code> is the default size of array. This value is set as below.
+<code>DEFAULT_LOAD_FACTOR</code> is the ratio of the number of put items to maximum capacity of hash table. Default value is 0.75f.</p>
+
+<p><code>java
+static final int DEFAULT_INITIAL_CAPACITY = 1 &lt;&lt; 4; // aka 16
+</code></p>
+
+<p>Only 16 items can be retained in HashMap. What happen if this size become insufficient for your use?
+In every code of adding item, this line was added.</p>
+
+<p>```java
+if ((size >= threshold) &amp;&amp; (null != table[bucketIndex])) {</p>
+
+<pre><code>resize(2 * table.length);
+hash = (null != key) ? hash(key) : 0;
+bucketIndex = indexFor(hash, table.length);
+</code></pre>
+
+<p>}
+```</p>
+
+<p>Threshold means the next size to which this table will resized. So if there are more items than an array can keep,
+array is resized by <code>resize</code> and hash value is calculated based on the new table size. <code>resize</code> is defined as below.</p>
+
+<p>```java
+void resize(int newCapacity) {</p>
+
+<pre><code>Entry[] oldTable = table;
+int oldCapacity = oldTable.length;
+if (oldCapacity == MAXIMUM_CAPACITY) {
+    // Setting next size to max
+    threshold = Integer.MAX_VALUE;
+    return;
+}
+
+Entry[] newTable = new Entry[newCapacity];
+// move all items to new hash table
+transfer(newTable, initHashSeedAsNeeded(newCapacity));
+table = newTable;
+threshold = (int)Math.min(newCapacity * loadFactor, MAXIMUM_CAPACITY + 1);
+</code></pre>
+
+<p>}
+```</p>
+
+<p>Create new table, and transfer all items to new table. It is simple, isn&rsquo;t it?
+So keep going to <code>put</code>. the core algorithm of this method is hashing key.</p>
+
+<h2>Put</h2>
+
+<p>Put code is written as below.</p>
+
+<p>```java
+public V put(K key, V value) {</p>
+
+<pre><code>if (table == EMPTY_TABLE) {
+    inflateTable(threshold);
+}
+if (key == null)
+   return putForNullKey(value);
+// Get hash value of this key object
+int hash = hash(key);
+// Get index in the hash table, so called bucket
+int i = indexFor(hash, table.length);
+for (Entry&lt;K,V&gt; e = table[i]; e != null; e = e.next) {
+   // Search the item that has same key object
+   Object k;
+   if (e.hash == hash &amp;&amp; ((k = e.key) == key || key.equals(k))) {
+      V oldValue = e.value;
+      e.value = value;
+      e.recordAccess(this);
+      return oldValue;
+   }
+}
+
+// If there no item that match the given key, create new entry.
+modCount++;
+addEntry(hash, key, value, i);
+return null;
+</code></pre>
+
+<p>}
+```</p>
+
+<p>If table is not created yet, make it by using <code>inflateTable</code>. Then hasing with <code>hash</code>. <code>hash</code> is defined as below.</p>
+
+<p>```java
+final int hash(Object k) {</p>
+
+<pre><code>int h = hashSeed;
+if (0 != h &amp;&amp; k instanceof String) {
+   return sun.misc.Hashing.stringHash32((String) k);
+}
+
+h ^= k.hashCode();
+
+// This function ensures that hashCodes that differ only by
+// constant multiples at each bit position have a bounded
+// number of collisions (approximately 8 at default load factor).
+h ^= (h &gt;&gt;&gt; 20) ^ (h &gt;&gt;&gt; 12);
+return h ^ (h &gt;&gt;&gt; 7) ^ (h &gt;&gt;&gt; 4);
+</code></pre>
+
+<p>}
+```</p>
+
+<p>If the key object is <code>String</code>, <code>sum.misc.Hashing.stringHash32</code> is used as hashing algorithm. In the other case, make use of <code>Object.hashCode()</code>.
+This method is declared in <code>Object</code> class. So all objects in Java should implements this method or defined already super classes.
+In both cases, <code>k.hashCode()</code> can be called safely. In order to make sure that hash value is unique in hash table, some bit calculations
+are operated on <code>h</code>. So now, you can get hash value correspond to key object.</p>
+
+<p>Please pay attention to the data structure used for storing items. This is implemented as chaining pattern.
+Back to <code>put</code> method.</p>
+
+<p>```java
+int hash = hash(key);
+int i = indexFor(hash, table.length);
+for (Entry&lt;K,V> e = table[i]; e != null; e = e.next) {</p>
+
+<pre><code>Object k;
+if (e.hash == hash &amp;&amp; ((k = e.key) == key || key.equals(k))) {
+   V oldValue = e.value;
+   e.value = value;
+   e.recordAccess(this);
+   return oldValue;
+}
+</code></pre>
+
+<p>}</p>
+
+<p>modCount++;
+addEntry(hash, key, value, i);
+return null;
+```</p>
+
+<p>After getting index for hash value with <code>indexFor(hash, table.length)</code>, take a chain from correspond bucket item.
+<code>table[i]</code> is the first item of this linked list. In the case of existing the value which has same key, update value.
+If there are overlapped items in this table, linked list has multiple items. To reduce calculation cost, new item is prepend to this list in <code>addEntry</code></p>
+
+<p>```java
+void addEntry(int hash, K key, V value, int bucketIndex) {</p>
+
+<pre><code>if ((size &gt;= threshold) &amp;&amp; (null != table[bucketIndex])) {
+    resize(2 * table.length);
+    hash = (null != key) ? hash(key) : 0;
+    bucketIndex = indexFor(hash, table.length);
+}
+createEntry(hash, key, value, bucketIndex);
+</code></pre>
+
+<p>}
+```</p>
+
+<p><code>createEntry</code> prepends this put value.</p>
+
+<p>```java
+void createEntry(int hash, K key, V value, int bucketIndex) {</p>
+
+<pre><code>Entry&lt;K,V&gt; e = table[bucketIndex];
+// hash: hash value that belongs to new entry
+// key: key object that belongs to new entry
+// value: content value that belongs to new entry
+// e: next node that is append to new entry item
+table[bucketIndex] = new Entry&lt;&gt;(hash, key, value, e);
+size++;
+</code></pre>
+
+<p>}
+```</p>
+
+<p><code>Entry</code> constructor receives its hash value, key value, content value and next node for linked list.
+So in this line, new object which is put on the hash table is prepend to the line of linked list.
+It will be the first object of the list.</p>
+
+<h2>Get</h2>
+
+<p>When you want to get target item that is correspond to your key, how is it works?</p>
+
+<p>Now, <code>getEntry</code> is called.</p>
+
+<p>```java
+final Entry&lt;K,V> getEntry(Object key) {</p>
+
+<pre><code>if (size == 0) {
+   return null;
+}
+
+int hash = (key == null) ? 0 : hash(key);
+for (Entry&lt;K,V&gt; e = table[indexFor(hash, table.length)];
+    // Search through linked list
+    e != null; e = e.next) {
+    Object k;
+    if (e.hash == hash &amp;&amp; ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))
+        return e;
+}
+return null;
+</code></pre>
+
+<p>}
+```</p>
+
+<p>Under given key, this code do linear search through linear list in the bucket item. Inside the list,
+returns the item which matches a given key object. This is simpler than I expected, but thanks to this code
+I can understand how <code>HashMap</code> works in Java programming language.</p>
+
+<p>This code reading is so fun to me that I want to keep this activity as possible.</p>
+
+<p>Thank you.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Useful Shortcuts for IntelliJ IDEA]]></title>
