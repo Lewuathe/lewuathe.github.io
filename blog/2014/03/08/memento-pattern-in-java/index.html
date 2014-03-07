@@ -1,0 +1,395 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Memento Pattern in Java - The first cry of Atom</title>
+  <meta name="author" content="Kai Sasaki">
+
+  
+  <meta name="description" content="Recently, I implemented some design patterns following this book. This book introduces 23 design patterns that all programmers should know when you &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="Memento pattern in Java - The first cry of Atom" >
+<meta property="og:description" content="Recently, I implemented some design patterns following this book. This book introduces 23 design patterns that all programmers should know when you &hellip;" />
+<meta property="og:url" content="http://lewuathe.com" />
+<meta property="og:image" content="http://lewuathe.github.io/images/site_image.png" />
+<meta property="og:author" content="lewuathe" />
+<meta property="og:site_name" content="The first cry of Atom" />
+<meta property="og:locale" content="ja_JP" />
+<meta property="og:type" content="article" />
+<meta property="fb:app_id" content="212934732101925" />
+
+
+  
+  <link rel="canonical" href="http://lewuathe.github.io/blog/2014/03/08/memento-pattern-in-java">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
+  <link href="/stylesheets/data-table.css" rel="stylesheet" type="text/css" />
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-44055098-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">The first cry of Atom</a></h1>
+  
+    <h2>The people who are crazy enough to think thay can change the world, are the ones who do</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:lewuathe.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/about.html">About</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="http://fotologue.jp/lewuathe">Pictures</a></li>
+  <li><a href="https://github.com/Lewuathe">GitHub</a></li>
+  <li><a href="https://twitter.com/Lewuathe">Twitter</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Memento Pattern in Java</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-08T00:02:29+09:00" pubdate data-updated="true">Mar 8<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Recently, I implemented some design patterns following <a href="http://www.amazon.co.jp/%E5%A2%97%E8%A3%9C%E6%94%B9%E8%A8%82%E7%89%88Java%E8%A8%80%E8%AA%9E%E3%81%A7%E5%AD%A6%E3%81%B6%E3%83%87%E3%82%B6%E3%82%A4%E3%83%B3%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3%E5%85%A5%E9%96%80-%E7%B5%90%E5%9F%8E-%E6%B5%A9/dp/4797327030">this book</a>. This book introduces 23 design patterns that all programmers should know when you write according to OOP instructions. So now I want to write this article about some of these patterns and explain these. All codes that used in this article are put <a href="https://github.com/Lewuathe/java-GoF/tree/master/Memento">here</a></p>
+
+<!-- more -->
+
+
+<h2>What is Memento pattern?</h2>
+
+<p>Memento pattern is used for recording past statuses and for recovering susequently. For example when you use text editor such as vim or emacs, do you use <code>undo</code>?
+Why do you think this <code>undo</code> command can perform? As one way, all statuses(sometimes not all) are recorded as a type of object. Then you can recover this object
+to use this recovered data in your application. Let&rsquo;s picking up game example, examine the structure of memento pattern.</p>
+
+<h2>Main</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">game.Gamer</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">game.Memento</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Main</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">Gamer</span> <span class="n">gamer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Gamer</span><span class="o">(</span><span class="mi">100</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">Memento</span> <span class="n">memento</span> <span class="o">=</span> <span class="n">gamer</span><span class="o">.</span><span class="na">createMemento</span><span class="o">();</span>
+</span><span class='line'>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;=== &quot;</span> <span class="o">+</span> <span class="n">i</span><span class="o">);</span>
+</span><span class='line'>            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Current: &quot;</span> <span class="o">+</span> <span class="n">gamer</span><span class="o">);</span>
+</span><span class='line'>            <span class="n">gamer</span><span class="o">.</span><span class="na">bet</span><span class="o">();</span>
+</span><span class='line'>            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Money: ¥&quot;</span> <span class="o">+</span> <span class="n">gamer</span><span class="o">.</span><span class="na">getMoney</span><span class="o">());</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">gamer</span><span class="o">.</span><span class="na">getMoney</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">memento</span><span class="o">.</span><span class="na">getMoney</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Save current state&quot;</span><span class="o">);</span>
+</span><span class='line'>                <span class="n">memento</span> <span class="o">=</span> <span class="n">gamer</span><span class="o">.</span><span class="na">createMemento</span><span class="o">();</span>
+</span><span class='line'>            <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">gamer</span><span class="o">.</span><span class="na">getMoney</span><span class="o">()</span> <span class="o">&lt;</span> <span class="n">memento</span><span class="o">.</span><span class="na">getMoney</span><span class="o">()</span> <span class="o">/</span> <span class="mi">2</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Restore previous state&quot;</span><span class="o">);</span>
+</span><span class='line'>                <span class="n">gamer</span><span class="o">.</span><span class="na">restoreMemento</span><span class="o">(</span><span class="n">memento</span><span class="o">);</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">1000</span><span class="o">);</span>
+</span><span class='line'>            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;&quot;</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>On every turn, a gamer bets and gets money or some fruits. If you get more money at the last of game you win. It&rsquo;s very simple.
+Please pay attention to line 7. Mement pattern is used there. This memento object is used when gamer can get more money or reduce
+his money to half of previous one. For saving, call <code>gamer.createMemento()</code> and for restoring, call <code>gamer.restoreMemento()</code>.
+All concepts that are included in memento pattern are these. It is easy to understand this pattern. Do you think you can write this pattern
+in your production code tomorrow? Please try it.</p>
+
+<p>As a reference, memento class is also placed here. But it is not core concept of memento pattern. You can arrange this concrete logic for your use
+if you could only save and restore statuses.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">package</span> <span class="n">game</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Memento</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">money</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">ArrayList</span> <span class="n">fruits</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getMoney</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="n">money</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="nf">Memento</span><span class="o">(</span><span class="kt">int</span> <span class="n">money</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">money</span> <span class="o">=</span> <span class="n">money</span><span class="o">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">fruits</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kt">void</span> <span class="nf">addFruit</span><span class="o">(</span><span class="n">String</span> <span class="n">fruit</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">fruits</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">fruit</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="n">List</span> <span class="nf">getFruits</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="o">(</span><span class="n">List</span><span class="o">)</span><span class="n">fruits</span><span class="o">.</span><span class="na">clone</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Is there any unclear stuff? Please look into <a href="https://github.com/Lewuathe/java-GoF/tree/master/Memento">this codes</a>
+Thank you.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kai Sasaki</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-08T00:02:29+09:00" pubdate data-updated="true">Mar 8<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/design-pattern/'>Design Pattern</a>, <a class='category' href='/blog/categories/java/'>Java</a>, <a class='category' href='/blog/categories/memento/'>Memento</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://lewuathe.github.io/blog/2014/03/08/memento-pattern-in-java/" data-via="Lewuathe" data-counturl="http://lewuathe.github.io/blog/2014/03/08/memento-pattern-in-java/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/03/06/how-is-hashtable-written-in-java/" title="Previous Post: How is HashMap written in Java">&laquo; How is HashMap written in Java</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/03/08/memento-pattern-in-java/">Memento Pattern in Java</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/06/how-is-hashtable-written-in-java/">How Is HashMap Written in Java</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/03/topcoder-with-intellij-idea/">TopCoder With IntelliJ IDEA</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/02/oobject-handler-cannot-be-called-in-php-extension/">Object Handler Cannot Be Called in Php Extension</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/01/actor-model-with-node-cluster/">Actor Model With Node Cluster</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Kai Sasaki -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/ja_JP/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

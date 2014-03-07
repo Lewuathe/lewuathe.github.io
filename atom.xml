@@ -4,7 +4,7 @@
   <title><![CDATA[The first cry of Atom]]></title>
   <link href="http://lewuathe.github.io/atom.xml" rel="self"/>
   <link href="http://lewuathe.github.io/"/>
-  <updated>2014-03-06T23:41:26+09:00</updated>
+  <updated>2014-03-08T00:37:13+09:00</updated>
   <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
@@ -12,6 +12,156 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Memento Pattern in Java]]></title>
+    <link href="http://lewuathe.github.io/blog/2014/03/08/memento-pattern-in-java/"/>
+    <updated>2014-03-08T00:02:29+09:00</updated>
+    <id>http://lewuathe.github.io/blog/2014/03/08/memento-pattern-in-java</id>
+    <content type="html"><![CDATA[<p>Recently, I implemented some design patterns following <a href="http://www.amazon.co.jp/%E5%A2%97%E8%A3%9C%E6%94%B9%E8%A8%82%E7%89%88Java%E8%A8%80%E8%AA%9E%E3%81%A7%E5%AD%A6%E3%81%B6%E3%83%87%E3%82%B6%E3%82%A4%E3%83%B3%E3%83%91%E3%82%BF%E3%83%BC%E3%83%B3%E5%85%A5%E9%96%80-%E7%B5%90%E5%9F%8E-%E6%B5%A9/dp/4797327030">this book</a>. This book introduces 23 design patterns that all programmers should know when you write according to OOP instructions. So now I want to write this article about some of these patterns and explain these. All codes that used in this article are put <a href="https://github.com/Lewuathe/java-GoF/tree/master/Memento">here</a></p>
+
+<!-- more -->
+
+
+<h2>What is Memento pattern?</h2>
+
+<p>Memento pattern is used for recording past statuses and for recovering susequently. For example when you use text editor such as vim or emacs, do you use <code>undo</code>?
+Why do you think this <code>undo</code> command can perform? As one way, all statuses(sometimes not all) are recorded as a type of object. Then you can recover this object
+to use this recovered data in your application. Let&rsquo;s picking up game example, examine the structure of memento pattern.</p>
+
+<h2>Main</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">game.Gamer</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">game.Memento</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Main</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">Gamer</span> <span class="n">gamer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Gamer</span><span class="o">(</span><span class="mi">100</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">Memento</span> <span class="n">memento</span> <span class="o">=</span> <span class="n">gamer</span><span class="o">.</span><span class="na">createMemento</span><span class="o">();</span>
+</span><span class='line'>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;=== &quot;</span> <span class="o">+</span> <span class="n">i</span><span class="o">);</span>
+</span><span class='line'>            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Current: &quot;</span> <span class="o">+</span> <span class="n">gamer</span><span class="o">);</span>
+</span><span class='line'>            <span class="n">gamer</span><span class="o">.</span><span class="na">bet</span><span class="o">();</span>
+</span><span class='line'>            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Money: ¥&quot;</span> <span class="o">+</span> <span class="n">gamer</span><span class="o">.</span><span class="na">getMoney</span><span class="o">());</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">gamer</span><span class="o">.</span><span class="na">getMoney</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">memento</span><span class="o">.</span><span class="na">getMoney</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Save current state&quot;</span><span class="o">);</span>
+</span><span class='line'>                <span class="n">memento</span> <span class="o">=</span> <span class="n">gamer</span><span class="o">.</span><span class="na">createMemento</span><span class="o">();</span>
+</span><span class='line'>            <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">gamer</span><span class="o">.</span><span class="na">getMoney</span><span class="o">()</span> <span class="o">&lt;</span> <span class="n">memento</span><span class="o">.</span><span class="na">getMoney</span><span class="o">()</span> <span class="o">/</span> <span class="mi">2</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Restore previous state&quot;</span><span class="o">);</span>
+</span><span class='line'>                <span class="n">gamer</span><span class="o">.</span><span class="na">restoreMemento</span><span class="o">(</span><span class="n">memento</span><span class="o">);</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">1000</span><span class="o">);</span>
+</span><span class='line'>            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;&quot;</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>On every turn, a gamer bets and gets money or some fruits. If you get more money at the last of game you win. It&rsquo;s very simple.
+Please pay attention to line 7. Mement pattern is used there. This memento object is used when gamer can get more money or reduce
+his money to half of previous one. For saving, call <code>gamer.createMemento()</code> and for restoring, call <code>gamer.restoreMemento()</code>.
+All concepts that are included in memento pattern are these. It is easy to understand this pattern. Do you think you can write this pattern
+in your production code tomorrow? Please try it.</p>
+
+<p>As a reference, memento class is also placed here. But it is not core concept of memento pattern. You can arrange this concrete logic for your use
+if you could only save and restore statuses.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">package</span> <span class="n">game</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Memento</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">money</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">ArrayList</span> <span class="n">fruits</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getMoney</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="n">money</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="nf">Memento</span><span class="o">(</span><span class="kt">int</span> <span class="n">money</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">money</span> <span class="o">=</span> <span class="n">money</span><span class="o">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">fruits</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kt">void</span> <span class="nf">addFruit</span><span class="o">(</span><span class="n">String</span> <span class="n">fruit</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">fruits</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">fruit</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="n">List</span> <span class="nf">getFruits</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="o">(</span><span class="n">List</span><span class="o">)</span><span class="n">fruits</span><span class="o">.</span><span class="na">clone</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Is there any unclear stuff? Please look into <a href="https://github.com/Lewuathe/java-GoF/tree/master/Memento">this codes</a>
+Thank you.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[How Is HashMap Written in Java]]></title>
@@ -3196,121 +3346,6 @@ It&rsquo;s below.</p>
 
 <p>There are many <a href="http://tessel.io/modules">modules</a> with tessel. For humidity, SDCard, Wifi, GPS, Serve etc.
 So I want to try these modules more, and expand the possibility of embedded JavaScript.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reference Configuration Library in Nodejs]]></title>
-    <link href="http://lewuathe.github.io/blog/2013/12/30/reference-configuration-library-in-nodejs/"/>
-    <updated>2013-12-30T20:24:00+09:00</updated>
-    <id>http://lewuathe.github.io/blog/2013/12/30/reference-configuration-library-in-nodejs</id>
-    <content type="html"><![CDATA[<p>I made npm module at the end of this year, <em>readonly</em>.</p>
-
-<p><a href="https://github.com/Lewuathe/readonly">lewuathe/readonly @GitHub</a></p>
-
-<p><a href="https://npmjs.org/package/readonly">readonly @npm</a></p>
-
-<p>readonly is a simple reference restriction library between custom modules in node object.
-When you want to configure access control of specific object from respective modules, this is good option.
-For example, you made two modules, both use the same object.</p>
-
-<!-- more -->
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="c1">// obj is uses from moduleA and moduleB</span>
-</span><span class='line'><span class="c1">// You want moduleA to read and update obj, but moduleB to read obj only.</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="o">:</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;B&#39;</span><span class="o">:</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="o">:</span><span class="s1">&#39;c&#39;</span><span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// Embedded in moduleA</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">moduleA</span> <span class="o">=</span> <span class="p">{};</span>
-</span><span class='line'><span class="nx">moduleA</span><span class="p">.</span><span class="nx">obj</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// Readonly restriction of `obj` from moduleB</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">moduleB</span> <span class="o">=</span> <span class="p">{};</span>
-</span><span class='line'><span class="nx">moduleB</span><span class="p">.</span><span class="nx">obj</span> <span class="o">=</span> <span class="nx">readonly</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// You can update `obj` from moduleA</span>
-</span><span class='line'><span class="nx">moduleA</span><span class="p">.</span><span class="nx">obj</span><span class="p">.</span><span class="nx">A</span> <span class="o">=</span> <span class="s2">&quot;d&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="c1">// But you cannot update `obj` from moduleB</span>
-</span><span class='line'><span class="nx">moduleA</span><span class="p">.</span><span class="nx">obj</span><span class="p">.</span><span class="nx">B</span> <span class="o">=</span> <span class="s2">&quot;e&quot;</span><span class="p">;</span>  <span class="c1">// Error</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In this situation, you can use <strong>readonly</strong>.</p>
-
-<h2>Install</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">$</span> <span class="nx">npm</span> <span class="nx">install</span> <span class="nx">readonly</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Usage</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">readonly</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;readonly&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="o">:</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;B&#39;</span><span class="o">:</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="o">:</span><span class="s1">&#39;c&#39;</span><span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// Normal ACL. You can use `obj` through moduleA as you like</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">moduleA</span> <span class="o">=</span> <span class="p">{};</span>
-</span><span class='line'><span class="nx">moduleA</span><span class="p">.</span><span class="nx">obj</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// Readonly restriction of `obj` in moduleB</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">moduleB</span> <span class="o">=</span> <span class="p">{};</span>
-</span><span class='line'><span class="nx">moduleB</span><span class="p">.</span><span class="nx">obj</span> <span class="o">=</span> <span class="nx">readonly</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// You can update `obj` from moduleA</span>
-</span><span class='line'><span class="nx">moduleA</span><span class="p">.</span><span class="nx">obj</span><span class="p">.</span><span class="nx">A</span> <span class="o">=</span> <span class="s2">&quot;d&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="c1">// This updates can be seen from moduleB</span>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">moduleB</span><span class="p">.</span><span class="nx">obj</span><span class="p">.</span><span class="nx">A</span><span class="p">);</span> <span class="c1">// --&gt; &quot;d&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// But if you update `obj` through moduleB, it will throws `UnableRewriteException`</span>
-</span><span class='line'><span class="nx">moduleA</span><span class="p">.</span><span class="nx">obj</span><span class="p">.</span><span class="nx">B</span> <span class="o">=</span> <span class="s2">&quot;e&quot;</span><span class="p">;</span>  <span class="c1">// --&gt; UnableRewriteException: original cannot be rewrite</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>With this library, you can access current property from restricted modules if original object is updates.
-In above example, <code>moduleB.obj.A</code> returns <code>"d"</code>. Try it.
-If you find any bugs, please inform me with <a href="https://github.com/Lewuathe/readonly/issues">GitHub</a></p>
-
-<p>Enjoy <strong>readonly</strong> !</p>
 ]]></content>
   </entry>
   
