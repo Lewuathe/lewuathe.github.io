@@ -91,5 +91,6 @@ public class Memento {
 }
 ```
 
-Is there any unclear stuff? Please look into [this codes](https://github.com/Lewuathe/java-GoF/tree/master/Memento)
+Is there any unclear stuff? Please look into [this codes](https://github.com/Lewuathe/java-GoF/tree/master/Memento).
+
 Thank you.
