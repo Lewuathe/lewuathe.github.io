@@ -1,0 +1,371 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Logistics Regression With Sparse Vector - The first cry of Atom</title>
+  <meta name="author" content="Kai Sasaki">
+
+  
+  <meta name="description" content="In my project I have to develop a model that is capable of predicting the count of page view
+from sparse vector data such as 1
+2
+[0 0 0 0 0 0 0 0 0 0 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="Logistics Regression with Sparse Vector - The first cry of Atom" >
+<meta property="og:description" content="In my project I have to develop a model that is capable of predicting the count of page view
+from sparse vector data such as 1
+2
+[0 0 0 0 0 0 0 0 0 0 &hellip;" />
+<meta property="og:url" content="http://lewuathe.com" />
+<meta property="og:image" content="http://lewuathe.github.io/images/site_image.png" />
+<meta property="og:author" content="lewuathe" />
+<meta property="og:site_name" content="The first cry of Atom" />
+<meta property="og:locale" content="ja_JP" />
+<meta property="og:type" content="article" />
+<meta property="fb:app_id" content="212934732101925" />
+
+
+  
+  <link rel="canonical" href="http://lewuathe.github.io/blog/2014/03/09/logistics-regression-with-sparse-vector">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
+  <link href="/stylesheets/data-table.css" rel="stylesheet" type="text/css" />
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-44055098-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">The first cry of Atom</a></h1>
+  
+    <h2>The people who are crazy enough to think thay can change the world, are the ones who do</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:lewuathe.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/about.html">About</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="http://fotologue.jp/lewuathe">Pictures</a></li>
+  <li><a href="https://github.com/Lewuathe">GitHub</a></li>
+  <li><a href="https://twitter.com/Lewuathe">Twitter</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Logistics Regression With Sparse Vector</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-09T19:54:25+09:00" pubdate data-updated="true">Mar 9<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>In my project I have to develop a model that is capable of predicting the count of page view
+from sparse vector data such as</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+</span><span class='line'> 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>However I found it was difficult to make a model which can be in practical use. From sparse vector, my current model
+is not trained sufficiently. I used <a href="http://scikit-learn.org/stable/index.html">scikit-learn</a> in python.</p>
+
+<!-- more -->
+
+
+<p>My current code is below.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># -*- coding: utf-8 -*-</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">os</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">sys</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">random</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">svm</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">rand</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">xs</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>    <span class="n">ys</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>    <span class="k">print</span> <span class="s">&quot;Train&quot;</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">):</span>
+</span><span class='line'>      <span class="sd">&quot;&quot;&quot;</span>
+</span><span class='line'><span class="sd">      x is a sparse vector generated from binomial distribution</span>
+</span><span class='line'><span class="sd">      x has a 1 vector generally speaking</span>
+</span><span class='line'><span class="sd">     &quot;&quot;&quot;</span>
+</span><span class='line'>        <span class="n">x</span> <span class="o">=</span> <span class="n">rand</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">xs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="sd">&quot;&quot;&quot;</span>
+</span><span class='line'><span class="sd">      y is obtained from gaussian distribution which has 0.7 as mean value</span>
+</span><span class='line'><span class="sd">        &quot;&quot;&quot;</span>
+</span><span class='line'>        <span class="n">y</span> <span class="o">=</span> <span class="n">rand</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">ys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">clf</span> <span class="o">=</span> <span class="n">svm</span><span class="o">.</span><span class="n">SVR</span><span class="p">()</span>
+</span><span class='line'>  <span class="c"># Train data</span>
+</span><span class='line'>    <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">print</span> <span class="s">&quot;Test&quot;</span>
+</span><span class='line'>    <span class="n">ts</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">ts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rand</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.01</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">print</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Through this process I can only get these results.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="p">[</span> <span class="mf">0.7507838</span>   <span class="mf">0.7507838</span>   <span class="mf">0.75058871</span>  <span class="mf">0.7507838</span>   <span class="mf">0.75058871</span>  <span class="mf">0.75058871</span>
+</span><span class='line'>  <span class="mf">0.73136874</span>  <span class="mf">0.7507838</span>   <span class="mf">0.75058871</span>  <span class="mf">0.75058871</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I think this result doesn&rsquo;t have valid significance for predicting. All values look the same to me!
+Simple support vector machine might not be suitable to predict with sparse vector data. But I have no idea
+how to make alternate model that can be constructed with sparse vectors. Is there anyone who have a good idea or
+a paper which has proper algorithm for this case? I want to know the algorithm which can construct better regression
+model from sparse vector. Please let me know that.</p>
+
+<p>Thank you.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kai Sasaki</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-09T19:54:25+09:00" pubdate data-updated="true">Mar 9<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/logistics-regression/'>Logistics Regression</a>, <a class='category' href='/blog/categories/machine-learning/'>Machine Learning</a>, <a class='category' href='/blog/categories/python/'>Python</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://lewuathe.github.io/blog/2014/03/09/logistics-regression-with-sparse-vector/" data-via="Lewuathe" data-counturl="http://lewuathe.github.io/blog/2014/03/09/logistics-regression-with-sparse-vector/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/03/08/memento-pattern-in-java/" title="Previous Post: Memento pattern in Java">&laquo; Memento pattern in Java</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/03/09/logistics-regression-with-sparse-vector/">Logistics Regression With Sparse Vector</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/08/memento-pattern-in-java/">Memento Pattern in Java</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/06/how-is-hashtable-written-in-java/">How Is HashMap Written in Java</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/03/topcoder-with-intellij-idea/">TopCoder With IntelliJ IDEA</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/02/oobject-handler-cannot-be-called-in-php-extension/">Object Handler Cannot Be Called in Php Extension</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Kai Sasaki -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/ja_JP/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -9,9 +9,7 @@
   <meta name="author" content="Kai Sasaki">
 
   
-  <meta name="description" content="この夏にあったことだ。 一般的に社会人が半ズボンを履いて会社へ行くことは「正しくない」ことだと考えられている。
-でもこの夏はとっても暑かったので、半ズボンがどれだけ許されるのか知りたいということもありいろいろなズボンで会社に行ってみた。
-長ズボン、七分丈、膝の見える短パン。 &hellip;">
+  <meta name="description" content="Released my first Jenkins plugin https://github.com/jenkinsci/hckrnews-plugin With this plugin, you can read hacker news top time line sitting in &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,9 +17,7 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta property="og:title" content=" - The first cry of Atom" >
-<meta property="og:description" content="この夏にあったことだ。 一般的に社会人が半ズボンを履いて会社へ行くことは「正しくない」ことだと考えられている。
-でもこの夏はとっても暑かったので、半ズボンがどれだけ許されるのか知りたいということもありいろいろなズボンで会社に行ってみた。
-長ズボン、七分丈、膝の見える短パン。 &hellip;" />
+<meta property="og:description" content="Released my first Jenkins plugin https://github.com/jenkinsci/hckrnews-plugin With this plugin, you can read hacker news top time line sitting in &hellip;" />
 <meta property="og:url" content="http://lewuathe.com" />
 <meta property="og:image" content="http://lewuathe.github.io/images/site_image.png" />
 <meta property="og:author" content="lewuathe" />
@@ -95,6 +91,134 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/11/28/my-first-jenkins-plugin/">My First Jenkins Plugin</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-28T21:15:00+09:00" pubdate data-updated="true">Nov 28<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Released my first Jenkins plugin</p>
+
+<p><a href="https://github.com/jenkinsci/hckrnews-plugin">https://github.com/jenkinsci/hckrnews-plugin</a></p>
+
+<p><img src="/images/posts/2013-11-28-hckrnews-plugin/screen-shot.png" alt="Screen shot" /></p>
+
+<p>With this plugin, you can read hacker news top time line sitting in front of CI server.
+So you can read top topics about technology and so on at the same time building your project. Does it sound good?</p>
+
+<h2>How to publish Jenkins plugin?</h2>
+
+<h3>Make GitHub repository</h3>
+
+<p>Normal Maven project needs only src/ and pom.xml. Jenkins plugin project is not exception.
+Write right .gitignore, and ignore target/ and work/ directory. These are not necessary.</p>
+
+<h3>Create new jenkins-ci account</h3>
+
+<p>Visit <a href="https://jenkins-ci.org/account/">here</a>. Create your new account.</p>
+
+<h3>Write settings.xml your account information</h3>
+
+<p>Your account name, and password got from above process should be written in <code>~/.m2/settings.xml</code> like below.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;settings&gt;
+</span><span class='line'> ・・・
+</span><span class='line'>  &lt;servers&gt;
+</span><span class='line'>    &lt;server&gt;
+</span><span class='line'>      &lt;id&gt;maven.jenkins-ci.org&lt;/id&gt;
+</span><span class='line'>      &lt;username&gt;XXXXXX&lt;/username&gt;
+</span><span class='line'>      &lt;password&gt;XXXXXX&lt;/password&gt;
+</span><span class='line'>    &lt;/server&gt;
+</span><span class='line'>  &lt;/servers&gt;
+</span><span class='line'>  ・・・
+</span><span class='line'>&lt;/settings&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Application for forking repository</h3>
+
+<p>Send an email to community <a href="https://groups.google.com/forum/#!forum/jenkinsci-ja">mailing list</a> in Japan. If you want to send other community, search <a href="http://jenkins-ci.org/content/mailing-lists">here</a>
+Soon your repository is forked to original jenkinsci organization.</p>
+
+<h3>Modify pom.xml</h3>
+
+<p>Add some line. SCM repository url should be written in your project <code>pom.xml</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;scm&gt;
+</span><span class='line'>    &lt;connection&gt;scm:git:ssh://github.com/jenkinsci/XXXXXXXX.git&lt;/connection&gt;
+</span><span class='line'>    &lt;developerConnection&gt;scm:git:ssh://git@github.com/jenkinsci/XXXXXXXX.git&lt;/developerConnection&gt;
+</span><span class='line'>    &lt;url&gt;https://github.com/jenkinsci/XXXXXXXX.git&lt;/url&gt;
+</span><span class='line'>&lt;/scm&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Release!</h3>
+
+<p>Type below command.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mvn release:prepare release:perform</span></code></pre></td></tr></table></div></figure>
+
+
+<p>One this your should pay attention to is not to add <code>-Dusername</code> and <code>-Dpassword</code> options. These are not used for GitHub but jenkinsci.org
+Congratulations!!</p>
+
+<h3>Future</h3>
+
+<p>In fact, I make this plugin with no experience of writing Java, of course maven.
+Therefore I have to study these tool and Java grammar. In addition to this, I learned how to write some design patterns with coding in accordance with OO programming.</p>
+
+<p>I also wrote some test codes with JUnit in maven. TDD is the method with which I want to develop. In this time, first I wrote unit test code and second logic code. This is fun for me because my code&rsquo;s quality seems to be kept easily. I want to keep writing test code first. This is the best practice for my developing.</p>
+
+<p>This plugin has only simple functions, however, this experience is sufficient value as software engineer.
+In the future, I will seize the moment and make more my own plugins.</p>
+
+<p>Ultimately, please use this plugin. It brings to you a new continuous integration life.</p>
+
+<p>Thank you.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1283,124 +1407,6 @@ PRMLではパーセプトロン学習アルゴリズムが収束するのに必�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/09/29/moderuebidensufalseping-jia/">モデルエビデンスの評価</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-09-29T10:17:00+09:00" pubdate data-updated="true">Sep 29<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>作ったプログラムは以下においたよ。</p>
-
-<p><a href="https://github.com/PhysicsEngine/cpi-stats">https://github.com/PhysicsEngine/cpi-stats</a></p>
-
-<p>ここで作成した線形回帰モデルのエビデンス評価をしてみた。
-モデルエビデンスはざっくり言うと、訓練データを与える尤度を周辺化した値。つまり、そのデータを与える可能性が最も高いものを選ぶことができればパラメタの複雑さなどを自分で判断しなくてもよいというメリットがある。</p>
-
-<p>今回、実装したのは基底関数を多項式とした場合で各目標値には加法性のガウスノイズがのる前提で計算を行った。</p>
-
-<p>超パラメタalpha(モデルパラメタのばらつき)とbeta(ガウスノイズの精度)はそれぞれ0.0001、15.0にした。推定の方法としてはベイズ推定の予測分布を計算して行った。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="c1">// Mはモデルパラメタの数</span>
-</span><span class='line'><span class="k">val</span> <span class="n">bayesRegression</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">BayesRegression</span><span class="o">(</span><span class="n">M</span><span class="o">,</span> <span class="mf">0.0001</span><span class="o">,</span> <span class="mf">15.0</span><span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h1>モデルエビデンスの評価</h1>
-
-<p>基本的にはPRML(3.86)式に従った。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="c1">// Alphaはパラメタの分布の事前分布のばらつきを表す超パラメタ</span>
-</span><span class='line'><span class="c1">// Betaはガウスノイズの精度を表す超パラメタ</span>
-</span><span class='line'><span class="c1">// eMnの最大尤度での二乗和誤差</span>
-</span><span class='line'><span class="o">(</span><span class="n">M</span><span class="o">/</span><span class="mf">2.0</span><span class="o">)</span> <span class="o">*</span> <span class="nc">Math</span><span class="o">.</span><span class="n">log</span><span class="o">(</span><span class="nc">Alpha</span><span class="o">)</span> <span class="o">+</span> <span class="o">(</span><span class="n">xlist</span><span class="o">.</span><span class="n">length</span><span class="o">/</span><span class="mf">2.0</span><span class="o">)</span> <span class="o">*</span> <span class="nc">Math</span><span class="o">.</span><span class="n">log</span><span class="o">(</span><span class="nc">Beta</span><span class="o">)</span> <span class="o">-</span> <span class="n">eMn</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="mf">2.0</span> <span class="o">*</span> <span class="nc">Math</span><span class="o">.</span><span class="n">log</span><span class="o">(</span><span class="n">det</span><span class="o">(</span><span class="n">inv</span><span class="o">(</span><span class="nc">_sN</span><span class="o">)))</span> <span class="o">-</span> <span class="n">xlist</span><span class="o">.</span><span class="n">length</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="nc">Math</span><span class="o">.</span><span class="n">log</span><span class="o">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nc">Math</span><span class="o">.</span><span class="nc">PI</span><span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><img src="/images/posts/2013-09-29-ModelEvidense/evidense.png" alt="モデルエビデンス" /></p>
-
-<p>モデルエビデンスをモデルパラメタの複雑さ2~100の間でプロットした。赤線はM=4の位置。M=4で最大となっていることがわかる。というわけでそれぞれの主要な位置で実際のモデルのグラフをプロットしてみた</p>
-
-<h2>M=3の場合</h2>
-
-<p>なんか直線っぽく見えるけれど、二次関数です。ほぼあってないのでエビデンスもすごい低い。二乗和誤差関数の値も大きい。
-このモデルはエビデンスを求めなくても選ばれなさそう。</p>
-
-<p><img src="/images/posts/2013-09-29-ModelEvidense/M=3.png" alt="M=3" /></p>
-
-<h2>M=4の場合</h2>
-
-<p>エビデンスが最大のモデル。見た目かなりよくfittingしている。</p>
-
-<p><img src="/images/posts/2013-09-29-ModelEvidense/M=4.png" alt="M=4" /></p>
-
-<h2>M=9の場合</h2>
-
-<p>むむ、M=4の場合と対して変わらない。</p>
-
-<p><img src="/images/posts/2013-09-29-ModelEvidense/M=9.png" alt="M=9" /></p>
-
-<h2>M=15の場合</h2>
-
-<p>これもあんまり変わらない。対数尺度で見た時に10程度の差しかないからか。この差はエビデンスでみると大して大きな差ではないのかもしれない。</p>
-
-<p><img src="/images/posts/2013-09-29-ModelEvidense/M=15.png" alt="M=15" /></p>
-
-<h2>M=30の場合</h2>
-
-<p>over fittingし始めた。M=15とM=30で大きく異るところはエビデンスの値というよりは訓練データ集合が25個だからそれより多いか少ないかの違いな気がする。</p>
-
-<p>直感的には基底関数を多項式にしているので最尤推定で行うと訓練データ集合よりもモデルパラメータの数が多いとすべての点を通るようなグラフになる。今回はベイズ推定で行っているので事前分布のお陰で全点を通るなんてことはないけれど、それでも過学習をし始める分岐点としては訓練データの数になるかもしれない。</p>
-
-<p>x=1付近でしか過学習してないのが気になるけれど。</p>
-
-<p><img src="/images/posts/2013-09-29-ModelEvidense/M=30.png" alt="M=30" /></p>
-
-<h2>M=100の場合</h2>
-
-<p>もう右側(x=1付近)のグラフはめちゃめちゃ。でもx=0付近はそんなにおかしくないのはなぜだろう。事前分布における精度は常に一定なのでそんなに場所によってばらついたりしなさそうなんだけど。</p>
-
-<p><img src="/images/posts/2013-09-29-ModelEvidense/M=100.png" alt="M=100" /></p>
-
-<h1>まとめ</h1>
-
-<p>評価値xによって過学習したりしてなかったりするのが気になるけれど、全体としてはエビデンス関数を最大化するようなモデルパラメタMを選ぶことによって、最適なモデルを作ることができそう。PRMLにも書いてあったけれど、「目で見りゃいいじゃん」というのはもっと高次元になった場合に通用しなくなるので、解析的にモデルを評価できる手法は有用。しかも割と時間もそんなにかからない。(Scalaでモデル100個の評価を行ったけれど1~2秒ほど)</p>
-
-<p>超パラメタ、alphaとbetaに関しても評価してエビデンスを最大化してみるとよりよいモデルが得られるのかも。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -1418,6 +1424,10 @@ PRMLではパーセプトロン学習アルゴリズムが収束するのに必�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/03/09/logistics-regression-with-sparse-vector/">Logistics Regression With Sparse Vector</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/03/08/memento-pattern-in-java/">Memento Pattern in Java</a>
       </li>
     
@@ -1431,10 +1441,6 @@ PRMLではパーセプトロン学習アルゴリズムが収束するのに必�
     
       <li class="post">
         <a href="/blog/2014/03/02/oobject-handler-cannot-be-called-in-php-extension/">Object Handler Cannot Be Called in Php Extension</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/03/01/actor-model-with-node-cluster/">Actor Model With Node Cluster</a>
       </li>
     
   </ul>

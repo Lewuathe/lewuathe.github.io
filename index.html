@@ -9,7 +9,10 @@
   <meta name="author" content="Kai Sasaki">
 
   
-  <meta name="description" content="Recently, I implemented some design patterns following this book. This book introduces 23 design patterns that all programmers should know when you &hellip;">
+  <meta name="description" content="In my project I have to develop a model that is capable of predicting the count of page view
+from sparse vector data such as 1
+2
+[0 0 0 0 0 0 0 0 0 0 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +20,10 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta property="og:title" content=" - The first cry of Atom" >
-<meta property="og:description" content="Recently, I implemented some design patterns following this book. This book introduces 23 design patterns that all programmers should know when you &hellip;" />
+<meta property="og:description" content="In my project I have to develop a model that is capable of predicting the count of page view
+from sparse vector data such as 1
+2
+[0 0 0 0 0 0 0 0 0 0 &hellip;" />
 <meta property="og:url" content="http://lewuathe.com" />
 <meta property="og:image" content="http://lewuathe.github.io/images/site_image.png" />
 <meta property="og:author" content="lewuathe" />
@@ -91,6 +97,57 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/03/09/logistics-regression-with-sparse-vector/">Logistics Regression With Sparse Vector</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-09T19:54:25+09:00" pubdate data-updated="true">Mar 9<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In my project I have to develop a model that is capable of predicting the count of page view
+from sparse vector data such as</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+</span><span class='line'> 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>However I found it was difficult to make a model which can be in practical use. From sparse vector, my current model
+is not trained sufficiently. I used <a href="http://scikit-learn.org/stable/index.html">scikit-learn</a> in python.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/03/09/logistics-regression-with-sparse-vector/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -485,51 +542,6 @@ So this is the potential way to write Android application. Today I&rsquo;d like 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/02/20/android-sdk-on-intellij-idea/">Android SDK on IntelliJ IDEA</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-02-20T21:24:56+09:00" pubdate data-updated="true">Feb 20<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Eventually, I finished android lecture that is introduced on <a href="http://lewuathe.com/blog/2014/02/18/useful-shortcuts-for-intellij-idea/">previous post</a>
-In this lecture, I learned how to use <a href="https://www.eclipse.org/">Eclipse</a>, <a href="http://java.com/ja/">Java</a> and of course <a href="http://developer.android.com/sdk/index.html">Android SDK</a></p>
-
-<p>After coming home, I tried to creating a environent for android application development. However only installing Eclipse and creating same environment to lectures one
-makes me tired. So I create this environment with <a href="http://www.jetbrains.com/idea/">IntelliJ IDEA</a>.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/02/20/android-sdk-on-intellij-idea/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -545,6 +557,10 @@ makes me tired. So I create this environment with <a href="http://www.jetbrains.
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/03/09/logistics-regression-with-sparse-vector/">Logistics Regression With Sparse Vector</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/03/08/memento-pattern-in-java/">Memento Pattern in Java</a>
       </li>
     
@@ -558,10 +574,6 @@ makes me tired. So I create this environment with <a href="http://www.jetbrains.
     
       <li class="post">
         <a href="/blog/2014/03/02/oobject-handler-cannot-be-called-in-php-extension/">Object Handler Cannot Be Called in Php Extension</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/03/01/actor-model-with-node-cluster/">Actor Model With Node Cluster</a>
       </li>
     
   </ul>

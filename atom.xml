@@ -4,7 +4,7 @@
   <title><![CDATA[The first cry of Atom]]></title>
   <link href="http://lewuathe.github.io/atom.xml" rel="self"/>
   <link href="http://lewuathe.github.io/"/>
-  <updated>2014-03-09T00:20:58+09:00</updated>
+  <updated>2014-03-09T20:22:04+09:00</updated>
   <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
@@ -12,6 +12,126 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Logistics Regression With Sparse Vector]]></title>
+    <link href="http://lewuathe.github.io/blog/2014/03/09/logistics-regression-with-sparse-vector/"/>
+    <updated>2014-03-09T19:54:25+09:00</updated>
+    <id>http://lewuathe.github.io/blog/2014/03/09/logistics-regression-with-sparse-vector</id>
+    <content type="html"><![CDATA[<p>In my project I have to develop a model that is capable of predicting the count of page view
+from sparse vector data such as</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+</span><span class='line'> 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>However I found it was difficult to make a model which can be in practical use. From sparse vector, my current model
+is not trained sufficiently. I used <a href="http://scikit-learn.org/stable/index.html">scikit-learn</a> in python.</p>
+
+<!-- more -->
+
+
+<p>My current code is below.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># -*- coding: utf-8 -*-</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">os</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">sys</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">random</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">svm</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">rand</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">xs</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>    <span class="n">ys</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>    <span class="k">print</span> <span class="s">&quot;Train&quot;</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">):</span>
+</span><span class='line'>      <span class="sd">&quot;&quot;&quot;</span>
+</span><span class='line'><span class="sd">      x is a sparse vector generated from binomial distribution</span>
+</span><span class='line'><span class="sd">      x has a 1 vector generally speaking</span>
+</span><span class='line'><span class="sd">     &quot;&quot;&quot;</span>
+</span><span class='line'>        <span class="n">x</span> <span class="o">=</span> <span class="n">rand</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">xs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="sd">&quot;&quot;&quot;</span>
+</span><span class='line'><span class="sd">      y is obtained from gaussian distribution which has 0.7 as mean value</span>
+</span><span class='line'><span class="sd">        &quot;&quot;&quot;</span>
+</span><span class='line'>        <span class="n">y</span> <span class="o">=</span> <span class="n">rand</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">ys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">clf</span> <span class="o">=</span> <span class="n">svm</span><span class="o">.</span><span class="n">SVR</span><span class="p">()</span>
+</span><span class='line'>  <span class="c"># Train data</span>
+</span><span class='line'>    <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">print</span> <span class="s">&quot;Test&quot;</span>
+</span><span class='line'>    <span class="n">ts</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">ts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rand</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.01</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">print</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Through this process I can only get these results.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="p">[</span> <span class="mf">0.7507838</span>   <span class="mf">0.7507838</span>   <span class="mf">0.75058871</span>  <span class="mf">0.7507838</span>   <span class="mf">0.75058871</span>  <span class="mf">0.75058871</span>
+</span><span class='line'>  <span class="mf">0.73136874</span>  <span class="mf">0.7507838</span>   <span class="mf">0.75058871</span>  <span class="mf">0.75058871</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I think this result doesn&rsquo;t have valid significance for predicting. All values look the same to me!
+Simple support vector machine might not be suitable to predict with sparse vector data. But I have no idea
+how to make alternate model that can be constructed with sparse vectors. Is there anyone who have a good idea or
+a paper which has proper algorithm for this case? I want to know the algorithm which can construct better regression
+model from sparse vector. Please let me know that.</p>
+
+<p>Thank you.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Memento Pattern in Java]]></title>
@@ -3151,202 +3271,6 @@ So in this entry, I cite one scrum example after another which I heard in these 
 <li>Some projects should be facilitated forcibly, like waterfall process</li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Hack Tessel!]]></title>
-    <link href="http://lewuathe.github.io/blog/2014/01/09/hack-tessel/"/>
-    <updated>2014-01-09T21:25:00+09:00</updated>
-    <id>http://lewuathe.github.io/blog/2014/01/09/hack-tessel</id>
-    <content type="html"><![CDATA[<p><meta property=”og:image” content=”http://lewuathe.com/images/posts/2014-01-09-tessel-first/bootstrap_tessel.jpg” /></p>
-
-<p>Yesterday, I got a <a href="http://tessel.io/">tessel</a>. With twists and turns, I overcome some obstacles for hacking this tiny but not little possibility board. So writing this post.</p>
-
-<p>First and unfortunately, these client modules are only used for beta testers now.
-So these are not opend yet. Please be understanding of this point.</p>
-
-<!-- more -->
-
-
-<h2>Environment</h2>
-
-<ul>
-<li>MacOSX 10.9.1</li>
-<li>git 1.8.3.4 (Apple Git-47)</li>
-<li>java 1.7.0_45</li>
-<li>node v0.10.16 (with nvm)</li>
-</ul>
-
-
-<h2>Install drivers for OSX</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ brew install libusb
-</span><span class='line'>$ brew install pkg-config</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In order to connect tessel with USB, these drivers are needed.
-After installing the drivers, you can use <code>tessel</code> command. This command is used for
-connecting tessel server or pushing your codes, etc. So your development cycle of tessel
-will be work around this command. It&rsquo;s very important.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ tessel
-</span><span class='line'>Tessel CLI
-</span><span class='line'>Usage:
-</span><span class='line'>   tessel &lt;filename&gt;
-</span><span class='line'>   tessel list
-</span><span class='line'>   tessel logs
-</span><span class='line'>   tessel push &lt;filename&gt; [-r &lt;ip[:port&gt;]] [-s] [-b &lt;file&gt;] [-a [options]]
-</span><span class='line'>          -r wireless pushing of code (inactive at the moment)
-</span><span class='line'>          -s saves the file that is getting passed to Tessel as builtin.tar.gz
-</span><span class='line'>          -b pushes a binary
-</span><span class='line'>          -a passes arguments to tessel scripts
-</span><span class='line'>   tessel wifi &lt;ssid&gt; &lt;pass&gt; &lt;security (wep/wap/wap2, wap2 by default)&gt;
-</span><span class='line'>   tessel wifi &lt;ssid&gt;
-</span><span class='line'>          connects to a wifi network without a password
-</span><span class='line'>   tessel wifi
-</span><span class='line'>          see current wifi status
-</span><span class='line'>   tessel stop
-</span><span class='line'>   tessel dfu-restore &lt;firmware.bin&gt;
-</span><span class='line'>          upload new firmware when in DFU mode
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Connecting</h2>
-
-<p>After installing these prerequisites, you can connect tessel to your PC with USB cable.
-For confirming the connection between tessel and my MAC, <code>verbose</code> subcommand is useful.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>% tessel verbose
-</span><span class='line'>TESSEL? No Tessel found, waiting...</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Umm?. I cannot connect. No matter how long I wait, there are no sign of connecting.
-So here is answer.</p>
-
-<p><img src="http://lewuathe.github.io/images/posts/2014-01-09-tessel-first/bootstrap_tessel.jpg" alt="Boostrap" /></p>
-
-<p>I have to wait for the LED lamps off. I cannot understand why these waiting is necessary now, but anyway after the LEDs are off, I can connect to the tessel board. Great!</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>% tessel verbose
-</span><span class='line'>TESSEL! Connected to /dev/cu.usbmodem1421.
-</span><span class='line'>H { date: 'Jan  3 2014', time: '17:50:43' }
-</span><span class='line'>l Tessel, by Technical Machine &lt;http://technical.io&gt;
-</span><span class='line'>l Firmware version: e1b13fc
-</span><span class='line'>l Runtime version: 7d86665
-</span><span class='line'>l Build time: Jan  3 2014 17:50:43
-</span><span class='line'>l Board version: 2
-</span><span class='line'>l Board serial: 428-0-4026571312-1578983944
-</span><span class='line'>d
-</span><span class='line'>l Run 'tessel push &lt;path to code&gt;' from the command line to push code.
-</span><span class='line'>w Connecting to last available network...
-</span><span class='line'>w CC3000 firmware version: 1.24
-</span><span class='line'>W { cc3000firmware: '1.24' }
-</span><span class='line'>w CC3000 firmware version: 1.24
-</span><span class='line'>W { cc3000firmware: '1.24' }
-</span><span class='line'>w Couldn't connect to saved network.
-</span><span class='line'>w
-</span><span class='line'>W { connected: 0, ip: null }
-</span><span class='line'>L 1
-</span><span class='line'>d Ready.</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Demo</h2>
-
-<p>Tessel has LED lamps as default. So I run sample code which can blink these LED.
-It&rsquo;s below.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>var tessel = require('tessel');
-</span><span class='line'>
-</span><span class='line'>// high means flashing
-</span><span class='line'>var led1 = tessel.led(1).output().high();
-</span><span class='line'>// low means going off
-</span><span class='line'>var led2 = tessel.led(2).output().low();
-</span><span class='line'>
-</span><span class='line'>var i = 0;
-</span><span class='line'>setInterval(function () {
-</span><span class='line'>  console.log(i++);
-</span><span class='line'>  // Switching on and off this function
-</span><span class='line'>  led1.toggle();
-</span><span class='line'>  led2.toggle();
-</span><span class='line'>}, 100);</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And pushing it.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ tessel push index.js</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<iframe width="420" height="315" src="http://lewuathe.github.io//www.youtube.com/embed/aKLGnU9wsTo" frameborder="0" allowfullscreen></iframe>
-
-
-<p><strong>BLINK!!!</strong></p>
-
-<h2>More module</h2>
-
-<p>There are many <a href="http://tessel.io/modules">modules</a> with tessel. For humidity, SDCard, Wifi, GPS, Serve etc.
-So I want to try these modules more, and expand the possibility of embedded JavaScript.</p>
 ]]></content>
   </entry>
   

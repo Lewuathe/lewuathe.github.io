@@ -9,7 +9,7 @@
   <meta name="author" content="Kai Sasaki">
 
   
-  <meta name="description" content="I made npm module at the end of this year, readonly. lewuathe/readonly @GitHub readonly @npm readonly is a simple reference restriction library &hellip;">
+  <meta name="description" content="Yesterday, I got a tessel. With twists and turns, I overcome some obstacles for hacking this tiny but not little possibility board. So writing this &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +17,7 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta property="og:title" content=" - The first cry of Atom" >
-<meta property="og:description" content="I made npm module at the end of this year, readonly. lewuathe/readonly @GitHub readonly @npm readonly is a simple reference restriction library &hellip;" />
+<meta property="og:description" content="Yesterday, I got a tessel. With twists and turns, I overcome some obstacles for hacking this tiny but not little possibility board. So writing this &hellip;" />
 <meta property="og:url" content="http://lewuathe.com" />
 <meta property="og:image" content="http://lewuathe.github.io/images/site_image.png" />
 <meta property="og:author" content="lewuathe" />
@@ -91,6 +91,52 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/01/09/hack-tessel/">Hack Tessel!</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-09T21:25:00+09:00" pubdate data-updated="true">Jan 9<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><meta property=”og:image” content=”http://lewuathe.com/images/posts/2014-01-09-tessel-first/bootstrap_tessel.jpg” /></p>
+
+<p>Yesterday, I got a <a href="http://tessel.io/">tessel</a>. With twists and turns, I overcome some obstacles for hacking this tiny but not little possibility board. So writing this post.</p>
+
+<p>First and unfortunately, these client modules are only used for beta testers now.
+So these are not opend yet. Please be understanding of this point.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/01/09/hack-tessel/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -1261,134 +1307,6 @@ It&rsquo;s my challenge for my future, and my hapiness.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/11/28/my-first-jenkins-plugin/">My First Jenkins Plugin</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-28T21:15:00+09:00" pubdate data-updated="true">Nov 28<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Released my first Jenkins plugin</p>
-
-<p><a href="https://github.com/jenkinsci/hckrnews-plugin">https://github.com/jenkinsci/hckrnews-plugin</a></p>
-
-<p><img src="/images/posts/2013-11-28-hckrnews-plugin/screen-shot.png" alt="Screen shot" /></p>
-
-<p>With this plugin, you can read hacker news top time line sitting in front of CI server.
-So you can read top topics about technology and so on at the same time building your project. Does it sound good?</p>
-
-<h2>How to publish Jenkins plugin?</h2>
-
-<h3>Make GitHub repository</h3>
-
-<p>Normal Maven project needs only src/ and pom.xml. Jenkins plugin project is not exception.
-Write right .gitignore, and ignore target/ and work/ directory. These are not necessary.</p>
-
-<h3>Create new jenkins-ci account</h3>
-
-<p>Visit <a href="https://jenkins-ci.org/account/">here</a>. Create your new account.</p>
-
-<h3>Write settings.xml your account information</h3>
-
-<p>Your account name, and password got from above process should be written in <code>~/.m2/settings.xml</code> like below.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;settings&gt;
-</span><span class='line'> ・・・
-</span><span class='line'>  &lt;servers&gt;
-</span><span class='line'>    &lt;server&gt;
-</span><span class='line'>      &lt;id&gt;maven.jenkins-ci.org&lt;/id&gt;
-</span><span class='line'>      &lt;username&gt;XXXXXX&lt;/username&gt;
-</span><span class='line'>      &lt;password&gt;XXXXXX&lt;/password&gt;
-</span><span class='line'>    &lt;/server&gt;
-</span><span class='line'>  &lt;/servers&gt;
-</span><span class='line'>  ・・・
-</span><span class='line'>&lt;/settings&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Application for forking repository</h3>
-
-<p>Send an email to community <a href="https://groups.google.com/forum/#!forum/jenkinsci-ja">mailing list</a> in Japan. If you want to send other community, search <a href="http://jenkins-ci.org/content/mailing-lists">here</a>
-Soon your repository is forked to original jenkinsci organization.</p>
-
-<h3>Modify pom.xml</h3>
-
-<p>Add some line. SCM repository url should be written in your project <code>pom.xml</code></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;scm&gt;
-</span><span class='line'>    &lt;connection&gt;scm:git:ssh://github.com/jenkinsci/XXXXXXXX.git&lt;/connection&gt;
-</span><span class='line'>    &lt;developerConnection&gt;scm:git:ssh://git@github.com/jenkinsci/XXXXXXXX.git&lt;/developerConnection&gt;
-</span><span class='line'>    &lt;url&gt;https://github.com/jenkinsci/XXXXXXXX.git&lt;/url&gt;
-</span><span class='line'>&lt;/scm&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Release!</h3>
-
-<p>Type below command.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ mvn release:prepare release:perform</span></code></pre></td></tr></table></div></figure>
-
-
-<p>One this your should pay attention to is not to add <code>-Dusername</code> and <code>-Dpassword</code> options. These are not used for GitHub but jenkinsci.org
-Congratulations!!</p>
-
-<h3>Future</h3>
-
-<p>In fact, I make this plugin with no experience of writing Java, of course maven.
-Therefore I have to study these tool and Java grammar. In addition to this, I learned how to write some design patterns with coding in accordance with OO programming.</p>
-
-<p>I also wrote some test codes with JUnit in maven. TDD is the method with which I want to develop. In this time, first I wrote unit test code and second logic code. This is fun for me because my code&rsquo;s quality seems to be kept easily. I want to keep writing test code first. This is the best practice for my developing.</p>
-
-<p>This plugin has only simple functions, however, this experience is sufficient value as software engineer.
-In the future, I will seize the moment and make more my own plugins.</p>
-
-<p>Ultimately, please use this plugin. It brings to you a new continuous integration life.</p>
-
-<p>Thank you.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -1406,6 +1324,10 @@ In the future, I will seize the moment and make more my own plugins.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/03/09/logistics-regression-with-sparse-vector/">Logistics Regression With Sparse Vector</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/03/08/memento-pattern-in-java/">Memento Pattern in Java</a>
       </li>
     
@@ -1419,10 +1341,6 @@ In the future, I will seize the moment and make more my own plugins.</p>
     
       <li class="post">
         <a href="/blog/2014/03/02/oobject-handler-cannot-be-called-in-php-extension/">Object Handler Cannot Be Called in Php Extension</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/03/01/actor-model-with-node-cluster/">Actor Model With Node Cluster</a>
       </li>
     
   </ul>
