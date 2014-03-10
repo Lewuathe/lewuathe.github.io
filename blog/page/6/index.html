@@ -9,9 +9,9 @@
   <meta name="author" content="Kai Sasaki">
 
   
-  <meta name="description" content="汎用人工知能の開発をするにあたって使う言語とかを考えていた。汎用人工知能（まだそれが何を意味するのか明瞭にはわかってない)で必要なスペックは次のものなのではないかなとあげてみた。 高速
-並列処理に向いている
-関数型（少なくとも副作用を前提としないプログラム） ここであげた条件には自分の好み、 &hellip;">
+  <meta name="description" content="SBT(Simple Build Tool)というScalaのビルドツールを使ってみる。
+ここを参考にした。 インストール まずインストール。macの場合はHomebrewで用意されているみたい。 1
+$ brew install sbt プロジェクトの作成 ひな形は自分で作る。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,9 +19,9 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta property="og:title" content=" - The first cry of Atom" >
-<meta property="og:description" content="汎用人工知能の開発をするにあたって使う言語とかを考えていた。汎用人工知能（まだそれが何を意味するのか明瞭にはわかってない)で必要なスペックは次のものなのではないかなとあげてみた。 高速
-並列処理に向いている
-関数型（少なくとも副作用を前提としないプログラム） ここであげた条件には自分の好み、 &hellip;" />
+<meta property="og:description" content="SBT(Simple Build Tool)というScalaのビルドツールを使ってみる。
+ここを参考にした。 インストール まずインストール。macの場合はHomebrewで用意されているみたい。 1
+$ brew install sbt プロジェクトの作成 ひな形は自分で作る。 &hellip;" />
 <meta property="og:url" content="http://lewuathe.com" />
 <meta property="og:image" content="http://lewuathe.github.io/images/site_image.png" />
 <meta property="og:author" content="lewuathe" />
@@ -101,6 +101,197 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2013/09/09/sbtwoshi-tutapuroziekutozuo-cheng/">SBTを使ったプロジェクト作成(1)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-09T21:29:00+09:00" pubdate data-updated="true">Sep 9<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>SBT(Simple Build Tool)というScalaのビルドツールを使ってみる。
+<a href="http://scalajp.github.io/sbt-getting-started-guide-ja/">ここ</a>を参考にした。</p>
+
+<h3>インストール</h3>
+
+<p>まずインストール。macの場合はHomebrewで用意されているみたい。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ brew install sbt</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>プロジェクトの作成</h3>
+
+<p>ひな形は自分で作る。ここではhelloプロジェクトを作ってみる。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mkdir hello
+</span><span class='line'>$ echo 'object Hi { def main(args: Array[String]) = println("Hi!") }' &gt; hw.scala
+</span><span class='line'>$ sbt
+</span><span class='line'># ここで必要なパッケージとか勝手にインストールしてビルドしてくれるみたい
+</span><span class='line'>&gt; run
+</span><span class='line'>・・・
+</span><span class='line'>Hi!</span></code></pre></td></tr></table></div></figure>
+
+
+<p>複雑なことはまだたくさんあるけれど、必要なことはこれだけだ。あとは蛇足と後学のため。でもきっと大事なことだ。</p>
+
+<h3>ソースコード</h3>
+
+<p>sbtではソースツリーはMavenと同じものを使うらしい。Maven知らない。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>hello/
+</span><span class='line'> build.sbt  (パッケージのmeta情報とかここにまとめる)
+</span><span class='line'> project/
+</span><span class='line'>   Build.scala (ビルド設定とかここに書く。Makefileみたいなもの？)
+</span><span class='line'> src/
+</span><span class='line'>   main/
+</span><span class='line'>     resources/
+</span><span class='line'>        &lt;メインの jar に含むファイル&gt;
+</span><span class='line'>     scala/
+</span><span class='line'>        &lt;メインの Scala ソース&gt;
+</span><span class='line'>     java/
+</span><span class='line'>        &lt;メインの Java ソース&gt;
+</span><span class='line'>   test/
+</span><span class='line'>     resources/
+</span><span class='line'>        &lt;テストの jar に含むファイル&gt;
+</span><span class='line'>     scala/
+</span><span class='line'>        &lt;テストの Scala ソース&gt;
+</span><span class='line'>     java/
+</span><span class='line'>        &lt;テストの Java ソース&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>これ以外は無視されるらしい。sbtコマンドでビルドが終わるとここにtargetディレクトリが追加されて、そこにできたclassファイルとかjarファイルが置かれる。Gitで管理したいなら<code>.gitignore</code>にはこう書くのが定石らしい。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>target/</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>インタラクティブモード</h3>
+
+<p>sbtを引数なしで実行するとインタラクティブモードになる。さっき<code>&gt;</code>が出てきて<code>run</code>と打ったらところで見ているはずだ。インタラクティブモードでは<code>compile</code>とか<code>run</code>が使える。みたまんまだ。</p>
+
+<h3>バッチモード</h3>
+
+<p>コマンド（さっきインタラクティブモードで一個一個打ってたやつ）を一度に実行できる。引数も与えられる。（test-onlyにはtestAとtestBを引数に与えている）</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sbt compile run "test-only testA testB"</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>継続的ビルド</h3>
+
+<p>ソースファイルの変更をトリガーに実行したければコマンドの先頭に<code>~</code>をつける。例えばインタラクティブモードで以下のようにすると、ソースをいじるたびに勝手にコンパイルしてくれるようになる。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt; ~ compile</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><code>clean</code>: targetの削除 <code>make clean</code>みたいなもの</li>
+<li><code>compile</code>: コンパイルする</li>
+<li><code>test</code>: コンパイルして実行</li>
+<li><code>console</code>: コンパイル済のソースを依存ライブラリにパスを通してscalaインタプリタに入る</li>
+<li><code>run</code>: プロジェクトのメインクラスを実行</li>
+<li><code>package</code>:  src/main/resources 内のファイルと src/main/scala からコンパイルされたクラスを含む jar を作る</li>
+</ul>
+
+
+<h3>build.sbtの書き方</h3>
+
+<p>ここで何書いていいかわからなかった大事なbuild.sbtが出てくる。
+はじめの方に書いたけれどビルド定義にはbuild.sbtとproject/<em>.scalaの２通りがある。ただ慣例的にはメインでbuild.sbtを使いそれでできないことを</em>.scalaファイルで行うことが多いらしい。さてビルド定義。</p>
+
+<h4>ビルド定義って？</h4>
+
+<blockquote><p>プロジェクトを調べ、全てのビルド定義ファイルを処理した後、sbt は、ビルドを記述した不可変マップ（キーと値のペア）を最終的に作る。例えば、name というキーがあり、それは文字列の値、つまり君のプロジェクト名に関連付けられる。<br/>ビルド定義ファイルは直接には sbt のマップに影響を与えない。その代わり、ビルド定義は、型が Setting[T] のオブジェクトを含んだ巨大なリストを作る。 T はマップ内の値の型だ。（Scala の Setting[T] は Java の Setting<T> と同様。） Setting は、新しいキーと値のペアや、既存の値への追加など、マップの変換を記述する。 （関数型プログラミングの精神に則り、変換は新しいマップを返し、古いマップは更新されない。）<br/>build.sbt では、プロジェクト名の Setting[String] を以下のように作る:</p><p>name := &#8220;hello&#8221;</p><p>この Setting[String] は name キーを追加（もしくは置換）して &#8220;hello&#8221; という値に設定することでマップを変換する。 変換されたマップは新しい sbt のマップとなる。マップを作るために、sbt はまず、同じキーへの変更が一緒に起き、かつ他のキーに依存する値の処理が依存するキーの後にくるように Setting のリストをソートする。 次に、sbt はソートされた Setting のリストを順番にみていって、一つづつマップに適用する。</p><p>まとめ: ビルド定義は Setting[T] のリストを定義し、Setting[T] は sbt のキー・値ペアへの変換を表し、T は値の型を指す。</p></blockquote>
+
+
+<p>何言ってるかわからない。
+例えば最初の方に出てきた<code>build.sbt</code>はこんなだった。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">name</span> <span class="o">:=</span> <span class="s">&quot;hello&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">version</span> <span class="o">:=</span> <span class="s">&quot;1.0&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scalaVersion</span> <span class="o">:=</span> <span class="s">&quot;2.9.1&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>これは<code>:=</code>の左側がSetting[T]型のオブジェクトで右側がその値だ。これらの値は組み込み型で型が決まっているので</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">name</span> <span class="o">:=</span> <span class="mi">42</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>とやるとコンパイルしてくれないそうな。
+キーの種類にはSettingとTaskがあり、nameとかversionはSetting。packageとかcompileはTaskとなる。なんだかまだ良くわからないけれど、設定値と実行命令みたいなものに２種類を設定できるっぽい。
+ライブラリ依存性とかを書く場合はこんな感じ。ほうほう。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.apache.derby&quot;</span> <span class="o">%</span> <span class="s">&quot;derby&quot;</span> <span class="o">%</span> <span class="s">&quot;10.4.1.3&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>今日は一旦このへんで。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2013/09/07/scalawoshi-ukotoni/">Scalaを使うことに</a></h1>
     
     
@@ -166,6 +357,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/03/10/difference-between-pca-and-da/">Difference Between PCA and dA</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/03/09/logistics-regression-with-sparse-vector/">Logistics Regression With Sparse Vector</a>
       </li>
     
@@ -179,10 +374,6 @@
     
       <li class="post">
         <a href="/blog/2014/03/03/topcoder-with-intellij-idea/">TopCoder With IntelliJ IDEA</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/03/02/oobject-handler-cannot-be-called-in-php-extension/">Object Handler Cannot Be Called in Php Extension</a>
       </li>
     
   </ul>

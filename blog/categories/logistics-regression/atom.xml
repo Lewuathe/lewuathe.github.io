@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Logistics Regression | The first cry of Atom]]></title>
   <link href="http://lewuathe.github.io/blog/categories/logistics-regression/atom.xml" rel="self"/>
   <link href="http://lewuathe.github.io/"/>
-  <updated>2014-03-09T20:22:04+09:00</updated>
+  <updated>2014-03-10T23:30:36+09:00</updated>
   <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
@@ -26,8 +26,8 @@ from sparse vector data such as</p>
  0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
 </code></p>
 
-<p>However I found it was difficult to make a model which can be in practical use. From sparse vector, my current model
-is not trained sufficiently. I used <a href="http://scikit-learn.org/stable/index.html">scikit-learn</a> in python.</p>
+<p>However I found it was difficult to make a model which can be applied to practical use case. From sparse vector, my current model
+doesn&rsquo;t look trained sufficiently. I used <a href="http://scikit-learn.org/stable/index.html">scikit-learn</a> in python.</p>
 
 <!-- more -->
 
