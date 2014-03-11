@@ -4,7 +4,7 @@
   <title><![CDATA[The first cry of Atom]]></title>
   <link href="http://lewuathe.github.io/atom.xml" rel="self"/>
   <link href="http://lewuathe.github.io/"/>
-  <updated>2014-03-10T23:30:36+09:00</updated>
+  <updated>2014-03-11T21:22:39+09:00</updated>
   <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
@@ -12,6 +12,75 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Forget Grief, Keep Data]]></title>
+    <link href="http://lewuathe.github.io/blog/2014/03/11/forget-grief-keep-data/"/>
+    <updated>2014-03-11T19:48:31+09:00</updated>
+    <id>http://lewuathe.github.io/blog/2014/03/11/forget-grief-keep-data</id>
+    <content type="html"><![CDATA[<p>Three years ago, I walked around Shinjuku at Tokyo.
+I had not yet obtained informal decision from current company for which I now work. So I walked around Shinjuku
+for job hunting as pre-graduate student called &ldquo;Shukatsu-sei&rdquo; in Japanese.</p>
+
+<p>First I wondered what happened. Then I escaped from the building shook violently.
+In spite of the pleasant friday always, those who were enjoying before the weekend were not the same to the ones
+of ordinary day. 2011 Tōhoku earthquake and tsunami struck Japan, my homeland.</p>
+
+<div style="text-align:center" markdown="1">
+<img src="http://lewuathe.github.io/images/posts/2014-03-11-forget-grief/eye_catch.jpg" />
+</div>
+
+
+<br>
+
+
+
+
+<!-- more -->
+
+
+<p>All media in Japan are filled with the memorial of that disaster today.
+They said &ldquo;Never forget <em>that day</em>&rdquo; or &ldquo;Hang over the memory to the next generation&rdquo;.
+These real intentions seem to me as the power that does not allow me to forget the grief of <em>that day</em>.
+Of course from the point of view of disaster prevention, information has to be kept in our society.
+But all needed for this are concrete data, aren&rsquo;t it?</p>
+
+<p>Grief doesn&rsquo;t help us recovering from the mental injury completely, I think. Furthermore, it is infectious
+to all over our country. So this anniversary compelled us be in deep sorrow. Never allows us to laugh, smile
+and joy. Of course I understand that the victims cannot avoid sinking to sorrow. But is it need to spread through
+radio, TV and internet? If anything, it is better to make them smile to recovering from deep sorrow as much as possible.</p>
+
+<p>It is very important for progressing to the future to laugh. Above all recovering from this cruel
+disaster. As well as grief, a smile is also infectious. It has the power of making our country better place
+for the future. So I want to spread smile rather than grief.</p>
+
+<p>The media might has the intention of keeping the memory in order to develop the disaster prevention system or making people
+keep doing support affected area for a long time. I agree with this attempt somewhat because all people tend to forget anything.
+But all what is necessary for developing disaster prevention system to keep might concrete data obtained from the situation of those days, isn&rsquo;t it?</p>
+
+<p>How high the <em>tsunami</em> was?</p>
+
+<p>How many building were collapsed by quake?</p>
+
+<p>What kind of resources became a shortage just after the disaster?</p>
+
+<p>Which nuclear reactor was more fault-torerant, <a href="http://en.wikipedia.org/wiki/Boiling_water_reactor">BWR</a> or <a href="http://en.wikipedia.org/wiki/Pressurized_water_reactor">PWR</a>?</p>
+
+<p>These data can be used for making the scheme to stand up to the disaster that has same scale to 3.11.
+Such research is now ongoing and will be kept going. So keep data not grief. Whole my country should turn
+toward the bright future where all people are smile. I think this future is not what the result of all
+recovery process, but it is on the way to the future. So it is now.
+Smile is not what came to us someday but what should be kept spreading whole my country. So it is now.</p>
+
+<p>Three years has passed after that 3.11 earthquake. Is it the time to forget all grief from our heart?
+What should be kept in our heart is only data. With these data, we can construct the country that is unafraid
+of next disaster which might come to our homeland again. And let&rsquo;s spread these knowledge all over the world. Disasters occur on a daily basis.
+People are seeking these knowledge today. This is urgent. We have no time to spread grief and weaken our life force.</p>
+
+<p>Forget grief, Keep data.
+Our country surely gets better with smile.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Difference Between PCA and dA]]></title>
@@ -81,8 +150,9 @@ This autoencoder has below characteristics.</p>
 <p>I think the most essential difference between PCA and denoised autoencoder is reversibility. PCA cannot restore original data bacause
 it losts the distance from the <a href="http://users.ics.aalto.fi/praiko/papers/pca_iconip/node3.html">principal subspace</a>. On the other hands,
 denoised autoencoder keeps its weight matrix inside own model. So it requires only adding transpose matrix of this weight for restoring.
-Please let there be no misunderstanding, however the purpose of PCA is not restoring original data. It is improving calculation cost through
-degree reduction. Denoised autoencoder must have weight parameter for restoring original data because its output become the input of next layer.</p>
+Please let there be no misunderstanding of usability of PCA, the purpose of PCA is not restoring original data. It is improving calculation cost through
+degree reduction. Denoised autoencoder must have weight parameter for restoring original data because its output become the input of next layer.
+So it has the ability to restore original data.</p>
 
 <p>Though these two algorithms looks same at the first sight, the purposes are different. This produces the different features between PCA and denoised
 autoencoder.</p>
@@ -2966,256 +3036,6 @@ cannot be updated properly. And I skipped parameter tuning completly :)</p>
 <h2>Deep learning module</h2>
 
 <p>I will make a deep learning module which uses this auto encoder. Please keep follow <a href="https://github.com/Lewuathe/n42">n42</a>!!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Idiomatic Python ~I Will Write With This Style~]]></title>
-    <link href="http://lewuathe.github.io/blog/2014/01/21/idiomatic-mython/"/>
-    <updated>2014-01-21T13:18:00+09:00</updated>
-    <id>http://lewuathe.github.io/blog/2014/01/21/idiomatic-mython</id>
-    <content type="html"><![CDATA[<p>I read a book, <em><a href="http://www.amazon.co.jp/Writing-Idiomatic-Python-2-7-3-Knupp-ebook/dp/B00B5KG0F8">Writing Idiomatic Python</a></em>
-Although I usually write python codes, I have not paid attension to the style of these codes. By reading this book, I have noticed
-that there are pythonic style in python codes. And I think it was good mind to write python code. There were many <em>Halmful</em>, <em>Idiomaric</em>
-phrases about python code. So I&rsquo;d like to introduce some of them which I&rsquo;ll write in my own code.</p>
-
-<!-- more -->
-
-
-<p>And of course, all python developers should read this book!!</p>
-
-<h2>Enumerate</h2>
-
-<p>Usually, I write loop code like below.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'><span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;Takeshi&quot;</span><span class="p">,</span> <span class="s">&quot;Nobita&quot;</span><span class="p">,</span> <span class="s">&quot;Masao&quot;</span><span class="p">]:</span>
-</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="s">&#39;{}:{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">element</span><span class="p">))</span>
-</span><span class='line'>    <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>But it is harmful according to this book. Correctly, you should write like below.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">conteiner</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Takeshi&quot;</span><span class="p">,</span> <span class="s">&quot;Nobita&quot;</span><span class="p">,</span> <span class="s">&quot;Masao&quot;</span><span class="p">]</span>
-</span><span class='line'><span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">element</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">conteiner</span><span class="p">):</span>
-</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="s">&#39;{}:{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Arbitrary arguments</h2>
-
-<p>In python, you can write arbitrary arguments with <code>*args</code> or <code>**kwargs</code>. Arbutrary arguments are useful when you
-want to implement some types of API which is different by package versions. You can write like below.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">make_api_call</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-</span><span class='line'>    <span class="k">print</span> <span class="n">a</span>
-</span><span class='line'>  <span class="k">print</span> <span class="n">b</span>
-</span><span class='line'>  <span class="k">print</span> <span class="n">c</span>
-</span><span class='line'>  <span class="k">print</span> <span class="n">args</span>
-</span><span class='line'>  <span class="k">print</span> <span class="n">kwargs</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Run this</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c">#!/usr/bin/python</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
-</span><span class='line'>    <span class="n">make_api_call</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&quot;Takeshi&quot;</span><span class="p">,</span> <span class="n">age</span><span class="o">=</span><span class="mi">23</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># --console--</span>
-</span><span class='line'><span class="c"># 1</span>
-</span><span class='line'><span class="c"># 2</span>
-</span><span class='line'><span class="c"># 3</span>
-</span><span class='line'><span class="c"># (4, 5, 6)</span>
-</span><span class='line'><span class="c"># {&#39;age&#39;: 23, &#39;name&#39;: &#39;Takeshi&#39;}</span>
-</span><span class='line'><span class="c">#</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Avoid <em>Swallowing</em> useful exceptions</h2>
-
-<p>In python, <code>exception</code> is common phrases used in <code>for</code> loop or etc. In addition to this,
-<code>exception</code> gives you a useful information for debugging. So you should not <em>swallow</em> these exceptions
-by writing bare <code>except</code> clause. If you don&rsquo;t have any idea about what type exceptions are raised from
-third-party library, you should raise it again.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">requests</span>
-</span><span class='line'><span class="k">def</span> <span class="nf">get_json_response</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
-</span><span class='line'>    <span class="k">try</span><span class="p">:</span>
-</span><span class='line'>        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-</span><span class='line'>    <span class="k">except</span><span class="p">:</span>
-</span><span class='line'>        <span class="k">raise</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Avoid using a temporary variables with swapping</h2>
-
-<p>Use tuple.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">foo</span> <span class="o">=</span> <span class="s">&quot;FOO&quot;</span>
-</span><span class='line'><span class="n">bar</span> <span class="o">=</span> <span class="s">&quot;BAR&quot;</span>
-</span><span class='line'><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="n">bar</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">bar</span><span class="p">,</span> <span class="n">foo</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Use <code>join</code> method. It&rsquo;s more faster</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">result_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Takeshi&quot;</span><span class="p">,</span> <span class="s">&quot;Nobita&quot;</span><span class="p">,</span> <span class="s">&quot;Masuo&quot;</span><span class="p">]</span>
-</span><span class='line'><span class="n">reesult_string</span> <span class="o">=</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result_list</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Use format function to make a formatted string</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># user is a dictionary</span>
-</span><span class='line'><span class="k">def</span> <span class="nf">get_formatted_user_info</span><span class="p">(</span><span class="n">user</span><span class="p">):</span>
-</span><span class='line'>    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;Nama: {user.name}, Age: {user.age}, Sex: {user.sex}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Prefer <code>xrange</code> to <code>range</code></h2>
-
-<p>Use <code>xrange</code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">10000</span><span class="p">):</span>
-</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="s">&#39;index: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Default value got from dicionary</h2>
-
-<p>If there are <code>name</code> field in user, <code>get</code> returns <code>'Unknown'</code>.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">username</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;Unknown&#39;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Dictionary complehension</h2>
-
-<p>The list complehension is well known about python context. But dictionary complehension is as important as this.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">user_email</span> <span class="o">=</span> <span class="p">{</span><span class="n">user</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span> <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">users_list</span> <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Set complehension</h2>
-
-<p>In set syntax, you can use complehension expression.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">users_first_names</span> <span class="o">=</span> <span class="p">{</span><span class="n">user</span><span class="o">.</span><span class="n">first_name</span> <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">users</span><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Ignore unnecessary row in tuple</h2>
-
-<p>If there are any data which is not necessary for you in tuple, ignore it with <code>_</code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">get_user_info</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
-</span><span class='line'><span class="k">if</span> <span class="n">age</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">:</span>
-</span><span class='line'>    <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;{name} can drink!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Generator</h2>
-
-<p>Python list comprehension is very useful, however, processing very large list will run out of memory.
-In this case you should use <code>generator</code> which is iterative expression, but doesn&rsquo;t use memory.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">users</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Nobita&quot;</span><span class="p">,</span> <span class="s">&quot;Takeshi&quot;</span><span class="p">,</span> <span class="s">&quot;Masuo&quot;</span><span class="p">]</span>
-</span><span class='line'><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">users</span> <span class="k">if</span> <span class="n">user</span> <span class="o">!=</span> <span class="s">&quot;Takeshi&quot;</span><span class="p">):</span>
-</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># NOBITA</span>
-</span><span class='line'><span class="c"># MASUO</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Refer PEP8</h2>
-
-<p>Python has standard set of formatting rule officially. It is called <strong>PEP8</strong>.
-You should install this plugin your editor.</p>
-
-<h2>Write as PEP252</h2>
-
-<p>PEP257 is the set of rules of document formattings.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">calculate_statistics</span><span class="p">(</span><span class="n">value_list</span><span class="p">):</span>
-</span><span class='line'>    <span class="sd">&quot;&quot;&quot;Return a tuple containing the mean, median and the mode of a list of integers</span>
-</span><span class='line'>
-</span><span class='line'><span class="sd">    Arguments:</span>
-</span><span class='line'><span class="sd">    value_list -- a list of integer values</span>
-</span><span class='line'>
-</span><span class='line'><span class="sd">    &quot;&quot;&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h1>Last but not least</h1>
-
-<p>I am a pythonia. With reading this book, I am able to write more pythonic code at my work scene.</p>
 ]]></content>
   </entry>
   

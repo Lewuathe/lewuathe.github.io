@@ -4,7 +4,7 @@
   <title><![CDATA[Category: dA | The first cry of Atom]]></title>
   <link href="http://lewuathe.github.io/blog/categories/da/atom.xml" rel="self"/>
   <link href="http://lewuathe.github.io/"/>
-  <updated>2014-03-10T23:30:36+09:00</updated>
+  <updated>2014-03-11T21:22:39+09:00</updated>
   <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
@@ -81,8 +81,9 @@ This autoencoder has below characteristics.</p>
 <p>I think the most essential difference between PCA and denoised autoencoder is reversibility. PCA cannot restore original data bacause
 it losts the distance from the <a href="http://users.ics.aalto.fi/praiko/papers/pca_iconip/node3.html">principal subspace</a>. On the other hands,
 denoised autoencoder keeps its weight matrix inside own model. So it requires only adding transpose matrix of this weight for restoring.
-Please let there be no misunderstanding, however the purpose of PCA is not restoring original data. It is improving calculation cost through
-degree reduction. Denoised autoencoder must have weight parameter for restoring original data because its output become the input of next layer.</p>
+Please let there be no misunderstanding of usability of PCA, the purpose of PCA is not restoring original data. It is improving calculation cost through
+degree reduction. Denoised autoencoder must have weight parameter for restoring original data because its output become the input of next layer.
+So it has the ability to restore original data.</p>
 
 <p>Though these two algorithms looks same at the first sight, the purposes are different. This produces the different features between PCA and denoised
 autoencoder.</p>

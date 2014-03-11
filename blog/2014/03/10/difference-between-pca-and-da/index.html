@@ -182,8 +182,9 @@ This autoencoder has below characteristics.</p>
 <p>I think the most essential difference between PCA and denoised autoencoder is reversibility. PCA cannot restore original data bacause
 it losts the distance from the <a href="http://users.ics.aalto.fi/praiko/papers/pca_iconip/node3.html">principal subspace</a>. On the other hands,
 denoised autoencoder keeps its weight matrix inside own model. So it requires only adding transpose matrix of this weight for restoring.
-Please let there be no misunderstanding, however the purpose of PCA is not restoring original data. It is improving calculation cost through
-degree reduction. Denoised autoencoder must have weight parameter for restoring original data because its output become the input of next layer.</p>
+Please let there be no misunderstanding of usability of PCA, the purpose of PCA is not restoring original data. It is improving calculation cost through
+degree reduction. Denoised autoencoder must have weight parameter for restoring original data because its output become the input of next layer.
+So it has the ability to restore original data.</p>
 
 <p>Though these two algorithms looks same at the first sight, the purposes are different. This produces the different features between PCA and denoised
 autoencoder.</p>
@@ -239,6 +240,8 @@ autoencoder.</p>
         <a class="basic-alignment left" href="/blog/2014/03/09/logistics-regression-with-sparse-vector/" title="Previous Post: Logistics Regression with Sparse Vector">&laquo; Logistics Regression with Sparse Vector</a>
       
       
+        <a class="basic-alignment right" href="/blog/2014/03/11/forget-grief-keep-data/" title="Next Post: Forget grief, keep data">Forget grief, keep data &raquo;</a>
+      
     </p>
   </footer>
 </article>
@@ -250,6 +253,10 @@ autoencoder.</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/03/11/forget-grief-keep-data/">Forget Grief, Keep Data</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/03/10/difference-between-pca-and-da/">Difference Between PCA and dA</a>
@@ -265,10 +272,6 @@ autoencoder.</p>
     
       <li class="post">
         <a href="/blog/2014/03/06/how-is-hashtable-written-in-java/">How Is HashMap Written in Java</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/03/03/topcoder-with-intellij-idea/">TopCoder With IntelliJ IDEA</a>
       </li>
     
   </ul>
