@@ -4,7 +4,7 @@
   <title><![CDATA[The first cry of Atom]]></title>
   <link href="http://lewuathe.github.io/atom.xml" rel="self"/>
   <link href="http://lewuathe.github.io/"/>
-  <updated>2014-03-17T22:33:47+09:00</updated>
+  <updated>2014-03-17T22:34:40+09:00</updated>
   <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
@@ -22,6 +22,9 @@
 I forgot to write algorithm for programming contest such as TopCoder. But previously
 I realized that it is so important for me to write accurate and fast algorithm within finite time.
 In order to improve my programming skill again, I returned back to the TopCoder.</p>
+
+<!-- more -->
+
 
 <p>SRM is a little hart to me, as first, I tried some practices. Today I solved SRM144 binary code problem.
 This problem decode messages recursively. For example, when you get the message <code>"123210122"</code>, this is encode of
