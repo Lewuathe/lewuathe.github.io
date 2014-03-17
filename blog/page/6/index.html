@@ -9,8 +9,9 @@
   <meta name="author" content="Kai Sasaki">
 
   
-  <meta name="description" content="スコープに関するお話 昨日の続き。
-実はSettingKeyにはスコープがあり、異なるプロジェクトではことなる値を使うことができる。そもそも同じ場所に置くなよという気はするがテスト用とかリリース用にビルドしたい場合に便利。このビルドの設定を分けるスコープの&#8221;軸&#8221; &hellip;">
+  <meta name="description" content="SBTの使い方がなんとなくわかってきたので、今度はEclipseにSBTプロジェクトを導入してみる。 Eclipse plubin for SBTのinstall プロジェクトに必要なプラグインをインストールする。この場合はproject/plubins.sbtに以下のように記述する。 1
+2
+3 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,8 +19,9 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta property="og:title" content=" - The first cry of Atom" >
-<meta property="og:description" content="スコープに関するお話 昨日の続き。
-実はSettingKeyにはスコープがあり、異なるプロジェクトではことなる値を使うことができる。そもそも同じ場所に置くなよという気はするがテスト用とかリリース用にビルドしたい場合に便利。このビルドの設定を分けるスコープの&#8221;軸&#8221; &hellip;" />
+<meta property="og:description" content="SBTの使い方がなんとなくわかってきたので、今度はEclipseにSBTプロジェクトを導入してみる。 Eclipse plubin for SBTのinstall プロジェクトに必要なプラグインをインストールする。この場合はproject/plubins.sbtに以下のように記述する。 1
+2
+3 &hellip;" />
 <meta property="og:url" content="http://lewuathe.com" />
 <meta property="og:image" content="http://lewuathe.github.io/images/site_image.png" />
 <meta property="og:author" content="lewuathe" />
@@ -93,6 +95,76 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/09/13/sbttoeclipsedescalakai-fa-huan-jing/">SBTとEclipseでScala開発環境</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-13T22:17:00+09:00" pubdate data-updated="true">Sep 13<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>SBTの使い方がなんとなくわかってきたので、今度はEclipseにSBTプロジェクトを導入してみる。</p>
+
+<h3>Eclipse plubin for SBTのinstall</h3>
+
+<p>プロジェクトに必要なプラグインをインストールする。この場合は<code>project/plubins.sbt</code>に以下のように記述する。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">resolvers</span> <span class="o">+=</span> <span class="nc">Classpaths</span><span class="o">.</span><span class="n">typesafeResolver</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">addSbtPlugin</span><span class="o">(</span><span class="s">&quot;com.typesafe.sbteclipse&quot;</span> <span class="o">%</span> <span class="s">&quot;sbteclipse-plugin&quot;</span> <span class="o">%</span> <span class="s">&quot;2.1.2&quot;</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ここで以下のコマンドを打てばこのプラグインがインストールされ、Eclipseプロジェクトに必要な.projectファイルができあがる</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">$</span> <span class="n">sbt</span> <span class="n">eclipse</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>これをImportすればいい。Importの方法は</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="nc">File</span> <span class="o">-&gt;</span> <span class="nc">Import</span> <span class="o">-&gt;</span> <span class="nc">General</span> <span class="o">-&gt;</span> <span class="nc">Existing</span> <span class="nc">Projects</span> <span class="n">into</span> <span class="nc">Workspace</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>でできる。</p>
+
+<p>あともっと便利にSBTを使いたければ<a href="http://d.hatena.ne.jp/qtamaki/20121210/1355167655">ここ</a>に書いてある通りにやるとテンプレート展開のためのライブラリとかも入れられる。(g8っつうらしい)</p>
+
+<p>でもどうやら実行とかテストはSBT上でやった方がいいみたい。Eclipseは純粋なエディタとして使う人が多いっぽい。
+確かにJavaのプロジェクトと認識されてしまってうまくコンパイルできないや。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -602,6 +674,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/03/17/srm144-div1/">SRM144 Div1</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/03/11/forget-grief-keep-data/">Forget Grief, Keep Data</a>
       </li>
     
@@ -615,10 +691,6 @@
     
       <li class="post">
         <a href="/blog/2014/03/08/memento-pattern-in-java/">Memento Pattern in Java</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/03/06/how-is-hashtable-written-in-java/">How Is HashMap Written in Java</a>
       </li>
     
   </ul>

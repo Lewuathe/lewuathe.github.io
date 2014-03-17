@@ -4,7 +4,7 @@
   <title><![CDATA[The first cry of Atom]]></title>
   <link href="http://lewuathe.github.io/atom.xml" rel="self"/>
   <link href="http://lewuathe.github.io/"/>
-  <updated>2014-03-11T22:19:52+09:00</updated>
+  <updated>2014-03-17T22:33:47+09:00</updated>
   <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
@@ -12,6 +12,143 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[SRM144 Div1]]></title>
+    <link href="http://lewuathe.github.io/blog/2014/03/17/srm144-div1/"/>
+    <updated>2014-03-17T21:57:38+09:00</updated>
+    <id>http://lewuathe.github.io/blog/2014/03/17/srm144-div1</id>
+    <content type="html"><![CDATA[<p>After a long time, I returned to <a href="http://www.topcoder.com/">TopCoder</a>.
+I forgot to write algorithm for programming contest such as TopCoder. But previously
+I realized that it is so important for me to write accurate and fast algorithm within finite time.
+In order to improve my programming skill again, I returned back to the TopCoder.</p>
+
+<p>SRM is a little hart to me, as first, I tried some practices. Today I solved SRM144 binary code problem.
+This problem decode messages recursively. For example, when you get the message <code>"123210122"</code>, this is encode of
+<code>"011100011"</code>. Suppose the first message is P, and second is Q. Now below equation is realized.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>P[i] = Q[i-1] + Q[i] + Q[i+1]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>With this recusive rule, you have to decode given message. My code is below.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.math.*</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">static</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">Math</span><span class="o">.*;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BinaryCode</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="n">String</span><span class="o">[]</span> <span class="nf">decode</span><span class="o">(</span><span class="n">String</span> <span class="n">message</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="c1">// Two answers should be solved</span>
+</span><span class='line'>      <span class="c1">// Each answer is correspond to Q[0] = 0 and Q[0] = 1 case.</span>
+</span><span class='line'>        <span class="n">String</span><span class="o">[]</span> <span class="n">ans</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">[</span><span class="mi">2</span><span class="o">];</span>
+</span><span class='line'>      
+</span><span class='line'>        <span class="n">Integer</span> <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>        <span class="n">Boolean</span> <span class="n">isOut</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">// Calculate two cases</span>
+</span><span class='line'>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>          <span class="c1">// In the case of negative value is received, answer should be &quot;NONE&quot;</span>
+</span><span class='line'>            <span class="n">isOut</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'>            <span class="n">start</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="c1">// For improve speed performance, I use StringBuffer</span>
+</span><span class='line'>            <span class="n">StringBuffer</span> <span class="n">p</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="c1">// First and second factor cannot be put on inside loop bacause these are not the sum of three factors</span>
+</span><span class='line'>            <span class="n">p</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">start</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+</span><span class='line'>            <span class="n">Integer</span> <span class="n">p1</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">1</span><span class="o">))</span> <span class="o">-</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">1</span><span class="o">));</span>
+</span><span class='line'>            <span class="n">p</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">p1</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="c1">// Decode each digit</span>
+</span><span class='line'>            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">message</span><span class="o">.</span><span class="na">length</span><span class="o">();</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">Integer</span> <span class="n">d</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="n">j</span><span class="o">,</span> <span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="o">))</span> <span class="o">-</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="n">j</span><span class="o">,</span> <span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="o">))</span> <span class="o">-</span> <span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="o">,</span> <span class="n">j</span><span class="o">));</span>
+</span><span class='line'>                <span class="k">if</span> <span class="o">(</span><span class="n">d</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                    <span class="n">ans</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="s">&quot;NONE&quot;</span><span class="o">;</span>
+</span><span class='line'>                    <span class="n">isOut</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'>                    <span class="k">break</span><span class="o">;</span>
+</span><span class='line'>                <span class="o">}</span>
+</span><span class='line'>                <span class="n">p</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">d</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+</span><span class='line'>           <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>           <span class="c1">// Last digit is not need to retained</span>
+</span><span class='line'>           <span class="k">if</span> <span class="o">(!</span><span class="n">isOut</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>               <span class="n">ans</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="na">toString</span><span class="o">().</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">p</span><span class="o">.</span><span class="na">length</span><span class="o">()-</span><span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>           <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>           <span class="c1">// This is guard. But I am not satisfied with this line :(</span>
+</span><span class='line'>           <span class="k">if</span> <span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span> <span class="o">==</span> <span class="sc">&#39;2&#39;</span> <span class="o">||</span> <span class="n">message</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span> <span class="o">==</span> <span class="sc">&#39;3&#39;</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>               <span class="n">ans</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="s">&quot;NONE&quot;</span><span class="o">;</span>
+</span><span class='line'>           <span class="o">}</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">return</span> <span class="n">ans</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I wrote this code about 30 minutes. It is not enough to fight on SRM. And in addition to this, I am not satisfied with my algorithm expecially
+last clause. I don&rsquo;t want to write exceptional logic as possible. If anyone write code about this problem, please inform me and give me a chance to
+look into your code.</p>
+
+<p>Thank you.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Forget Grief, Keep Data]]></title>
@@ -2757,290 +2894,6 @@ for own diversity, and the number of options.</p>
 <h2>Last&hellip;</h2>
 
 <p>And the last but not least, if you find any bugs or any points to be fixed, patches are welcome!!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Autoencoder With node.js]]></title>
-    <link href="http://lewuathe.github.io/blog/2014/01/26/autoencoder-with-node-dot-js/"/>
-    <updated>2014-01-26T21:14:00+09:00</updated>
-    <id>http://lewuathe.github.io/blog/2014/01/26/autoencoder-with-node-dot-js</id>
-    <content type="html"><![CDATA[<p><a href="https://en.wikipedia.org/wiki/Autoencoder">Auto encoder</a> is used for deep learning. Auto encoder extract characteristics of data through
-unsupervised learning. This is a kind of newral network. By using an auto encoder, you don&rsquo;t have to
-be in trouble with choicing extracting algorithm, or doing yourself. Therefore, in deepleanring field,
-this algorithm is used very actively. There are many implementation such as Python or Java, which are
-used in machine learning frequently, but I cannot find this in nodejs. So this weekend, I wrote autoencoder in nodejs.</p>
-
-<!-- more -->
-
-
-<p>When I started writing this code, I referred <a href="https://github.com/yusugomori/DeepLearning">@yusugomori/DeepLearning</a>.
-I would like to take this opportunity to express my appreciation and gratitude to him for his great code.</p>
-
-<p><a href="https://github.com/Lewuathe/n42/blob/master/lib/dA.js">GitHub source</a></p>
-
-<p>The major linear algebra library is <a href="http://sylvester.jcoglan.com/">sylvelster</a> in JavaScript. This is simple and user friendly
-library. So if you cannot decide which library you should use in JavaScript, I recommend sylvester.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">Matrix</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;sylvester&#39;</span><span class="p">).</span><span class="nx">Matrix</span><span class="p">;</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">Vector</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;sylvester&#39;</span><span class="p">).</span><span class="nx">Vector</span><span class="p">;</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">utils</span>  <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./utils.js&#39;</span><span class="p">);</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">assert</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;assert&#39;</span><span class="p">);</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">generator</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;box-muller&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">function</span> <span class="nx">dA</span><span class="p">(</span><span class="nx">input</span><span class="p">,</span> <span class="nx">nVisible</span><span class="p">,</span> <span class="nx">nHidden</span><span class="p">,</span> <span class="nx">W</span><span class="p">,</span> <span class="nx">hBias</span><span class="p">,</span> <span class="nx">vBias</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
-</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">input</span>    <span class="o">=</span> <span class="nx">input</span><span class="p">;</span>
-</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">nVisible</span> <span class="o">=</span> <span class="nx">nVisible</span><span class="p">;</span>
-</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">nHidden</span>  <span class="o">=</span> <span class="nx">nHidden</span><span class="p">;</span>
-</span><span class='line'>    <span class="c1">// Initialize weight parameter</span>
-</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">W</span>     <span class="o">=</span> <span class="p">(</span><span class="nx">W</span> <span class="o">!=</span> <span class="kc">undefined</span><span class="p">)</span><span class="o">?</span> <span class="nx">W</span> <span class="o">:</span> <span class="nx">Matrix</span><span class="p">.</span><span class="nx">Random</span><span class="p">(</span><span class="nx">nVisible</span><span class="p">,</span> <span class="nx">nHidden</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// Initialize hidden bias parameters</span>
-</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">hBias</span> <span class="o">=</span> <span class="p">(</span><span class="nx">hBias</span> <span class="o">!=</span> <span class="kc">undefined</span><span class="p">)</span><span class="o">?</span> <span class="nx">hBias</span> <span class="o">:</span> <span class="nx">Vector</span><span class="p">.</span><span class="nx">Zero</span><span class="p">(</span><span class="nx">nHidden</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// Initialize visual bias parameters</span>
-</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">vBias</span> <span class="o">=</span> <span class="p">(</span><span class="nx">vBias</span> <span class="o">!=</span> <span class="kc">undefined</span><span class="p">)</span><span class="o">?</span> <span class="nx">vBias</span> <span class="o">:</span> <span class="nx">Vector</span><span class="p">.</span><span class="nx">Zero</span><span class="p">(</span><span class="nx">nVisible</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">wPrime</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">W</span><span class="p">.</span><span class="nx">transpose</span><span class="p">();</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">dA</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">getCorruptedInput</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">input</span><span class="p">,</span> <span class="nx">corruptionLevel</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="c1">// Return noised data</span>
-</span><span class='line'>    <span class="nx">assert</span><span class="p">.</span><span class="nx">isTrue</span><span class="p">(</span><span class="nx">corruptionLevel</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">);</span>
-</span><span class='line'>    <span class="nx">noised</span> <span class="o">=</span> <span class="p">[];</span>
-</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">input</span><span class="p">.</span><span class="nx">rows</span><span class="p">();</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nx">noised</span><span class="p">.</span><span class="nx">push</span><span class="p">([]);</span>
-</span><span class='line'>        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">input</span><span class="p">.</span><span class="nx">cols</span><span class="p">();</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="c1">// generator returns sampling value according to regular gaussian distribution</span>
-</span><span class='line'>            <span class="nx">noised</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">push</span><span class="p">((</span><span class="nx">generator</span><span class="p">()</span> <span class="o">*</span> <span class="nx">corruptionLevel</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="nx">input</span><span class="p">.</span><span class="nx">e</span><span class="p">(</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nx">j</span><span class="o">+</span><span class="mi">1</span><span class="p">));;</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">return</span> <span class="nx">$M</span><span class="p">(</span><span class="nx">noised</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">dA</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">getHiddenValues</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">input</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
-</span><span class='line'>    <span class="c1">// Calculate plus weight</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">rowValues</span> <span class="o">=</span> <span class="nx">input</span><span class="p">.</span><span class="nx">x</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">W</span><span class="p">);</span>
-</span><span class='line'>    <span class="k">return</span> <span class="nx">utils</span><span class="p">.</span><span class="nx">sigmoid</span><span class="p">(</span><span class="nx">utils</span><span class="p">.</span><span class="nx">plusBias</span><span class="p">(</span><span class="nx">rowValues</span><span class="p">,</span> <span class="nx">self</span><span class="p">.</span><span class="nx">hBias</span><span class="p">));</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">dA</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">getReconstructedInput</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">hidden</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">rowValues</span> <span class="o">=</span> <span class="nx">hidden</span><span class="p">.</span><span class="nx">x</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">W</span><span class="p">.</span><span class="nx">transpose</span><span class="p">());</span>
-</span><span class='line'>    <span class="k">return</span> <span class="nx">utils</span><span class="p">.</span><span class="nx">sigmoid</span><span class="p">(</span><span class="nx">utils</span><span class="p">.</span><span class="nx">plusBias</span><span class="p">(</span><span class="nx">rowValues</span><span class="p">,</span> <span class="nx">self</span><span class="p">.</span><span class="nx">vBias</span><span class="p">));</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">dA</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">train</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">lr</span><span class="p">,</span> <span class="nx">corruptionLevel</span><span class="p">,</span> <span class="nx">input</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
-</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="p">(</span><span class="nx">input</span> <span class="o">!=</span> <span class="kc">undefined</span><span class="p">)</span><span class="o">?</span> <span class="nx">input</span> <span class="o">:</span> <span class="nx">self</span><span class="p">.</span><span class="nx">input</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">x</span><span class="p">;</span>
-</span><span class='line'>    <span class="c1">// Noised data</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">tildeX</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">getCorruptedInput</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">corruptionLevel</span><span class="p">);</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">getHiddenValues</span><span class="p">(</span><span class="nx">tildeX</span><span class="p">);</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">z</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">getReconstructedInput</span><span class="p">(</span><span class="nx">y</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// Below this line, backpropagation algorithm is used</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">lH2</span> <span class="o">=</span> <span class="nx">x</span><span class="p">.</span><span class="nx">subtract</span><span class="p">(</span><span class="nx">z</span><span class="p">);</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">sigma</span> <span class="o">=</span> <span class="nx">lH2</span><span class="p">.</span><span class="nx">x</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">W</span><span class="p">);</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">lH1</span> <span class="o">=</span> <span class="p">[];</span>
-</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">sigma</span><span class="p">.</span><span class="nx">rows</span><span class="p">();</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nx">lH1</span><span class="p">.</span><span class="nx">push</span><span class="p">([]);</span>
-</span><span class='line'>        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">sigma</span><span class="p">.</span><span class="nx">cols</span><span class="p">();</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nx">lH1</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">push</span><span class="p">(</span><span class="nx">sigma</span><span class="p">.</span><span class="nx">e</span><span class="p">(</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nx">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="nx">y</span><span class="p">.</span><span class="nx">e</span><span class="p">(</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nx">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="nx">y</span><span class="p">.</span><span class="nx">e</span><span class="p">(</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nx">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)));</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="nx">lH1</span> <span class="o">=</span> <span class="nx">$M</span><span class="p">(</span><span class="nx">lH1</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">lW</span> <span class="o">=</span> <span class="nx">tildeX</span><span class="p">.</span><span class="nx">transpose</span><span class="p">().</span><span class="nx">x</span><span class="p">(</span><span class="nx">lH1</span><span class="p">).</span><span class="nx">add</span><span class="p">(</span><span class="nx">lH2</span><span class="p">.</span><span class="nx">transpose</span><span class="p">().</span><span class="nx">x</span><span class="p">(</span><span class="nx">y</span><span class="p">));</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">W</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">W</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">lW</span><span class="p">.</span><span class="nx">x</span><span class="p">(</span><span class="nx">lr</span><span class="p">));</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">vBias</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">vBias</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">utils</span><span class="p">.</span><span class="nx">mean</span><span class="p">(</span><span class="nx">lH2</span><span class="p">,</span> <span class="mi">0</span><span class="p">).</span><span class="nx">x</span><span class="p">(</span><span class="nx">lr</span><span class="p">));</span>
-</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">hBias</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">hBias</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">utils</span><span class="p">.</span><span class="nx">mean</span><span class="p">(</span><span class="nx">lH1</span><span class="p">,</span> <span class="mi">0</span><span class="p">).</span><span class="nx">x</span><span class="p">(</span><span class="nx">lr</span><span class="p">));</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="nx">dA</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">reconstruct</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">getHiddenValues</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">z</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">getReconstructedInput</span><span class="p">(</span><span class="nx">y</span><span class="p">);</span>
-</span><span class='line'>    <span class="k">return</span> <span class="nx">z</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Traning and result</h2>
-
-<p>Try auto encoder!!</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">[</span>
-</span><span class='line'>            <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
-</span><span class='line'>            <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
-</span><span class='line'>            <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
-</span><span class='line'>            <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
-</span><span class='line'>            <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
-</span><span class='line'>            <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
-</span><span class='line'>            <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
-</span><span class='line'>            <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
-</span><span class='line'><span class="p">];</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">var</span> <span class="nx">da</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">dA</span><span class="p">(</span><span class="nx">$M</span><span class="p">(</span><span class="nx">data</span><span class="p">),</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="c1">// 0.1 is learning rate which is used gradient decent</span>
-</span><span class='line'>    <span class="c1">// 0.02 is standard deviation which is used for add noise to original data</span>
-</span><span class='line'>    <span class="nx">da</span><span class="p">.</span><span class="nx">train</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">da</span><span class="p">.</span><span class="nx">reconstruct</span><span class="p">(</span><span class="nx">$M</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]]));</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/*   </span>
-</span><span class='line'><span class="cm"> *   Returns </span>
-</span><span class='line'><span class="cm"> *   [0.5055820272991076, 0.9979837957439818, 0.007330556962859083]   </span>
-</span><span class='line'><span class="cm"> *   [0.5042481334395964, 0.006342602394604374, 0.9970156469919944]</span>
-</span><span class='line'><span class="cm"> *   [0.5055017563352926, 0.9979783271177022, 0.007473069891271281]</span>
-</span><span class='line'><span class="cm"> *</span>
-</span><span class='line'><span class="cm"> */</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In general, this auto encoder looks like working properly. I think the error of difference between original data
-and reconstructed data was induced by below two points.</p>
-
-<ul>
-<li>Lack of divergence of training data</li>
-<li>Parameter tuning</li>
-</ul>
-
-
-<p>I didn&rsquo;t write many training examples. So in spite of many decent times, the parameters
-cannot be updated properly. And I skipped parameter tuning completly :)</p>
-
-<h2>Deep learning module</h2>
-
-<p>I will make a deep learning module which uses this auto encoder. Please keep follow <a href="https://github.com/Lewuathe/n42">n42</a>!!</p>
 ]]></content>
   </entry>
   
