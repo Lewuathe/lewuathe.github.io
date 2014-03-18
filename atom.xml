@@ -4,7 +4,7 @@
   <title><![CDATA[The first cry of Atom]]></title>
   <link href="http://lewuathe.github.io/atom.xml" rel="self"/>
   <link href="http://lewuathe.github.io/"/>
-  <updated>2014-03-17T22:34:40+09:00</updated>
+  <updated>2014-03-18T23:18:31+09:00</updated>
   <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
@@ -12,6 +12,100 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Marble Problem]]></title>
+    <link href="http://lewuathe.github.io/blog/2014/03/18/marble-problem/"/>
+    <updated>2014-03-18T21:45:14+09:00</updated>
+    <id>http://lewuathe.github.io/blog/2014/03/18/marble-problem</id>
+    <content type="html"><![CDATA[<p>I tried this problem.</p>
+
+<h2>Marble</h2>
+
+<p>There are boxes infinitely in a straight line. Each box is labeled from left side &hellip;,-2,-1,0,1,2,&hellip; to the right side.
+Now <em>R</em> red marbles are in the -100th box. In the same way, <em>G</em> green mables are in the 0th box and <em>B</em> blue mables are in the 100th box.
+There no other marbles in all boxes. All boxes should have one marble at most.
+Repeat below process and make the number of marbles of each each at most one.</p>
+
+<ul>
+<li>Select one marble, move it left box or right box.</li>
+<li>However one box must not have more than two marbles that has different colors each other</li>
+</ul>
+
+
+<p>Calculate minimum required steps.</p>
+
+<!-- more -->
+
+
+<p>I wrote below code.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.Scanner</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * Created by sasakiumi on 3/18/14.</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Main</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">Scanner</span> <span class="n">sc</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Scanner</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">g</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">max</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="n">g</span><span class="o">),</span> <span class="n">b</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">steps</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;();</span>
+</span><span class='line'>        <span class="n">steps</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+</span><span class='line'>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">max</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">Integer</span> <span class="n">pre</span> <span class="o">=</span> <span class="n">steps</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>            <span class="n">steps</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">pre</span> <span class="o">+</span> <span class="o">(</span><span class="n">i</span> <span class="o">/</span> <span class="mi">2</span><span class="o">));</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">Integer</span> <span class="n">ans</span> <span class="o">=</span> <span class="n">steps</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">r</span><span class="o">)</span> <span class="o">+</span> <span class="n">steps</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">g</span><span class="o">)</span> <span class="o">+</span> <span class="n">steps</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">ans</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>OK. I understand this code does not put the case of 100 marbles that is same color into consideration.
+If there are 200 red marbles, this code does not work properly. But I have not found effective way to solve all cases.
+I will update this problem later. If you have any good idea, please let me know.</p>
+
+<p>Thank you.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[SRM144 Div1]]></title>
@@ -2766,137 +2860,6 @@ in node.</p>
 <p>Though I completed to write, this autoencoder has not yet enough accuracy to prediction in compared to
 denoised autoencoder. So I have to pile up some improvements to use practically.
 If you find any bugs, welcome patches!!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Stacked Denoised Autoencoder With Nodejs]]></title>
-    <link href="http://lewuathe.github.io/blog/2014/01/29/stacked-denoised-autoencoder-with-nodejs/"/>
-    <updated>2014-01-29T21:38:00+09:00</updated>
-    <id>http://lewuathe.github.io/blog/2014/01/29/stacked-denoised-autoencoder-with-nodejs</id>
-    <content type="html"><![CDATA[<p>I developed deep leanring module which enables you to use stacked denoised autoencoder in nodejs.
-This is called n42. You can train with deep learning algorithm very easily.</p>
-
-<p><a href="https://npmjs.org/package/n42">https://npmjs.org/package/n42</a></p>
-
-<!-- more -->
-
-
-<h2>How to use</h2>
-
-<p>This is how to use it.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">n42</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;n42&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// input data</span>
-</span><span class='line'><span class="c1">// This is made of sylvester matrix</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">input</span> <span class="o">=</span> <span class="nx">$M</span><span class="p">([</span>
-</span><span class='line'>    <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
-</span><span class='line'>    <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
-</span><span class='line'>    <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
-</span><span class='line'>    <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
-</span><span class='line'>    <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
-</span><span class='line'>    <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
-</span><span class='line'><span class="p">]);</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// label data</span>
-</span><span class='line'><span class="c1">// This is made of sylvester matrix</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">label</span> <span class="o">=</span> <span class="nx">$M</span><span class="p">([</span>
-</span><span class='line'>    <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
-</span><span class='line'>    <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
-</span><span class='line'>    <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
-</span><span class='line'>    <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
-</span><span class='line'>    <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
-</span><span class='line'>    <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
-</span><span class='line'><span class="p">]);</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">var</span> <span class="nx">sda</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">n42</span><span class="p">.</span><span class="nx">SdA</span><span class="p">(</span><span class="nx">input</span><span class="p">,</span> <span class="nx">label</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="mi">2</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// Training all hidden layers</span>
-</span><span class='line'><span class="nx">sda</span><span class="p">.</span><span class="nx">pretrain</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mi">1000</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// Tuning output layer which is composed of logistics regression</span>
-</span><span class='line'><span class="nx">sda</span><span class="p">.</span><span class="nx">finetune</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mi">50</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// Test data</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">$M</span><span class="p">([</span>
-</span><span class='line'>    <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
-</span><span class='line'>    <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
-</span><span class='line'><span class="p">]);</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">sda</span><span class="p">.</span><span class="nx">predict</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
-</span><span class='line'>
-</span><span class='line'><span class="cm">/**</span>
-</span><span class='line'><span class="cm"> *   Predict answers</span>
-</span><span class='line'><span class="cm"> *   [0.9999998973561728, 1.0264382721184357e-7] ~ [1.0, 0.0]</span>
-</span><span class='line'><span class="cm"> *   [4.672230837774381e-28, 1]                  ~ [0.0, 1.0]  </span>
-</span><span class='line'><span class="cm"> */</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If you want to know what stacked denoised autoencoder is, look this <a href="http://deeplearning.net/tutorial/SdA.html">page</a>
-Briefly, stacked denoised autoencoder is multi layer denoised autoencoder.</p>
-
-<p>First you should train denoised autoencoder by
-unsupervised learning. With this process, this network can extract characteristics of input data properly.</p>
-
-<p>Second, you tune output logistics regression layer with gradient descent.</p>
-
-<p>And Last, only predict! It&rsquo;s easy, isn&rsquo;t it?</p>
-
-<p>Now the accuracy is depend on the parameters which you select considerably. Deep leanring algorithm might be the way it is,
-however, I want to develop end implement more general algorithms. In the next step, I&rsquo;ll develop restricted boltzmann machine, and
-deep boltzmann machine. Thouhgh these algorithms are somewhat less accurate than stacked denoised autoencoder, n42 must have this algorithm
-for own diversity, and the number of options.</p>
-
-<h2>Last&hellip;</h2>
-
-<p>And the last but not least, if you find any bugs or any points to be fixed, patches are welcome!!</p>
 ]]></content>
   </entry>
   
