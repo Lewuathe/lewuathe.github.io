@@ -9,7 +9,7 @@
   <meta name="author" content="Kai Sasaki">
 
   
-  <meta name="description" content="今回はモデルのバイアスとバリアンスを前回までの正則化最小二乗法のモデルを使って計算してみたよ。線形回帰モデルのバイアスとバリアンスはトレードオフの関係にあって、表現力の高いモデルを用いるとバイアスは小さくなるがバリアンスは大きくなってしまう。 &hellip;">
+  <meta name="description" content="知識表現 知識表現（ちしきひょうげん）、KR（Knowledge Representation）は、推論を導けるような知識の表現、およびその方法を開発する人工知能研究の領域である。From ja.wikipedia.org/wiki/&hellip; 人工知能って何って考えたときにぼんやりと、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +17,7 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta property="og:title" content=" - The first cry of Atom" >
-<meta property="og:description" content="今回はモデルのバイアスとバリアンスを前回までの正則化最小二乗法のモデルを使って計算してみたよ。線形回帰モデルのバイアスとバリアンスはトレードオフの関係にあって、表現力の高いモデルを用いるとバイアスは小さくなるがバリアンスは大きくなってしまう。 &hellip;" />
+<meta property="og:description" content="知識表現 知識表現（ちしきひょうげん）、KR（Knowledge Representation）は、推論を導けるような知識の表現、およびその方法を開発する人工知能研究の領域である。From ja.wikipedia.org/wiki/&hellip; 人工知能って何って考えたときにぼんやりと、 &hellip;" />
 <meta property="og:url" content="http://lewuathe.com" />
 <meta property="og:image" content="http://lewuathe.github.io/images/site_image.png" />
 <meta property="og:author" content="lewuathe" />
@@ -91,6 +91,87 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/09/18/zhi-shi-biao-xian-falsetamefalsedetagou-zao/">知識表現のためのデータ構造</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-18T21:15:00+09:00" pubdate data-updated="true">Sep 18<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>知識表現</h2>
+
+<blockquote><p>知識表現（ちしきひょうげん）、KR（Knowledge Representation）は、推論を導けるような知識の表現、およびその方法を開発する人工知能研究の領域である。</p><footer><strong>From</strong> <cite><a href='http://ja.wikipedia.org/wiki/%E7%9F%A5%E8%AD%98%E8%A1%A8%E7%8F%BE'>ja.wikipedia.org/wiki/&hellip;</a></cite></footer></blockquote>
+
+
+<p>人工知能って何って考えたときにぼんやりと、何かの入力に対して何らかの&#8221;知識&#8221;を使って出力を行う機械というふうに考えていた。そもそも漠然とはしている答えではあるものの、じゃあ&#8221;知識&#8221;って何？どうやって得ればいいの？どうやって持っていればいいの？という考えになる。それに答えを与えるのが知識表現(Knowledge Representation)だ。</p>
+
+<p>この知識のデータ構造は推論がしやすい形で持っているのがいい。そしてさらに、表現力がちょうどよい方がいい。なぜなら表現力が高ければ高いほど、記述自体は簡潔になるが、推論に一貫性が持たせられないかもしれない。逆に表現力が低いと非常に煩雑な記述を行わないといけないかもしれない。そのためこのちょうどとい程度の表現力の知識表現は大事だ。</p>
+
+<h3>フレーム構造</h3>
+
+<p>RDBMSみたいなもの。知識を事柄の名称、事柄の属性、属性の値で表現する。RDBMS的にいうとPKとカラム名、カラム値に対応するのかな。</p>
+
+<p><img src="https://raw.github.com/Lewuathe/lewuathe.github.io/source/ownimage/frame.png" alt="フレーム構造" /></p>
+
+<p>ただフレーム構造はその事柄の属性をすべて列挙することが非常にむずかしいことがわかっている(フレーム問題)</p>
+
+<h3>スクリプト構造</h3>
+
+<p>スクリプト構造は手続き的な知識の知識表現に使える。</p>
+
+<p><img src="https://raw.github.com/Lewuathe/lewuathe.github.io/source/ownimage/script.png" alt="スクリプト構造" /></p>
+
+<h3>格文法</h3>
+
+<p>動詞を中心にとらえて、用言的概念と体言的概念に整理する。少しむずかしいが概念を文法として理解しようという試み。情報通信研究機構で開発が続くEDR電子化辞書などの用いられているらしい。</p>
+
+<h3>概念依存理論</h3>
+
+<p>どんな言語にも共通する根源的な意味を抽出して、それらの意味ですべてを表現しようという試み。すべての文章を11の動詞の組み合わせと名詞、修飾概念などを組み合わせて表現。各文法はどちらかというと「関係」に重きをおいた表現方法だが、概念依存理論は「概念」それ自身をを中心に据えている。</p>
+
+<p><img src="https://raw.github.com/Lewuathe/lewuathe.github.io/source/ownimage/gainen.png" alt="概念依存理論" /></p>
+
+<h3>意味ネットワーク</h3>
+
+<p>意味ネットワークは物事をその関係性から評価しようという試み。今まで出てきた属性や、承継関係、動作対象なども「関係」として表すことができるので、すべての知識をノードとエッジで表せる。この方法のよいところは、物事を関係性から理解しようとするので、その物事について関係性が現れるまで評価する必要がないところだと思う。実際人間と同じように考えるのであれば、ある物事を理解しようとするときにそれを直ちに理解しようとするよりは、まず周りとの関係性（それがどのような関係性であれ）から埋めていくことが多い。初対面の人を知ろうとするときに、その人の職業、年齢、性別、住所などから理解しようとすることと同じだ。</p>
+
+<h2>結論</h2>
+
+<p>結論というと言い過ぎかもしれない。僕自身が考えたこととしては知識を表現する上であるオブジェクトの属性や承継関係などをそれぞれ区別して理解しようとするとあまりに煩雑にすぎる気がした。そのためもっと上位のネットワーク構造という形から知識を表現できるようにするといいんじゃないかと思った。実際上記のすべての知識表現はノードとエッジという構造で表現できそうだ。つまり意味ネットワークとしての知識表現をベースにしたものが最も適していると思う。</p>
+
+<p>さて、知識の表現方法は分かった。じゃあこれをどうやってデータとして持てばいいんだろう。ちょうどいいところに最近ではNoSQLの一つとしてグラフ志向データベースというものがあるらしい。これは文字通りデータをノードとエッジの組み合わせで表現する方法。ノード間の関係性などが探索するのに非常に適していいるらしい。最も有名なところではNeo4Jというものがある。</p>
+
+<p><a href="http://www.neo4j.org/">http://www.neo4j.org/</a></p>
+
+<p>なんだかここがGraphGistコンテストみたいなものをやっているっぽいので、勉強がてらやってみようかと。多分次回はNeo4Jに関して書くかも。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1265,6 +1346,10 @@ build.sbtファイルに以下のように書いてupdateを行う</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/03/29/wen-quan-jin-nite/">温泉津にて</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/03/25/shan-toshou-duan-tomu-de-to/">禅と手段と目的と</a>
       </li>
     
@@ -1278,10 +1363,6 @@ build.sbtファイルに以下のように書いてupdateを行う</p>
     
       <li class="post">
         <a href="/blog/2014/03/17/srm144-div1/">SRM144 Div1</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/03/11/forget-grief-keep-data/">Forget Grief, Keep Data</a>
       </li>
     
   </ul>
