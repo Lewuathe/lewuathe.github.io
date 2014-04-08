@@ -9,9 +9,9 @@
   <meta name="author" content="Kai Sasaki">
 
   
-  <meta name="description" content="「おやすみなさい」 なるほど、みんな地元の人達か。温泉津で過ごす夜は少し僕を戸惑わせた。
-旅館に付属していない外湯と呼ばれる湯に入りにきたため、地元の人達の憩いの場にお邪魔してしまったようだ。 「じゃ、お先です」
-「おやすみなさい」 そんなやりとりをして、みんな湯を上がっていく。 &hellip;">
+  <meta name="description" content="今日の日本時間13:00頃、OpenSSLに致命的なバグがあることがわかった。全世界で動いているSSLプロセスが影響を受ける。
+簡単に言うと、メモリ上にある任意のデータを漏洩する可能性があるバグだ。
+このバグはもう2年も前からあったらしいが見つかったのはつい最近で、パッチがあたったのは十数時間前だ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,9 +19,9 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta property="og:title" content=" - The first cry of Atom" >
-<meta property="og:description" content="「おやすみなさい」 なるほど、みんな地元の人達か。温泉津で過ごす夜は少し僕を戸惑わせた。
-旅館に付属していない外湯と呼ばれる湯に入りにきたため、地元の人達の憩いの場にお邪魔してしまったようだ。 「じゃ、お先です」
-「おやすみなさい」 そんなやりとりをして、みんな湯を上がっていく。 &hellip;" />
+<meta property="og:description" content="今日の日本時間13:00頃、OpenSSLに致命的なバグがあることがわかった。全世界で動いているSSLプロセスが影響を受ける。
+簡単に言うと、メモリ上にある任意のデータを漏洩する可能性があるバグだ。
+このバグはもう2年も前からあったらしいが見つかったのはつい最近で、パッチがあたったのは十数時間前だ &hellip;" />
 <meta property="og:url" content="http://lewuathe.com" />
 <meta property="og:image" content="http://lewuathe.github.io/images/site_image.png" />
 <meta property="og:author" content="lewuathe" />
@@ -95,6 +95,54 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/04/08/opensslfalsecui-ruo-xing-wodu-nta/">Heart Bleedを読んだ</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-08T21:06:12+09:00" pubdate data-updated="true">Apr 8<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今日の日本時間13:00頃、OpenSSLに致命的なバグがあることがわかった。全世界で動いているSSLプロセスが影響を受ける。
+簡単に言うと、メモリ上にある任意のデータを漏洩する可能性があるバグだ。
+このバグはもう2年も前からあったらしいが見つかったのはつい最近で、パッチがあたったのは十数時間前だ。</p>
+
+<p><a href="https://github.com/openssl/openssl/commit/96db9023b881d7cd9f379b0c154650d6c108e9a3">Add heartbeat extension bounds check.</a></p>
+
+<p>基本的には<a href="http://heartbleed.com/">Heart Bleed</a>に詳細が記載されていて、危険なOpenSSLのバージョン、ディストリビューションが書いてある。
+対応方法も書いてある。今回はエンジニアとして、コードを読んでどういうバグだったのか理解してみたかったので書いてみる。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/04/08/opensslfalsecui-ruo-xing-wodu-nta/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -552,50 +600,6 @@ doesn&rsquo;t look trained sufficiently. I used <a href="http://scikit-learn.org
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/03/06/how-is-hashtable-written-in-java/">How Is HashMap Written in Java</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-03-06T22:22:04+09:00" pubdate data-updated="true">Mar 6<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Here recently, I have a chance to read Java core API, expecially <em>HashMap</em>.
-Usually, I use HashMap paying no attention to, but this code reading brought many things to me.
-I can understand that how HashMap is written in Java and more this is very simple than I expected.
-So in this post, I&rsquo;d like to introduce some ideas and code used in <code>java.util.HashMap</code>.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/03/06/how-is-hashtable-written-in-java/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -611,6 +615,10 @@ So in this post, I&rsquo;d like to introduce some ideas and code used in <code>j
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/04/08/opensslfalsecui-ruo-xing-wodu-nta/">Heart Bleedを読んだ</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/03/29/wen-quan-jin-nite/">温泉津にて</a>
       </li>
     
@@ -624,10 +632,6 @@ So in this post, I&rsquo;d like to introduce some ideas and code used in <code>j
     
       <li class="post">
         <a href="/blog/2014/03/18/marble-problem/">Marble Problem</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/03/17/srm144-div1/">SRM144 Div1</a>
       </li>
     
   </ul>

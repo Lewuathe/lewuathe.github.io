@@ -9,7 +9,7 @@
   <meta name="author" content="Kai Sasaki">
 
   
-  <meta name="description" content="読んだ。 http://karigari.hatenablog.com/entry/2013/11/06/000000 全く自分にとって新しいことでなくても、文字に起こされると驚くことがある。概念は知っていても言葉は知らない、そんな感じだ。自分が何か努力したり頑張ったり、 &hellip;">
+  <meta name="description" content="Recently I investigate the scalability of Jenkins. In my idea, I want to make hot standby Jenkins server with NFS. So the plugins which enable us to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +17,7 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta property="og:title" content=" - The first cry of Atom" >
-<meta property="og:description" content="読んだ。 http://karigari.hatenablog.com/entry/2013/11/06/000000 全く自分にとって新しいことでなくても、文字に起こされると驚くことがある。概念は知っていても言葉は知らない、そんな感じだ。自分が何か努力したり頑張ったり、 &hellip;" />
+<meta property="og:description" content="Recently I investigate the scalability of Jenkins. In my idea, I want to make hot standby Jenkins server with NFS. So the plugins which enable us to &hellip;" />
 <meta property="og:url" content="http://lewuathe.com" />
 <meta property="og:image" content="http://lewuathe.github.io/images/site_image.png" />
 <meta property="og:author" content="lewuathe" />
@@ -91,6 +91,188 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/11/16/developing-jenkins-plugin-on-vagrant/">Developing Jenkins Plugin on Vagrant</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-16T21:09:00+09:00" pubdate data-updated="true">Nov 16<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Recently I investigate the scalability of Jenkins. In my idea, I want to make hot standby Jenkins server with NFS. So the plugins which enable us to do that are required. And for my study, I decided to develop on Vagrant and VirtualBox. It costs me very little because there is no need to get real server.  So in this post, I will describe how to set up your jenkins plugin environment on your vagrant Ubuntu.</p>
+
+<h2>Start vagrant</h2>
+
+<p>My <code>Vagrantfile</code> is below. Before this, you should download precise64 box on vagrant <a href="http://www.vagrantbox.es/">site</a></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># -*- mode: ruby -*-
+</span><span class='line'># vi: set ft=ruby :
+</span><span class='line'>
+</span><span class='line'>Vagrant.configure("2") do |config|
+</span><span class='line'>  # Every Vagrant virtual environment requires a box to build off of.
+</span><span class='line'>  config.vm.box = "ubuntu"
+</span><span class='line'>
+</span><span class='line'>  # Create a forwarded port mapping which allows access to a specific port
+</span><span class='line'>  # within the machine from a port on the host machine. In the example below,
+</span><span class='line'>  # accessing "localhost:8080" will access port 80 on the guest machine.
+</span><span class='line'>  config.vm.network :forwarded_port, guest: 8080, host: 8080
+</span><span class='line'>
+</span><span class='line'> end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Jenkins plugin server starts on port 8080. So you need to write guest port 8080. Host port can be written any number.
+And start vagrant.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ vagrant up</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Set up maven3</h2>
+
+<p>Jenkins plugins are build with Maven. In this time, Maven3 can build sample plugin easily, so I recommend that you download maven3.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo apt-get install maven</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Write settings.xml</h2>
+
+<p>Write settings.xml as below.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;settings&gt;
+</span><span class='line'>  &lt;pluginGroups&gt;
+</span><span class='line'>    &lt;pluginGroup&gt;org.jenkins-ci.tools&lt;/pluginGroup&gt;
+</span><span class='line'>  &lt;/pluginGroups&gt;
+</span><span class='line'>
+</span><span class='line'>  &lt;profiles&gt;
+</span><span class='line'>    &lt;!-- Give access to Jenkins plugins --&gt;
+</span><span class='line'>    &lt;profile&gt;
+</span><span class='line'>      &lt;id&gt;jenkins&lt;/id&gt;
+</span><span class='line'>      &lt;activation&gt;
+</span><span class='line'>        &lt;activeByDefault&gt;true&lt;/activeByDefault&gt; &lt;!-- change this to false, if you don't like to have it on per default --&gt;
+</span><span class='line'>      &lt;/activation&gt;
+</span><span class='line'>      &lt;repositories&gt;
+</span><span class='line'>        &lt;repository&gt;
+</span><span class='line'>          &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
+</span><span class='line'>          &lt;url&gt;http://repo.jenkins-ci.org/public/&lt;/url&gt;
+</span><span class='line'>        &lt;/repository&gt;
+</span><span class='line'>      &lt;/repositories&gt;
+</span><span class='line'>      &lt;pluginRepositories&gt;
+</span><span class='line'>        &lt;pluginRepository&gt;
+</span><span class='line'>          &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
+</span><span class='line'>          &lt;url&gt;http://repo.jenkins-ci.org/public/&lt;/url&gt;
+</span><span class='line'>        &lt;/pluginRepository&gt;
+</span><span class='line'>      &lt;/pluginRepositories&gt;
+</span><span class='line'>    &lt;/profile&gt;
+</span><span class='line'>  &lt;/profiles&gt;
+</span><span class='line'>  &lt;mirrors&gt;
+</span><span class='line'>    &lt;mirror&gt;
+</span><span class='line'>      &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
+</span><span class='line'>      &lt;url&gt;http://repo.jenkins-ci.org/public/&lt;/url&gt;
+</span><span class='line'>      &lt;mirrorOf&gt;m.g.o-public&lt;/mirrorOf&gt;
+</span><span class='line'>    &lt;/mirror&gt;
+</span><span class='line'>  &lt;/mirrors&gt;
+</span><span class='line'>&lt;/settings&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>JDK!!</h2>
+
+<p>I failed to create my plugin in this time bacause of lack of JDK. Ubuntu 12.04 LTS doesn&rsquo;t have JDK in own image. You have to install it.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo apt-get install default-jdk</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Build plugin</h2>
+
+<p>Building plugin with maven command.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mvn install</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And demonstrate your plugin.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mvn hpi:run</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can see Jenkins web UI on <a href="http://localhost:8080/jenkins">http://localhost:8080/jenkins</a> unless maven command has not exit.
+So now, I can get multi Jenkins server for mutual mount on NFS. My Jenkins study has been continued.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1242,358 +1424,6 @@ Chefがもてはやされているけれど、Puppetも頑張っているよと�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/09/20/neo4jfalseshi-ifang-1/">Neo4jの使い方(1)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-09-20T21:33:00+09:00" pubdate data-updated="true">Sep 20<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Neo4jを使ってみたよ。とりあえず触ってみたかったのでインストールはせずに<a href="http://gist.neo4j.org/">GraphGist</a>を使ってCypherの書き方を勉強してみた。</p>
-
-<h1>Cypherって？</h1>
-
-<p>グラフデータベースを操作するためのSQLのこと。他のグラフデータベースに利用されているのかは知らないけれどNeo4jに関してはこのCypherを使ってデータを操作する。SQLを知らないとMySQLに対して何もできないのと同じようにCypherを知らないとNeo4jを何もできない。今回はこのCypherの基本的な構文や書き方を書いてみる。</p>
-
-<p>本家のドキュメントは<a href="http://docs.neo4j.org/chunked/milestone/cypher-query-lang.html">ここ</a>だよ</p>
-
-<h1>ノードの作成</h1>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>CREATE (n:Actor {name:"Doraemon"})</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Actorは型。nameは属性。nはマッチさせるときの記述子</p>
-
-<h2>エッジの作成</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>MATCH (actor:Actor)
-</span><span class='line'>WHERE actor.name = "Doraemon"
-</span><span class='line'>CREATE (n:Actor {name:"Nobita"})
-</span><span class='line'>CREATE (actor)-[:HELP]-&gt;(n)</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Actor型の中でnameがDoraemonのものを探す。見つけたらNobitaを作成し、その間にHELP型のエッジを作成する。</p>
-
-<h2>UNIQUEで作成する</h2>
-
-<p>エッジを同じものを複製したくなければ<code>CREATE UNIQUE</code>を使う</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>MATCH (actor:Actor)
-</span><span class='line'>WHERE actor.name = "Doraemon"
-</span><span class='line'>CREATE UNIQUE (actor)-[r:ACTED_IN]-&gt;(movie:Movie {title:"Mugen Sankenshi"})
-</span><span class='line'>RETURN r;</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>属性の変更</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>MATCH (actor:Actor)
-</span><span class='line'>WHERE actor.name = "Doraemon"
-</span><span class='line'>SET actor.birth_year = 2020
-</span><span class='line'>RETURN actor.name, actor.birth_year;</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>全てのノードの列挙</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>MATCH (actor:Actor)
-</span><span class='line'>RETURN actor as `All Actors`;</span></code></pre></td></tr></table></div></figure>
-
-
-<h1>パターンマッチ</h1>
-
-<p>グラフデータベースの検索は基本的にパターンマッチを使って行う。既にいくつか出てきたけれどパターンマッチには<code>MATCH</code>文を使う。</p>
-
-<h2>エッジのマッチ</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>(a)-[r]-&gt;(b)</span></code></pre></td></tr></table></div></figure>
-
-
-<p>ノードは丸括弧で囲み、エッジは角括弧で囲む。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>(a)-[r:HELP]-&gt;(b)</span></code></pre></td></tr></table></div></figure>
-
-
-<p>型にもマッチさせたいときに型も書く。
-無向グラフであれば矢印にはしない.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>(a)--(b)</span></code></pre></td></tr></table></div></figure>
-
-
-<p>複数のタイプにorでマッチさせたいときには縦棒を使う</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>(a)-[r:TYPE1|TYPE2]-&gt;(b)</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Optional relationship</h2>
-
-<p>マッチしない場合にはその要素だけnullを返して欲しい場合には<code>?</code>を使う。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>START me = node(*)
-</span><span class='line'>MATCH (me)--&gt;(friend)-[?]-&gt;(friend_of_friend)
-</span><span class='line'>RETURN friend,friend_of_friend</span></code></pre></td></tr></table></div></figure>
-
-
-<p>この場合にはこの関係にマッチしないノードがあった場合にはそこの欄だけnullになる。関係があるかないかまだわからないけれど、とりあえずすべての見てみたい場合に有効。</p>
-
-<p>エッジの個数を指定したい場合は<code>*</code>を使う</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>START me = node(4)
-</span><span class='line'>MATCH (me)-[?*2]-&gt;(friend)
-</span><span class='line'>RETURN friend</span></code></pre></td></tr></table></div></figure>
-
-
-<p>自分から２つ関係をまたいだ友達だけ返す。範囲指定も可能。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>START me = node(4)
-</span><span class='line'>MATCH (me)-[?*2..4]-&gt;(friend)
-</span><span class='line'>RETURN friend</span></code></pre></td></tr></table></div></figure>
-
-
-<p>2から4までの関係をまたいだ友達。</p>
-
-<h2>パスの割り当て</h2>
-
-<p>マッチしたパスを見たい場合があるときは、そのまま代入させてしまえばいい。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>START me = node(3)
-</span><span class='line'>MATCH p1 = (me)-[*2]-(friendOfFriend)
-</span><span class='line'>CREATE p2 = (me)-[:MARRIED_TO]-&gt;(wife {name:"Gunhild"})
-</span><span class='line'>CREATE UNIQUE p3 = wife-[:KNOWS]-friendOfFriend
-</span><span class='line'>RETURN p1,p2,p3</span></code></pre></td></tr></table></div></figure>
-
-
-<h1>参照構文</h1>
-
-<p>要素の検索、参照に必要な４つの構文(START, MATCH, WHERE, RETURN)に関して</p>
-
-<h2>START</h2>
-
-<p>STARTは探索を行うためのアンカーとなるノード、またはエッジを決める構文。</p>
-
-<p>以下のようなグラフがあったときに</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>START n = node(1)</span></code></pre></td></tr></table></div></figure>
-
-
-<p>と書くとnにnodeの1がバインドされ、これを使って探索することが可能。</p>
-
-<p><img src="/images/posts/2013-09-20-neo4j-1/graph.png" alt="Graphの例" /></p>
-
-<p>複数ノード、または全てのノードに対して処理を行いたい場合はこんな感じ。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>START n = node(1,2,3)
-</span><span class='line'>RETURN n</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>START n = node(*)
-</span><span class='line'>RETURN n</span></code></pre></td></tr></table></div></figure>
-
-
-<p>アンカーとなるエッジをバインドさせたい場合は以下のように書く。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>START r = relationship(0)
-</span><span class='line'>RETURN r</span></code></pre></td></tr></table></div></figure>
-
-
-<p>複数の点から始めるにはこんな感じ。(このやり方が知りたかった)</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>START a = node(1), b = node(2)
-</span><span class='line'>RETURN a,b</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>MATCH</h2>
-
-<p>nodeやエッジにパターンマッチさせるための構文。
-STARTなしでもMATCHは使えることはさっき書いたけれど、この場合でのどちらにしろCypherはすべてのノードを探索して始点となるノードを探すことになる。</p>
-
-<p>すべてのノードを得たい場合は簡単。CypherはSTARTを指定しなければすべてのノードを探索するので、条件がなければすべてのノードにマッチする。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>MATCH n
-</span><span class='line'>RETURN n</span></code></pre></td></tr></table></div></figure>
-
-
-<p>ラベルにマッチさせたいときはコロンで区切る</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>MATCH n:Actor
-</span><span class='line'>RETURN n</span></code></pre></td></tr></table></div></figure>
-
-
-<p>エッジもマッチに含めてよい</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>MATCH (director)--&gt;(movie)
-</span><span class='line'>WHERE director.name = "Oliver Stone"
-</span><span class='line'>RETURN movie.title</span></code></pre></td></tr></table></div></figure>
-
-
-<p>エッジにラベルをマッチさせてもよい</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>MATCH (movie)&lt;-[r:ACTED_IN]-(actor)
-</span><span class='line'>WHERE actor.name = "Tom Hanks"
-</span><span class='line'>RETURN movie.title</span></code></pre></td></tr></table></div></figure>
-
-
-<p>エッジの数でマッチさせることもできる</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>MATCH (martin)-[:ACTED_IN*1..2]-(x)
-</span><span class='line'>WHERE martin.name = "Martin Sheen"
-</span><span class='line'>RETURN x</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>WHERE</h2>
-
-<p>MATCHで引っかかったものをfilterにかける処理を行う文</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>MATCH n
-</span><span class='line'>WHERE n.name = "Takeshi" XOR (n.age &lt; 30 AND n.name = "Nobita") OR NOT (n.name = "Suneo" OR n.name = "Dekisugi")
-</span><span class='line'>RETURN n</span></code></pre></td></tr></table></div></figure>
-
-
-<p>名前がたけしである場合か、30際以下ののび太である場合かスネオでも出来杉でもない場合のノードが返ってくる
-MATCHでラベルを使うこともできたが、WHEREでも可能</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>MATCH n
-</span><span class='line'>WHERE n:Actor
-</span><span class='line'>RETURN n</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Actorだけが返ってくる。また正規表現も使える</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>MATCH n
-</span><span class='line'>WHERE n.name =~ "T.*"
-</span><span class='line'>RETURN n</span></code></pre></td></tr></table></div></figure>
-
-
-<p>多分&#8221;Takeshi&#8221;が返ってくる。ある属性があるかないかで取る場合はHASを使う</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>MATCH n
-</span><span class='line'>WHERE HAS(n.belt)
-</span><span class='line'>RETURN n</span></code></pre></td></tr></table></div></figure>
-
-
-<p>belt属性があるものが得られる。</p>
-
-<h2>RETURN</h2>
-
-<p>返り値を選択するのがRETURN文だけれどここで数を返した、平均を返したりといったことができる。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>MATCH (n)--&gt;(x)
-</span><span class='line'>WHERE n.name = "X"
-</span><span class='line'>RETURN n, count(*)</span></code></pre></td></tr></table></div></figure>
-
-
-<p>MATCHした数が返ってくる。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>MATCH (n)-[r]-&gt;(x)
-</span><span class='line'>WHERE n.name = "Nobita"
-</span><span class='line'>RETURN type(r)</span></code></pre></td></tr></table></div></figure>
-
-
-<p>エッジのラベルが返ってくる。KNOWSとか。
-SQLと同じように他にもSUMとかAVGとか使えるみたい。</p>
-
-<p>大体基本的な構文はわかってきたので、次はGraphGistを使ってもう少し複雑なものを作ってみようかな。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/6/">&larr; Older</a>
@@ -1611,6 +1441,10 @@ SQLと同じように他にもSUMとかAVGとか使えるみたい。</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/04/08/opensslfalsecui-ruo-xing-wodu-nta/">Heart Bleedを読んだ</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/03/29/wen-quan-jin-nite/">温泉津にて</a>
       </li>
     
@@ -1624,10 +1458,6 @@ SQLと同じように他にもSUMとかAVGとか使えるみたい。</p>
     
       <li class="post">
         <a href="/blog/2014/03/18/marble-problem/">Marble Problem</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/03/17/srm144-div1/">SRM144 Div1</a>
       </li>
     
   </ul>
