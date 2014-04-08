@@ -11,7 +11,7 @@
   
   <meta name="description" content="今日の日本時間13:00頃、OpenSSLに致命的なバグがあることがわかった。全世界で動いているSSLプロセスが影響を受ける。
 簡単に言うと、メモリ上にある任意のデータを漏洩する可能性があるバグだ。
-このバグはもう2年も前からあったらしいが見つかったのはつい最近で、パッチがあたったのは十数時間前だ &hellip;">
+このバグはもう2年も前からあったらしいがGoogle Security TeamのNeel &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +21,7 @@
   <meta property="og:title" content=" - The first cry of Atom" >
 <meta property="og:description" content="今日の日本時間13:00頃、OpenSSLに致命的なバグがあることがわかった。全世界で動いているSSLプロセスが影響を受ける。
 簡単に言うと、メモリ上にある任意のデータを漏洩する可能性があるバグだ。
-このバグはもう2年も前からあったらしいが見つかったのはつい最近で、パッチがあたったのは十数時間前だ &hellip;" />
+このバグはもう2年も前からあったらしいがGoogle Security TeamのNeel &hellip;" />
 <meta property="og:url" content="http://lewuathe.com" />
 <meta property="og:image" content="http://lewuathe.github.io/images/site_image.png" />
 <meta property="og:author" content="lewuathe" />
@@ -126,11 +126,11 @@
 
   <div class="entry-content"><p>今日の日本時間13:00頃、OpenSSLに致命的なバグがあることがわかった。全世界で動いているSSLプロセスが影響を受ける。
 簡単に言うと、メモリ上にある任意のデータを漏洩する可能性があるバグだ。
-このバグはもう2年も前からあったらしいが見つかったのはつい最近で、パッチがあたったのは十数時間前だ。</p>
+このバグはもう2年も前からあったらしいがGoogle Security TeamのNeel Mentaに見つけられたのはつい最近で、パッチがあたったのは十数時間前だ。</p>
 
 <p><a href="https://github.com/openssl/openssl/commit/96db9023b881d7cd9f379b0c154650d6c108e9a3">Add heartbeat extension bounds check.</a></p>
 
-<p>基本的には<a href="http://heartbleed.com/">Heart Bleed</a>に詳細が記載されていて、危険なOpenSSLのバージョン、ディストリビューションが書いてある。
+<p>基本的には<a href="http://heartbleed.com/">heartbleed.com</a>に詳細が記載されていて、危険なOpenSSLのバージョン、ディストリビューションが書いてある。
 対応方法も書いてある。今回はエンジニアとして、コードを読んでどういうバグだったのか理解してみたかったので書いてみる。</p>
 
 </div>

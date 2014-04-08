@@ -4,7 +4,7 @@
   <title><![CDATA[Category: OpenSSL | The first cry of Atom]]></title>
   <link href="http://lewuathe.github.io/blog/categories/openssl/atom.xml" rel="self"/>
   <link href="http://lewuathe.github.io/"/>
-  <updated>2014-04-08T22:06:44+09:00</updated>
+  <updated>2014-04-08T22:18:07+09:00</updated>
   <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
@@ -20,11 +20,11 @@
     <id>http://lewuathe.github.io/blog/2014/04/08/opensslfalsecui-ruo-xing-wodu-nta</id>
     <content type="html"><![CDATA[<p>今日の日本時間13:00頃、OpenSSLに致命的なバグがあることがわかった。全世界で動いているSSLプロセスが影響を受ける。
 簡単に言うと、メモリ上にある任意のデータを漏洩する可能性があるバグだ。
-このバグはもう2年も前からあったらしいが見つかったのはつい最近で、パッチがあたったのは十数時間前だ。</p>
+このバグはもう2年も前からあったらしいがGoogle Security TeamのNeel Mentaに見つけられたのはつい最近で、パッチがあたったのは十数時間前だ。</p>
 
 <p><a href="https://github.com/openssl/openssl/commit/96db9023b881d7cd9f379b0c154650d6c108e9a3">Add heartbeat extension bounds check.</a></p>
 
-<p>基本的には<a href="http://heartbleed.com/">Heart Bleed</a>に詳細が記載されていて、危険なOpenSSLのバージョン、ディストリビューションが書いてある。
+<p>基本的には<a href="http://heartbleed.com/">heartbleed.com</a>に詳細が記載されていて、危険なOpenSSLのバージョン、ディストリビューションが書いてある。
 対応方法も書いてある。今回はエンジニアとして、コードを読んでどういうバグだったのか理解してみたかったので書いてみる。</p>
 
 <!-- more -->
@@ -129,11 +129,13 @@ memcpy(bp, pl, payload);</p>
 <p>```</p>
 
 <p>先ほどのリクエストから得た<code>payload</code>分の長さのデータを<code>pl</code>から<code>bp</code>にコピーしている。これでレスポンスデータを構築したことになる。
-これをユーザクライアントに返すことになるわけだ。さて今回見つかったバグは既にここまでのコードの中にある。</p>
+これをユーザクライアントに返すことになるわけだ。</p>
+
+<p>さて今回見つかったバグは既にここまでのコードの中にある。</p>
 
 <h2>バグ</h2>
 
-<p>注意して欲しいのは変数<code>payload</code>は<strong>ユーザから与えられたデータ</strong>ということだ。つまりだれでも勝手に設定できるため、<strong>正しい値</strong>が入っていない可能性がある。
+<p>注意して欲しいのは変数<code>payload</code>は<strong>ユーザから与えられたデータ</strong>ということだ。つまりだれでも勝手に設定できるため、<strong>正しい値が入っていない</strong>可能性がある。
 この場合の正しさというのはリクエストデータの大きさを正しく反映しているかどうかということだ。
 もしこの<code>payload</code>変数(受け取ったデータの先頭から2byteの値)がデータの長さを正しく反映していない、特に実際のデータ長よりも
 長い値が<code>payload</code>に設定されているとしたらどうだろう。レスポンスデータを作る以下のコードは正しく動作するだろうか。</p>
@@ -143,11 +145,11 @@ memcpy(bp, pl, payload);</p>
 
 <p>```</p>
 
-<p>正しく動作しない。実際の<code>pl</code>に入っているデータは<code>payload</code>に設定されている値よりも短いため、<code>pl</code>から連続したメモリ領域を<code>bp</code>に
+<p>正しく動作しない。正確にいうと動作に特に影響はないが、余計なものを送ってしまう可能性がある。ここに脆弱性が生まれる。実際の<code>pl</code>に入っているデータは<code>payload</code>に設定されている値よりも短いため、<code>pl</code>から連続したメモリ領域を<code>bp</code>に
 コピーしてしまう。そして、このあふれた領域にSSL秘密鍵のデータが載っていたらどうだろうか。OpenSSLプロセスであれば秘密鍵のデータをプロセスメモリ上に乗せているのは
 十分考えられることだ。
 このコピーされてしまったSSL秘密鍵のデータは<code>bp</code>を経由してそのままクライアントの手にわたってしまうことになる。
-もちろん、今のコンピュータはプロセスあたりのヒープ領域が大きいため、ただちに秘密鍵の値をコピーしてしまうことにはならないが、やはり可能性はゼロではない。
+もちろん、最近のコンピュータはプロセスあたりのヒープ領域が大きいため、ただちに秘密鍵の値をコピーしてしまうことにはならないが、やはり可能性はゼロではない。
 OpenSSLチームは以下のような修正を加えたパッチを配布している。</p>
 
 <h2>修正</h2>
