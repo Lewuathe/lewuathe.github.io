@@ -4,7 +4,7 @@
   <title><![CDATA[The first cry of Atom]]></title>
   <link href="http://lewuathe.github.io/atom.xml" rel="self"/>
   <link href="http://lewuathe.github.io/"/>
-  <updated>2014-04-08T22:18:07+09:00</updated>
+  <updated>2014-04-10T21:26:23+09:00</updated>
   <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
@@ -12,6 +12,190 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Patterns About BFS in Competitive Programming]]></title>
+    <link href="http://lewuathe.github.io/blog/2014/04/10/patterns-about-bfs-in-commetitive-programming/"/>
+    <updated>2014-04-10T20:24:26+09:00</updated>
+    <id>http://lewuathe.github.io/blog/2014/04/10/patterns-about-bfs-in-commetitive-programming</id>
+    <content type="html"><![CDATA[<p>So let&rsquo;s go back to English from today :)</p>
+
+<p>I solved SRM612 Div1 for practice. This problem is <a href="http://community.topcoder.com/stat?c=problem_statement&amp;pm=10543">this</a>
+In this post, I left out the detail of this problem because main topic of this post is pattern of <a href="http://en.wikipedia.org/wiki/Breadth-first_search">BFS</a>.
+First I tried to solve this problem with some dynamic programming algorithm. But after trying, I found BFS is sufficient algorithm
+to solve. So now I rewrote my program as below.</p>
+
+<!-- more -->
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.math.*</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">static</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">Math</span><span class="o">.*;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">EmoticonsDiv1</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span><span class="o">[]</span> <span class="nf">decode</span><span class="o">(</span><span class="kt">int</span> <span class="n">code</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kt">int</span><span class="o">[]</span> <span class="n">ret</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="mi">2</span><span class="o">];</span>
+</span><span class='line'>        <span class="n">ret</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">code</span> <span class="o">/</span> <span class="mi">10000</span><span class="o">;</span>
+</span><span class='line'>        <span class="n">ret</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">code</span> <span class="o">%</span> <span class="mi">10000</span><span class="o">;</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">ret</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">printSmiles</span><span class="o">(</span><span class="kt">int</span> <span class="n">smiles</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">Queue</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">q</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;();</span>
+</span><span class='line'>        <span class="kt">int</span><span class="o">[][]</span> <span class="n">state</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">1000</span><span class="o">][</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">1000</span><span class="o">];</span>
+</span><span class='line'>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">1000</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">1000</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">state</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="o">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">1000</span><span class="o">);</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">//        state[i][j] : i = message, j = clipboard</span>
+</span><span class='line'>        <span class="n">state</span><span class="o">[</span><span class="mi">1</span><span class="o">][</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>        <span class="n">q</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="mi">1</span> <span class="o">*</span> <span class="mi">10000</span> <span class="o">+</span> <span class="mi">0</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">while</span> <span class="o">(!</span><span class="n">q</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>            <span class="kt">int</span><span class="o">[]</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">decode</span><span class="o">(</span><span class="n">q</span><span class="o">.</span><span class="na">poll</span><span class="o">());</span>
+</span><span class='line'>            <span class="kt">int</span> <span class="n">message</span> <span class="o">=</span> <span class="n">ret</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+</span><span class='line'>            <span class="kt">int</span> <span class="n">clipboard</span> <span class="o">=</span> <span class="n">ret</span><span class="o">[</span><span class="mi">1</span><span class="o">];</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">state</span><span class="o">[</span><span class="n">message</span><span class="o">][</span><span class="n">message</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">state</span><span class="o">[</span><span class="n">message</span><span class="o">][</span><span class="n">clipboard</span><span class="o">]</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">state</span><span class="o">[</span><span class="n">message</span><span class="o">][</span><span class="n">message</span><span class="o">]</span> <span class="o">=</span> <span class="n">state</span><span class="o">[</span><span class="n">message</span><span class="o">][</span><span class="n">clipboard</span><span class="o">]</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>                <span class="n">q</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">message</span> <span class="o">*</span> <span class="mi">10000</span> <span class="o">+</span> <span class="n">message</span><span class="o">);</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">message</span> <span class="o">+</span> <span class="n">clipboard</span> <span class="o">&lt;</span> <span class="o">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">1000</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">state</span><span class="o">[</span><span class="n">message</span> <span class="o">+</span> <span class="n">clipboard</span><span class="o">][</span><span class="n">clipboard</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">state</span><span class="o">[</span><span class="n">message</span><span class="o">][</span><span class="n">clipboard</span><span class="o">]</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">state</span><span class="o">[</span><span class="n">message</span> <span class="o">+</span> <span class="n">clipboard</span><span class="o">][</span><span class="n">clipboard</span><span class="o">]</span> <span class="o">=</span> <span class="n">state</span><span class="o">[</span><span class="n">message</span><span class="o">][</span><span class="n">clipboard</span><span class="o">]</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>                <span class="k">if</span> <span class="o">(</span><span class="n">message</span> <span class="o">+</span> <span class="n">clipboard</span> <span class="o">==</span> <span class="n">smiles</span><span class="o">)</span> <span class="k">return</span> <span class="n">state</span><span class="o">[</span><span class="n">message</span> <span class="o">+</span> <span class="n">clipboard</span><span class="o">][</span><span class="n">clipboard</span><span class="o">];</span>
+</span><span class='line'>                <span class="n">q</span><span class="o">.</span><span class="na">add</span><span class="o">((</span><span class="n">message</span> <span class="o">+</span> <span class="n">clipboard</span><span class="o">)</span> <span class="o">*</span> <span class="mi">10000</span> <span class="o">+</span> <span class="n">clipboard</span><span class="o">);</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">message</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">state</span><span class="o">[</span><span class="n">message</span> <span class="o">-</span> <span class="mi">1</span><span class="o">][</span><span class="n">clipboard</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">state</span><span class="o">[</span><span class="n">message</span><span class="o">][</span><span class="n">clipboard</span><span class="o">]</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">state</span><span class="o">[</span><span class="n">message</span> <span class="o">-</span> <span class="mi">1</span><span class="o">][</span><span class="n">clipboard</span><span class="o">]</span> <span class="o">=</span> <span class="n">state</span><span class="o">[</span><span class="n">message</span><span class="o">][</span><span class="n">clipboard</span><span class="o">]</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>                <span class="k">if</span> <span class="o">(</span><span class="n">message</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">==</span> <span class="n">smiles</span><span class="o">)</span> <span class="k">return</span> <span class="n">state</span><span class="o">[</span><span class="n">message</span> <span class="o">-</span> <span class="mi">1</span><span class="o">][</span><span class="n">clipboard</span><span class="o">];</span>
+</span><span class='line'>                <span class="n">q</span><span class="o">.</span><span class="na">add</span><span class="o">((</span><span class="n">message</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">*</span> <span class="mi">10000</span> <span class="o">+</span> <span class="n">clipboard</span><span class="o">);</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">return</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">1000</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The computing complexity of this code is O(S<sup>2</sup>). Could solve in time. After writing, I realized there are some patterns about writing BFS
+in competitive programming. I want to put together these patterns in this port for the future contest.</p>
+
+<h2>State encoding, decoding</h2>
+
+<p>In general, BFS uses a queue data strucure. The elements of queue has to keep each state to search. In this case, each <code>message</code> and <code>clipboard</code>.
+When you write software on long-term basis, you should write state class for keeping <code>message</code> and <code>clipboard</code>. But this is competitive programming.
+Defining adhoc class will take you some more time to complete writing code. So you should avoid this pattern as possible.</p>
+
+<p>The solution is encoding, decoding pattern. Default queue can only keep one <code>Integer</code> or <code>String</code>, therefore let two variables put into this one variable.
+Specifically, this is.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="c1">// Decode one integer to two interger that composes state</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span><span class="o">[]</span> <span class="nf">decode</span><span class="o">(</span><span class="kt">int</span> <span class="n">code</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kt">int</span><span class="o">[]</span> <span class="n">ret</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="mi">2</span><span class="o">];</span>
+</span><span class='line'>    <span class="n">ret</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">code</span> <span class="o">/</span> <span class="mi">10000</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">ret</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">code</span> <span class="o">%</span> <span class="mi">10000</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">ret</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span><span class="o">[]</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">decode</span><span class="o">(</span><span class="n">q</span><span class="o">.</span><span class="na">poll</span><span class="o">());</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">message</span> <span class="o">=</span> <span class="n">ret</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">clipboard</span> <span class="o">=</span> <span class="n">ret</span><span class="o">[</span><span class="mi">1</span><span class="o">];</span>
+</span><span class='line'><span class="c1">// Encode two variables into one variable</span>
+</span><span class='line'><span class="n">q</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">message</span> <span class="o">*</span> <span class="mi">10000</span> <span class="o">+</span> <span class="n">clipboard</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>With this pattern you don&rsquo;t have to write your own state class. But this pattern has a fault. If there are more variables in a state,
+decoding and encoding code becomes more complex and hard to debug. In addition to this problem, you should also know the range of input variable.
+In this case, I use 10000 number to encoding and decoding, bacause input variables are included in [0, 1000]. So <code>message</code> and <code>clipboard</code> can be
+separated. The selection of this base integer will be difficult as the number of state varibales are increasing.</p>
+
+<h2>Optimization value</h2>
+
+<p>Above case, optimization value to be submit as answer is the count of manipulation <code>state[i][j]</code>. If you can write state class, you don&rsquo;t need to
+this 2 dimension array. But you couldn&rsquo;t. So with this <code>state</code>, I can realize that if I want to keep more values such as optimization value,
+I can prepair external third variable instead. With this variable, you can keep more values corresponding to each state.</p>
+
+<h2>Last but not least</h2>
+
+<p>You should not write such codes in production software!!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Heart Bleedを読んだ]]></title>
@@ -2756,123 +2940,6 @@ makes me tired. So I create this environment with <a href="http://www.jetbrains.
 <p>I pray for the faster android emulator to Google.</p>
 
 <p>Thank you :)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Useful Shortcuts for IntelliJ IDEA]]></title>
-    <link href="http://lewuathe.github.io/blog/2014/02/18/useful-shortcuts-for-intellij-idea/"/>
-    <updated>2014-02-18T21:21:10+09:00</updated>
-    <id>http://lewuathe.github.io/blog/2014/02/18/useful-shortcuts-for-intellij-idea</id>
-    <content type="html"><![CDATA[<p>In this week, I am attending a lecture for developing mobile application on android.
-Of course I had no experience writing android applications, I have not written Java code in my life.
-Through this lecture, I was so impressed by the functionality of <a href="https://www.eclipse.org/">Eclipse</a>.</p>
-
-<p>In my life, I hate using IDE because these tools always hide a mechanism for building application.
-This is why I always used emacs or vim. But today, I changed my mind. IDE is the next step for me in order to acquire new skills.
-So just now I installed <a href="http://www.jetbrains.com/idea/">IntelliJ IDEA</a> which is in fashion nowadays.</p>
-
-<!-- more -->
-
-
-<p>In this post, I&rsquo;d like to introduce some shortcuts for my kickstarting IntelliJ IDEA. If you know any other tips, please let me know.</p>
-
-<table>
-<thead>
-<tr>
-<th></th>
-<th align="left"> Short Cut </th>
-<th align="left"> Function </th>
-<th align="left"> Notes </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-<td align="left"> Ctrl + Space  </td>
-<td align="left"> Basic Code completion </td>
-<td align="left"> With IntelliJ IDEA, however code completion is run automatically </td>
-</tr>
-<tr>
-<td></td>
-<td align="left"> Alt + Enter   </td>
-<td align="left"> Show intention actions and quick-fixes </td>
-<td align="left"> IntelliJ IDEA gives me any suggestions in each situations </td>
-</tr>
-<tr>
-<td></td>
-<td align="left"> Ctrl + Alt + L </td>
-<td align="left"> Reformat code </td>
-<td align="left"> Rearrange for readable format </td>
-</tr>
-<tr>
-<td></td>
-<td align="left"> Ctrl + Alt + O </td>
-<td align="left"> Optimize imports </td>
-<td align="left"> Remove unnecessary imports </td>
-</tr>
-<tr>
-<td></td>
-<td align="left"> Ctrl + Q </td>
-<td align="left"> Quick documentation </td>
-<td align="left"> Simple reference to javadoc </td>
-</tr>
-<tr>
-<td></td>
-<td align="left"> Ctrl + O </td>
-<td align="left"> Override methods </td>
-<td align="left"> Implements override methods of current class </td>
-</tr>
-<tr>
-<td></td>
-<td align="left"> Ctrl + / </td>
-<td align="left"> Comment out/in a line </td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td align="left"> Ctrl + W </td>
-<td align="left"> Select successively increasing code blocks </td>
-<td align="left"> You can select a meaningful code blocks </td>
-</tr>
-<tr>
-<td></td>
-<td align="left"> Ctrl + Y </td>
-<td align="left"> Delete line at caret </td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td align="left"> Shift + Enter </td>
-<td align="left"> Start new line </td>
-<td align="left"> Wherever line you are, insert new line</td>
-</tr>
-<tr>
-<td></td>
-<td align="left"> Shift + F10 </td>
-<td align="left"> Run </td>
-<td align="left"> </td>
-</tr>
-<tr>
-<td></td>
-<td align="left"> Ctrl + Alt + V </td>
-<td align="left"> Introduce variables </td>
-<td align="left"> Make variables name automatically </td>
-</tr>
-<tr>
-<td></td>
-<td align="left"> Ctrl + J </td>
-<td align="left"> Insert live templates </td>
-<td align="left"> A lot of type of templates are preinstalled </td>
-</tr>
-</tbody>
-</table>
-
-
-<p>How do you think that? Of course, there are so many shortcuts and functions that I cannot introduce all of these.
-The only way to know how useful IntelliJ IDEA is using it throughly! From today, I&rsquo;ll switch default editor to IntelliJ IDEA.</p>
-
-<p>Thank you.</p>
 ]]></content>
   </entry>
   
