@@ -4,7 +4,7 @@
   <title><![CDATA[The first cry of Atom]]></title>
   <link href="http://lewuathe.github.io/atom.xml" rel="self"/>
   <link href="http://lewuathe.github.io/"/>
-  <updated>2014-04-18T21:37:37+09:00</updated>
+  <updated>2014-05-20T22:02:50+09:00</updated>
   <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
@@ -12,6 +12,277 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[What Is the Essential Factor of Autoencoder?]]></title>
+    <link href="http://lewuathe.github.io/blog/2014/05/20/what-is-the-essential-factor-of-autoencoder/"/>
+    <updated>2014-05-20T21:08:45+09:00</updated>
+    <id>http://lewuathe.github.io/blog/2014/05/20/what-is-the-essential-factor-of-autoencoder</id>
+    <content type="html"><![CDATA[<p>The other day, I wrote neural network which implements backpropagation algorithm.
+Following this program I write denoised autoencoder program by inheriting previous neural network.
+Backpropagation algorithm is generally good performance in spite of the simplicity. With this code,
+I can be ranked in at the <a href="http://www.kaggle.com/c/digit-recognizer/leaderboard">266th(May 20th, 2014)</a>.
+So I think this implementation has no bugs. However when I use this program as autoencoder the same is not true.
+With autoencoder, you should reduce dimension of input vector in order to extract essential characteristics.
+These essential characteristics might be also reduced so it cannot reconstruct the same vector to input vector.
+In fact after over-completed this network, I can better performance in terms of the number of accurate answers.</p>
+
+<p>This is code.</p>
+
+<!-- more -->
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">package</span> <span class="n">com</span><span class="o">.</span><span class="na">lewuathe</span><span class="o">.</span><span class="na">magi</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">org.ujmp.core.Matrix</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * Created by sasakiumi on 5/8/14.</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DenoisedAutoencoder</span> <span class="kd">extends</span> <span class="n">NeuralNetwork</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">double</span> <span class="n">corruptionLevel</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="nf">DenoisedAutoencoder</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">numLayers</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kd">super</span><span class="o">(</span><span class="n">numLayers</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="nf">DenoisedAutoencoder</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">numLayers</span><span class="o">,</span> <span class="n">Matrix</span> <span class="n">w</span><span class="o">,</span> <span class="n">Matrix</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kd">super</span><span class="o">(</span><span class="n">numLayers</span><span class="o">);</span>
+</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">weights</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">w</span><span class="o">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">biases</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">b</span><span class="o">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">corruptionLevel</span> <span class="o">=</span> <span class="mf">0.2</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setCorruptionLevel</span><span class="o">(</span><span class="kt">double</span> <span class="n">corruptionLevel</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">corruptionLevel</span> <span class="o">=</span> <span class="n">corruptionLevel</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="cm">/**</span>
+</span><span class='line'><span class="cm">     * update</span>
+</span><span class='line'><span class="cm">     *</span>
+</span><span class='line'><span class="cm">     * @param x</span>
+</span><span class='line'><span class="cm">     * @param y</span>
+</span><span class='line'><span class="cm">     * @param lr</span>
+</span><span class='line'><span class="cm">     */</span>
+</span><span class='line'>     <span class="nd">@Override</span>
+</span><span class='line'>     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">(</span><span class="kt">double</span><span class="o">[][]</span> <span class="n">x</span><span class="o">,</span> <span class="kt">double</span><span class="o">[][]</span> <span class="n">y</span><span class="o">,</span> <span class="kt">double</span> <span class="n">lr</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>          <span class="n">Matrix</span><span class="o">[]</span> <span class="n">nablaB</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Matrix</span><span class="o">[</span><span class="mi">2</span><span class="o">];</span>
+</span><span class='line'>          <span class="n">nablaB</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="na">factory</span><span class="o">.</span><span class="na">zeros</span><span class="o">(</span><span class="n">numLayers</span><span class="o">[</span><span class="mi">1</span><span class="o">],</span> <span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>          <span class="n">nablaB</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="na">factory</span><span class="o">.</span><span class="na">zeros</span><span class="o">(</span><span class="n">numLayers</span><span class="o">[</span><span class="mi">2</span><span class="o">],</span> <span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>          <span class="n">Matrix</span><span class="o">[]</span> <span class="n">nablaW</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Matrix</span><span class="o">[</span><span class="mi">2</span><span class="o">];</span>
+</span><span class='line'>          <span class="n">nablaW</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="na">factory</span><span class="o">.</span><span class="na">zeros</span><span class="o">(</span><span class="n">numLayers</span><span class="o">[</span><span class="mi">1</span><span class="o">],</span> <span class="n">numLayers</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
+</span><span class='line'>          <span class="n">nablaW</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="na">factory</span><span class="o">.</span><span class="na">zeros</span><span class="o">(</span><span class="n">numLayers</span><span class="o">[</span><span class="mi">2</span><span class="o">],</span> <span class="n">numLayers</span><span class="o">[</span><span class="mi">1</span><span class="o">]);</span>
+</span><span class='line'>
+</span><span class='line'>          <span class="k">assert</span> <span class="n">x</span><span class="o">.</span><span class="na">length</span> <span class="o">==</span> <span class="n">y</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
+</span><span class='line'>          <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">x</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">Matrix</span> <span class="n">xMat</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="na">factory</span><span class="o">.</span><span class="na">zeros</span><span class="o">(</span><span class="n">numLayers</span><span class="o">[</span><span class="mi">0</span><span class="o">],</span> <span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>              <span class="n">Matrix</span> <span class="n">yMat</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="na">factory</span><span class="o">.</span><span class="na">zeros</span><span class="o">(</span><span class="n">numLayers</span><span class="o">[</span><span class="mi">2</span><span class="o">],</span> <span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>              <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">numLayers</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>                  <span class="n">xMat</span><span class="o">.</span><span class="na">setAsDouble</span><span class="o">(</span><span class="n">corrupt</span><span class="o">(</span><span class="n">x</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">],</span> <span class="n">corruptionLevel</span><span class="o">),</span> <span class="n">j</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+</span><span class='line'>              <span class="o">}</span>
+</span><span class='line'>                <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">numLayers</span><span class="o">[</span><span class="mi">2</span><span class="o">];</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>                  <span class="n">yMat</span><span class="o">.</span><span class="na">setAsDouble</span><span class="o">(</span><span class="n">y</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">],</span> <span class="n">j</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+</span><span class='line'>              <span class="o">}</span>
+</span><span class='line'>              <span class="n">Matrix</span><span class="o">[][]</span> <span class="n">delta</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">backprod</span><span class="o">(</span><span class="n">xMat</span><span class="o">,</span> <span class="n">yMat</span><span class="o">);</span>
+</span><span class='line'>              <span class="c1">// delta[0]: nablaB</span>
+</span><span class='line'>              <span class="c1">// delta[1]: nablaW</span>
+</span><span class='line'>              <span class="n">nablaB</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">nablaB</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">plus</span><span class="o">(</span><span class="n">delta</span><span class="o">[</span><span class="mi">0</span><span class="o">][</span><span class="mi">0</span><span class="o">]);</span>
+</span><span class='line'>              <span class="n">nablaB</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">nablaB</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="na">plus</span><span class="o">(</span><span class="n">delta</span><span class="o">[</span><span class="mi">0</span><span class="o">][</span><span class="mi">1</span><span class="o">]);</span>
+</span><span class='line'>                <span class="n">nablaW</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">nablaW</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">plus</span><span class="o">(</span><span class="n">delta</span><span class="o">[</span><span class="mi">1</span><span class="o">][</span><span class="mi">0</span><span class="o">]);</span>
+</span><span class='line'>              <span class="n">nablaW</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">nablaW</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="na">plus</span><span class="o">(</span><span class="n">delta</span><span class="o">[</span><span class="mi">1</span><span class="o">][</span><span class="mi">1</span><span class="o">]);</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="c1">// Update biases and weights with gradient descent</span>
+</span><span class='line'>          <span class="n">biases</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">biases</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">minus</span><span class="o">(</span><span class="n">nablaB</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">mtimes</span><span class="o">(</span><span class="n">lr</span><span class="o">));</span>
+</span><span class='line'>          <span class="n">biases</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">biases</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="na">minus</span><span class="o">(</span><span class="n">nablaB</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="na">mtimes</span><span class="o">(</span><span class="n">lr</span><span class="o">));</span>
+</span><span class='line'>          <span class="n">weights</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">weights</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">minus</span><span class="o">(</span><span class="n">nablaW</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">mtimes</span><span class="o">(</span><span class="n">lr</span><span class="o">));</span>
+</span><span class='line'>            <span class="n">weights</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">weights</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">minus</span><span class="o">(</span><span class="n">nablaW</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="na">transpose</span><span class="o">().</span><span class="na">mtimes</span><span class="o">(</span><span class="n">lr</span><span class="o">));</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Override</span>
+</span><span class='line'>    <span class="kd">protected</span> <span class="n">Matrix</span><span class="o">[][]</span> <span class="nf">backprod</span><span class="o">(</span><span class="n">Matrix</span> <span class="n">x</span><span class="o">,</span> <span class="n">Matrix</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">Matrix</span><span class="o">[]</span> <span class="n">nablaB</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Matrix</span><span class="o">[</span><span class="mi">2</span><span class="o">];</span>
+</span><span class='line'>        <span class="n">nablaB</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="na">factory</span><span class="o">.</span><span class="na">zeros</span><span class="o">(</span><span class="n">numLayers</span><span class="o">[</span><span class="mi">1</span><span class="o">],</span> <span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">nablaB</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="na">factory</span><span class="o">.</span><span class="na">zeros</span><span class="o">(</span><span class="n">numLayers</span><span class="o">[</span><span class="mi">2</span><span class="o">],</span> <span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">Matrix</span><span class="o">[]</span> <span class="n">nablaW</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Matrix</span><span class="o">[</span><span class="mi">2</span><span class="o">];</span>
+</span><span class='line'>        <span class="n">nablaW</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="na">factory</span><span class="o">.</span><span class="na">zeros</span><span class="o">(</span><span class="n">numLayers</span><span class="o">[</span><span class="mi">1</span><span class="o">],</span> <span class="n">numLayers</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
+</span><span class='line'>        <span class="n">nablaW</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="na">factory</span><span class="o">.</span><span class="na">zeros</span><span class="o">(</span><span class="n">numLayers</span><span class="o">[</span><span class="mi">2</span><span class="o">],</span> <span class="n">numLayers</span><span class="o">[</span><span class="mi">1</span><span class="o">]);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">// In case of denoised autoencoder, no use of 1st weight layer</span>
+</span><span class='line'>        <span class="n">weights</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">weights</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">transpose</span><span class="o">();</span>
+</span><span class='line'>        <span class="c1">// Activation of each layer</span>
+</span><span class='line'>        <span class="n">Matrix</span> <span class="n">activation</span> <span class="o">=</span> <span class="n">x</span><span class="o">;</span>
+</span><span class='line'>        <span class="c1">// Collection of activation values of each layer including input</span>
+</span><span class='line'>        <span class="n">Matrix</span><span class="o">[]</span> <span class="n">activations</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Matrix</span><span class="o">[</span><span class="mi">3</span><span class="o">];</span>
+</span><span class='line'>        <span class="c1">// Set input activation</span>
+</span><span class='line'>        <span class="n">activations</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">x</span><span class="o">;</span>
+</span><span class='line'>        <span class="c1">// Row values before activating</span>
+</span><span class='line'>        <span class="n">Matrix</span> <span class="n">zs</span><span class="o">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Matrix</span><span class="o">[</span><span class="mi">2</span><span class="o">];</span>
+</span><span class='line'>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">zs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">weights</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">mtimes</span><span class="o">(</span><span class="n">activation</span><span class="o">).</span><span class="na">plus</span><span class="o">(</span><span class="n">biases</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+</span><span class='line'>            <span class="n">activation</span> <span class="o">=</span> <span class="n">Activation</span><span class="o">.</span><span class="na">sigmoid</span><span class="o">(</span><span class="n">zs</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+</span><span class='line'>            <span class="n">activations</span><span class="o">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">activation</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">// Calculate output layer error</span>
+</span><span class='line'>          <span class="n">Matrix</span> <span class="n">delta</span> <span class="o">=</span> <span class="n">costDerivative</span><span class="o">(</span><span class="n">activations</span><span class="o">[</span><span class="mi">2</span><span class="o">],</span> <span class="n">y</span><span class="o">);</span>
+</span><span class='line'>          <span class="n">delta</span> <span class="o">=</span> <span class="n">Util</span><span class="o">.</span><span class="na">eachMul</span><span class="o">(</span><span class="n">delta</span><span class="o">,</span> <span class="n">Activation</span><span class="o">.</span><span class="na">sigmoidPrime</span><span class="o">(</span><span class="n">zs</span><span class="o">[</span><span class="mi">1</span><span class="o">]));</span>
+</span><span class='line'>          <span class="n">Matrix</span> <span class="n">L_vbias</span> <span class="o">=</span> <span class="n">delta</span><span class="o">.</span><span class="na">clone</span><span class="o">();</span>
+</span><span class='line'>          <span class="n">nablaB</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">delta</span><span class="o">;</span>
+</span><span class='line'>            <span class="n">nablaW</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">delta</span><span class="o">.</span><span class="na">mtimes</span><span class="o">(</span><span class="n">activations</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="na">transpose</span><span class="o">());</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">--)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="c1">// Back propagation of output layer error to hidden layers</span>
+</span><span class='line'>              <span class="n">delta</span> <span class="o">=</span> <span class="n">weights</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">transpose</span><span class="o">().</span><span class="na">mtimes</span><span class="o">(</span><span class="n">delta</span><span class="o">);</span>
+</span><span class='line'>                <span class="n">delta</span> <span class="o">=</span> <span class="n">Util</span><span class="o">.</span><span class="na">eachMul</span><span class="o">(</span><span class="n">delta</span><span class="o">,</span> <span class="n">Activation</span><span class="o">.</span><span class="na">sigmoidPrime</span><span class="o">(</span><span class="n">zs</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">]));</span>
+</span><span class='line'>              <span class="n">nablaB</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">delta</span><span class="o">;</span>
+</span><span class='line'>                <span class="n">nablaW</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">delta</span><span class="o">.</span><span class="na">mtimes</span><span class="o">(</span><span class="n">activations</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">].</span><span class="na">transpose</span><span class="o">());</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">Matrix</span><span class="o">[][]</span> <span class="n">ret</span> <span class="o">=</span> <span class="o">{</span><span class="n">nablaB</span><span class="o">,</span> <span class="n">nablaW</span><span class="o">};</span>
+</span><span class='line'>          <span class="k">return</span> <span class="n">ret</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">private</span> <span class="kt">double</span> <span class="nf">corrupt</span><span class="o">(</span><span class="kt">double</span> <span class="n">input</span><span class="o">,</span> <span class="kt">double</span> <span class="n">level</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>          <span class="kt">double</span> <span class="n">noise</span> <span class="o">=</span> <span class="n">level</span> <span class="o">*</span> <span class="o">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">Math</span><span class="o">.</span><span class="na">random</span><span class="o">()</span> <span class="o">-</span> <span class="mf">1.0</span><span class="o">);</span>
+</span><span class='line'>          <span class="k">return</span> <span class="n">input</span> <span class="o">*</span> <span class="o">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">noise</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Complete code is <a href="https://github.com/Lewuathe/magi">here</a>
+While I contemplates about any bugs or errors hidden in this program, I received good clue.</p>
+
+<div style="text-align:center" markdown="1">
+<blockquote class="twitter-tweet" lang="ja"><p><a href="https://twitter.com/Lewuathe">@Lewuathe</a> over-complete autoencoders can often recover interesting structures of the data if regularized (e.g. sparsity constraint)</p>&mdash; Vincent Spruyt (@esurior) <a href="https://twitter.com/esurior/statuses/468730252798492672">2014, 5月 20</a></blockquote>
+<script async src="http://lewuathe.github.io//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+
+
+<p>I will try it with this clue a little more.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Dear, O]]></title>
@@ -2760,159 +3031,6 @@ You cannot make use of  this model with such a tiny data extracted from twitter 
 <p>Next time, I want to try with Wikipedia JP corpus. This famous site includes huge corpus data. I am sure to obtain good results in the next time.</p>
 
 <p>Source codes used this process is <a href="https://github.com/Lewuathe/algos/tree/master/word2vec">here</a>. Please do take a look at these codes!</p>
-
-<p>Thank you.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Use JavaScriptInterface on Android]]></title>
-    <link href="http://lewuathe.github.io/blog/2014/02/21/use-javascriptinterface-on-android/"/>
-    <updated>2014-02-21T21:34:20+09:00</updated>
-    <id>http://lewuathe.github.io/blog/2014/02/21/use-javascriptinterface-on-android</id>
-    <content type="html"><![CDATA[<p>On Android, there is a system for calling Java method from JavaScript. This is called <a href="http://developer.android.com/reference/android/webkit/JavascriptInterface.html">JavaScriptInterface</a>.
-With this class, you can call Java methods run on Android application from JavaScript written on any HTML file.</p>
-
-<p>If you want, you can write good user interface with HTML and JavaScript. And backend logic can be written by Java, Android SDK.
-So this is the potential way to write Android application. Today I&rsquo;d like to introduce this way.</p>
-
-<!-- more -->
-
-
-<h2>Attach WebView</h2>
-
-<p>In order to render HTML, you need to use <a href="http://developer.android.com/reference/android/webkit/WebView.html">WebView</a>.
-So first of all, attach WebView to your layout file.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
-</span><span class='line'><span class="nt">&lt;LinearLayout</span> <span class="na">xmlns:android=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>
-</span><span class='line'>              <span class="na">android:orientation=</span><span class="s">&quot;vertical&quot;</span>
-</span><span class='line'>              <span class="na">android:layout_width=</span><span class="s">&quot;fill_parent&quot;</span>
-</span><span class='line'>              <span class="na">android:layout_height=</span><span class="s">&quot;fill_parent&quot;</span> <span class="nt">&gt;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nt">&lt;WebView</span>
-</span><span class='line'>            <span class="na">android:layout_width=</span><span class="s">&quot;match_parent&quot;</span>
-</span><span class='line'>            <span class="na">android:layout_height=</span><span class="s">&quot;match_parent&quot;</span>
-</span><span class='line'>            <span class="na">android:id=</span><span class="s">&quot;@+id/webView&quot;</span>
-</span><span class='line'>          <span class="na">android:layout_gravity=</span><span class="s">&quot;center_horizontal&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'><span class="nt">&lt;/LinearLayout&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Write you HTML</h2>
-
-<p>On previous WebView renders this html file. You need to write this file on your project directory so that an application can use it
-from bundle files. My Sample looks like below.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="cp">&lt;!DOCTYPE html&gt;</span>
-</span><span class='line'><span class="nt">&lt;html&gt;</span>
-</span><span class='line'><span class="nt">&lt;head&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;title&gt;</span>JSTest<span class="nt">&lt;/title&gt;</span>
-</span><span class='line'><span class="nt">&lt;/head&gt;</span>
-</span><span class='line'><span class="nt">&lt;body&gt;</span>
-</span><span class='line'>    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span> <span class="na">value=</span><span class="s">&quot;Call Java&quot;</span> <span class="na">onclick=</span><span class="s">&quot;JSAction.action()&quot;</span> <span class="nt">/&gt;</span>
-</span><span class='line'><span class="nt">&lt;/body&gt;</span>
-</span><span class='line'><span class="nt">&lt;/html&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>JSAction</code> is the Java class that implements JavaScriptInterface with annotation.
-So last let&rsquo;s write down this interface class.</p>
-
-<h2>Write JavaScriptInterface class</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyActivity</span> <span class="kd">extends</span> <span class="n">Activity</span> <span class="o">{</span>
-</span><span class='line'>    <span class="cm">/**</span>
-</span><span class='line'><span class="cm">     * Called when the activity is first created.</span>
-</span><span class='line'><span class="cm">     */</span>
-</span><span class='line'>    <span class="nd">@Override</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">setContentView</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">main</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">WebView</span> <span class="n">webView</span> <span class="o">=</span> <span class="o">(</span><span class="n">WebView</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">webView</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">webView</span><span class="o">.</span><span class="na">setWebViewClient</span><span class="o">(</span><span class="k">new</span> <span class="n">WebViewClient</span><span class="o">());</span>
-</span><span class='line'>        <span class="n">WebSettings</span> <span class="n">settings</span> <span class="o">=</span> <span class="n">webView</span><span class="o">.</span><span class="na">getSettings</span><span class="o">();</span>
-</span><span class='line'>        <span class="n">settings</span><span class="o">.</span><span class="na">setJavaScriptEnabled</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">webView</span><span class="o">.</span><span class="na">addJavascriptInterface</span><span class="o">(</span><span class="k">new</span> <span class="n">JavaScriptAction</span><span class="o">(),</span> <span class="s">&quot;JSAction&quot;</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">webView</span><span class="o">.</span><span class="na">loadUrl</span><span class="o">(</span><span class="s">&quot;file:///android_asset/jstest.html&quot;</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// This is the JavaScriptInterface class</span>
-</span><span class='line'>  <span class="c1">// All you need to do is write annotation for JavaScriptInterface. </span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">JavaScriptAction</span> <span class="o">{</span>
-</span><span class='line'>        <span class="nd">@JavascriptInterface</span>
-</span><span class='line'>        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">action</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">Toast</span><span class="o">.</span><span class="na">makeText</span><span class="o">(</span><span class="n">MyActivity</span><span class="o">.</span><span class="na">this</span><span class="o">,</span>
-</span><span class='line'>                         <span class="s">&quot;Called from JavaScript&quot;</span><span class="o">,</span>
-</span><span class='line'>                         <span class="n">Toast</span><span class="o">.</span><span class="na">LENGTH_SHORT</span><span class="o">).</span><span class="na">show</span><span class="o">();</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><img src="http://lewuathe.github.io/images/posts/2014-02-21-javascriptinterface-android/demo.png" alt="demo" /></p>
-
-<p>That&rsquo;s all. When you click input button, a toast will show on screen.
-By using JavaScriptInterface, you can easily separate UI design and business logic.
-Definitely, this will be the useful option for your development.</p>
-
-<p>If you want to look into the detail of these code, please access <a href="https://github.com/Lewuathe/JavaScriptInterface-sample">here</a>
-This is my sample repository. I&rsquo;m glad to see this repository is used for further development.</p>
 
 <p>Thank you.</p>
 ]]></content>

@@ -9,7 +9,8 @@
   <meta name="author" content="Kai Sasaki">
 
   
-  <meta name="description" content="Hello, nice to meet you. I am a novice software engineer who has worked for about 2 years. An ordinary man. I have no honor, no fame and no wealth. &hellip;">
+  <meta name="description" content="The other day, I wrote neural network which implements backpropagation algorithm.
+Following this program I write denoised autoencoder program by &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -17,7 +18,8 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta property="og:title" content=" - The first cry of Atom" >
-<meta property="og:description" content="Hello, nice to meet you. I am a novice software engineer who has worked for about 2 years. An ordinary man. I have no honor, no fame and no wealth. &hellip;" />
+<meta property="og:description" content="The other day, I wrote neural network which implements backpropagation algorithm.
+Following this program I write denoised autoencoder program by &hellip;" />
 <meta property="og:url" content="http://lewuathe.com" />
 <meta property="og:image" content="http://lewuathe.github.io/images/site_image.png" />
 <meta property="og:author" content="lewuathe" />
@@ -91,6 +93,56 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/20/what-is-the-essential-factor-of-autoencoder/">What Is the Essential Factor of Autoencoder?</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-20T21:08:45+09:00" pubdate data-updated="true">May 20<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The other day, I wrote neural network which implements backpropagation algorithm.
+Following this program I write denoised autoencoder program by inheriting previous neural network.
+Backpropagation algorithm is generally good performance in spite of the simplicity. With this code,
+I can be ranked in at the <a href="http://www.kaggle.com/c/digit-recognizer/leaderboard">266th(May 20th, 2014)</a>.
+So I think this implementation has no bugs. However when I use this program as autoencoder the same is not true.
+With autoencoder, you should reduce dimension of input vector in order to extract essential characteristics.
+These essential characteristics might be also reduced so it cannot reconstruct the same vector to input vector.
+In fact after over-completed this network, I can better performance in terms of the number of accurate answers.</p>
+
+<p>This is code.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/05/20/what-is-the-essential-factor-of-autoencoder/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -552,55 +604,6 @@ of ordinary day. 2011 Tōhoku earthquake and tsunami struck Japan, my homeland.<
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/03/10/difference-between-pca-and-da/">Difference Between PCA and dA</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-03-10T22:08:40+09:00" pubdate data-updated="true">Mar 10<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Today I gave a presentation about Deep Learning in my office. Through this presentation, I felt
-the difficulty of explanation about mathematic notion without equations. Complex concept should
-be attached with some equations. Simplicity was one of the biggest purpose of my presentaion.</p>
-
-<p>Anyway, there is a question I cannot answer clearly.</p>
-
-<blockquote><p>What&rsquo;s the difference between <a href="http://en.wikipedia.org/wiki/Principal_component_analysis">PCA</a> and <a href="http://en.wikipedia.org/wiki/Nonlinear_dimensionality_reduction#Autoencoders">Denoised Autoencoder</a>?</p></blockquote>
-
-<p>It was a difficult question for me. So I studied what distinguished PCA and dA primaly.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/03/10/difference-between-pca-and-da/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -616,6 +619,10 @@ be attached with some equations. Simplicity was one of the biggest purpose of my
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/05/20/what-is-the-essential-factor-of-autoencoder/">What Is the Essential Factor of Autoencoder?</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/04/18/dear-o/">Dear, O</a>
       </li>
     
@@ -629,10 +636,6 @@ be attached with some equations. Simplicity was one of the biggest purpose of my
     
       <li class="post">
         <a href="/blog/2014/03/29/wen-quan-jin-nite/">温泉津にて</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/03/25/shan-toshou-duan-tomu-de-to/">禅と手段と目的と</a>
       </li>
     
   </ul>

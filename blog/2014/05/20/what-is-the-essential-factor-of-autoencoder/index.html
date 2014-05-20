@@ -1,0 +1,518 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>What Is the Essential Factor of Autoencoder? - The first cry of Atom</title>
+  <meta name="author" content="Kai Sasaki">
+
+  
+  <meta name="description" content="The other day, I wrote neural network which implements backpropagation algorithm.
+Following this program I write denoised autoencoder program by &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="What is the essential factor of autoencoder? - The first cry of Atom" >
+<meta property="og:description" content="The other day, I wrote neural network which implements backpropagation algorithm.
+Following this program I write denoised autoencoder program by &hellip;" />
+<meta property="og:url" content="http://lewuathe.com" />
+<meta property="og:image" content="http://lewuathe.github.io/images/site_image.png" />
+<meta property="og:author" content="lewuathe" />
+<meta property="og:site_name" content="The first cry of Atom" />
+<meta property="og:locale" content="ja_JP" />
+<meta property="og:type" content="article" />
+<meta property="fb:app_id" content="212934732101925" />
+
+
+  
+  <link rel="canonical" href="http://lewuathe.github.io/blog/2014/05/20/what-is-the-essential-factor-of-autoencoder">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
+  <link href="/stylesheets/data-table.css" rel="stylesheet" type="text/css" />
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-44055098-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">The first cry of Atom</a></h1>
+  
+    <h2>The people who are crazy enough to think thay can change the world, are the ones who do</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:lewuathe.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/about.html">About</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="http://fotologue.jp/lewuathe">Pictures</a></li>
+  <li><a href="https://github.com/Lewuathe">GitHub</a></li>
+  <li><a href="https://twitter.com/Lewuathe">Twitter</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">What Is the Essential Factor of Autoencoder?</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-20T21:08:45+09:00" pubdate data-updated="true">May 20<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>The other day, I wrote neural network which implements backpropagation algorithm.
+Following this program I write denoised autoencoder program by inheriting previous neural network.
+Backpropagation algorithm is generally good performance in spite of the simplicity. With this code,
+I can be ranked in at the <a href="http://www.kaggle.com/c/digit-recognizer/leaderboard">266th(May 20th, 2014)</a>.
+So I think this implementation has no bugs. However when I use this program as autoencoder the same is not true.
+With autoencoder, you should reduce dimension of input vector in order to extract essential characteristics.
+These essential characteristics might be also reduced so it cannot reconstruct the same vector to input vector.
+In fact after over-completed this network, I can better performance in terms of the number of accurate answers.</p>
+
+<p>This is code.</p>
+
+<!-- more -->
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">package</span> <span class="n">com</span><span class="o">.</span><span class="na">lewuathe</span><span class="o">.</span><span class="na">magi</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">org.ujmp.core.Matrix</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * Created by sasakiumi on 5/8/14.</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DenoisedAutoencoder</span> <span class="kd">extends</span> <span class="n">NeuralNetwork</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">double</span> <span class="n">corruptionLevel</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="nf">DenoisedAutoencoder</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">numLayers</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kd">super</span><span class="o">(</span><span class="n">numLayers</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="nf">DenoisedAutoencoder</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">numLayers</span><span class="o">,</span> <span class="n">Matrix</span> <span class="n">w</span><span class="o">,</span> <span class="n">Matrix</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kd">super</span><span class="o">(</span><span class="n">numLayers</span><span class="o">);</span>
+</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">weights</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">w</span><span class="o">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">biases</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">b</span><span class="o">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">corruptionLevel</span> <span class="o">=</span> <span class="mf">0.2</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setCorruptionLevel</span><span class="o">(</span><span class="kt">double</span> <span class="n">corruptionLevel</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">corruptionLevel</span> <span class="o">=</span> <span class="n">corruptionLevel</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="cm">/**</span>
+</span><span class='line'><span class="cm">     * update</span>
+</span><span class='line'><span class="cm">     *</span>
+</span><span class='line'><span class="cm">     * @param x</span>
+</span><span class='line'><span class="cm">     * @param y</span>
+</span><span class='line'><span class="cm">     * @param lr</span>
+</span><span class='line'><span class="cm">     */</span>
+</span><span class='line'>     <span class="nd">@Override</span>
+</span><span class='line'>     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">(</span><span class="kt">double</span><span class="o">[][]</span> <span class="n">x</span><span class="o">,</span> <span class="kt">double</span><span class="o">[][]</span> <span class="n">y</span><span class="o">,</span> <span class="kt">double</span> <span class="n">lr</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>          <span class="n">Matrix</span><span class="o">[]</span> <span class="n">nablaB</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Matrix</span><span class="o">[</span><span class="mi">2</span><span class="o">];</span>
+</span><span class='line'>          <span class="n">nablaB</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="na">factory</span><span class="o">.</span><span class="na">zeros</span><span class="o">(</span><span class="n">numLayers</span><span class="o">[</span><span class="mi">1</span><span class="o">],</span> <span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>          <span class="n">nablaB</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="na">factory</span><span class="o">.</span><span class="na">zeros</span><span class="o">(</span><span class="n">numLayers</span><span class="o">[</span><span class="mi">2</span><span class="o">],</span> <span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>          <span class="n">Matrix</span><span class="o">[]</span> <span class="n">nablaW</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Matrix</span><span class="o">[</span><span class="mi">2</span><span class="o">];</span>
+</span><span class='line'>          <span class="n">nablaW</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="na">factory</span><span class="o">.</span><span class="na">zeros</span><span class="o">(</span><span class="n">numLayers</span><span class="o">[</span><span class="mi">1</span><span class="o">],</span> <span class="n">numLayers</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
+</span><span class='line'>          <span class="n">nablaW</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="na">factory</span><span class="o">.</span><span class="na">zeros</span><span class="o">(</span><span class="n">numLayers</span><span class="o">[</span><span class="mi">2</span><span class="o">],</span> <span class="n">numLayers</span><span class="o">[</span><span class="mi">1</span><span class="o">]);</span>
+</span><span class='line'>
+</span><span class='line'>          <span class="k">assert</span> <span class="n">x</span><span class="o">.</span><span class="na">length</span> <span class="o">==</span> <span class="n">y</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
+</span><span class='line'>          <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">x</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">Matrix</span> <span class="n">xMat</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="na">factory</span><span class="o">.</span><span class="na">zeros</span><span class="o">(</span><span class="n">numLayers</span><span class="o">[</span><span class="mi">0</span><span class="o">],</span> <span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>              <span class="n">Matrix</span> <span class="n">yMat</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="na">factory</span><span class="o">.</span><span class="na">zeros</span><span class="o">(</span><span class="n">numLayers</span><span class="o">[</span><span class="mi">2</span><span class="o">],</span> <span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>              <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">numLayers</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>                  <span class="n">xMat</span><span class="o">.</span><span class="na">setAsDouble</span><span class="o">(</span><span class="n">corrupt</span><span class="o">(</span><span class="n">x</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">],</span> <span class="n">corruptionLevel</span><span class="o">),</span> <span class="n">j</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+</span><span class='line'>              <span class="o">}</span>
+</span><span class='line'>                <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">numLayers</span><span class="o">[</span><span class="mi">2</span><span class="o">];</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>                  <span class="n">yMat</span><span class="o">.</span><span class="na">setAsDouble</span><span class="o">(</span><span class="n">y</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">],</span> <span class="n">j</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+</span><span class='line'>              <span class="o">}</span>
+</span><span class='line'>              <span class="n">Matrix</span><span class="o">[][]</span> <span class="n">delta</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">backprod</span><span class="o">(</span><span class="n">xMat</span><span class="o">,</span> <span class="n">yMat</span><span class="o">);</span>
+</span><span class='line'>              <span class="c1">// delta[0]: nablaB</span>
+</span><span class='line'>              <span class="c1">// delta[1]: nablaW</span>
+</span><span class='line'>              <span class="n">nablaB</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">nablaB</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">plus</span><span class="o">(</span><span class="n">delta</span><span class="o">[</span><span class="mi">0</span><span class="o">][</span><span class="mi">0</span><span class="o">]);</span>
+</span><span class='line'>              <span class="n">nablaB</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">nablaB</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="na">plus</span><span class="o">(</span><span class="n">delta</span><span class="o">[</span><span class="mi">0</span><span class="o">][</span><span class="mi">1</span><span class="o">]);</span>
+</span><span class='line'>                <span class="n">nablaW</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">nablaW</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">plus</span><span class="o">(</span><span class="n">delta</span><span class="o">[</span><span class="mi">1</span><span class="o">][</span><span class="mi">0</span><span class="o">]);</span>
+</span><span class='line'>              <span class="n">nablaW</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">nablaW</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="na">plus</span><span class="o">(</span><span class="n">delta</span><span class="o">[</span><span class="mi">1</span><span class="o">][</span><span class="mi">1</span><span class="o">]);</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="c1">// Update biases and weights with gradient descent</span>
+</span><span class='line'>          <span class="n">biases</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">biases</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">minus</span><span class="o">(</span><span class="n">nablaB</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">mtimes</span><span class="o">(</span><span class="n">lr</span><span class="o">));</span>
+</span><span class='line'>          <span class="n">biases</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">biases</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="na">minus</span><span class="o">(</span><span class="n">nablaB</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="na">mtimes</span><span class="o">(</span><span class="n">lr</span><span class="o">));</span>
+</span><span class='line'>          <span class="n">weights</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">weights</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">minus</span><span class="o">(</span><span class="n">nablaW</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">mtimes</span><span class="o">(</span><span class="n">lr</span><span class="o">));</span>
+</span><span class='line'>            <span class="n">weights</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">weights</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">minus</span><span class="o">(</span><span class="n">nablaW</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="na">transpose</span><span class="o">().</span><span class="na">mtimes</span><span class="o">(</span><span class="n">lr</span><span class="o">));</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Override</span>
+</span><span class='line'>    <span class="kd">protected</span> <span class="n">Matrix</span><span class="o">[][]</span> <span class="nf">backprod</span><span class="o">(</span><span class="n">Matrix</span> <span class="n">x</span><span class="o">,</span> <span class="n">Matrix</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">Matrix</span><span class="o">[]</span> <span class="n">nablaB</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Matrix</span><span class="o">[</span><span class="mi">2</span><span class="o">];</span>
+</span><span class='line'>        <span class="n">nablaB</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="na">factory</span><span class="o">.</span><span class="na">zeros</span><span class="o">(</span><span class="n">numLayers</span><span class="o">[</span><span class="mi">1</span><span class="o">],</span> <span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">nablaB</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="na">factory</span><span class="o">.</span><span class="na">zeros</span><span class="o">(</span><span class="n">numLayers</span><span class="o">[</span><span class="mi">2</span><span class="o">],</span> <span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">Matrix</span><span class="o">[]</span> <span class="n">nablaW</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Matrix</span><span class="o">[</span><span class="mi">2</span><span class="o">];</span>
+</span><span class='line'>        <span class="n">nablaW</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="na">factory</span><span class="o">.</span><span class="na">zeros</span><span class="o">(</span><span class="n">numLayers</span><span class="o">[</span><span class="mi">1</span><span class="o">],</span> <span class="n">numLayers</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
+</span><span class='line'>        <span class="n">nablaW</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="na">factory</span><span class="o">.</span><span class="na">zeros</span><span class="o">(</span><span class="n">numLayers</span><span class="o">[</span><span class="mi">2</span><span class="o">],</span> <span class="n">numLayers</span><span class="o">[</span><span class="mi">1</span><span class="o">]);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">// In case of denoised autoencoder, no use of 1st weight layer</span>
+</span><span class='line'>        <span class="n">weights</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">weights</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">transpose</span><span class="o">();</span>
+</span><span class='line'>        <span class="c1">// Activation of each layer</span>
+</span><span class='line'>        <span class="n">Matrix</span> <span class="n">activation</span> <span class="o">=</span> <span class="n">x</span><span class="o">;</span>
+</span><span class='line'>        <span class="c1">// Collection of activation values of each layer including input</span>
+</span><span class='line'>        <span class="n">Matrix</span><span class="o">[]</span> <span class="n">activations</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Matrix</span><span class="o">[</span><span class="mi">3</span><span class="o">];</span>
+</span><span class='line'>        <span class="c1">// Set input activation</span>
+</span><span class='line'>        <span class="n">activations</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">x</span><span class="o">;</span>
+</span><span class='line'>        <span class="c1">// Row values before activating</span>
+</span><span class='line'>        <span class="n">Matrix</span> <span class="n">zs</span><span class="o">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Matrix</span><span class="o">[</span><span class="mi">2</span><span class="o">];</span>
+</span><span class='line'>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">zs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">weights</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">mtimes</span><span class="o">(</span><span class="n">activation</span><span class="o">).</span><span class="na">plus</span><span class="o">(</span><span class="n">biases</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+</span><span class='line'>            <span class="n">activation</span> <span class="o">=</span> <span class="n">Activation</span><span class="o">.</span><span class="na">sigmoid</span><span class="o">(</span><span class="n">zs</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+</span><span class='line'>            <span class="n">activations</span><span class="o">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">activation</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">// Calculate output layer error</span>
+</span><span class='line'>          <span class="n">Matrix</span> <span class="n">delta</span> <span class="o">=</span> <span class="n">costDerivative</span><span class="o">(</span><span class="n">activations</span><span class="o">[</span><span class="mi">2</span><span class="o">],</span> <span class="n">y</span><span class="o">);</span>
+</span><span class='line'>          <span class="n">delta</span> <span class="o">=</span> <span class="n">Util</span><span class="o">.</span><span class="na">eachMul</span><span class="o">(</span><span class="n">delta</span><span class="o">,</span> <span class="n">Activation</span><span class="o">.</span><span class="na">sigmoidPrime</span><span class="o">(</span><span class="n">zs</span><span class="o">[</span><span class="mi">1</span><span class="o">]));</span>
+</span><span class='line'>          <span class="n">Matrix</span> <span class="n">L_vbias</span> <span class="o">=</span> <span class="n">delta</span><span class="o">.</span><span class="na">clone</span><span class="o">();</span>
+</span><span class='line'>          <span class="n">nablaB</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">delta</span><span class="o">;</span>
+</span><span class='line'>            <span class="n">nablaW</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">delta</span><span class="o">.</span><span class="na">mtimes</span><span class="o">(</span><span class="n">activations</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="na">transpose</span><span class="o">());</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">--)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="c1">// Back propagation of output layer error to hidden layers</span>
+</span><span class='line'>              <span class="n">delta</span> <span class="o">=</span> <span class="n">weights</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">transpose</span><span class="o">().</span><span class="na">mtimes</span><span class="o">(</span><span class="n">delta</span><span class="o">);</span>
+</span><span class='line'>                <span class="n">delta</span> <span class="o">=</span> <span class="n">Util</span><span class="o">.</span><span class="na">eachMul</span><span class="o">(</span><span class="n">delta</span><span class="o">,</span> <span class="n">Activation</span><span class="o">.</span><span class="na">sigmoidPrime</span><span class="o">(</span><span class="n">zs</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">]));</span>
+</span><span class='line'>              <span class="n">nablaB</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">delta</span><span class="o">;</span>
+</span><span class='line'>                <span class="n">nablaW</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">delta</span><span class="o">.</span><span class="na">mtimes</span><span class="o">(</span><span class="n">activations</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">].</span><span class="na">transpose</span><span class="o">());</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">Matrix</span><span class="o">[][]</span> <span class="n">ret</span> <span class="o">=</span> <span class="o">{</span><span class="n">nablaB</span><span class="o">,</span> <span class="n">nablaW</span><span class="o">};</span>
+</span><span class='line'>          <span class="k">return</span> <span class="n">ret</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">private</span> <span class="kt">double</span> <span class="nf">corrupt</span><span class="o">(</span><span class="kt">double</span> <span class="n">input</span><span class="o">,</span> <span class="kt">double</span> <span class="n">level</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>          <span class="kt">double</span> <span class="n">noise</span> <span class="o">=</span> <span class="n">level</span> <span class="o">*</span> <span class="o">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">Math</span><span class="o">.</span><span class="na">random</span><span class="o">()</span> <span class="o">-</span> <span class="mf">1.0</span><span class="o">);</span>
+</span><span class='line'>          <span class="k">return</span> <span class="n">input</span> <span class="o">*</span> <span class="o">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">noise</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Complete code is <a href="https://github.com/Lewuathe/magi">here</a>
+While I contemplates about any bugs or errors hidden in this program, I received good clue.</p>
+
+<div style="text-align:center" markdown="1">
+<blockquote class="twitter-tweet" lang="ja"><p><a href="https://twitter.com/Lewuathe">@Lewuathe</a> over-complete autoencoders can often recover interesting structures of the data if regularized (e.g. sparsity constraint)</p>&mdash; Vincent Spruyt (@esurior) <a href="https://twitter.com/esurior/statuses/468730252798492672">2014, 5月 20</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+
+
+<p>I will try it with this clue a little more.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kai Sasaki</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-20T21:08:45+09:00" pubdate data-updated="true">May 20<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/deep-learning/'>Deep Learning</a>, <a class='category' href='/blog/categories/machine-learning/'>Machine Learning</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://lewuathe.github.io/blog/2014/05/20/what-is-the-essential-factor-of-autoencoder/" data-via="Lewuathe" data-counturl="http://lewuathe.github.io/blog/2014/05/20/what-is-the-essential-factor-of-autoencoder/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/04/18/dear-o/" title="Previous Post: Dear, O">&laquo; Dear, O</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/05/20/what-is-the-essential-factor-of-autoencoder/">What Is the Essential Factor of Autoencoder?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/04/18/dear-o/">Dear, O</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/04/10/patterns-about-bfs-in-commetitive-programming/">Patterns About BFS in Competitive Programming</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/04/08/opensslfalsecui-ruo-xing-wodu-nta/">Heart Bleedを読んだ</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/29/wen-quan-jin-nite/">温泉津にて</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Kai Sasaki -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/ja_JP/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
