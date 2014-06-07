@@ -1,0 +1,89 @@
+---
+layout: post
+title: "SRM144 Div1"
+date: 2014-03-17 21:57:38 +0900
+comments: true
+categories: ["TopCoder", "Programming"]
+author: Kai Sasaki
+---
+
+After a long time, I returned to [TopCoder](http://www.topcoder.com/).
+I forgot to write algorithm for programming contest such as TopCoder. But previously
+I realized that it is so important for me to write accurate and fast algorithm within finite time.
+In order to improve my programming skill again, I returned back to the TopCoder.
+
+<!-- more -->
+
+SRM is a little hart to me, as first, I tried some practices. Today I solved SRM144 binary code problem.
+This problem decode messages recursively. For example, when you get the message `"123210122"`, this is encode of
+`"011100011"`. Suppose the first message is P, and second is Q. Now below equation is realized.
+
+```
+P[i] = Q[i-1] + Q[i] + Q[i+1]
+```
+
+With this recusive rule, you have to decode given message. My code is below.
+
+
+```java
+import java.util.*;
+import java.math.*;
+
+import static java.lang.Math.*;
+
+public class BinaryCode {
+    public String[] decode(String message) {
+	    // Two answers should be solved
+		// Each answer is correspond to Q[0] = 0 and Q[0] = 1 case.
+        String[] ans = new String[2];
+		
+        Integer start = 0;
+        Boolean isOut = null;
+
+        // Calculate two cases
+        for (int i = 0; i < 2; i++) {
+		    // In the case of negative value is received, answer should be "NONE"
+            isOut = false;
+            start = i;
+
+            // For improve speed performance, I use StringBuffer
+            StringBuffer p = new StringBuffer();
+
+            // First and second factor cannot be put on inside loop bacause these are not the sum of three factors
+            p.append(start.toString());
+            Integer p1 = Integer.parseInt(message.substring(0, 1)) - Integer.parseInt(p.substring(0, 1));
+            p.append(p1);
+
+            // Decode each digit
+            for (int j = 1; j < message.length(); j++) {
+                Integer d = Integer.parseInt(message.substring(j, j+1)) - Integer.parseInt(p.substring(j, j+1)) - Integer.parseInt(p.substring(j-1, j));
+                if (d < 0) {
+                    ans[i] = "NONE";
+                    isOut = true;
+                    break;
+                }
+                p.append(d.toString());
+           }
+
+           // Last digit is not need to retained
+           if (!isOut) {
+               ans[i] = p.toString().substring(0, p.length()-1);
+           }
+
+           // This is guard. But I am not satisfied with this line :(
+           if (message.length() == 1 && (message.charAt(0) == '2' || message.charAt(0) == '3')) {
+               ans[i] = "NONE";
+           }
+        }
+
+        return ans;
+    }
+}
+
+```
+
+I wrote this code about 30 minutes. It is not enough to fight on SRM. And in addition to this, I am not satisfied with my algorithm expecially
+last clause. I don't want to write exceptional logic as possible. If anyone write code about this problem, please inform me and give me a chance to
+look into your code.
+
+Thank you.
