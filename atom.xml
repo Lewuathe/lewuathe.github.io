@@ -4,7 +4,7 @@
   <title><![CDATA[The first cry of Atom]]></title>
   <link href="http://lewuathe.github.io/atom.xml" rel="self"/>
   <link href="http://lewuathe.github.io/"/>
-  <updated>2014-06-08T00:02:32+09:00</updated>
+  <updated>2014-06-13T22:17:59+09:00</updated>
   <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
@@ -12,6 +12,31 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Welcome Open Source Movement in Hardware Company]]></title>
+    <link href="http://lewuathe.github.io/blog/2014/06/13/open-source-movement-in-hardware-compan/"/>
+    <updated>2014-06-13T22:00:35+09:00</updated>
+    <id>http://lewuathe.github.io/blog/2014/06/13/open-source-movement-in-hardware-compan</id>
+    <content type="html"><![CDATA[<p>Today is the first day of new era for Open Source movements.</p>
+
+<p><a href="http://www.teslamotors.com/blog/all-our-patent-are-belong-you">All Our Patent Are Belong To You</a></p>
+
+<div style="text-align:center" markdown="1">
+<figure>
+<img src="http://lewuathe.github.io/images/posts/2014-06-13-tesla/motor.jpg" />
+<figure>Tesla Motor by Steve Jurvetson<a href="https://www.flickr.com/photos/jurvetson/2782565657/in/photolist-5eTnPX-kv7w5M-f7WzKj-f7WyNA-dXMDqB-6M2MHW-5eHYAq-6aJA3F-7zhWDy-4t8U5F-dXTjdG-f7WymU-f7GmqF-f7GiuB-BNTx5-6kAGXC-5t76MG-nWXsmN-6kAGoU-6aqomT-chEjh3-6kwyti-5peGWB-aXeXtc-8pSRjC-dxpQbA-atHJJo-aGXy8P-ciZHPf-f7WvB3-6kAGAd-f7Wz5Y-dZ4MiH-atAnS1-eiPF9U-6kAHnJ-dB939C-6DAEpq-dNTgjx-dXMzLa-dXTjfY-f7GjfK-f7GjLF-f7GhVc-5nwqy5-gyBgiX-dXTfQE-79tMEC-9ghJyE-brfREu">flickr</a></figcaption>
+</figure>
+</div>
+
+
+<p>Tesla is famous for its motor products. These opened patents includes EV technologies for the future.
+I think it will accelerate the speed of development of EV vehicles. So this decision plays a big role to
+progress the bright future of motor technologies.</p>
+
+<p>Above all, as a software engineer, it is great thing to spread open source movement into hardware companies.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Hack NHK]]></title>
@@ -2572,124 +2597,6 @@ The main theme of this seminor was</p>
 <p>I have a desire of the bright future of nodejs when a lot of developers and users
 make world better place helping each other with this software.
 After meeting these passionate developers, this desire changed to confidence.</p>
-
-<p>Thank you.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Optimize Octopress for Facebook Post]]></title>
-    <link href="http://lewuathe.github.io/blog/2014/02/24/optimize-octopress-for-facebook-post/"/>
-    <updated>2014-02-24T20:25:45+09:00</updated>
-    <id>http://lewuathe.github.io/blog/2014/02/24/optimize-octopress-for-facebook-post</id>
-    <content type="html"><![CDATA[<p>This blog made by <a href="http://octopress.org/">octopress</a>, ruby CMS tool.
-As many others do, I also combined this tool with <a href="http://pages.github.com/">GitHub pages</a>
-But this method has one fault about posting on facebook. Octopress doesn&rsquo;t include ogp properties as default. Ogp properties privide facebook meta information such as title, author, description and url. So without this meta information, you cannot get proper images when you write a post on facebook. In order to attach thumbtail image to your post, you have to write some configuration on octopress.</p>
-
-<!-- more -->
-
-
-
-
-<div style="text-align:center" markdown="1">
-<img src="http://lewuathe.github.io/images/posts/2014-02-24-octopress-ogp/before.png" />
-</div>
-
-
-<h2>Write appid and locale</h2>
-
-<p>Append below configuration in your <code>_config.yml</code></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>facebook_app_id: YOUR_APP_ID
-</span><span class='line'>facebook_locale: ja_JP</span></code></pre></td></tr></table></div></figure>
-
-
-<p>YOUR_APP_ID might be listed on <code>/source/_include/facebook_like.html</code> Paste that number.</p>
-
-<h2>Change facebook like action</h2>
-
-<p>Edit <code>/source/_include/facebook_like.html</code> like below. This modification makes this JavaScript code get app_id and locale from <code>_config.yml</code> file.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'>&lt;div id="fb-root"&gt;&lt;/div&gt;
-</span><span class='line'>&lt;script&gt;(function(d, s, id) {
-</span><span class='line'>  var js, fjs = d.getElementsByTagName(s)[0];
-</span><span class='line'>  if (d.getElementById(id)) {return;}
-</span><span class='line'>  js = d.createElement(s); js.id = id; js.async = true;
-</span><span class='line'>  js.src = "//connect.facebook.net/ja_JP/all.js#appId=212934732101925&xfbml=1";
-</span><span class='line'>  fjs.parentNode.insertBefore(js, fjs);
-</span><span class='line'>}(document, 'script', 'facebook-jssdk'));&lt;/script&gt;
-</span><span class='line'></span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Add top page flag</h2>
-
-<p>To ditinguish post articles and top page, add this flag to <code>source/index.html</code></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>---
-</span><span class='line'>layout: default
-</span><span class='line'>index: true  
-</span><span class='line'>---</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Configuration for ogp meta informations</h2>
-
-<p>Write below meta tags to <code>source/_includes/custom/facebook_ogp.html</code></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>% cat source/_includes/custom/facebook_ogp.html
-</span><span class='line'>&lt;meta property="og:title" content="Optimize octopress for facebook post - The first cry of Atom" &gt;
-</span><span class='line'>&lt;meta property="og:description" content="" /&gt;
-</span><span class='line'>&lt;meta property="og:url" content="http://lewuathe.com" /&gt;
-</span><span class='line'>&lt;meta property="og:image" content="http://lewuathe.github.io/images/site_image.png" /&gt;
-</span><span class='line'>&lt;meta property="og:author" content="lewuathe" /&gt;
-</span><span class='line'>&lt;meta property="og:site_name" content="The first cry of Atom" /&gt;
-</span><span class='line'>&lt;meta property="og:locale" content="ja_JP" /&gt;
-</span><span class='line'>&lt;meta property="og:type" content="article" /&gt;
-</span><span class='line'>&lt;meta property="fb:app_id" content="212934732101925" /&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Include meta tags</h2>
-
-<p>At last, make header include these meta tags. Write below on <code>source/_include/head.html</code></p>
-
-<p><img src="http://lewuathe.github.io/images/posts/2014-02-24-octopress-ogp/code.png" /></p>
-
-<p>So that&rsquo;s all. It&rsquo;s ok. Deploy this site and post any entry to facebook.</p>
-
-<div style="text-align:center" markdown="1">
-<img src="http://lewuathe.github.io/images/posts/2014-02-24-octopress-ogp/after.png" />
-</div>
-
-
-<p>Good, you can see your thumbnail. A research shows that the post that has thumbnail images attracts more people than
-the post that has no image can. If you are using octopress for writing your own blog, it must be the good option for increasing
-the access from facebook.</p>
 
 <p>Thank you.</p>
 ]]></content>
