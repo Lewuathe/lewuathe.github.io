@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Scala | The first cry of Atom]]></title>
   <link href="http://lewuathe.github.io/blog/categories/scala/atom.xml" rel="self"/>
   <link href="http://lewuathe.github.io/"/>
-  <updated>2014-06-13T22:17:59+09:00</updated>
+  <updated>2014-06-19T20:12:01+09:00</updated>
   <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
@@ -12,6 +12,167 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Case Class for Swift]]></title>
+    <link href="http://lewuathe.github.io/blog/2014/06/19/case-class-for-swift/"/>
+    <updated>2014-06-19T19:15:40+09:00</updated>
+    <id>http://lewuathe.github.io/blog/2014/06/19/case-class-for-swift</id>
+    <content type="html"><![CDATA[<p>Last week, Apple new programming language <a href="https://developer.apple.com/swift/">Swift</a> was released.
+From that time I keep considering Swift looks like <a href="http://www.scala-lang.org/">Scala</a> language.
+Scala has two sides as object-oriented-language and functional-programming-language. So there are many features
+you should learn from scala. One of the most powerful feature of scala is pattern matching. This feature in scala context
+can be applied to all type objects. It is called constructor pattern matching.</p>
+
+<!-- more -->
+
+
+<p>```scala
+case class User(name: String, age: Int) {}</p>
+
+<p>val u = User(&ldquo;NOBITA&rdquo;, 12)</p>
+
+<p>val ret = u match {</p>
+
+<pre><code>case User("TAKESHI", 12) =&gt; 1
+case User("NOBITA", 12)  =&gt; 2
+case User("NOBITA", 13)  =&gt; 3
+case _ =&gt; 4
+</code></pre>
+
+<p>}</p>
+
+<p>// ret is 2
+```</p>
+
+<p>All you should do to use pattern match with your custom class is declare <code>case</code> class.
+The scala compiler generates <code>unapply</code> method called extractors automatically. So you can use
+these feature very easily.</p>
+
+<p>So Swift is also functional programming language. And it has pattern matchin with <code>switch</code> control flow. But I think it is not sufficient in comparison with Scala.</p>
+
+<p>Therefore I tried it.</p>
+
+<p>```
+//
+//  SwiftCase.swift
+//  SwiftCase
+//
+//  Created by Sasaki Kai on 6/19/14.
+//  Copyright &copy; 2014 Sasaki Kai. All rights reserved.
+//</p>
+
+<p>import Foundation</p>
+
+<p>// For matching, unapply method is necessary
+protocol SwiftCase {</p>
+
+<pre><code>func unapply() -&gt; Array&lt;NSObject&gt;
+</code></pre>
+
+<p>}</p>
+
+<p>class SwiftPair {</p>
+
+<pre><code>let first: SwiftCase
+let second: AnyObject
+init(first: SwiftCase, second: AnyObject) {
+    self.first = first
+    self.second = second
+}
+</code></pre>
+
+<p>}</p>
+
+<p>// DSL like logic for generating pair (Matching object, Result object)
+@infix func ~> (source: SwiftCase, target: AnyObject)&ndash;> SwiftPair {</p>
+
+<pre><code>return SwiftPair(first: source, second: target)
+</code></pre>
+
+<p>}</p>
+
+<p>func match(c: SwiftCase)(arr: Array<SwiftPair>)&ndash;> AnyObject? {</p>
+
+<pre><code>for pair in arr {
+    let matchArr = (pair.first as SwiftCase).unapply()
+    let originArr = c.unapply()
+    var isOk = true
+    if matchArr.count == originArr.count {
+       for var i = 0; i &lt; matchArr.count; ++i {
+            if matchArr[i] != originArr[i] {
+                isOk = false
+            }
+       }
+       if isOk {
+          return pair.second
+       }
+    }
+}
+return nil
+</code></pre>
+
+<p>}
+```</p>
+
+<p>With this class and functions, you can write below code.</p>
+
+<p>```
+class User: SwiftCase {</p>
+
+<pre><code>let name: String
+let age: Int
+init(name: String, age: Int) {
+    self.name = name
+    self.age = age
+}
+
+func unapply() -&gt; Array&lt;NSObject&gt; {
+    return [self.name, self.age]
+}
+</code></pre>
+
+<p>}</p>
+
+<p>class OtherUser: SwiftCase {</p>
+
+<pre><code>let name: String
+let age: Int
+let address: String
+init(name: String, age: Int, address: String) {
+   self.name = name
+   self.age = age
+   self.address = address
+}
+
+func unapply() -&gt; Array&lt;NSObject&gt; {
+    return [self.name, self.age, self.address]
+}
+</code></pre>
+
+<p>}</p>
+
+<p>let user = User(name: &ldquo;NOBITA&rdquo;, age: 34)
+let ret : AnyObject? = match(user)(arr: [</p>
+
+<pre><code>User(name: "TAKESHI", age: 23) ~&gt; 1,
+User(name: "NOBITA", age: 32) ~&gt; 2,
+User(name: "NOBITA", age: 34) ~&gt; 3,
+OtherUser(name: "NOBITA", age: 20, address: "TOKYO") ~&gt; 4
+</code></pre>
+
+<p>])</p>
+
+<p>// ret is 3
+```</p>
+
+<p>Is it looks like matching DSL in Swift? So I want to make this class more sophisticated. Some symbols are not easy to understand
+and match function need to receive <code>Array</code> parameter. It is not cool ;(</p>
+
+<p>The repository is <a href="https://github.com/Lewuathe/SwiftCase">here</a>. If you have some advice, please let me know.
+Thank you.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Useful Shortcuts for IntelliJ IDEA]]></title>
