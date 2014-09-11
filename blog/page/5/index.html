@@ -9,7 +9,8 @@
   <meta name="author" content="Kai Sasaki">
 
   
-  <meta name="description" content="At work, I am a scrum padawan, not yet master :&ndash;) Through developing with agile team, I was taught what scrum is, product backlog is, sprint is &hellip;">
+  <meta name="description" content="This entry follows previous post.
+The practical methods about TDD are explained in this section. And also, it is written as an article of TDD advent &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="Hatena::Bookmark" content="nocomment" />
   <meta property="og:title" content=" - The first cry of Atom" >
-<meta property="og:description" content="At work, I am a scrum padawan, not yet master :&ndash;) Through developing with agile team, I was taught what scrum is, product backlog is, sprint is &hellip;" />
+<meta property="og:description" content="This entry follows previous post.
+The practical methods about TDD are explained in this section. And also, it is written as an article of TDD advent &hellip;" />
 <meta property="og:url" content="http://lewuathe.com" />
 <meta property="og:image" content="http://lewuathe.github.io/images/site_image.png" />
 <meta property="og:author" content="lewuathe" />
@@ -82,7 +84,7 @@
 <ul class="main-navigation">
   <li><a href="/about.html">About</a></li>
   <li><a href="/blog/archives">Archives</a></li>
-  <li><a href="http://fotologue.jp/lewuathe">Pictures</a></li>
+  <li><a href="http://instagram.com/lewuathe">Pictures</a></li>
   <li><a href="https://github.com/Lewuathe">GitHub</a></li>
   <li><a href="https://twitter.com/Lewuathe">Twitter</a></li>
 </ul>
@@ -92,6 +94,119 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/12/09/agile-samurai-basecamp-in-tokyo/">Agile Samurai Basecamp in Tokyo <2></a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-09T20:16:00+09:00" pubdate data-updated="true">Dec 9<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This entry follows previous post.
+The practical methods about TDD are explained in this section.</p>
+
+<p>And also, it is written as an article of <a href="http://qiita.com/advent-calendar/2013/tddadventjp">TDD advent calendar on 10th day</a>.</p>
+
+<h2>How to start TDD? Takuto Wada(twada)</h2>
+
+<p>The left wing of agile is what about team environment, management, scrum, iteration and standup meeting. On the other hand, the right wing of agile is not perceived enough to ordinary people.
+It&rsquo;s CI/CD and automation. These are also as important as the formers. There is apparent difference between making software and keeping making software. Agile programming always requires refactoring.
+In TDD process, refactoring is the core process. You cannot say that you achieve TDD without refactoring your program.</p>
+
+<h3>Write running code, and then write clean code</h3>
+
+<p>Making Good design previously is difficult task. Besides we don&rsquo;t know what is good design on the system undefined yet. Software and program are too complex for us to understand perfectly.
+So we cannot avoid progressing development with positivism notion. In other words, write code first! However we cannot solve all problems yet. The codes once confirmed as what runs with no bugs
+are not willing to be refactored. We are afraid of changing running code. TDD enables us to pass over these fears. The concrete cycle of TDD is below.</p>
+
+<h3>TDD cycle</h3>
+
+<ol>
+<li>Make TODO list</li>
+<li>Write test code first</li>
+<li>Running test and fail (<em>Red phase</em>)</li>
+<li>Write product code</li>
+<li>Running test and success (<em>Green phase</em>)</li>
+<li>Refactoring product code with keeping Green</li>
+<li>Repeat 1~6 process</li>
+</ol>
+
+
+<p>The most important process in these 7 phases is refactoring. If you result in failure of TDD, the main reason is to neglect refactoring your product code. It needs more power of the will.
+So it is better to insert refactoring into TDD process. You don&rsquo;t do refactoring as an addition, but do as necessary process.</p>
+
+<p><img src="/images/posts/2013-12-10-samurai-2/golden_cycle.jpg" alt="Golden Cycle" /></p>
+
+<h3>The secrets of TDD</h3>
+
+<p>To achive TDD, you should know how to start TDD at your daily work.</p>
+
+<h3><em>Small start one by one</em></h3>
+
+<p>You should make small TODO list as possible. It is good to reduce each task within the span which you can complete red, green and refactoring cycle in 15~30minutes.
+The more fast you can complete, the better your TODO list is.</p>
+
+<h3><em>Tackle one enemy in one time</em></h3>
+
+<p>However, if you can reduce each task in small unit, starting all tasks at one time is not good work. As Samurai(Musashi Miyamoto) did, you have to also complete tasks one by one.
+You can concentrate the essentials of each task,</p>
+
+<h3><em>You are the first user</em></h3>
+
+<p>When you write test code, you should take care of the usability. The interface of your product code is determined when you write your test code.
+So before write your test code and while writing your test code, your should try and make the interface better bacause you are the first user of your product.
+The only way to know how user friendly your product is using it yourself. In other words, let&rsquo;s test it.</p>
+
+<h3><em>Test your uncertain</em></h3>
+
+<p>The purpose of TDD is not mainly to guarantee software quality, but to take your ease in order to sleep peacefully. If there are no automatic test codes, it is horror.
+The every time you release your products, you are to end up with praying for the success of the release. Or in order to assure that there are no bugs in your software,
+you might have to many overtime work. That&rsquo;s too bad :(. To avoid this situation, test codes are selected and written under the criteria of how this test makes you peaceful.</p>
+
+<h3><em>Knit a lifeline</em></h3>
+
+<p>This is relevant to previous item. Compiled a lot of test codes will help you when you are in danger or crisis. This test codes become a lifeline knitted over many layers
+It will support you in any situation strongly.</p>
+
+<h3><em>The essencial goal of TDD</em></h3>
+
+<p>The best goal of TDD is keeping your health. This means your code health, your team health and of course your code health. Bacause of TDD, all developers can go home early,
+take a meal with your family and friends, make your product with peaceful mind. This is the essential goal of TDD for all software engineers. Conquering your anxiety and keeping you healthy.</p>
+
+<h1>After session</h1>
+
+<p>This goal made me realize why I am a software engineer again. Programming, writing code should always be fun. It should always be what makes me happy.
+If you are unhappy with writing code as work, it mistakes the means for the end, doesn&rsquo;t it? TDD is the one way of making my life as software engineer more joyful.
+That mind must not be forgot whenever I type my test code.</p>
+
+<p>The each line of your test codes makes you happy, I believe.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1167,166 +1282,6 @@ scoresには10個のscoreが入ったリストが返ってくる。これの平�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/11/03/tf-idfdetagufu-ke/">TF-IDFでタグ付け</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-03T22:28:00+09:00" pubdate data-updated="true">Nov 3<span>rd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Kaggleで挑戦できそうな問題があったのでチャレンジしてみた。</p>
-
-<p><a href="http://www.kaggle.com/c/facebook-recruiting-iii-keyword-extraction">http://www.kaggle.com/c/facebook-recruiting-iii-keyword-extraction</a></p>
-
-<p>Stack Exchange(Stack Overflowみたいなもの)にあるテキストとそのタグデータを訓練データとして
-同様にStack Exchangeにあるページからタグを類推せよという問題。
-多分キーワード抽出を行う方法がうまく行くんじゃないかと思いやってみた。</p>
-
-<h2>TF-IDFアルゴリズム</h2>
-
-<p><img src="/images/posts/2013-11-03-tfidf/equation.png" alt="Equation" /></p>
-
-<p>基本的にはTF-IDFを使ってみる。これは文書中のtokenの重要度をその頻度と、他の文書にどれくらいないかの指標
-の積として表すアルゴリズム。コードで書くと下のような感じ。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-</span><span class='line'><span class="n">term</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">Target</span> <span class="n">Term</span><span class="o">&gt;</span>
-</span><span class='line'><span class="n">include_document_num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">([</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">all_documents</span> <span class="k">if</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">d</span><span class="p">])</span>
-</span><span class='line'><span class="n">word_score</span> <span class="o">=</span> <span class="n">term_frequency</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span> <span class="n">all_document_num</span> <span class="o">/</span> <span class="n">include_document_num</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>term_frquencyはその文書中にどれくらいその単語が出てきたか。多くの場合は正規化してある。
-その後ろの項は全文書中にその単語を含む文書がどれくらいあるかの比の逆数。これは他の文書にその単語がなければないほど大きくなるので、その単語がその文書のキーワードとして十分に機能することを示唆している。
-TF-IDFのTFはTerm FrequencyでIDFはInversed Document Frequencyの略だ。</p>
-
-<p>今回はTestデータの各文書の単語として有効な単語(htmlタグや各種記法は省くようにした)についてword_scoreを計算し、その中から正規化されたscoreが10%を超えたものをその文書のキーワードとして抽出するようにしてみた。
-プログラムのコアの部分は以下のような形になった。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># 全テストデータ</span>
-</span><span class='line'><span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">test_file</span><span class="p">:</span>
-</span><span class='line'>    <span class="c"># テストデータとしてタイトルもあるのでこいつも利用してみる</span>
-</span><span class='line'>    <span class="n">title_tokens</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">word_tokenize</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c"># 英数字意外の文字を取り除いた</span>
-</span><span class='line'>    <span class="n">tokens</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">r&quot;\W+&quot;</span><span class="p">,</span> <span class="n">nltk</span><span class="o">.</span><span class="n">clean_html</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c"># ここは自分でかってに付け足した部分。タイトルに含まれる単語達は特別扱いして10個余分に足しておく</span>
-</span><span class='line'>  <span class="c"># 本当はここは文書中の何%とかにした方が各文書でのタイトルの重要度にばらつきがでなくていいのかもしれない</span>
-</span><span class='line'>    <span class="k">for</span> <span class="n">title_token</span> <span class="ow">in</span> <span class="n">title_tokens</span><span class="p">:</span>
-</span><span class='line'>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
-</span><span class='line'>            <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">title_token</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c"># 同じ単語のscoreを計算しても意味ないので重複を消しておく</span>
-</span><span class='line'>    <span class="n">uniqTokens</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c"># 各tokenのscoreを計算。実際の計算はNLTKに任せた</span>
-</span><span class='line'>    <span class="n">tf_idf_scores</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span class='line'>    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">uniqTokens</span><span class="p">:</span>
-</span><span class='line'>        <span class="n">tf_idf_scores</span><span class="p">[</span><span class="n">token</span><span class="p">]</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">tf_idf</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">tokens</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c"># scoreでソート</span>
-</span><span class='line'>    <span class="n">sorted_tf_idf_scores</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">tf_idf_scores</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c"># 10%を超えたものをkeywordsとして登録</span>
-</span><span class='line'>    <span class="n">keywords</span> <span class="o">=</span> <span class="p">[</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">sorted_tf_idf_scores</span> <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mf">0.1</span><span class="p">]</span>
-</span><span class='line'>  <span class="c"># 1個もないのは変なので1番scoreが高いものだけでも抽出しておく</span>
-</span><span class='line'>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">keywords</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
-</span><span class='line'>        <span class="n">keywords</span> <span class="o">=</span> <span class="p">[</span> <span class="n">sorted_tf_idf_scores</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="p">]</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c"># ファイル出力</span>
-</span><span class='line'>    <span class="n">result_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">,</span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">keywords</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>訓練データがあまりにもデカイので、ちょっと全部は訓練できない。
-一部の訓練データに対して試してみて余分はかなり出てくるけれど、抜けは割りとない。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="err">推定キーワード</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span><span class="s">&quot;an without type file image check uploaded mime&quot;</span>
-</span><span class='line'><span class="err">正解キーワード</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span><span class="s">&quot;php image-processing file-upload upload mime-types&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="err">推定キーワード</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span><span class="s">&quot;How ctrl press prevent firefox closing&quot;</span>
-</span><span class='line'><span class="err">正解キーワード</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span><span class="s">&quot;firefox&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>image-processingとか、そもそもそういう単語を文書に含んでなかったらこの方法だと抽出できない。もっと関係抽出とか固有表現認識とかしないといけないかも。あとタイトルの重みを強くし過ぎたせいか&#8221;How&#8221;とか&#8221;Can&#8221;とかの単語も結構入ってきてしまう。Stack ExchangeとかStack Overflowって自分が書くときを考えてみてもそうだけど、単純に疑問文書くことも多いから単純にタイトルにキーワードが含まれているだろうという考えは甘いかも。</p>
-
-<p>もう少しチューニングしてみる。あと訓練データが600万件近くあるのでできるだけたくさん利用できるように工夫したい。
-(マシンスペックと時間を考えても100万件が今の限界・・・)</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/6/">&larr; Older</a>
@@ -1344,6 +1299,10 @@ TF-IDFのTFはTerm FrequencyでIDFはInversed Document Frequencyの略だ。</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/09/12/living-in-silicon-valley/">Living in Silicon Valley</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/06/19/case-class-for-swift/">Case Class for Swift</a>
       </li>
     
@@ -1357,10 +1316,6 @@ TF-IDFのTFはTerm FrequencyでIDFはInversed Document Frequencyの略だ。</p>
     
       <li class="post">
         <a href="/blog/2014/05/20/what-is-the-essential-factor-of-autoencoder/">What Is the Essential Factor of Autoencoder?</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/04/18/dear-o/">Dear, O</a>
       </li>
     
   </ul>

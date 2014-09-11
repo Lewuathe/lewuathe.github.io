@@ -9,7 +9,7 @@
   <meta name="author" content="Kai Sasaki">
 
   
-  <meta name="description" content="昨日、以前作ったOSSのライブラリにpatchが送られてきた。 https://github.com/Lewuathe/passport-yj 友人とかなり昔に作ったので、存在を忘れていたとまではいかないがpatchが送られてきたときは驚いた。何したらいいんだろうという感じだった。 &hellip;">
+  <meta name="description" content="Kaggleで挑戦できそうな問題があったのでチャレンジしてみた。 http://www.kaggle.com/c/facebook-recruiting-iii-keyword-extraction Stack Exchange(Stack Overflowみたいなもの) &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="Hatena::Bookmark" content="nocomment" />
   <meta property="og:title" content=" - The first cry of Atom" >
-<meta property="og:description" content="昨日、以前作ったOSSのライブラリにpatchが送られてきた。 https://github.com/Lewuathe/passport-yj 友人とかなり昔に作ったので、存在を忘れていたとまではいかないがpatchが送られてきたときは驚いた。何したらいいんだろうという感じだった。 &hellip;" />
+<meta property="og:description" content="Kaggleで挑戦できそうな問題があったのでチャレンジしてみた。 http://www.kaggle.com/c/facebook-recruiting-iii-keyword-extraction Stack Exchange(Stack Overflowみたいなもの) &hellip;" />
 <meta property="og:url" content="http://lewuathe.com" />
 <meta property="og:image" content="http://lewuathe.github.io/images/site_image.png" />
 <meta property="og:author" content="lewuathe" />
@@ -82,7 +82,7 @@
 <ul class="main-navigation">
   <li><a href="/about.html">About</a></li>
   <li><a href="/blog/archives">Archives</a></li>
-  <li><a href="http://fotologue.jp/lewuathe">Pictures</a></li>
+  <li><a href="http://instagram.com/lewuathe">Pictures</a></li>
   <li><a href="https://github.com/Lewuathe">GitHub</a></li>
   <li><a href="https://twitter.com/Lewuathe">Twitter</a></li>
 </ul>
@@ -92,6 +92,166 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/11/03/tf-idfdetagufu-ke/">TF-IDFでタグ付け</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-03T22:28:00+09:00" pubdate data-updated="true">Nov 3<span>rd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Kaggleで挑戦できそうな問題があったのでチャレンジしてみた。</p>
+
+<p><a href="http://www.kaggle.com/c/facebook-recruiting-iii-keyword-extraction">http://www.kaggle.com/c/facebook-recruiting-iii-keyword-extraction</a></p>
+
+<p>Stack Exchange(Stack Overflowみたいなもの)にあるテキストとそのタグデータを訓練データとして
+同様にStack Exchangeにあるページからタグを類推せよという問題。
+多分キーワード抽出を行う方法がうまく行くんじゃないかと思いやってみた。</p>
+
+<h2>TF-IDFアルゴリズム</h2>
+
+<p><img src="/images/posts/2013-11-03-tfidf/equation.png" alt="Equation" /></p>
+
+<p>基本的にはTF-IDFを使ってみる。これは文書中のtokenの重要度をその頻度と、他の文書にどれくらいないかの指標
+の積として表すアルゴリズム。コードで書くと下のような感じ。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+</span><span class='line'><span class="n">term</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">Target</span> <span class="n">Term</span><span class="o">&gt;</span>
+</span><span class='line'><span class="n">include_document_num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">([</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">all_documents</span> <span class="k">if</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">d</span><span class="p">])</span>
+</span><span class='line'><span class="n">word_score</span> <span class="o">=</span> <span class="n">term_frequency</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span> <span class="n">all_document_num</span> <span class="o">/</span> <span class="n">include_document_num</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>term_frquencyはその文書中にどれくらいその単語が出てきたか。多くの場合は正規化してある。
+その後ろの項は全文書中にその単語を含む文書がどれくらいあるかの比の逆数。これは他の文書にその単語がなければないほど大きくなるので、その単語がその文書のキーワードとして十分に機能することを示唆している。
+TF-IDFのTFはTerm FrequencyでIDFはInversed Document Frequencyの略だ。</p>
+
+<p>今回はTestデータの各文書の単語として有効な単語(htmlタグや各種記法は省くようにした)についてword_scoreを計算し、その中から正規化されたscoreが10%を超えたものをその文書のキーワードとして抽出するようにしてみた。
+プログラムのコアの部分は以下のような形になった。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># 全テストデータ</span>
+</span><span class='line'><span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">test_file</span><span class="p">:</span>
+</span><span class='line'>    <span class="c"># テストデータとしてタイトルもあるのでこいつも利用してみる</span>
+</span><span class='line'>    <span class="n">title_tokens</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">word_tokenize</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># 英数字意外の文字を取り除いた</span>
+</span><span class='line'>    <span class="n">tokens</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">r&quot;\W+&quot;</span><span class="p">,</span> <span class="n">nltk</span><span class="o">.</span><span class="n">clean_html</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># ここは自分でかってに付け足した部分。タイトルに含まれる単語達は特別扱いして10個余分に足しておく</span>
+</span><span class='line'>  <span class="c"># 本当はここは文書中の何%とかにした方が各文書でのタイトルの重要度にばらつきがでなくていいのかもしれない</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">title_token</span> <span class="ow">in</span> <span class="n">title_tokens</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+</span><span class='line'>            <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">title_token</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># 同じ単語のscoreを計算しても意味ないので重複を消しておく</span>
+</span><span class='line'>    <span class="n">uniqTokens</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># 各tokenのscoreを計算。実際の計算はNLTKに任せた</span>
+</span><span class='line'>    <span class="n">tf_idf_scores</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">uniqTokens</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">tf_idf_scores</span><span class="p">[</span><span class="n">token</span><span class="p">]</span> <span class="o">=</span> <span class="n">collection</span><span class="o">.</span><span class="n">tf_idf</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">tokens</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># scoreでソート</span>
+</span><span class='line'>    <span class="n">sorted_tf_idf_scores</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">tf_idf_scores</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># 10%を超えたものをkeywordsとして登録</span>
+</span><span class='line'>    <span class="n">keywords</span> <span class="o">=</span> <span class="p">[</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">sorted_tf_idf_scores</span> <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mf">0.1</span><span class="p">]</span>
+</span><span class='line'>  <span class="c"># 1個もないのは変なので1番scoreが高いものだけでも抽出しておく</span>
+</span><span class='line'>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">keywords</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">keywords</span> <span class="o">=</span> <span class="p">[</span> <span class="n">sorted_tf_idf_scores</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c"># ファイル出力</span>
+</span><span class='line'>    <span class="n">result_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">,</span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">keywords</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>訓練データがあまりにもデカイので、ちょっと全部は訓練できない。
+一部の訓練データに対して試してみて余分はかなり出てくるけれど、抜けは割りとない。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="err">推定キーワード</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span><span class="s">&quot;an without type file image check uploaded mime&quot;</span>
+</span><span class='line'><span class="err">正解キーワード</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span><span class="s">&quot;php image-processing file-upload upload mime-types&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="err">推定キーワード</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span><span class="s">&quot;How ctrl press prevent firefox closing&quot;</span>
+</span><span class='line'><span class="err">正解キーワード</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span><span class="s">&quot;firefox&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>image-processingとか、そもそもそういう単語を文書に含んでなかったらこの方法だと抽出できない。もっと関係抽出とか固有表現認識とかしないといけないかも。あとタイトルの重みを強くし過ぎたせいか&#8221;How&#8221;とか&#8221;Can&#8221;とかの単語も結構入ってきてしまう。Stack ExchangeとかStack Overflowって自分が書くときを考えてみてもそうだけど、単純に疑問文書くことも多いから単純にタイトルにキーワードが含まれているだろうという考えは甘いかも。</p>
+
+<p>もう少しチューニングしてみる。あと訓練データが600万件近くあるのでできるだけたくさん利用できるように工夫したい。
+(マシンスペックと時間を考えても100万件が今の限界・・・)</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1326,254 +1486,6 @@ SQLと同じように他にもSUMとかAVGとか使えるみたい。</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/09/16/scaladerozisuteikusuhui-gui/">Scalaでロジスティクス回帰</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-09-16T20:37:00+09:00" pubdate data-updated="true">Sep 16<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>PRMLをの勉強も兼ねて線形回帰モデルの構築をやってみたよ。
-PRML本の内容と<a href="http://aidiary.hatenablog.com/entry/20100404/1270359720">ここ</a>を参考に書いてみたのでぜひ参考に。
-リポジトリは<a href="https://github.com/PhysicsEngine/cpi-stats">こちら</a></p>
-
-<h2>最尤推定</h2>
-
-<p>基本的にはsin関数にガウスノイズを足した20個の訓練データからもとのsin関数が復元できるかということをやった。
-1次元の多項式フィッティングの場合には最尤推定は最小二乗法でとけばいいだけなのでコードはこんな感じ。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">package</span> <span class="nn">com.PhysicsEngine.cpistats</span>
-</span><span class='line'><span class="k">import</span> <span class="nn">breeze.linalg._</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">object</span> <span class="nc">LeastSquares</span> <span class="o">{</span>
-</span><span class='line'>  <span class="c1">// モデルパラメータの数 あとで正則化項を加えて計算したMAP推定と比較したいので割りとデカイ。over fittingしやすい</span>
-</span><span class='line'>  <span class="k">val</span> <span class="n">M</span> <span class="k">=</span> <span class="mi">20</span>
-</span><span class='line'>      <span class="k">def</span> <span class="n">estimate</span><span class="o">(</span><span class="n">dataList</span><span class="k">:</span><span class="kt">List</span><span class="o">[</span><span class="kt">Pair</span><span class="o">[</span><span class="kt">Double</span>,<span class="kt">Double</span><span class="o">]],</span> <span class="n">lam</span><span class="k">:</span><span class="kt">Double</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
-</span><span class='line'>    <span class="c1">// The model parameter num</span>
-</span><span class='line'>    <span class="k">val</span> <span class="n">dataLength</span> <span class="k">=</span> <span class="n">dataList</span><span class="o">.</span><span class="n">length</span>
-</span><span class='line'>    <span class="c1">// AはM+1個の微分方程式の係数行列</span>
-</span><span class='line'>    <span class="k">var</span> <span class="n">A</span> <span class="k">=</span> <span class="nc">DenseMatrix</span><span class="o">.</span><span class="n">zeros</span><span class="o">[</span><span class="kt">Double</span><span class="o">](</span><span class="n">M</span><span class="o">+</span><span class="mi">1</span><span class="o">,</span> <span class="n">M</span><span class="o">+</span><span class="mi">1</span><span class="o">)</span>
-</span><span class='line'>    <span class="c1">// Tは目標値との掛け算</span>
-</span><span class='line'>    <span class="c1">// 詳しくはPRMLの演習問題(1.1)を読んだ方がいいかも</span>
-</span><span class='line'>    <span class="c1">// 要は微分して0とおいたときの連立方程式を解くための行列とベクトル</span>
-</span><span class='line'>    <span class="k">var</span> <span class="n">T</span> <span class="k">=</span> <span class="nc">DenseVector</span><span class="o">.</span><span class="n">zeros</span><span class="o">[</span><span class="kt">Double</span><span class="o">](</span><span class="n">M</span><span class="o">+</span><span class="mi">1</span><span class="o">)</span>
-</span><span class='line'>  
-</span><span class='line'>    <span class="k">for</span><span class="o">(</span><span class="n">i</span> <span class="k">&lt;-</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">M</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>      <span class="k">for</span><span class="o">(</span> <span class="n">j</span> <span class="k">&lt;-</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">M</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">var</span> <span class="n">temp</span> <span class="k">=</span> <span class="mf">0.0</span>
-</span><span class='line'>        <span class="n">dataList</span><span class="o">.</span><span class="n">foreach</span> <span class="o">{</span>
-</span><span class='line'>          <span class="n">dataPair</span> <span class="k">=&gt;</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">temp</span> <span class="o">+=</span> <span class="nc">Math</span><span class="o">.</span><span class="n">pow</span><span class="o">(</span><span class="n">dataPair</span><span class="o">.</span><span class="n">_1</span><span class="o">,</span> <span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="o">)</span>
-</span><span class='line'>          <span class="o">}</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>        <span class="n">A</span><span class="o">(</span><span class="n">i</span><span class="o">,</span> <span class="n">j</span><span class="o">)</span> <span class="k">=</span> <span class="n">temp</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="c1">//print(A)</span>
-</span><span class='line'>  
-</span><span class='line'>    <span class="k">for</span><span class="o">(</span><span class="n">i</span> <span class="k">&lt;-</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">M</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">var</span> <span class="n">temp</span> <span class="k">=</span> <span class="mf">0.0</span>
-</span><span class='line'>        <span class="n">dataList</span><span class="o">.</span><span class="n">foreach</span> <span class="o">{</span>
-</span><span class='line'>          <span class="n">dataPair</span> <span class="k">=&gt;</span> <span class="o">{</span>
-</span><span class='line'>              <span class="n">temp</span> <span class="o">+=</span> <span class="nc">Math</span><span class="o">.</span><span class="n">pow</span><span class="o">(</span><span class="n">dataPair</span><span class="o">.</span><span class="n">_1</span><span class="o">,</span> <span class="n">i</span><span class="o">)</span> <span class="o">*</span> <span class="n">dataPair</span><span class="o">.</span><span class="n">_2</span>
-</span><span class='line'>          <span class="o">}</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>        <span class="n">T</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="k">=</span> <span class="n">temp</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="c1">//print(T)</span>
-</span><span class='line'>  
-</span><span class='line'>    <span class="k">val</span> <span class="n">wlist</span> <span class="k">=</span> <span class="n">A</span> <span class="o">\</span> <span class="n">T</span>
-</span><span class='line'>    <span class="c1">// この連立方程式をとくとパラメータベクトルが得られる</span>
-</span><span class='line'>    <span class="n">wlist</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'>  
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>これで解いた場合の回帰曲線がこれ
-<img src="https://raw.github.com/PhysicsEngine/cpi-stats/master/results/LeastSquares_lambda.png" alt="LeastSquares_lambda" /></p>
-
-<p>狙いどおり過学習しております。</p>
-
-<h3>MAP推定</h3>
-
-<p>過学習をふせぐために大きすぎるパラメータにペナルティを与える方法がある。これは正則化項とよばれる項を加えた上での誤差関数を最小化する方法。これはモデルパラメータの事後分布を最大化するようなものを選ぶ方法と同じ。だからMAP推定(Most a posterio)と呼ばれる。やりかたは簡単。さっきの行列Aの対角成分に正則化パラメータを加えればよい。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="c1">// これを A(i, j) = tempの前に書く</span>
-</span><span class='line'><span class="c1">// lam = 0.00001くらいでいい</span>
-</span><span class='line'><span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">j</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">temp</span> <span class="o">+=</span> <span class="n">lam</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>結果は以下。</p>
-
-<p><img src="https://raw.github.com/PhysicsEngine/cpi-stats/master/results/LeastSquares.png" alt="LeastSquares" /></p>
-
-<p>正則化項の値はかなり小さいはずなのに結構効果がある。すごい。ただずれているところはかなりずれているようにも見える。</p>
-
-<h2>ベイズ推定</h2>
-
-<p>というわけでベイズ推定。上の２つは両方ともパラメータwを点推定で決めてしまう決定論的な手法であるのに対してベイズ推定はパラメータ事後分布から予測分布を求めることまでを行う。簡単にいうと各xの値に対してパラメータwはひとつには決めずにある分布に従う確率変数として扱い、目標値に対しても幅を持たせることになる。今回は各訓練データはガウス分布にしたがうノイズがのっているという仮定にもとづいて推定を行う。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">package</span> <span class="nn">com.PhysicsEngine.cpistats</span>
-</span><span class='line'><span class="k">import</span> <span class="nn">breeze.linalg._</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">object</span> <span class="nc">BayesEstimation</span> <span class="o">{</span>
-</span><span class='line'>    <span class="c1">// モデルパラメータの数</span>
-</span><span class='line'>  <span class="k">val</span> <span class="n">M</span> <span class="k">=</span> <span class="mi">20</span>
-</span><span class='line'>  <span class="c1">// BETAとALPHAは事後分布の超パラメータ</span>
-</span><span class='line'>  <span class="k">val</span> <span class="nc">BETA</span> <span class="k">=</span> <span class="mf">11.1</span>
-</span><span class='line'>  <span class="k">val</span> <span class="nc">ALPHA</span> <span class="k">=</span> <span class="mf">0.005</span>
-</span><span class='line'>  
-</span><span class='line'>  <span class="c1">// 基底関数。今回は多項式関数をつかっている</span>
-</span><span class='line'>  <span class="k">def</span> <span class="n">phi</span><span class="o">(</span><span class="n">x</span><span class="k">:</span><span class="kt">Double</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">var</span> <span class="n">T</span> <span class="k">=</span> <span class="nc">DenseVector</span><span class="o">.</span><span class="n">zeros</span><span class="o">[</span><span class="kt">Double</span><span class="o">](</span><span class="n">M</span><span class="o">+</span><span class="mi">1</span><span class="o">)</span>
-</span><span class='line'>    <span class="k">for</span><span class="o">(</span><span class="n">i</span> <span class="k">&lt;-</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">M</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">T</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="k">=</span> <span class="nc">Math</span><span class="o">.</span><span class="n">pow</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">i</span><span class="o">)</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="n">T</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'>  
-</span><span class='line'>  <span class="c1">// 平均値を求める</span>
-</span><span class='line'>  <span class="c1">// PRML(1.70)</span>
-</span><span class='line'>  <span class="k">def</span> <span class="n">mean</span><span class="o">(</span><span class="n">x</span><span class="k">:</span><span class="kt">Double</span><span class="o">,</span> <span class="n">dataList</span><span class="k">:</span><span class="kt">List</span><span class="o">[</span><span class="kt">Pair</span><span class="o">[</span><span class="kt">Double</span>, <span class="kt">Double</span><span class="o">]],</span> <span class="n">S</span><span class="k">:</span><span class="kt">DenseMatrix</span><span class="o">[</span><span class="kt">Double</span><span class="o">])</span> <span class="k">=</span> <span class="o">{</span>
-</span><span class='line'>    <span class="k">val</span> <span class="n">sums</span> <span class="k">=</span> <span class="nc">DenseVector</span><span class="o">.</span><span class="n">zeros</span><span class="o">[</span><span class="kt">Double</span><span class="o">](</span><span class="n">M</span><span class="o">+</span><span class="mi">1</span><span class="o">)</span>
-</span><span class='line'>    <span class="k">for</span><span class="o">(</span><span class="n">i</span> <span class="k">&lt;-</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">dataList</span><span class="o">.</span><span class="n">length</span><span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">sums</span> <span class="o">+=</span> <span class="n">phi</span><span class="o">(</span><span class="n">dataList</span><span class="o">(</span><span class="n">i</span><span class="o">).</span><span class="n">_1</span><span class="o">)</span> <span class="o">:*</span> <span class="n">dataList</span><span class="o">(</span><span class="n">i</span><span class="o">).</span><span class="n">_2</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="nc">BETA</span> <span class="o">*</span> <span class="n">phi</span><span class="o">(</span><span class="n">x</span><span class="o">).</span><span class="n">t</span> <span class="o">*</span> <span class="n">S</span> <span class="o">*</span> <span class="n">sums</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'>  
-</span><span class='line'>  <span class="c1">// 各平均値からの精度</span>
-</span><span class='line'>  <span class="c1">// PRML(1.71)  def variance(x:Double, dataList:List[Pair[Double, Double]], S:DenseMatrix[Double]) = {</span>
-</span><span class='line'>    <span class="n">phi</span><span class="o">(</span><span class="n">x</span><span class="o">).</span><span class="n">t</span> <span class="o">*</span> <span class="n">S</span> <span class="o">*</span> <span class="n">phi</span><span class="o">(</span><span class="n">x</span><span class="o">)</span> <span class="o">+</span> <span class="o">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="nc">BETA</span><span class="o">)</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>これで推定した結果がこちら。</p>
-
-<p><img src="https://raw.github.com/PhysicsEngine/cpi-stats/master/results/BayesEstimation.png" alt="BayesEstimation" /></p>
-
-<p>緑実線が平均値の推定結果で、赤点線がそれぞれ平均値から1σ分だけ離れた曲線を表す。大体あてはまっていることがわかる。もっとパラメータの数を多くすると無理やり、範囲内に訓練データが入るような分布が得られた。
-もう少し汎用的なものを作っていこうかなと思っています。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/7/">&larr; Older</a>
@@ -1591,6 +1503,10 @@ PRML本の内容と<a href="http://aidiary.hatenablog.com/entry/20100404/1270359
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/09/12/living-in-silicon-valley/">Living in Silicon Valley</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/06/19/case-class-for-swift/">Case Class for Swift</a>
       </li>
     
@@ -1604,10 +1520,6 @@ PRML本の内容と<a href="http://aidiary.hatenablog.com/entry/20100404/1270359
     
       <li class="post">
         <a href="/blog/2014/05/20/what-is-the-essential-factor-of-autoencoder/">What Is the Essential Factor of Autoencoder?</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/04/18/dear-o/">Dear, O</a>
       </li>
     
   </ul>

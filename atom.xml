@@ -4,7 +4,7 @@
   <title><![CDATA[The first cry of Atom]]></title>
   <link href="http://lewuathe.github.io/atom.xml" rel="self"/>
   <link href="http://lewuathe.github.io/"/>
-  <updated>2014-06-19T20:22:12+09:00</updated>
+  <updated>2014-09-12T06:29:15+09:00</updated>
   <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
@@ -12,6 +12,31 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Living in Silicon Valley]]></title>
+    <link href="http://lewuathe.github.io/blog/2014/09/12/living-in-silicon-valley/"/>
+    <updated>2014-09-12T06:06:34+09:00</updated>
+    <id>http://lewuathe.github.io/blog/2014/09/12/living-in-silicon-valley</id>
+    <content type="html"><![CDATA[<p>I am not living in SF. My house is at Tokyo, Japan now. Moreover it’s the first time to visit Silicon Valley. I don’t know what I can understand from what I saw, what I felt and who I met. So it’s my review time for this trip and make use of this to know how I should live. There are 3 points.</p>
+
+<h2>We were all only users</h2>
+
+<p>In Japan, the number of tech startups are growing. The quality of software can, I think, compete with world class softwares. Living in Japan as a software engineer didn’t look so bad to me. But this trip changed me totally.</p>
+
+<p>Most of the software I am using in Japan was imported from here, Silicon Valley. All is developed in here, Silicon Valley. We are only users of these softwares created by engineers in Silicon Valley. This makes me so disappointed. What am I supposed to do? I feel all things I keep doing is in vain. We are only users. Just users. Not creators. This is the one thing I decided to change my life as a software engineer.</p>
+
+<h2>Communication</h2>
+
+<p>I am not good at communication even in Japanese. I am a nerd or geek or otaku. I thought somehow geeks in SF will be the same type of person like me, but it is not true. Most of the people I met here would like to communicate voluntarily with great vitality, especially about their own idea and viewpoint. There was no exception. I am somewhat confident about my own idea and the skill to convey one to others. But it is not enough here. People are more serious about their communication skill in order to persuade others or make own team involving your own. There are no exception even about engineers. I have to obtain not only English communication skills but also communication skills itself.</p>
+
+<h2>Life</h2>
+
+<p>Only correct thing what I assume in advance is this, LIFE. I think people who are living in Silicon Valley know what life is and what happiness is. People works for own life’s happiness, but not working itself. I cannot feel this righteous sense in Japan. All people looks down, are tired with daily work and earn little money even though they have no vacation to spent these money. It is not sound thing as lifestyle. Conversely all people I met here are all smiling, looks very happy. I wonder what makes them happier than people in Japan. Money? Vacation? Job? I cannot grasp what is the most influential factor. But I am sure that people in Silicon Valley are happier.</p>
+
+<p>Overall, it is dream for all engineers to live in Silicon Valley. Today I know the reason why this is dream for us. I am sure to return back here.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Case Class for Swift]]></title>
@@ -2608,139 +2633,6 @@ So in this time, I have no answer how to solve this problem by myself.</p>
 If someone has any advice to me, please inform <a href="https://twitter.com/Lewuathe">@Lewuathe</a>.</p>
 
 <p>Thank you.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Actor Model With Node Cluster]]></title>
-    <link href="http://lewuathe.github.io/blog/2014/03/01/actor-model-with-node-cluster/"/>
-    <updated>2014-03-01T02:19:34+09:00</updated>
-    <id>http://lewuathe.github.io/blog/2014/03/01/actor-model-with-node-cluster</id>
-    <content type="html"><![CDATA[<p>If you want to implement asynchronous parallel system with nodejs, the best and easiest way might be using <a href="http://nodejs.org/api/cluster.html">cluster</a>.
-Cluster module is easy to use and provides you faster implementation. I wrote somewhat Actor like code that uses cluster module.</p>
-
-<!-- more -->
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">cluster</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;cluster&#39;</span><span class="p">);</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// Get the number of core of your CPU</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">numCPUs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;os&#39;</span><span class="p">).</span><span class="nx">cpus</span><span class="p">().</span><span class="nx">length</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="nx">cluster</span><span class="p">.</span><span class="nx">isWorker</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// Starting worker process</span>
-</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;I am worker &quot;</span> <span class="o">+</span> <span class="nx">process</span><span class="p">.</span><span class="nx">pid</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// Send master process a message</span>
-</span><span class='line'>    <span class="nx">process</span><span class="p">.</span><span class="nx">send</span><span class="p">({</span> <span class="nx">chat</span><span class="o">:</span> <span class="s2">&quot;I am + &quot;</span> <span class="o">+</span> <span class="nx">process</span><span class="p">.</span><span class="nx">pid</span> <span class="p">});</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// Event handler that is called when this worker get a message</span>
-</span><span class='line'>    <span class="nx">process</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Thank you receiving: &#39;</span> <span class="o">+</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">chat</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">});</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="nx">cluster</span><span class="p">.</span><span class="nx">isMaster</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// Starting master process</span>
-</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span> <span class="nx">numCPUs</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">){</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="c1">// Create worker process</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">worker</span> <span class="o">=</span> <span class="nx">cluster</span><span class="p">.</span><span class="nx">fork</span><span class="p">();</span>
-</span><span class='line'>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;worker forked: pid=&quot;</span> <span class="o">+</span> <span class="nx">worker</span><span class="p">.</span><span class="nx">process</span><span class="p">.</span><span class="nx">pid</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="c1">// Catch the timing of worker death</span>
-</span><span class='line'>        <span class="nx">worker</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;death&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">worker</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;worker &#39;</span> <span class="o">+</span> <span class="nx">worker</span><span class="p">.</span><span class="nx">process</span><span class="p">.</span><span class="nx">pid</span> <span class="o">+</span> <span class="s1">&#39; died&#39;</span><span class="p">);</span>
-</span><span class='line'>        <span class="p">});</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="c1">// Event hander that is called when the master get a message</span>
-</span><span class='line'>        <span class="nx">worker</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;master received: &#39;</span> <span class="o">+</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">chat</span><span class="p">);</span>
-</span><span class='line'>            <span class="nx">worker</span><span class="p">.</span><span class="nx">send</span><span class="p">({</span><span class="nx">chat</span><span class="o">:</span> <span class="s1">&#39;Hi, I received: &#39;</span> <span class="o">+</span> <span class="nx">msg</span><span class="p">.</span><span class="nx">chat</span><span class="p">});</span>
-</span><span class='line'>        <span class="p">});</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// In order to kill all process, you shouldn&#39; forget below part</span>
-</span><span class='line'><span class="nx">process</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;SIGINT&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nx">cluster</span><span class="p">.</span><span class="nx">isMaster</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;master is killed: pid=&#39;</span> <span class="o">+</span> <span class="nx">process</span><span class="p">.</span><span class="nx">pid</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;worker is killed pid=&#39;</span> <span class="o">+</span> <span class="nx">process</span><span class="p">.</span><span class="nx">pid</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>With cluster, there are two types of actors. One is master process, and the others are worker processes.
-You can let master process and worker process send message respectively. To sending worker a message from master,
-use <code>worker.send({text:"From master to worker"})</code>. On the other hand to sending master a message from worker process,
-use <code>process.send({text:"From worker to master"})</code>.</p>
-
-<p>This asynchronous model looks like Actor and message model. In this model, it is not necessary to implement exclusive control
-because all processes acts harmoniously with only messages. If I can take this model nicely into nodejs, <a href="https://github.com/Lewuathe/n42">n42</a>
-will get better running performance. I&rsquo;ll try it.</p>
-
-<p>Thank you</p>
 ]]></content>
   </entry>
   
