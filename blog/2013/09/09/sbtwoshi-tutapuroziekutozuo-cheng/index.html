@@ -3,49 +3,35 @@
 <!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
 <!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
   <title>SBTを使ったプロジェクト作成(1) - The first cry of Atom</title>
   <meta name="author" content="Kai Sasaki">
 
   
-  <meta name="description" content="SBT(Simple Build Tool)というScalaのビルドツールを使ってみる。
+  <meta name="description" content="SBTを使ったプロジェクト作成(1) written Sep 9th, 2013 SBT(Simple Build Tool)というScalaのビルドツールを使ってみる。
 ここを参考にした。 インストール まずインストール。macの場合はHomebrewで用意されているみたい。 1
-$ brew install sbt プロジェクトの作成 ひな形は自分で作る。 &hellip;">
+$ brew &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="Hatena::Bookmark" content="nocomment" />
-  <meta property="og:title" content="SBTを使ったプロジェクト作成(1) - The first cry of Atom" >
-<meta property="og:description" content="SBT(Simple Build Tool)というScalaのビルドツールを使ってみる。
-ここを参考にした。 インストール まずインストール。macの場合はHomebrewで用意されているみたい。 1
-$ brew install sbt プロジェクトの作成 ひな形は自分で作る。 &hellip;" />
-<meta property="og:url" content="http://lewuathe.com" />
-<meta property="og:image" content="http://lewuathe.github.io/images/site_image.png" />
-<meta property="og:author" content="lewuathe" />
-<meta property="og:site_name" content="The first cry of Atom" />
-<meta property="og:locale" content="ja_JP" />
-<meta property="og:type" content="article" />
-<meta property="fb:app_id" content="212934732101925" />
-
 
   
   <link rel="canonical" href="http://lewuathe.github.io/blog/2013/09/09/sbtwoshi-tutapuroziekutozuo-cheng">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
-  <link href="/stylesheets/data-table.css" rel="stylesheet" type="text/css" />
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -62,48 +48,18 @@ $ brew install sbt プロジェクトの作成 ひな形は自分で作る。 &h
 
 </head>
 
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">The first cry of Atom</a></h1>
-  
-    <h2>The people who are crazy enough to think thay can change the world, are the ones who do</h2>
-  
-</hgroup>
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
 
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:lewuathe.github.io" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/about.html">About</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-  <li><a href="http://instagram.com/lewuathe">Pictures</a></li>
-  <li><a href="https://github.com/Lewuathe">GitHub</a></li>
-  <li><a href="https://twitter.com/Lewuathe">Twitter</a></li>
-</ul>
-
-</nav>
-  <div id="main">
-    <div id="content">
-      <div>
-<article class="hentry" role="article">
-  
-  <header>
-    
-      <h1 class="entry-title">SBTを使ったプロジェクト作成(1)</h1>
-    
-    
-      <p class="meta">
-        
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>SBTを使ったプロジェクト作成(1)</h1>
+        <div class="meta">
+          written 
 
 
 
@@ -113,16 +69,15 @@ $ brew install sbt プロジェクトの作成 ひな形は自分で作る。 &h
 
 
   
+
 
 
 <time datetime="2013-09-09T21:29:00+09:00" pubdate data-updated="true">Sep 9<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
+          
 
 
-<div class="entry-content"><p>SBT(Simple Build Tool)というScalaのビルドツールを使ってみる。
+        </div>
+        <p>SBT(Simple Build Tool)というScalaのビルドツールを使ってみる。
 <a href="http://scalajp.github.io/sbt-getting-started-guide-ja/">ここ</a>を参考にした。</p>
 
 <h3>インストール</h3>
@@ -278,133 +233,65 @@ $ brew install sbt プロジェクトの作成 ひな形は自分で作る。 &h
 
 
 <p>今日は一旦このへんで。</p>
-</div>
 
 
-  <footer>
-    <p class="meta">
-      
-  
-
-<span class="byline author vcard">Posted by <span class="fn">Kai Sasaki</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-09-09T21:29:00+09:00" pubdate data-updated="true">Sep 9<span>th</span>, 2013</time>
-      
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://lewuathe.github.io/blog/2013/09/09/sbtwoshi-tutapuroziekutozuo-cheng/" data-via="Lewuathe" data-counturl="http://lewuathe.github.io/blog/2013/09/09/sbtwoshi-tutapuroziekutozuo-cheng/" >Tweet</a>
-  
-  
-  
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2013/09/07/scalawoshi-ukotoni/" title="Previous Post: Scalaを使うことに">&laquo; Scalaを使うことに</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2013/09/10/sbtwoshi-tutapuroziekutozuo-cheng-2/" title="Next Post: SBTを使ったプロジェクト作成(2)">SBTを使ったプロジェクト作成(2) &raquo;</a>
-      
-    </p>
-  </footer>
+        <hr class="divider-short"/>
+        
+        
+      </div>
+    </div>
+  </div>
 </article>
 
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2013/09/07/scalawoshi-ukotoni/" title="Previous Post: Scalaを使うことに">&laquo; Previous: Scalaを使うことに</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2013/09/10/sbtwoshi-tutapuroziekutozuo-cheng-2/" title="Next Post: SBTを使ったプロジェクト作成(2)">Next: SBTを使ったプロジェクト作成(2) &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
 </div>
 
-<aside class="sidebar">
-  
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2014/09/12/living-in-silicon-valley/">Living in Silicon Valley</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/19/case-class-for-swift/">Case Class for Swift</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/13/open-source-movement-in-hardware-compan/">Welcome Open Source Movement in Hardware Company</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/26/hack-nhk/">Hack NHK</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/20/what-is-the-essential-factor-of-autoencoder/">What Is the Essential Factor of Autoencoder?</a>
-      </li>
-    
-  </ul>
-</section>
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
 
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/Lewuathe"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
 
+    
+    <a href="https://github.com/Lewuathe"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
 
+    
 
+    
+  </div>
+</div>
 
-  
-</aside>
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
 
 
     </div>
   </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Kai Sasaki -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
-
 </footer>
-  
 
-
-
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id; js.async = true;
-  js.src = "//connect.facebook.net/ja_JP/all.js#appId=212934732101925&xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-
-
-
-</body>
+  </body>
 </html>

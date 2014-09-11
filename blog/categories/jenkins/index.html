@@ -3,6 +3,10 @@
 <!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
 <!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
   <title>Category: Jenkins - The first cry of Atom</title>
@@ -16,32 +20,16 @@
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="Hatena::Bookmark" content="nocomment" />
-  <meta property="og:title" content="Category: Jenkins - The first cry of Atom" >
-<meta property="og:description" content="Category: Jenkins" />
-<meta property="og:url" content="http://lewuathe.com" />
-<meta property="og:image" content="http://lewuathe.github.io/images/site_image.png" />
-<meta property="og:author" content="lewuathe" />
-<meta property="og:site_name" content="The first cry of Atom" />
-<meta property="og:locale" content="ja_JP" />
-<meta property="og:type" content="article" />
-<meta property="fb:app_id" content="212934732101925" />
-
 
   
   <link rel="canonical" href="http://lewuathe.github.ioblog/categories/jenkins">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
-  <link href="/stylesheets/data-table.css" rel="stylesheet" type="text/css" />
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -58,175 +46,662 @@
 
 </head>
 
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">The first cry of Atom</a></h1>
-  
-    <h2>The people who are crazy enough to think thay can change the world, are the ones who do</h2>
-  
-</hgroup>
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
 
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+    <div class="all-posts">
+  <div class="container">
+    <div class="row">
+      <div class="list-title col-md-offset-3 col-md-6">
+        <h4>Posts in Jenkins</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="article-list">
+    <div class="container">
+      
+        
+        <div class="row">
+          <div class="col-md-offset-3 col-md-6">
+            <article>
+  <h2><a href="/blog/2013/12/13/making-widget-plugin/">Making Jenkins Widget Plugin</a></h2>
   
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:lewuathe.github.io" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/about.html">About</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-  <li><a href="http://instagram.com/lewuathe">Pictures</a></li>
-  <li><a href="https://github.com/Lewuathe">GitHub</a></li>
-  <li><a href="https://twitter.com/Lewuathe">Twitter</a></li>
+  <p>
+    <p>This article was written for <a href="http://qiita.com/advent-calendar/2013/jenkinsci">Jenkins Advent Calendar</a> 14th day.</p>
+
+<h2>Making Jenkins plugin</h2>
+
+<p>Have you ever made Jenkins plugin? This is about my experience developing Jenkins plugin.
+I have not written Java ever, and of course didn&rsquo;t know how to make maven projects. So while writing plugin codes,
+I went this way and that, googling and trying code snippets. Then I felt that there were not enough documents for
+first Jenkins plugin developers. This post however I only made widget plugin, I would be glad that this article will be useful
+to the same developers as me.</p>
+
+<h2>Getting started</h2>
+
+<p>First, it is needed to download skelton of Jenkins plugin by using maven plugin. I used maven-3.0.5, and OSX machine.
+Write below xml in <code>~/.m2/settings.xml</code></p>
+
+<p>```
+<settings>
+  <pluginGroups></p>
+
+<pre><code>&lt;pluginGroup&gt;org.jenkins-ci.tools&lt;/pluginGroup&gt;
+</code></pre>
+
+<p>  </pluginGroups></p>
+
+<p>  <profiles></p>
+
+<pre><code>&lt;!-- Give access to Jenkins plugins --&gt;
+&lt;profile&gt;
+  &lt;id&gt;jenkins&lt;/id&gt;
+  &lt;activation&gt;
+    &lt;activeByDefault&gt;true&lt;/activeByDefault&gt; &lt;!-- change this to false, if you don't like to have it on per default --&gt;
+  &lt;/activation&gt;
+  &lt;repositories&gt;
+    &lt;repository&gt;
+      &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
+      &lt;url&gt;http://repo.jenkins-ci.org/public/&lt;/url&gt;
+    &lt;/repository&gt;
+  &lt;/repositories&gt;
+  &lt;pluginRepositories&gt;
+    &lt;pluginRepository&gt;
+      &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
+      &lt;url&gt;http://repo.jenkins-ci.org/public/&lt;/url&gt;
+    &lt;/pluginRepository&gt;
+  &lt;/pluginRepositories&gt;
+&lt;/profile&gt;
+</code></pre>
+
+<p>  </profiles>
+  <mirrors></p>
+
+<pre><code>&lt;mirror&gt;
+  &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
+  &lt;url&gt;http://repo.jenkins-ci.org/public/&lt;/url&gt;
+  &lt;mirrorOf&gt;m.g.o-public&lt;/mirrorOf&gt;
+&lt;/mirror&gt;
+</code></pre>
+
+<p>  </mirrors>
+</settings>
+```</p>
+
+<p>Create skelton.</p>
+
+<p><code>
+$ mvn hpi:create
+</code></p>
+
+<p>Project name and artifactId will be asked as below.</p>
+
+<p><code>
+[INFO] Scanning for projects...
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Maven Stub Project (No POM) 1
+[INFO] ------------------------------------------------------------------------
+[INFO]
+[INFO] --- maven-hpi-plugin:1.106:create (default-cli) @ standalone-pom ---
+Enter the groupId of your plugin [org.jenkins-ci.plugins]: com.lewuathe.plugins
+Enter the artifactId of your plugin (normally without '-plugin' suffix): mytest
+</code></p>
+
+<p>Then under current directory, <code>mytest</code> project might be made. The directory tree looks like.</p>
+
+<p>```
+% tree mytest
+mytest
+├── pom.xml
+└── src</p>
+
+<pre><code>└── main
+    ├── java
+    │   └── com
+    │       └── lewuathe
+    │           └── plugins
+    │               └── mytest
+    │                   └── HelloWorldBuilder.java
+    └── resources
+        ├── com
+        │   └── lewuathe
+        │       └── plugins
+        │           └── mytest
+        │               └── HelloWorldBuilder
+        │                   ├── config.jelly
+        │                   ├── global.jelly
+        │                   ├── help-name.html
+        │                   └── help-useFrench.html
+        └── index.jelly
+</code></pre>
+
+<p>13 directories, 7 files
+```</p>
+
+<p>This sample project uses Builder extension point of Jenkins plugin. <a href="https://wiki.jenkins-ci.org/display/JENKINS/Extension+points#Extensionpoints-hudson.tasks.Builder">Builder extension</a> point is executed inside of the build process. If you have any process run on the way of building, you have to write the class which extends Builder. But in this article, I introduce Widget plugin. If you want to know what kind of extension points exist, please search on <a href="https://wiki.jenkins-ci.org/display/JENKINS/Extension+points">this page</a></p>
+
+<p>Before explaining about Widget plugin, let me say how to run this plugins.</p>
+
+<p><code>
+$ mvn hpi:run
+</code></p>
+
+<p>With above command, maven can download packages on which this plugin project depends and run Jenkins test server on 8080 port.</p>
+
+<p>```</p>
+
+<h1>Access below host!</h1>
+
+<p><a href="http://localhost:8080/jenkins/">http://localhost:8080/jenkins/</a>
+```</p>
+
+<p>You can look at Jenkins server! There is all you have to do before developing your own Jenkins plugin. Let&rsquo;s get started.</p>
+
+<h2>Write Widget plugin</h2>
+
+<p>My Jenkins plugin is put on <a href="https://github.com/jenkinsci/hckrnews-plugin">this repository</a>. With this plugin you can see hacker news top time-line on Jenkins dashboard.
+From <a href="https://wiki.jenkins-ci.org/display/JENKINS/Hckrnews+Plugin">there</a>, it can be downloaded.
+Screen shot was taken as below.</p>
+
+<p><img src="/images/posts/2013-12-13-jenkins-widget-plugin/hckrnews-screenshot.png" alt="screenshot" /></p>
+
+<p>By examing this plugin&rsquo;s source code, I want to list up the points I had trouble in completing this plugin.</p>
+
+<h2>Correspondence of Jelly file and Java class</h2>
+
+<p>In Jenkins, <a href="http://stapler.kohsuke.org/what-is.html">Stapler</a> is used in order to map URL and Java objects.</p>
+
+<blockquote><p>Stapler is a library that &ldquo;staples&rdquo; your application objects to URLs, making it easier to write web applications. The core idea of Stapler is to automatically assign URLs for your objects, creating an intuitive URL hierarchy.</p></blockquote>
+
+<p>At first, I cannot grasp what that means and practically which objects are mapped to jelly files. In conclusion, this is the correspond directory files.
+Please look at <code>src/main/java</code> and <code>src/main/resources</code> directory of your project. It looks the same structure, doesn&rsquo;t it? So, in these directory, the correnspondence between Java class and jelly filesis made.
+For example on hckrnews-plugin source tree, <code>java/com/lewuathe/plugins/hckrnews/HckrnewsWidget.java</code> corresponds to <code>com/lewuathe/plugins/hckrnews/HckrnewsWidget/</code>.
+The former is what model or controller, and the latter is view in the context of MVC.</p>
+
+<p>```
+├── java
+│   └── com
+│       └── lewuathe
+│           └── plugins
+│               └── hckrnews
+│                   └── HckrnewsWidget.java  // &lt;&mdash; This is controller
+└── resources</p>
+
+<pre><code>├── com
+│   └── lewuathe
+│       └── plugins
+│           └── hckrnews
+│               └── HckrnewsWidget
+│                   └── index.jelly     // &lt;-- This is view which corresponds to above controller, HckrnewsWidget.java
+└── index.jelly
+</code></pre>
+
+<p>```</p>
+
+<h2>Calling view method</h2>
+
+<p>In <code>HckrnewsWidget.java</code>, news static class in child class of Widget extension points is written.</p>
+
+<p>```java
+@Extension
+public class HckrnewsWidget extends Widget {
+// &hellip;.</p>
+
+<pre><code>public static class News {
+    private String title;
+    private String url;
+    private String points;
+    private String postedBy;
+
+    public String getTitle() { return this.title; }
+    public String getUrl() { return this.url; }
+    public String getPoints() { return this.points; }
+    public String getPostedBy() { return this.postedBy; }
+}
+</code></pre>
+
+<p>// &hellip;.
+}
+```</p>
+
+<p>Ordinary getter of News object. So it comes to index.jelly file.</p>
+
+<p>```
+&lt;j:jelly xmlns:j=&ldquo;jelly:core&rdquo; xmlns:st=&ldquo;jelly:stapler&rdquo; xmlns:d=&ldquo;jelly:define&rdquo; xmlns:l=&ldquo;/lib/layout&rdquo; xmlns:t=&ldquo;/lib/hudson&rdquo; xmlns:f=&ldquo;/lib/form&rdquo; xmlns:i=&ldquo;jelly:fmt&rdquo;>
+&lt;l:pane width=&ldquo;3&rdquo; title=&ldquo;Hacker News Top&rdquo;>
+<tr>
+  <th class="pane">Title</th>
+  <th class="pane">Points</th>
+  <th class="pane">Posted by</th>
+</tr>
+&lt;j:forEach var=&ldquo;news&rdquo; items=&ldquo;${it.newslist}&rdquo;>
+  <tr></p>
+
+<pre><code>&lt;td align="left" class="pane" style="width:10px;"&gt;&lt;a href="${news.url}"&gt;${news.title}&lt;/a&gt;&lt;/td&gt;
+&lt;td class="pane" align="right"&gt;${news.points}&lt;/td&gt;
+&lt;td class="pane" align="right"&gt;${news.postedBy}&lt;/td&gt;
+</code></pre>
+
+<p>  </tr>
+&lt;/j:forEach>
+&lt;/l:pane>
+Last Updated: ${it.lastupdatedstr}
+&lt;/j:jelly>
+```</p>
+
+<p>The detail of Jelly syntax is not explained in this time. In this template file, <code>it</code> refers to the correspondence object in logic of stapler,
+in other words that&rsquo;s <code>HckrnewsWidget.java</code>. So when you writes as <code>it.newslist</code>, this calls</p>
+
+<p>```java
+@Extension
+public class HckrnewsWidget extends Widget {
+//&hellip;</p>
+
+<pre><code>public List&lt;News&gt; getNewslist() {
+        return this.newsList;
+}
+</code></pre>
+
+<p>//&hellip;
+}
+```</p>
+
+<p>Then <code>index.jelly</code> can get newslist. But you should take care of the casing of method name. If you write <code>getNewsList</code>, it can be called. Types are below.</p>
+
+<ul>
+<li>getNewslist : it.newslist is called</li>
+<li>getNewsList : it.newList is called</li>
+<li>getNewslist : it.newsList is <em>not</em> called</li>
 </ul>
 
-</nav>
-  <div id="main">
-    <div id="content">
-      <div>
-<article role="article">
+
+<p>So it looks like auto casting to a captal letter is only applied to the first letter. It is necessary to arrange the type of posteror letters.</p>
+
+<h2>Making Wiki</h2>
+
+<p>It might be rare case which only I experienced. Jenkins wiki page can not be created automatically.
+Of course, it is taken for granted that writing down your wiki url on pom.xml.</p>
+
+<p><code>
+&lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"&gt;
+//...
+  &lt;url&gt;http://wiki.jenkins-ci.org/display/JENKINS/Hckrnews+Plugin&lt;/url&gt;
+//...
+&lt;/project&gt;
+</code></p>
+
+<p>But this is not the trigger of creating Jenkins wiki page :( You have to make your own page yourself.
+I misunderstood about making wiki pages on this point. After you make your own wiki page, let&rsquo;s add a tag.</p>
+
+<p><img src="/images/posts/2013-12-13-jenkins-widget-plugin/add-tag.png" alt="add-tag" /></p>
+
+<p>After you add tag, your wiki page will be listed on <a href="https://wiki.jenkins-ci.org/display/JENKINS/Plugins">this page</a>. It will be easier to search for users.</p>
+
+<h1>After all</h1>
+
+<p>This experience taught me many things about plugin development, Jenkins extension points and of course <strong>Java</strong> !!
+Conversly if you have no experience of Java, you can also make your own Jenkins plugin about two weeks.
+And I want to keep making Jenkins plugins when idea comes to me.</p>
+
+<p>Last but not least, write your test codes in your plugin. With maven, you can run JUnit very easily.
+If there are no test codes in the plugin of continuous integration tool, Jenkins, it sounds like mistaking the means for the end, doesn&rsquo;t it?</p>
+
+<p>Viva great continuous integration! Thank you.</p>
+
+  </p>
+  <span class="meta">
+    written 
+
+
+
+
+
+
+
+
   
-  <header>
-    <h1 class="entry-title">Category: Jenkins</h1>
+
+
+
+<time datetime="2013-12-13T21:14:00+09:00" pubdate data-updated="true">Dec 13<span>th</span>, 2013</time>
     
-  </header>
+
+in
+<span class="categories">
   
-  <div id="blog-archives" class="category">
+    <a class='category' href='/blog/categories/jenkins/'>Jenkins</a>, <a class='category' href='/blog/categories/widget/'>Widget</a>, <a class='category' href='/blog/categories/plugin/'>plugin</a>
+  
+</span>
 
 
+  </span>
 
   
-  <h2>2013</h2>
-
-<article>
-  
-<h1><a href="/blog/2013/12/13/making-widget-plugin/">Making Jenkins Widget Plugin</a></h1>
-<time datetime="2013-12-13T21:14:00+09:00" pubdate><span class='month'>Dec</span> <span class='day'>13</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/jenkins/'>Jenkins</a>, <a class='category' href='/blog/categories/widget/'>Widget</a>, <a class='category' href='/blog/categories/plugin/'>plugin</a></span>
-</footer>
-
-
 </article>
 
-
-
-<article>
+          </div>
+        </div>
+      
+        
+        <div class="row">
+          <div class="col-md-offset-3 col-md-6">
+            <article>
+  <h2><a href="/blog/2013/11/28/my-first-jenkins-plugin/">My First Jenkins Plugin</a></h2>
   
-<h1><a href="/blog/2013/11/28/my-first-jenkins-plugin/">My First Jenkins Plugin</a></h1>
-<time datetime="2013-11-28T21:15:00+09:00" pubdate><span class='month'>Nov</span> <span class='day'>28</span> <span class='year'>2013</span></time>
+  <p>
+    <p>Released my first Jenkins plugin</p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/java/'>Java</a>, <a class='category' href='/blog/categories/jenkins/'>Jenkins</a>, <a class='category' href='/blog/categories/maven/'>Maven</a>, <a class='category' href='/blog/categories/plugin/'>plugin</a></span>
-</footer>
+<p><a href="https://github.com/jenkinsci/hckrnews-plugin">https://github.com/jenkinsci/hckrnews-plugin</a></p>
+
+<p><img src="/images/posts/2013-11-28-hckrnews-plugin/screen-shot.png" alt="Screen shot" /></p>
+
+<p>With this plugin, you can read hacker news top time line sitting in front of CI server.
+So you can read top topics about technology and so on at the same time building your project. Does it sound good?</p>
+
+<h2>How to publish Jenkins plugin?</h2>
+
+<h3>Make GitHub repository</h3>
+
+<p>Normal Maven project needs only src/ and pom.xml. Jenkins plugin project is not exception.
+Write right .gitignore, and ignore target/ and work/ directory. These are not necessary.</p>
+
+<h3>Create new jenkins-ci account</h3>
+
+<p>Visit <a href="https://jenkins-ci.org/account/">here</a>. Create your new account.</p>
+
+<h3>Write settings.xml your account information</h3>
+
+<p>Your account name, and password got from above process should be written in <code>~/.m2/settings.xml</code> like below.</p>
+
+<p>```
+<settings>
+ ・・・
+  <servers></p>
+
+<pre><code>&lt;server&gt;
+  &lt;id&gt;maven.jenkins-ci.org&lt;/id&gt;
+  &lt;username&gt;XXXXXX&lt;/username&gt;
+  &lt;password&gt;XXXXXX&lt;/password&gt;
+&lt;/server&gt;
+</code></pre>
+
+<p>  </servers>
+  ・・・
+</settings>
+```</p>
+
+<h3>Application for forking repository</h3>
+
+<p>Send an email to community <a href="https://groups.google.com/forum/#!forum/jenkinsci-ja">mailing list</a> in Japan. If you want to send other community, search <a href="http://jenkins-ci.org/content/mailing-lists">here</a>
+Soon your repository is forked to original jenkinsci organization.</p>
+
+<h3>Modify pom.xml</h3>
+
+<p>Add some line. SCM repository url should be written in your project <code>pom.xml</code></p>
+
+<p>```
+<scm></p>
+
+<pre><code>&lt;connection&gt;scm:git:ssh://github.com/jenkinsci/XXXXXXXX.git&lt;/connection&gt;
+&lt;developerConnection&gt;scm:git:ssh://git@github.com/jenkinsci/XXXXXXXX.git&lt;/developerConnection&gt;
+&lt;url&gt;https://github.com/jenkinsci/XXXXXXXX.git&lt;/url&gt;
+</code></pre>
+
+<p></scm>
+```</p>
+
+<h3>Release!</h3>
+
+<p>Type below command.</p>
+
+<p><code>
+$ mvn release:prepare release:perform
+</code></p>
+
+<p>One this your should pay attention to is not to add <code>-Dusername</code> and <code>-Dpassword</code> options. These are not used for GitHub but jenkinsci.org
+Congratulations!!</p>
+
+<h3>Future</h3>
+
+<p>In fact, I make this plugin with no experience of writing Java, of course maven.
+Therefore I have to study these tool and Java grammar. In addition to this, I learned how to write some design patterns with coding in accordance with OO programming.</p>
+
+<p>I also wrote some test codes with JUnit in maven. TDD is the method with which I want to develop. In this time, first I wrote unit test code and second logic code. This is fun for me because my code&rsquo;s quality seems to be kept easily. I want to keep writing test code first. This is the best practice for my developing.</p>
+
+<p>This plugin has only simple functions, however, this experience is sufficient value as software engineer.
+In the future, I will seize the moment and make more my own plugins.</p>
+
+<p>Ultimately, please use this plugin. It brings to you a new continuous integration life.</p>
+
+<p>Thank you.</p>
+
+  </p>
+  <span class="meta">
+    written 
 
 
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-11-28T21:15:00+09:00" pubdate data-updated="true">Nov 28<span>th</span>, 2013</time>
+    
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/java/'>Java</a>, <a class='category' href='/blog/categories/jenkins/'>Jenkins</a>, <a class='category' href='/blog/categories/maven/'>Maven</a>, <a class='category' href='/blog/categories/plugin/'>plugin</a>
+  
+</span>
+
+
+  </span>
+
+  
 </article>
 
-
-
-<article>
+          </div>
+        </div>
+      
+        
+        <div class="row">
+          <div class="col-md-offset-3 col-md-6">
+            <article>
+  <h2><a href="/blog/2013/11/16/developing-jenkins-plugin-on-vagrant/">Developing Jenkins Plugin on Vagrant</a></h2>
   
-<h1><a href="/blog/2013/11/16/developing-jenkins-plugin-on-vagrant/">Developing Jenkins Plugin on Vagrant</a></h1>
-<time datetime="2013-11-16T21:09:00+09:00" pubdate><span class='month'>Nov</span> <span class='day'>16</span> <span class='year'>2013</span></time>
+  <p>
+    <p>Recently I investigate the scalability of Jenkins. In my idea, I want to make hot standby Jenkins server with NFS. So the plugins which enable us to do that are required. And for my study, I decided to develop on Vagrant and VirtualBox. It costs me very little because there is no need to get real server.  So in this post, I will describe how to set up your jenkins plugin environment on your vagrant Ubuntu.</p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/jenkins/'>Jenkins</a>, <a class='category' href='/blog/categories/ubuntu/'>Ubuntu</a>, <a class='category' href='/blog/categories/vagrant/'>Vagrant</a></span>
-</footer>
+<h2>Start vagrant</h2>
+
+<p>My <code>Vagrantfile</code> is below. Before this, you should download precise64 box on vagrant <a href="http://www.vagrantbox.es/">site</a></p>
+
+<p>```</p>
+
+<h1>&ndash;<em>&ndash; mode: ruby &ndash;</em>&ndash;</h1>
+
+<h1>vi: set ft=ruby :</h1>
+
+<p>Vagrant.configure(&ldquo;2&rdquo;) do |config|
+  # Every Vagrant virtual environment requires a box to build off of.
+  config.vm.box = &ldquo;ubuntu&rdquo;</p>
+
+<p>  # Create a forwarded port mapping which allows access to a specific port
+  # within the machine from a port on the host machine. In the example below,
+  # accessing &ldquo;localhost:8080&rdquo; will access port 80 on the guest machine.
+  config.vm.network :forwarded_port, guest: 8080, host: 8080</p>
+
+<p> end
+```
+Jenkins plugin server starts on port 8080. So you need to write guest port 8080. Host port can be written any number.
+And start vagrant.</p>
+
+<p><code>
+$ vagrant up
+</code></p>
+
+<h2>Set up maven3</h2>
+
+<p>Jenkins plugins are build with Maven. In this time, Maven3 can build sample plugin easily, so I recommend that you download maven3.</p>
+
+<p><code>
+$ sudo apt-get install maven
+</code></p>
+
+<h2>Write settings.xml</h2>
+
+<p>Write settings.xml as below.</p>
+
+<p>```
+<settings>
+  <pluginGroups></p>
+
+<pre><code>&lt;pluginGroup&gt;org.jenkins-ci.tools&lt;/pluginGroup&gt;
+</code></pre>
+
+<p>  </pluginGroups></p>
+
+<p>  <profiles></p>
+
+<pre><code>&lt;!-- Give access to Jenkins plugins --&gt;
+&lt;profile&gt;
+  &lt;id&gt;jenkins&lt;/id&gt;
+  &lt;activation&gt;
+    &lt;activeByDefault&gt;true&lt;/activeByDefault&gt; &lt;!-- change this to false, if you don't like to have it on per default --&gt;
+  &lt;/activation&gt;
+  &lt;repositories&gt;
+    &lt;repository&gt;
+      &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
+      &lt;url&gt;http://repo.jenkins-ci.org/public/&lt;/url&gt;
+    &lt;/repository&gt;
+  &lt;/repositories&gt;
+  &lt;pluginRepositories&gt;
+    &lt;pluginRepository&gt;
+      &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
+      &lt;url&gt;http://repo.jenkins-ci.org/public/&lt;/url&gt;
+    &lt;/pluginRepository&gt;
+  &lt;/pluginRepositories&gt;
+&lt;/profile&gt;
+</code></pre>
+
+<p>  </profiles>
+  <mirrors></p>
+
+<pre><code>&lt;mirror&gt;
+  &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
+  &lt;url&gt;http://repo.jenkins-ci.org/public/&lt;/url&gt;
+  &lt;mirrorOf&gt;m.g.o-public&lt;/mirrorOf&gt;
+&lt;/mirror&gt;
+</code></pre>
+
+<p>  </mirrors>
+</settings>
+```</p>
+
+<h2>JDK!!</h2>
+
+<p>I failed to create my plugin in this time bacause of lack of JDK. Ubuntu 12.04 LTS doesn&rsquo;t have JDK in own image. You have to install it.</p>
+
+<p><code>
+$ sudo apt-get install default-jdk
+</code></p>
+
+<h2>Build plugin</h2>
+
+<p>Building plugin with maven command.</p>
+
+<p><code>
+$ mvn install
+</code></p>
+
+<p>And demonstrate your plugin.</p>
+
+<p><code>
+$ mvn hpi:run
+</code></p>
+
+<p>You can see Jenkins web UI on <a href="http://localhost:8080/jenkins">http://localhost:8080/jenkins</a> unless maven command has not exit.
+So now, I can get multi Jenkins server for mutual mount on NFS. My Jenkins study has been continued.</p>
+
+  </p>
+  <span class="meta">
+    written 
 
 
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-11-16T21:09:00+09:00" pubdate data-updated="true">Nov 16<span>th</span>, 2013</time>
+    
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/jenkins/'>Jenkins</a>, <a class='category' href='/blog/categories/ubuntu/'>Ubuntu</a>, <a class='category' href='/blog/categories/vagrant/'>Vagrant</a>
+  
+</span>
+
+
+  </span>
+
+  
 </article>
 
+          </div>
+        </div>
+      
+    </div>
+  </div>
 </div>
 
-  
-</article>
-
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
 </div>
 
-<aside class="sidebar">
-  
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
+<div class="col-md-2">
+  <div class="social-icon-list">
     
-      <li class="post">
-        <a href="/blog/2014/09/12/living-in-silicon-valley/">Living in Silicon Valley</a>
-      </li>
+    <a href="https://twitter.com/Lewuathe"><img src="/images/glyphicons_social_31_twitter.png"/></a>
     
-      <li class="post">
-        <a href="/blog/2014/06/19/case-class-for-swift/">Case Class for Swift</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/13/open-source-movement-in-hardware-compan/">Welcome Open Source Movement in Hardware Company</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/26/hack-nhk/">Hack NHK</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/20/what-is-the-essential-factor-of-autoencoder/">What Is the Essential Factor of Autoencoder?</a>
-      </li>
-    
-  </ul>
-</section>
 
+    
+    <a href="https://github.com/Lewuathe"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
 
+    
 
+    
+  </div>
+</div>
 
-
-  
-</aside>
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
 
 
     </div>
   </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Kai Sasaki -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
-
 </footer>
-  
 
-
-
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id; js.async = true;
-  js.src = "//connect.facebook.net/ja_JP/all.js#appId=212934732101925&xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-
-
-
-</body>
+  </body>
 </html>

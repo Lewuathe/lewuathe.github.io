@@ -3,6 +3,10 @@
 <!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
 <!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
   <title>Category: 機械学習 - The first cry of Atom</title>
@@ -16,32 +20,16 @@
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="Hatena::Bookmark" content="nocomment" />
-  <meta property="og:title" content="Category: 機械学習 - The first cry of Atom" >
-<meta property="og:description" content="Category: 機械学習" />
-<meta property="og:url" content="http://lewuathe.com" />
-<meta property="og:image" content="http://lewuathe.github.io/images/site_image.png" />
-<meta property="og:author" content="lewuathe" />
-<meta property="og:site_name" content="The first cry of Atom" />
-<meta property="og:locale" content="ja_JP" />
-<meta property="og:type" content="article" />
-<meta property="fb:app_id" content="212934732101925" />
-
 
   
   <link rel="canonical" href="http://lewuathe.github.ioblog/categories/ji-jie-xue-xi">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
-  <link href="/stylesheets/data-table.css" rel="stylesheet" type="text/css" />
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-
   
   <script type="text/javascript">
     var _gaq = _gaq || [];
@@ -58,147 +46,177 @@
 
 </head>
 
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">The first cry of Atom</a></h1>
-  
-    <h2>The people who are crazy enough to think thay can change the world, are the ones who do</h2>
-  
-</hgroup>
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
 
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:lewuathe.github.io" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/about.html">About</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-  <li><a href="http://instagram.com/lewuathe">Pictures</a></li>
-  <li><a href="https://github.com/Lewuathe">GitHub</a></li>
-  <li><a href="https://twitter.com/Lewuathe">Twitter</a></li>
-</ul>
+    <div class="all-posts">
+  <div class="container">
+    <div class="row">
+      <div class="list-title col-md-offset-3 col-md-6">
+        <h4>Posts in 機械学習</h4>
+      </div>
+    </div>
+  </div>
 
-</nav>
-  <div id="main">
-    <div id="content">
-      <div>
-<article role="article">
+  <div class="article-list">
+    <div class="container">
+      
+        
+        <div class="row">
+          <div class="col-md-offset-3 col-md-6">
+            <article>
+  <h2><a href="/blog/2013/09/29/moderuebidensufalseping-jia/">モデルエビデンスの評価</a></h2>
   
-  <header>
-    <h1 class="entry-title">Category: 機械学習</h1>
+  <p>
+    <p>作ったプログラムは以下においたよ。</p>
+
+<p><a href="https://github.com/PhysicsEngine/cpi-stats">https://github.com/PhysicsEngine/cpi-stats</a></p>
+
+<p>ここで作成した線形回帰モデルのエビデンス評価をしてみた。
+モデルエビデンスはざっくり言うと、訓練データを与える尤度を周辺化した値。つまり、そのデータを与える可能性が最も高いものを選ぶことができればパラメタの複雑さなどを自分で判断しなくてもよいというメリットがある。</p>
+
+<p>今回、実装したのは基底関数を多項式とした場合で各目標値には加法性のガウスノイズがのる前提で計算を行った。</p>
+
+<p>超パラメタalpha(モデルパラメタのばらつき)とbeta(ガウスノイズの精度)はそれぞれ0.0001、15.0にした。推定の方法としてはベイズ推定の予測分布を計算して行った。</p>
+
+<p><code>scala
+// Mはモデルパラメタの数
+val bayesRegression = new BayesRegression(M, 0.0001, 15.0)
+</code></p>
+
+<h1>モデルエビデンスの評価</h1>
+
+<p>基本的にはPRML(3.86)式に従った。</p>
+
+<p><code>
+// Alphaはパラメタの分布の事前分布のばらつきを表す超パラメタ
+// Betaはガウスノイズの精度を表す超パラメタ
+// eMnの最大尤度での二乗和誤差
+(M/2.0) * Math.log(Alpha) + (xlist.length/2.0) * Math.log(Beta) - eMn - 1/2.0 * Math.log(det(inv(_sN))) - xlist.length / 2.0 * Math.log(2 * Math.PI)
+</code></p>
+
+<p><img src="/images/posts/2013-09-29-ModelEvidense/evidense.png" alt="モデルエビデンス" /></p>
+
+<p>モデルエビデンスをモデルパラメタの複雑さ2~100の間でプロットした。赤線はM=4の位置。M=4で最大となっていることがわかる。というわけでそれぞれの主要な位置で実際のモデルのグラフをプロットしてみた</p>
+
+<h2>M=3の場合</h2>
+
+<p>なんか直線っぽく見えるけれど、二次関数です。ほぼあってないのでエビデンスもすごい低い。二乗和誤差関数の値も大きい。
+このモデルはエビデンスを求めなくても選ばれなさそう。</p>
+
+<p><img src="/images/posts/2013-09-29-ModelEvidense/M=3.png" alt="M=3" /></p>
+
+<h2>M=4の場合</h2>
+
+<p>エビデンスが最大のモデル。見た目かなりよくfittingしている。</p>
+
+<p><img src="/images/posts/2013-09-29-ModelEvidense/M=4.png" alt="M=4" /></p>
+
+<h2>M=9の場合</h2>
+
+<p>むむ、M=4の場合と対して変わらない。</p>
+
+<p><img src="/images/posts/2013-09-29-ModelEvidense/M=9.png" alt="M=9" /></p>
+
+<h2>M=15の場合</h2>
+
+<p>これもあんまり変わらない。対数尺度で見た時に10程度の差しかないからか。この差はエビデンスでみると大して大きな差ではないのかもしれない。</p>
+
+<p><img src="/images/posts/2013-09-29-ModelEvidense/M=15.png" alt="M=15" /></p>
+
+<h2>M=30の場合</h2>
+
+<p>over fittingし始めた。M=15とM=30で大きく異るところはエビデンスの値というよりは訓練データ集合が25個だからそれより多いか少ないかの違いな気がする。</p>
+
+<p>直感的には基底関数を多項式にしているので最尤推定で行うと訓練データ集合よりもモデルパラメータの数が多いとすべての点を通るようなグラフになる。今回はベイズ推定で行っているので事前分布のお陰で全点を通るなんてことはないけれど、それでも過学習をし始める分岐点としては訓練データの数になるかもしれない。</p>
+
+<p>x=1付近でしか過学習してないのが気になるけれど。</p>
+
+<p><img src="/images/posts/2013-09-29-ModelEvidense/M=30.png" alt="M=30" /></p>
+
+<h2>M=100の場合</h2>
+
+<p>もう右側(x=1付近)のグラフはめちゃめちゃ。でもx=0付近はそんなにおかしくないのはなぜだろう。事前分布における精度は常に一定なのでそんなに場所によってばらついたりしなさそうなんだけど。</p>
+
+<p><img src="/images/posts/2013-09-29-ModelEvidense/M=100.png" alt="M=100" /></p>
+
+<h1>まとめ</h1>
+
+<p>評価値xによって過学習したりしてなかったりするのが気になるけれど、全体としてはエビデンス関数を最大化するようなモデルパラメタMを選ぶことによって、最適なモデルを作ることができそう。PRMLにも書いてあったけれど、「目で見りゃいいじゃん」というのはもっと高次元になった場合に通用しなくなるので、解析的にモデルを評価できる手法は有用。しかも割と時間もそんなにかからない。(Scalaでモデル100個の評価を行ったけれど1~2秒ほど)</p>
+
+<p>超パラメタ、alphaとbetaに関しても評価してエビデンスを最大化してみるとよりよいモデルが得られるのかも。</p>
+
+  </p>
+  <span class="meta">
+    written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-09-29T10:17:00+09:00" pubdate data-updated="true">Sep 29<span>th</span>, 2013</time>
     
-  </header>
+
+in
+<span class="categories">
   
-  <div id="blog-archives" class="category">
+    <a class='category' href='/blog/categories/moderuebidensu/'>モデルエビデンス</a>, <a class='category' href='/blog/categories/ji-jie-xue-xi/'>機械学習</a>
+  
+</span>
 
 
+  </span>
 
   
-  <h2>2013</h2>
-
-<article>
-  
-<h1><a href="/blog/2013/09/29/moderuebidensufalseping-jia/">モデルエビデンスの評価</a></h1>
-<time datetime="2013-09-29T10:17:00+09:00" pubdate><span class='month'>Sep</span> <span class='day'>29</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/moderuebidensu/'>モデルエビデンス</a>, <a class='category' href='/blog/categories/ji-jie-xue-xi/'>機械学習</a></span>
-</footer>
-
-
 </article>
 
+          </div>
+        </div>
+      
+    </div>
+  </div>
 </div>
 
-  
-</article>
-
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
 </div>
 
-<aside class="sidebar">
-  
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
+<div class="col-md-2">
+  <div class="social-icon-list">
     
-      <li class="post">
-        <a href="/blog/2014/09/12/living-in-silicon-valley/">Living in Silicon Valley</a>
-      </li>
+    <a href="https://twitter.com/Lewuathe"><img src="/images/glyphicons_social_31_twitter.png"/></a>
     
-      <li class="post">
-        <a href="/blog/2014/06/19/case-class-for-swift/">Case Class for Swift</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/13/open-source-movement-in-hardware-compan/">Welcome Open Source Movement in Hardware Company</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/26/hack-nhk/">Hack NHK</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/05/20/what-is-the-essential-factor-of-autoencoder/">What Is the Essential Factor of Autoencoder?</a>
-      </li>
-    
-  </ul>
-</section>
 
+    
+    <a href="https://github.com/Lewuathe"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
 
+    
 
+    
+  </div>
+</div>
 
-
-  
-</aside>
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
 
 
     </div>
   </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Kai Sasaki -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
-
 </footer>
-  
 
-
-
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id; js.async = true;
-  js.src = "//connect.facebook.net/ja_JP/all.js#appId=212934732101925&xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-
-
-
-</body>
+  </body>
 </html>
