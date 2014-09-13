@@ -89,6 +89,231 @@ The people who are crazy enough to think thay can change the world, are the ones
           <div class="row">
             <div class="col-md-offset-3 col-md-6">
               <article>
+  <h2><a href="/blog/2013/11/09/scikit-learndecross-validation/">scikit-learnでCross Validation</a></h2>
+  
+  <p>
+    <p>だんだんとscikit-learnとMachine Learningに慣れてきた。
+今回はCross ValidationとGrid Searchをやってみた。</p>
+
+
+
+
+<h3>Cross Validation</h3>
+
+
+
+
+<p>詳しいことは<a href="http://ja.wikipedia.org/wiki/%E4%BA%A4%E5%B7%AE%E6%A4%9C%E5%AE%9A">Wikipedia</a>に書いてある。
+Cross Validationはモデルの妥当性を検証する方法のひとつ。一般的に開発用のデータは訓練データと検証データに分かれる。
+しかし、このまま行ってしまうと折角の訓練データが減ってしまうことになる上に、訓練データの選び方によって汎化性能が下がってしまう可能性がある。
+Wikipediaに書いてあるもののホールド・アウト検定がこれに当たる。一般にはこれはCross Validationにはあたらない。</p>
+
+
+
+
+<p>ここに書いてあるK-分割交差検定がこれに当たる。K-分割交差検定では開発用のデータをK個に分割しK-1個を訓練用に、残りの一つを検証用に使いモデルの正当性を計算する。
+これにより使える訓練データが増えると同時に、これらを訓練データを変えることにより、汎化性能を上げることができる。</p>
+
+
+
+
+<p>scikit-learnで具体的にどのように行うのか書いてみた。訓練に使ったデータとしてはKaggleの<a href="http://www.kaggle.com/c/data-science-london-scikit-learn">Data Science London</a>で出されているものを用いた。</p>
+
+
+
+
+<h3>SVM</h3>
+
+
+
+
+<p>まずは単純にサポートベクターマシンでクラス分けをさせた時のコード</p>
+
+
+<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># &ndash;<em>&ndash; coding: utf-8 &ndash;</em>&ndash;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">os</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">sys</span>
+</span><span class='line'><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">svm</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">csv</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n"><strong>name</strong></span> <span class="o">==</span> <span class="s">&quot;<strong>main</strong>&quot;</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">train_feature_file</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">&quot;../data/train.csv&quot;</span><span class="p">,</span> <span class="s">&quot;rb&quot;</span><span class="p">),</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&quot;,&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">train_label_file</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">&quot;../data/trainLabels.csv&quot;</span><span class="p">,</span> <span class="s">&quot;rb&quot;</span><span class="p">),</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&quot;,&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">train_features</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>    <span class="n">train_labels</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">train_feature</span><span class="p">,</span> <span class="n">train_label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">train_feature_file</span><span class="p">,</span> <span class="n">train_label_file</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">train_features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_feature</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">train_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_label</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">train_features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">train_features</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">train_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">train_labels</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">clf</span> <span class="o">=</span> <span class="n">svm</span><span class="o">.</span><span class="n">SVC</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">cache_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">class_weight</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">coef0</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">gamma</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="s">&quot;rbf&quot;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=&ndash;</span><span class="mi">1</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">shrinking</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_features</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">test_feature_file</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">&quot;../data/test.csv&quot;</span><span class="p">,</span> <span class="s">&quot;rb&quot;</span><span class="p">),</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&quot;,&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">test_features</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class='line'>    <span class="k">print</span> <span class="s">&quot;Id,Solution&quot;</span>
+</span><span class='line'>    <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">test_feature</span> <span class="ow">in</span> <span class="n">test_feature_file</span><span class="p">:</span>
+</span><span class='line'>        <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;,&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_feature</span><span class="p">)[</span><span class="mi">0</span><span class="p">]))</span>
+</span><span class='line'>        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>このモデルをCross Validationで検証してみる。</p>
+
+
+<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">get_score</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">train_features</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">cross_validation</span><span class="o">.</span><span class="n">train_test_split</span><span class="p">(</span><span class="n">train_features</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">print</span> <span class="n">clf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>cross_validation.train_test_splitは一定の割合が検証用データとなるように開発用データを分割する関数。この場合は<code>test_size=0.4</code>を指定したので、40%のデータを検証用として使うことになる。
+<code>fit</code>が60%の訓練データで行うもので、scoreが残された40%のデータで検証を行いその正答率を出してくれる。これがこのモデルの、このテストデータにおける正当性となる。もちろんこれが高ければ高いほどよいが
+汎化性能が高いかどうかはここからでは読み取ることができない。そのためK分割を行うことでK回の検証を行うことができる。これらのスコアを平均することで汎化性能も含めたモデルの正当性を表すことができる。</p>
+
+
+<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">get_accuracy</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">train_features</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_validation</span><span class="o">.</span><span class="n">cross_val_score</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">train_features</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Accuracy: </span><span class="si">%0.2f</span><span class="s"> (+/&ndash; </span><span class="si">%0.2f</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p><code>cross_validation_cross_val_score</code>でこれらの検証のすべてのscoreを得ることができる。<code>cv</code>はK分割の分割の個数を指定することができる。今回は開発用のデータを10個に分割し10回の検証を行う。
+scoresには10個のscoreが入ったリストが返ってくる。これの平均をAccuracyとして出している。これで汎化性能も含めたモデルの正当性を得ることができるが、モデルパラメータのチューニングを手で行う必要がある。
+手で調整して、Accuracyを計算するというのは非常に手間なのでGrid Searchというアルゴリズムでこのチューニングをある程度自動化することができる。</p>
+
+
+
+
+<h3>Grid Search</h3>
+
+
+
+
+<p>パラメータの範囲を指定することで経験的に最適なパラメータの組を探索する方法がGrid Search。Pythonで行うには以下のように書く。</p>
+
+
+<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">grid_search</span><span class="p">(</span><span class="n">train_features</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">):</span>
+</span><span class='line'>    <span class="n">param_grid</span> <span class="o">=</span> <span class="p">[</span>
+</span><span class='line'>        <span class="p">{</span><span class="s">&#39;C&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">],</span> <span class="s">&#39;kernel&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;linear&#39;</span><span class="p">]},</span>
+</span><span class='line'>        <span class="p">{</span><span class="s">&#39;C&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">],</span> <span class="s">&#39;gamma&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.0001</span><span class="p">],</span> <span class="s">&#39;kernel&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;rbf&#39;</span><span class="p">]},</span>
+</span><span class='line'>    <span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">clf</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">svm</span><span class="o">.</span><span class="n">SVC</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">param_grid</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=&ndash;</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_features</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">print</span> <span class="n">clf</span><span class="o">.</span><span class="n">best_estimator_</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>param_gridに指定することでこの範囲を指定することができる。n_jobsに並列に計算を行うプロセス数を指定することができる。-1を指定するとコア数をデフォルト選ぶようになっている。与えられた訓練データに対してGrid Searchを行う。
+時間は少しかかるが、この訓練データに対して最もスコアが高くなるようなモデルパラメータを選ぶことができる。この訓練データを実際のテストデータに使うことができる。</p>
+
+
+
+
+<h3>まとめ</h3>
+
+
+
+
+<p>PRMLには実際の機械学習のプロセスみたいなものがあまり細かく書かれていないのでKaggleに提出されているコードとかを実際にみて、こういったプロセスが分かるようになってきた。
+あとscikit-learnが便利すぎて、機械学習の学習アルゴリズムだけじゃなくて特徴抽出とかモデルパラメータの最適化なども整備されていたことに驚いた。</p>
+
+
+  </p>
+  <span class="meta">
+    written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-11-09T21:56:00+09:00" pubdate data-updated="true">Nov 9<span>th</span>, 2013</time>
+    
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/cross-validation/'>Cross Validation</a>, <a class='category' href='/blog/categories/python/'>Python</a>, <a class='category' href='/blog/categories/scikit-learn/'>scikit-learn</a>
+  
+</span>
+
+
+  </span>
+
+  
+</article>
+
+            </div>
+          </div>
+        
+          
+          <div class="row">
+            <div class="col-md-offset-3 col-md-6">
+              <article>
   <h2><a href="/blog/2013/11/03/tf-idfdetagufu-ke/">TF-IDFでタグ付け</a></h2>
   
   <p>
@@ -2019,103 +2244,6 @@ SQLと同じように他にもSUMとかAVGとか使えるみたい。</p>
 
 
 <time datetime="2013-09-18T21:15:00+09:00" pubdate data-updated="true">Sep 18<span>th</span>, 2013</time>
-    
-
-
-  </span>
-
-  
-</article>
-
-            </div>
-          </div>
-        
-          
-          <div class="row">
-            <div class="col-md-offset-3 col-md-6">
-              <article>
-  <h2><a href="/blog/2013/09/17/baiasu-bariansufen-jie/">バイアス-バリアンス分解</a></h2>
-  
-  <p>
-    <p>今回はモデルのバイアスとバリアンスを前回までの正則化最小二乗法のモデルを使って計算してみたよ。線形回帰モデルのバイアスとバリアンスはトレードオフの関係にあって、表現力の高いモデルを用いるとバイアスは小さくなるがバリアンスは大きくなってしまう。逆にバリアンスの小さいモデルを用いるとデータによる差が小さくなる代わりに全ての予測値の平均が理想的な回帰関数から離れていってしまう。</p>
-
-
-
-
-<p>20通りの異なる訓練データ集合に対して正則化パラメータを調整して、訓練させてみた。</p>
-
-
-
-
-<h3>λ=1.1の場合</h3>
-
-
-
-
-<p><img src="https://raw.github.com/PhysicsEngine/cpi-stats/master/results/lambda1.1.png" alt="lambda=1.1" /></p>
-
-
-
-
-<p>正則化パラメータが大きい場合は複雑なモデルに対するペナルティが大きくなるので、このようにバリアンスが小さく抑えられる。けれども表現力の豊かなモデルが抑えられるのでそもそも訓練データから理想的な曲線を表現できるほどのモデルになってないことがわかる。ぱっと見、さっきの正則化パラメータが小さい場合よりもずっとsin関数に見えないものができあがってしまった。</p>
-
-
-
-
-<h3>λ= 0.0000001の場合</h3>
-
-
-
-
-<p><img src="https://raw.github.com/PhysicsEngine/cpi-stats/master/results/lambda0.0000000001.png" alt="lambda=0.000000001" /></p>
-
-
-
-
-<p>正則化パラメータが小さい場合、次元数の高いモデルに対するペナルティが低くなるので過学習を起こしやすい。この場合、それぞれの訓練データにひきずられて様々な回帰モデルが構成されてしまった。さっきよりはなんとなくsin関数に見えるけれど、あんまり、ここからどのデータが一番よいのかを決めるのも難しいし、何よりどれもかなり異なっているので全体として理想的な回帰曲線がわからない。</p>
-
-
-
-
-<h3>平均をとってみた</h3>
-
-
-
-
-<p>なんとなくsin関数に見えるということは平均をとると、正しい回帰曲線になるんではないだろうか。ということでバリアンスが高くて訓練データに引きずられてしまっている場合の平均をとってみる</p>
-
-
-
-
-<p><img src="https://raw.github.com/PhysicsEngine/cpi-stats/master/results/ave.png" alt="ave" /></p>
-
-
-
-
-<p>赤い太線が各推定曲線の平均。sin関数に見える！！</p>
-
-
-
-
-<p>このことからバリアンスが大きな表現力の高いモデルの平均はいつもでもないにせよ、有益な推定結果をもたらすこともあるかもしれない。(PRMLの受け売りだけどね)</p>
-
-
-  </p>
-  <span class="meta">
-    written 
-
-
-
-
-
-
-
-
-  
-
-
-
-<time datetime="2013-09-17T21:17:00+09:00" pubdate data-updated="true">Sep 17<span>th</span>, 2013</time>
     
 
 

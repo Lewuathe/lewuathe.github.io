@@ -89,6 +89,500 @@ The people who are crazy enough to think thay can change the world, are the ones
           <div class="row">
             <div class="col-md-offset-3 col-md-6">
               <article>
+  <h2><a href="/blog/2013/12/13/making-widget-plugin/">Making Jenkins Widget Plugin</a></h2>
+  
+  <p>
+    <p>This article was written for <a href="http://qiita.com/advent-calendar/2013/jenkinsci">Jenkins Advent Calendar</a> 14th day.</p>
+
+
+
+
+<h2>Making Jenkins plugin</h2>
+
+
+
+
+<p>Have you ever made Jenkins plugin? This is about my experience developing Jenkins plugin.
+I have not written Java ever, and of course didn&rsquo;t know how to make maven projects. So while writing plugin codes,
+I went this way and that, googling and trying code snippets. Then I felt that there were not enough documents for
+first Jenkins plugin developers. This post however I only made widget plugin, I would be glad that this article will be useful
+to the same developers as me.</p>
+
+
+
+
+<h2>Getting started</h2>
+
+
+
+
+<p>First, it is needed to download skelton of Jenkins plugin by using maven plugin. I used maven-3.0.5, and OSX machine.
+Write below xml in <code>~/.m2/settings.xml</code></p>
+
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;settings&gt;
+</span><span class='line'>  &lt;pluginGroups&gt;
+</span><span class='line'>    &lt;pluginGroup&gt;org.jenkins-ci.tools&lt;/pluginGroup&gt;
+</span><span class='line'>  &lt;/pluginGroups&gt;
+</span><span class='line'>
+</span><span class='line'>  &lt;profiles&gt;
+</span><span class='line'>    &lt;!&mdash; Give access to Jenkins plugins &mdash;&gt;
+</span><span class='line'>    &lt;profile&gt;
+</span><span class='line'>      &lt;id&gt;jenkins&lt;/id&gt;
+</span><span class='line'>      &lt;activation&gt;
+</span><span class='line'>        &lt;activeByDefault&gt;true&lt;/activeByDefault&gt; &lt;!&mdash; change this to false, if you don&rsquo;t like to have it on per default &mdash;&gt;
+</span><span class='line'>      &lt;/activation&gt;
+</span><span class='line'>      &lt;repositories&gt;
+</span><span class='line'>        &lt;repository&gt;
+</span><span class='line'>          &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
+</span><span class='line'>          &lt;url&gt;<a href="http://repo.jenkins-ci.org/public/&amp;lt;/url&amp;gt;">http://repo.jenkins-ci.org/public/&amp;lt;/url&amp;gt;</a>
+</span><span class='line'>        &lt;/repository&gt;
+</span><span class='line'>      &lt;/repositories&gt;
+</span><span class='line'>      &lt;pluginRepositories&gt;
+</span><span class='line'>        &lt;pluginRepository&gt;
+</span><span class='line'>          &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
+</span><span class='line'>          &lt;url&gt;<a href="http://repo.jenkins-ci.org/public/&amp;lt;/url&amp;gt;">http://repo.jenkins-ci.org/public/&amp;lt;/url&amp;gt;</a>
+</span><span class='line'>        &lt;/pluginRepository&gt;
+</span><span class='line'>      &lt;/pluginRepositories&gt;
+</span><span class='line'>    &lt;/profile&gt;
+</span><span class='line'>  &lt;/profiles&gt;
+</span><span class='line'>  &lt;mirrors&gt;
+</span><span class='line'>    &lt;mirror&gt;
+</span><span class='line'>      &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
+</span><span class='line'>      &lt;url&gt;<a href="http://repo.jenkins-ci.org/public/&amp;lt;/url&amp;gt;">http://repo.jenkins-ci.org/public/&amp;lt;/url&amp;gt;</a>
+</span><span class='line'>      &lt;mirrorOf&gt;m.g.o-public&lt;/mirrorOf&gt;
+</span><span class='line'>    &lt;/mirror&gt;
+</span><span class='line'>  &lt;/mirrors&gt;
+</span><span class='line'>&lt;/settings&gt;</span></code></pre></td></tr></table></div></figure></p>
+
+<p>Create skelton.</p>
+
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mvn hpi:create</span></code></pre></td></tr></table></div></figure></p>
+
+<p>Project name and artifactId will be asked as below.</p>
+
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[INFO] Scanning for projects&hellip;
+</span><span class='line'>[INFO]
+</span><span class='line'>[INFO] &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;
+</span><span class='line'>[INFO] Building Maven Stub Project (No POM) 1
+</span><span class='line'>[INFO] &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;
+</span><span class='line'>[INFO]
+</span><span class='line'>[INFO] &mdash;&ndash; maven-hpi-plugin:1.106:create (default-cli) @ standalone-pom &mdash;&ndash;
+</span><span class='line'>Enter the groupId of your plugin [org.jenkins-ci.plugins]: com.lewuathe.plugins
+</span><span class='line'>Enter the artifactId of your plugin (normally without &lsquo;-plugin&rsquo; suffix): mytest</span></code></pre></td></tr></table></div></figure></p>
+
+<p>Then under current directory, <code>mytest</code> project might be made. The directory tree looks like.</p>
+
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>% tree mytest
+</span><span class='line'>mytest
+</span><span class='line'>├── pom.xml
+</span><span class='line'>└── src
+</span><span class='line'>    └── main
+</span><span class='line'>        ├── java
+</span><span class='line'>        │   └── com
+</span><span class='line'>        │       └── lewuathe
+</span><span class='line'>        │           └── plugins
+</span><span class='line'>        │               └── mytest
+</span><span class='line'>        │                   └── HelloWorldBuilder.java
+</span><span class='line'>        └── resources
+</span><span class='line'>            ├── com
+</span><span class='line'>            │   └── lewuathe
+</span><span class='line'>            │       └── plugins
+</span><span class='line'>            │           └── mytest
+</span><span class='line'>            │               └── HelloWorldBuilder
+</span><span class='line'>            │                   ├── config.jelly
+</span><span class='line'>            │                   ├── global.jelly
+</span><span class='line'>            │                   ├── help-name.html
+</span><span class='line'>            │                   └── help-useFrench.html
+</span><span class='line'>            └── index.jelly
+</span><span class='line'>
+</span><span class='line'>13 directories, 7 files</span></code></pre></td></tr></table></div></figure></p>
+
+<p>This sample project uses Builder extension point of Jenkins plugin. <a href="https://wiki.jenkins-ci.org/display/JENKINS/Extension+points#Extensionpoints-hudson.tasks.Builder">Builder extension</a> point is executed inside of the build process. If you have any process run on the way of building, you have to write the class which extends Builder. But in this article, I introduce Widget plugin. If you want to know what kind of extension points exist, please search on <a href="https://wiki.jenkins-ci.org/display/JENKINS/Extension+points">this page</a></p>
+
+
+
+
+<p>Before explaining about Widget plugin, let me say how to run this plugins.</p>
+
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mvn hpi:run</span></code></pre></td></tr></table></div></figure></p>
+
+<p>With above command, maven can download packages on which this plugin project depends and run Jenkins test server on 8080 port.</p>
+
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># Access below host!
+</span><span class='line'><a href="http://localhost:8080/jenkins/">http://localhost:8080/jenkins/</a></span></code></pre></td></tr></table></div></figure></p>
+
+<p>You can look at Jenkins server! There is all you have to do before developing your own Jenkins plugin. Let&rsquo;s get started.</p>
+
+
+
+
+<h2>Write Widget plugin</h2>
+
+
+
+
+<p>My Jenkins plugin is put on <a href="https://github.com/jenkinsci/hckrnews-plugin">this repository</a>. With this plugin you can see hacker news top time-line on Jenkins dashboard.
+From <a href="https://wiki.jenkins-ci.org/display/JENKINS/Hckrnews+Plugin">there</a>, it can be downloaded.
+Screen shot was taken as below.</p>
+
+
+
+
+<p><img src="/images/posts/2013-12-13-jenkins-widget-plugin/hckrnews-screenshot.png" alt="screenshot" /></p>
+
+
+
+
+<p>By examing this plugin&rsquo;s source code, I want to list up the points I had trouble in completing this plugin.</p>
+
+
+
+
+<h2>Correspondence of Jelly file and Java class</h2>
+
+
+
+
+<p>In Jenkins, <a href="http://stapler.kohsuke.org/what-is.html">Stapler</a> is used in order to map URL and Java objects.</p>
+
+
+
+
+<blockquote><p>Stapler is a library that &ldquo;staples&rdquo; your application objects to URLs, making it easier to write web applications. The core idea of Stapler is to automatically assign URLs for your objects, creating an intuitive URL hierarchy.</p></blockquote>
+
+
+
+
+<p>At first, I cannot grasp what that means and practically which objects are mapped to jelly files. In conclusion, this is the correspond directory files.
+Please look at <code>src/main/java</code> and <code>src/main/resources</code> directory of your project. It looks the same structure, doesn&rsquo;t it? So, in these directory, the correnspondence between Java class and jelly filesis made.
+For example on hckrnews-plugin source tree, <code>java/com/lewuathe/plugins/hckrnews/HckrnewsWidget.java</code> corresponds to <code>com/lewuathe/plugins/hckrnews/HckrnewsWidget/</code>.
+The former is what model or controller, and the latter is view in the context of MVC.</p>
+
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>├── java
+</span><span class='line'>│   └── com
+</span><span class='line'>│       └── lewuathe
+</span><span class='line'>│           └── plugins
+</span><span class='line'>│               └── hckrnews
+</span><span class='line'>│                   └── HckrnewsWidget.java  // &lt;&mdash; This is controller
+</span><span class='line'>└── resources
+</span><span class='line'>    ├── com
+</span><span class='line'>    │   └── lewuathe
+</span><span class='line'>    │       └── plugins
+</span><span class='line'>    │           └── hckrnews
+</span><span class='line'>    │               └── HckrnewsWidget
+</span><span class='line'>    │                   └── index.jelly     // &lt;&mdash; This is view which corresponds to above controller, HckrnewsWidget.java
+</span><span class='line'>    └── index.jelly</span></code></pre></td></tr></table></div></figure></p>
+
+<h2>Calling view method</h2>
+
+
+
+
+<p>In <code>HckrnewsWidget.java</code>, news static class in child class of Widget extension points is written.</p>
+
+
+<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Extension</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HckrnewsWidget</span> <span class="kd">extends</span> <span class="n">Widget</span> <span class="o">{</span>
+</span><span class='line'><span class="c1">// &hellip;.</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">News</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kd">private</span> <span class="n">String</span> <span class="n">title</span><span class="o">;</span>
+</span><span class='line'>        <span class="kd">private</span> <span class="n">String</span> <span class="n">url</span><span class="o">;</span>
+</span><span class='line'>        <span class="kd">private</span> <span class="n">String</span> <span class="n">points</span><span class="o">;</span>
+</span><span class='line'>        <span class="kd">private</span> <span class="n">String</span> <span class="n">postedBy</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kd">public</span> <span class="n">String</span> <span class="nf">getTitle</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">title</span><span class="o">;</span> <span class="o">}</span>
+</span><span class='line'>        <span class="kd">public</span> <span class="n">String</span> <span class="nf">getUrl</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">url</span><span class="o">;</span> <span class="o">}</span>
+</span><span class='line'>        <span class="kd">public</span> <span class="n">String</span> <span class="nf">getPoints</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">points</span><span class="o">;</span> <span class="o">}</span>
+</span><span class='line'>        <span class="kd">public</span> <span class="n">String</span> <span class="nf">getPostedBy</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">postedBy</span><span class="o">;</span> <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="c1">// &hellip;.</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>Ordinary getter of News object. So it comes to index.jelly file.</p>
+
+
+<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="o">&lt;</span><span class="nl">j:</span><span class="n">jelly</span> <span class="nl">xmlns:</span><span class="n">j</span><span class="o">=</span><span class="s">&quot;jelly:core&quot;</span> <span class="nl">xmlns:</span><span class="n">st</span><span class="o">=</span><span class="s">&quot;jelly:stapler&quot;</span> <span class="nl">xmlns:</span><span class="n">d</span><span class="o">=</span><span class="s">&quot;jelly:define&quot;</span> <span class="nl">xmlns:</span><span class="n">l</span><span class="o">=</span><span class="s">&quot;/lib/layout&quot;</span> <span class="nl">xmlns:</span><span class="n">t</span><span class="o">=</span><span class="s">&quot;/lib/hudson&quot;</span> <span class="nl">xmlns:</span><span class="n">f</span><span class="o">=</span><span class="s">&quot;/lib/form&quot;</span> <span class="nl">xmlns:</span><span class="n">i</span><span class="o">=</span><span class="s">&quot;jelly:fmt&quot;</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nl">l:</span><span class="n">pane</span> <span class="n">width</span><span class="o">=</span><span class="s">&quot;3&quot;</span> <span class="n">title</span><span class="o">=</span><span class="s">&quot;Hacker News Top&quot;</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="n">th</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;pane&quot;</span><span class="o">&gt;</span><span class="n">Title</span><span class="o">&lt;/</span><span class="n">th</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="n">th</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;pane&quot;</span><span class="o">&gt;</span><span class="n">Points</span><span class="o">&lt;/</span><span class="n">th</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="n">th</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;pane&quot;</span><span class="o">&gt;</span><span class="n">Posted</span> <span class="n">by</span><span class="o">&lt;/</span><span class="n">th</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nl">j:</span><span class="n">forEach</span> <span class="n">var</span><span class="o">=</span><span class="s">&quot;news&quot;</span> <span class="n">items</span><span class="o">=</span><span class="s">&quot;${it.newslist}&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="n">td</span> <span class="n">align</span><span class="o">=</span><span class="s">&quot;left&quot;</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;pane&quot;</span> <span class="n">style</span><span class="o">=</span><span class="s">&quot;width:10px;&quot;</span><span class="o">&gt;&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;${news.url}&quot;</span><span class="o">&gt;</span><span class="n">$</span><span class="o">{</span><span class="n">news</span><span class="o">.</span><span class="na">title</span><span class="o">}&lt;/</span><span class="n">a</span><span class="o">&gt;&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="n">td</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;pane&quot;</span> <span class="n">align</span><span class="o">=</span><span class="s">&quot;right&quot;</span><span class="o">&gt;</span><span class="n">$</span><span class="o">{</span><span class="n">news</span><span class="o">.</span><span class="na">points</span><span class="o">}&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="n">td</span> <span class="n">class</span><span class="o">=</span><span class="s">&quot;pane&quot;</span> <span class="n">align</span><span class="o">=</span><span class="s">&quot;right&quot;</span><span class="o">&gt;</span><span class="n">$</span><span class="o">{</span><span class="n">news</span><span class="o">.</span><span class="na">postedBy</span><span class="o">}&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="nl">j:</span><span class="n">forEach</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="nl">l:</span><span class="n">pane</span><span class="o">&gt;</span>
+</span><span class='line'><span class="n">Last</span> <span class="nl">Updated:</span> <span class="n">$</span><span class="o">{</span><span class="n">it</span><span class="o">.</span><span class="na">lastupdatedstr</span><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="nl">j:</span><span class="n">jelly</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>The detail of Jelly syntax is not explained in this time. In this template file, <code>it</code> refers to the correspondence object in logic of stapler,
+in other words that&rsquo;s <code>HckrnewsWidget.java</code>. So when you writes as <code>it.newslist</code>, this calls</p>
+
+
+<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Extension</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HckrnewsWidget</span> <span class="kd">extends</span> <span class="n">Widget</span> <span class="o">{</span>
+</span><span class='line'><span class="c1">//&hellip;</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">News</span><span class="o">&gt;</span> <span class="nf">getNewslist</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">newsList</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="c1">//&hellip;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>Then <code>index.jelly</code> can get newslist. But you should take care of the casing of method name. If you write <code>getNewsList</code>, it can be called. Types are below.</p>
+
+
+
+
+<ul>
+<li>getNewslist : it.newslist is called</li>
+<li>getNewsList : it.newList is called</li>
+<li>getNewslist : it.newsList is <em>not</em> called</li>
+</ul>
+
+
+
+
+<p>So it looks like auto casting to a captal letter is only applied to the first letter. It is necessary to arrange the type of posteror letters.</p>
+
+
+
+
+<h2>Making Wiki</h2>
+
+
+
+
+<p>It might be rare case which only I experienced. Jenkins wiki page can not be created automatically.
+Of course, it is taken for granted that writing down your wiki url on pom.xml.</p>
+
+
+<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="o">&lt;</span><span class="n">project</span> <span class="n">xmlns</span><span class="o">=</span><span class="s">&quot;<a href="http://maven.apache.org/POM/4.0.0&amp;quot;">http://maven.apache.org/POM/4.0.0&amp;quot;</a></span> <span class="nl">xmlns:</span><span class="n">xsi</span><span class="o">=</span><span class="s">&quot;<a href="http://www.w3.org/2001/XMLSchema-instance&amp;quot;">http://www.w3.org/2001/XMLSchema-instance&amp;quot;</a></span> <span class="nl">xsi:</span><span class="n">schemaLocation</span><span class="o">=</span><span class="s">&quot;<a href="http://maven.apache.org/POM/4.0.0">http://maven.apache.org/POM/4.0.0</a> <a href="http://maven.apache.org/maven-v4_0_0.xsd&amp;quot;">http://maven.apache.org/maven-v4_0_0.xsd&amp;quot;</a></span><span class="o">&gt;</span>
+</span><span class='line'><span class="c1">//&hellip;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="n">url</span><span class="o">&gt;</span><span class="nl"><a href="http:">http:</a></span><span class="c1">//wiki.jenkins-ci.org/display/JENKINS/Hckrnews+Plugin&lt;/url&gt;</span>
+</span><span class='line'><span class="c1">//&hellip;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">project</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>But this is not the trigger of creating Jenkins wiki page :( You have to make your own page yourself.
+I misunderstood about making wiki pages on this point. After you make your own wiki page, let&rsquo;s add a tag.</p>
+
+
+
+
+<p><img src="/images/posts/2013-12-13-jenkins-widget-plugin/add-tag.png" alt="add-tag" /></p>
+
+
+
+
+<p>After you add tag, your wiki page will be listed on <a href="https://wiki.jenkins-ci.org/display/JENKINS/Plugins">this page</a>. It will be easier to search for users.</p>
+
+
+
+
+<h1>After all</h1>
+
+
+
+
+<p>This experience taught me many things about plugin development, Jenkins extension points and of course <strong>Java</strong> !!
+Conversly if you have no experience of Java, you can also make your own Jenkins plugin about two weeks.
+And I want to keep making Jenkins plugins when idea comes to me.</p>
+
+
+
+
+<p>Last but not least, write your test codes in your plugin. With maven, you can run JUnit very easily.
+If there are no test codes in the plugin of continuous integration tool, Jenkins, it sounds like mistaking the means for the end, doesn&rsquo;t it?</p>
+
+
+
+
+<p>Viva great continuous integration! Thank you.</p>
+
+
+  </p>
+  <span class="meta">
+    written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-12-13T21:14:00+09:00" pubdate data-updated="true">Dec 13<span>th</span>, 2013</time>
+    
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/jenkins/'>Jenkins</a>, <a class='category' href='/blog/categories/widget/'>Widget</a>, <a class='category' href='/blog/categories/plugin/'>plugin</a>
+  
+</span>
+
+
+  </span>
+
+  
+</article>
+
+            </div>
+          </div>
+        
+          
+          <div class="row">
+            <div class="col-md-offset-3 col-md-6">
+              <article>
   <h2><a href="/blog/2013/12/09/agile-samurai-basecamp-in-tokyo/">Agile Samurai Basecamp in Tokyo <2></a></h2>
   
   <p>
@@ -1527,231 +2021,6 @@ in
 <span class="categories">
   
     <a class='category' href='/blog/categories/life/'>Life</a>, <a class='category' href='/blog/categories/study/'>Study</a>
-  
-</span>
-
-
-  </span>
-
-  
-</article>
-
-            </div>
-          </div>
-        
-          
-          <div class="row">
-            <div class="col-md-offset-3 col-md-6">
-              <article>
-  <h2><a href="/blog/2013/11/09/scikit-learndecross-validation/">scikit-learnでCross Validation</a></h2>
-  
-  <p>
-    <p>だんだんとscikit-learnとMachine Learningに慣れてきた。
-今回はCross ValidationとGrid Searchをやってみた。</p>
-
-
-
-
-<h3>Cross Validation</h3>
-
-
-
-
-<p>詳しいことは<a href="http://ja.wikipedia.org/wiki/%E4%BA%A4%E5%B7%AE%E6%A4%9C%E5%AE%9A">Wikipedia</a>に書いてある。
-Cross Validationはモデルの妥当性を検証する方法のひとつ。一般的に開発用のデータは訓練データと検証データに分かれる。
-しかし、このまま行ってしまうと折角の訓練データが減ってしまうことになる上に、訓練データの選び方によって汎化性能が下がってしまう可能性がある。
-Wikipediaに書いてあるもののホールド・アウト検定がこれに当たる。一般にはこれはCross Validationにはあたらない。</p>
-
-
-
-
-<p>ここに書いてあるK-分割交差検定がこれに当たる。K-分割交差検定では開発用のデータをK個に分割しK-1個を訓練用に、残りの一つを検証用に使いモデルの正当性を計算する。
-これにより使える訓練データが増えると同時に、これらを訓練データを変えることにより、汎化性能を上げることができる。</p>
-
-
-
-
-<p>scikit-learnで具体的にどのように行うのか書いてみた。訓練に使ったデータとしてはKaggleの<a href="http://www.kaggle.com/c/data-science-london-scikit-learn">Data Science London</a>で出されているものを用いた。</p>
-
-
-
-
-<h3>SVM</h3>
-
-
-
-
-<p>まずは単純にサポートベクターマシンでクラス分けをさせた時のコード</p>
-
-
-<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># &ndash;<em>&ndash; coding: utf-8 &ndash;</em>&ndash;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kn">import</span> <span class="nn">os</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">sys</span>
-</span><span class='line'><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">svm</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">csv</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="n"><strong>name</strong></span> <span class="o">==</span> <span class="s">&quot;<strong>main</strong>&quot;</span><span class="p">:</span>
-</span><span class='line'>    <span class="n">train_feature_file</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">&quot;../data/train.csv&quot;</span><span class="p">,</span> <span class="s">&quot;rb&quot;</span><span class="p">),</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&quot;,&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">train_label_file</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">&quot;../data/trainLabels.csv&quot;</span><span class="p">,</span> <span class="s">&quot;rb&quot;</span><span class="p">),</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&quot;,&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">train_features</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span class='line'>    <span class="n">train_labels</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span class='line'>    <span class="k">for</span> <span class="n">train_feature</span><span class="p">,</span> <span class="n">train_label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">train_feature_file</span><span class="p">,</span> <span class="n">train_label_file</span><span class="p">):</span>
-</span><span class='line'>        <span class="n">train_features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_feature</span><span class="p">)</span>
-</span><span class='line'>        <span class="n">train_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_label</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">train_features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">train_features</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">train_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">train_labels</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">clf</span> <span class="o">=</span> <span class="n">svm</span><span class="o">.</span><span class="n">SVC</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">cache_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">class_weight</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">coef0</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">degree</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">gamma</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="s">&quot;rbf&quot;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=&ndash;</span><span class="mi">1</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">shrinking</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_features</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">test_feature_file</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">&quot;../data/test.csv&quot;</span><span class="p">,</span> <span class="s">&quot;rb&quot;</span><span class="p">),</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&quot;,&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">test_features</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span class='line'>    <span class="k">print</span> <span class="s">&quot;Id,Solution&quot;</span>
-</span><span class='line'>    <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
-</span><span class='line'>    <span class="k">for</span> <span class="n">test_feature</span> <span class="ow">in</span> <span class="n">test_feature_file</span><span class="p">:</span>
-</span><span class='line'>        <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;,&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_feature</span><span class="p">)[</span><span class="mi">0</span><span class="p">]))</span>
-</span><span class='line'>        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-</span></code></pre></td></tr></table></div></figure></p>
-
-<p>このモデルをCross Validationで検証してみる。</p>
-
-
-<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">get_score</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">train_features</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">):</span>
-</span><span class='line'>    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">cross_validation</span><span class="o">.</span><span class="n">train_test_split</span><span class="p">(</span><span class="n">train_features</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">print</span> <span class="n">clf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure></p>
-
-<p>cross_validation.train_test_splitは一定の割合が検証用データとなるように開発用データを分割する関数。この場合は<code>test_size=0.4</code>を指定したので、40%のデータを検証用として使うことになる。
-<code>fit</code>が60%の訓練データで行うもので、scoreが残された40%のデータで検証を行いその正答率を出してくれる。これがこのモデルの、このテストデータにおける正当性となる。もちろんこれが高ければ高いほどよいが
-汎化性能が高いかどうかはここからでは読み取ることができない。そのためK分割を行うことでK回の検証を行うことができる。これらのスコアを平均することで汎化性能も含めたモデルの正当性を表すことができる。</p>
-
-
-<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">get_accuracy</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">train_features</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">):</span>
-</span><span class='line'>    <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_validation</span><span class="o">.</span><span class="n">cross_val_score</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">train_features</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Accuracy: </span><span class="si">%0.2f</span><span class="s"> (+/&ndash; </span><span class="si">%0.2f</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">scores</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure></p>
-
-<p><code>cross_validation_cross_val_score</code>でこれらの検証のすべてのscoreを得ることができる。<code>cv</code>はK分割の分割の個数を指定することができる。今回は開発用のデータを10個に分割し10回の検証を行う。
-scoresには10個のscoreが入ったリストが返ってくる。これの平均をAccuracyとして出している。これで汎化性能も含めたモデルの正当性を得ることができるが、モデルパラメータのチューニングを手で行う必要がある。
-手で調整して、Accuracyを計算するというのは非常に手間なのでGrid Searchというアルゴリズムでこのチューニングをある程度自動化することができる。</p>
-
-
-
-
-<h3>Grid Search</h3>
-
-
-
-
-<p>パラメータの範囲を指定することで経験的に最適なパラメータの組を探索する方法がGrid Search。Pythonで行うには以下のように書く。</p>
-
-
-<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">grid_search</span><span class="p">(</span><span class="n">train_features</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">):</span>
-</span><span class='line'>    <span class="n">param_grid</span> <span class="o">=</span> <span class="p">[</span>
-</span><span class='line'>        <span class="p">{</span><span class="s">&#39;C&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">],</span> <span class="s">&#39;kernel&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;linear&#39;</span><span class="p">]},</span>
-</span><span class='line'>        <span class="p">{</span><span class="s">&#39;C&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">],</span> <span class="s">&#39;gamma&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.0001</span><span class="p">],</span> <span class="s">&#39;kernel&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;rbf&#39;</span><span class="p">]},</span>
-</span><span class='line'>    <span class="p">]</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">clf</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">svm</span><span class="o">.</span><span class="n">SVC</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">param_grid</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=&ndash;</span><span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_features</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">print</span> <span class="n">clf</span><span class="o">.</span><span class="n">best_estimator_</span>
-</span></code></pre></td></tr></table></div></figure></p>
-
-<p>param_gridに指定することでこの範囲を指定することができる。n_jobsに並列に計算を行うプロセス数を指定することができる。-1を指定するとコア数をデフォルト選ぶようになっている。与えられた訓練データに対してGrid Searchを行う。
-時間は少しかかるが、この訓練データに対して最もスコアが高くなるようなモデルパラメータを選ぶことができる。この訓練データを実際のテストデータに使うことができる。</p>
-
-
-
-
-<h3>まとめ</h3>
-
-
-
-
-<p>PRMLには実際の機械学習のプロセスみたいなものがあまり細かく書かれていないのでKaggleに提出されているコードとかを実際にみて、こういったプロセスが分かるようになってきた。
-あとscikit-learnが便利すぎて、機械学習の学習アルゴリズムだけじゃなくて特徴抽出とかモデルパラメータの最適化なども整備されていたことに驚いた。</p>
-
-
-  </p>
-  <span class="meta">
-    written 
-
-
-
-
-
-
-
-
-  
-
-
-
-<time datetime="2013-11-09T21:56:00+09:00" pubdate data-updated="true">Nov 9<span>th</span>, 2013</time>
-    
-
-in
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/cross-validation/'>Cross Validation</a>, <a class='category' href='/blog/categories/python/'>Python</a>, <a class='category' href='/blog/categories/scikit-learn/'>scikit-learn</a>
   
 </span>
 

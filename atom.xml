@@ -4,7 +4,7 @@
   <title><![CDATA[The first cry of Atom]]></title>
   <link href="http://lewuathe.github.io/atom.xml" rel="self"/>
   <link href="http://lewuathe.github.io/"/>
-  <updated>2014-09-12T07:58:45+09:00</updated>
+  <updated>2014-09-13T13:42:02+09:00</updated>
   <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
@@ -12,6 +12,33 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Noblesse Oblige in Silicon Valley]]></title>
+    <link href="http://lewuathe.github.io/blog/2014/09/13/noblesse-oblige-in-silicon-valley/"/>
+    <updated>2014-09-13T13:09:59+09:00</updated>
+    <id>http://lewuathe.github.io/blog/2014/09/13/noblesse-oblige-in-silicon-valley</id>
+    <content type="html"><![CDATA[<p>To be honest, I don&rsquo;t know <a href="http://salesforce.com">salesforce.com</a> clearly because it&rsquo;s B2B company and I cannot see that existence
+on daily work. Though now I cannot grasp whole picture of this company yet, I want to write about charity and donation in US.</p>
+
+<!-- more -->
+
+
+<p>I think social security policy in US is worse than that in Japan. Especially, cost of medical care looks very expensive to me. How many people can they pay that high cost? I don&rsquo;t know accurate number of sufferers of medical care, but that is not small number. That might be the reason why there are a lot of billionaires who donate some kind of charities in US. <a href="https://twitter.com/Benioff">Marc Benioff</a> is one of them. I listend his talk at <a href="http://techcrunch.com/2014/09/09/marc-benioffs-plans-more-investing-more-donating-more-political-demands/">TechCrunch Disrupt SF</a>. And I found this tweet on my TL today.</p>
+
+<blockquote class="twitter-tweet" lang="en"><p>Were announ phase 2 of our <a href="https://twitter.com/sfusdedtech">@sfusdedtech</a> program today with <a href="https://twitter.com/SFUSD_Supe">@SFUSD_Supe</a> and <a href="https://twitter.com/mayoredlee">@mayoredlee</a>! A new grant for our schools. <a href="http://t.co/TG7JEBrUzk">http://t.co/TG7JEBrUzk</a></p>&mdash; Marc Benioff (@Benioff) <a href="https://twitter.com/Benioff/status/510421230634020864">September 12, 2014</a></blockquote>
+
+
+<script async src="http://lewuathe.github.io//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<p>The seminar hole where TCDisrupt was held was filled with the sound of clap toward Marc Benioff. He talked about his charity activities toward education. People who attended looeked so impresed and expressed their pure applause. So purely. Is it same thing is true in Japan? I doubted.</p>
+
+<p>Of cource, I cannot decide according to only this tiny sample. But I cannot help being envy of the pureness which attendeed of TCDisrupt showed. In Japan, people will show their skeptical view or jealousy toward billionaire. &ldquo;Is that only for advertisement?&rdquo; &ldquo;Is that just hipocrisy!&rdquo; Yes, that might be true. But is that halm to ordinary people? There must be a lot of people who are helped by these donations. Is it just ok, isn&rsquo;t it? Why can&rsquo;t they express applause toward the people who use their money that is got by their own efforts? For disadvantages. I think it is necessary to say thank you at first regardless their reasons.</p>
+
+<p>Pureness supports the power of noblesse oblige in Silicon Valley, I felt.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Living in Silicon Valley]]></title>
@@ -2521,119 +2548,6 @@ are run. So it is easy to confirm whether your code are correct or not before su
 Compiling and Submitting is the same way to ordinary one. Definitely you can solve problems faster than your rivals with this plugin.</p>
 
 <p><img src="http://lewuathe.github.io/images/posts/2014-03-03-intellijcoder/run_test.png" alt="run_test" /></p>
-
-<p>Thank you.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Object Handler Cannot Be Called in Php Extension]]></title>
-    <link href="http://lewuathe.github.io/blog/2014/03/02/oobject-handler-cannot-be-called-in-php-extension/"/>
-    <updated>2014-03-02T00:38:00+09:00</updated>
-    <id>http://lewuathe.github.io/blog/2014/03/02/oobject-handler-cannot-be-called-in-php-extension</id>
-    <content type="html"><![CDATA[<p>I have a problem.</p>
-
-<p><a href="http://stackoverflow.com/questions/22113672/object-handler-cannot-be-called-in-php-extension">object handler cannot be called in php extension</a></p>
-
-<p>I am developing PHP extension. However, I am not sufficient familiar with PHP extension.
-So in this time, I have no answer how to solve this problem by myself.</p>
-
-<!-- more -->
-
-
-<p>I cannot call destructor of my class written in C++(in below code, <code>foo</code> is that. In my inspection, I know PHP_MINIT_FUNCTION was called definitely. Inside of PHP_MINIT_FUNCTION, set code for create_object might not be done properly. When deleting foo, foo_free_strage should be called, but not called.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="k">static</span> <span class="nx">zend_class_entry</span><span class="o">*</span> <span class="nx">foo_ce</span><span class="p">;</span>
-</span><span class='line'><span class="k">static</span> <span class="nx">zend_object_handlers</span> <span class="nx">foo_object_handlers</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">void</span> <span class="nx">foo_free_storage</span><span class="p">(</span><span class="nx">void</span> <span class="o">*</span><span class="nx">object</span> <span class="nx">TSRMLS_DC</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="nx">std</span><span class="o">::</span><span class="na">cout</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;php_foo destracter&quot;</span> <span class="o">&lt;&lt;</span> <span class="nx">std</span><span class="o">::</span><span class="na">endl</span><span class="p">;</span>
-</span><span class='line'>  <span class="nx">foo_object</span><span class="o">*</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">(</span><span class="nx">foo_object</span><span class="o">*</span><span class="p">)</span><span class="nx">object</span><span class="p">;</span>
-</span><span class='line'>  <span class="nx">delete</span> <span class="nx">obj</span><span class="o">-&gt;</span><span class="na">foo_pointer</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">efree</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">zend_object_value</span> <span class="nx">foo_create_handler</span><span class="p">(</span><span class="nx">zend_class_entry</span> <span class="o">*</span><span class="nx">type</span> <span class="nx">TSRMLS_DC</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>  <span class="nx">std</span><span class="o">::</span><span class="na">cout</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;php_foo handler&quot;</span> <span class="o">&lt;&lt;</span> <span class="nx">std</span><span class="o">::</span><span class="na">endl</span><span class="p">;</span>
-</span><span class='line'>  <span class="nx">zval</span> <span class="o">*</span><span class="nx">tmp</span><span class="p">;</span>
-</span><span class='line'>  <span class="nx">zend_object_value</span> <span class="nx">retval</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">foo_object</span> <span class="o">*</span><span class="nx">obj</span> <span class="o">=</span> <span class="p">(</span><span class="nx">foo_object</span> <span class="o">*</span><span class="p">)</span><span class="nx">emalloc</span><span class="p">(</span><span class="nb">sizeof</span><span class="p">(</span><span class="nx">foo_object</span><span class="p">));</span>
-</span><span class='line'>  <span class="nx">memset</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">sizeof</span><span class="p">(</span><span class="nx">foo_object</span><span class="p">));</span>
-</span><span class='line'>  <span class="nx">obj</span><span class="o">-&gt;</span><span class="na">std</span><span class="o">.</span><span class="nx">ce</span> <span class="o">=</span> <span class="nx">type</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">retval</span><span class="o">.</span><span class="nx">handle</span> <span class="o">=</span> <span class="nx">zend_objects_store_put</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="k">NULL</span><span class="p">,</span> <span class="nx">foo_free_storage</span><span class="p">,</span> <span class="k">NULL</span> <span class="nx">TSRMLS</span>    <span class="nx">_CC</span><span class="p">);</span>
-</span><span class='line'>  <span class="nx">retval</span><span class="o">.</span><span class="nx">handlers</span> <span class="o">=</span> <span class="o">&amp;</span><span class="nx">foo_object_handlers</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">return</span> <span class="nx">retval</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// Initialization</span>
-</span><span class='line'><span class="nx">PHP_MINIT_FUNCTION</span><span class="p">(</span><span class="nx">bar</span><span class="p">){</span>
-</span><span class='line'>  <span class="nx">zend_class_entry</span> <span class="nx">ce</span><span class="p">;</span>
-</span><span class='line'>  <span class="nx">INIT_CLASS_ENTRY</span><span class="p">(</span><span class="nx">ce</span><span class="p">,</span> <span class="s2">&quot;Foo&quot;</span><span class="p">,</span> <span class="nx">foo_functions</span><span class="p">);</span>
-</span><span class='line'>  <span class="nx">foo_ce</span> <span class="o">=</span> <span class="nx">zend_register_internal_class</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ce</span> <span class="nx">TSRMLS_CC</span><span class="p">);</span>
-</span><span class='line'>  <span class="nx">foo_ce</span><span class="o">-&gt;</span><span class="na">create_object</span> <span class="o">=</span> <span class="nx">foo_create_handler</span><span class="p">;</span>
-</span><span class='line'>  <span class="nx">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">foo_object_handlers</span><span class="p">,</span> <span class="nx">zend_get_std_object_handlers</span><span class="p">(),</span> <span class="nb">sizeof</span><span class="p">(</span><span class="nx">zend_object</span>    <span class="nx">_handlers</span><span class="p">));</span>
-</span><span class='line'>  <span class="nx">foo_object_handlers</span><span class="o">.</span><span class="nx">clone_obj</span> <span class="o">=</span> <span class="k">NULL</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">return</span> <span class="nx">SUCCESS</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>My development enviromnment is as listed below.</p>
-
-<ul>
-<li>CentOS [x86_64]</li>
-<li>gcc 4.4.7</li>
-</ul>
-
-
-<p>Could someone lets me know the solution of this problem?
-If someone has any advice to me, please inform <a href="https://twitter.com/Lewuathe">@Lewuathe</a>.</p>
 
 <p>Thank you.</p>
 ]]></content>

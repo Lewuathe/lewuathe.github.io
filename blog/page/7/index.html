@@ -89,6 +89,103 @@ The people who are crazy enough to think thay can change the world, are the ones
           <div class="row">
             <div class="col-md-offset-3 col-md-6">
               <article>
+  <h2><a href="/blog/2013/09/17/baiasu-bariansufen-jie/">バイアス-バリアンス分解</a></h2>
+  
+  <p>
+    <p>今回はモデルのバイアスとバリアンスを前回までの正則化最小二乗法のモデルを使って計算してみたよ。線形回帰モデルのバイアスとバリアンスはトレードオフの関係にあって、表現力の高いモデルを用いるとバイアスは小さくなるがバリアンスは大きくなってしまう。逆にバリアンスの小さいモデルを用いるとデータによる差が小さくなる代わりに全ての予測値の平均が理想的な回帰関数から離れていってしまう。</p>
+
+
+
+
+<p>20通りの異なる訓練データ集合に対して正則化パラメータを調整して、訓練させてみた。</p>
+
+
+
+
+<h3>λ=1.1の場合</h3>
+
+
+
+
+<p><img src="https://raw.github.com/PhysicsEngine/cpi-stats/master/results/lambda1.1.png" alt="lambda=1.1" /></p>
+
+
+
+
+<p>正則化パラメータが大きい場合は複雑なモデルに対するペナルティが大きくなるので、このようにバリアンスが小さく抑えられる。けれども表現力の豊かなモデルが抑えられるのでそもそも訓練データから理想的な曲線を表現できるほどのモデルになってないことがわかる。ぱっと見、さっきの正則化パラメータが小さい場合よりもずっとsin関数に見えないものができあがってしまった。</p>
+
+
+
+
+<h3>λ= 0.0000001の場合</h3>
+
+
+
+
+<p><img src="https://raw.github.com/PhysicsEngine/cpi-stats/master/results/lambda0.0000000001.png" alt="lambda=0.000000001" /></p>
+
+
+
+
+<p>正則化パラメータが小さい場合、次元数の高いモデルに対するペナルティが低くなるので過学習を起こしやすい。この場合、それぞれの訓練データにひきずられて様々な回帰モデルが構成されてしまった。さっきよりはなんとなくsin関数に見えるけれど、あんまり、ここからどのデータが一番よいのかを決めるのも難しいし、何よりどれもかなり異なっているので全体として理想的な回帰曲線がわからない。</p>
+
+
+
+
+<h3>平均をとってみた</h3>
+
+
+
+
+<p>なんとなくsin関数に見えるということは平均をとると、正しい回帰曲線になるんではないだろうか。ということでバリアンスが高くて訓練データに引きずられてしまっている場合の平均をとってみる</p>
+
+
+
+
+<p><img src="https://raw.github.com/PhysicsEngine/cpi-stats/master/results/ave.png" alt="ave" /></p>
+
+
+
+
+<p>赤い太線が各推定曲線の平均。sin関数に見える！！</p>
+
+
+
+
+<p>このことからバリアンスが大きな表現力の高いモデルの平均はいつもでもないにせよ、有益な推定結果をもたらすこともあるかもしれない。(PRMLの受け売りだけどね)</p>
+
+
+  </p>
+  <span class="meta">
+    written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-09-17T21:17:00+09:00" pubdate data-updated="true">Sep 17<span>th</span>, 2013</time>
+    
+
+
+  </span>
+
+  
+</article>
+
+            </div>
+          </div>
+        
+          
+          <div class="row">
+            <div class="col-md-offset-3 col-md-6">
+              <article>
   <h2><a href="/blog/2013/09/16/scaladerozisuteikusuhui-gui/">Scalaでロジスティクス回帰</a></h2>
   
   <p>
