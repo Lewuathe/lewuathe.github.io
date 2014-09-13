@@ -9,6 +9,8 @@ author: Kai Sasaki
 
 I am not living in SF. My house is at Tokyo, Japan now. Moreover it’s the first time to visit Silicon Valley. I don’t know what I can understand from what I saw, what I felt and who I met. So it’s my review time for this trip and make use of this to know how I should live. There are 3 points.
 
+<!-- more -->
+
 ## We were all only users
 In Japan, the number of tech startups are growing. The quality of software can, I think, compete with world class softwares. Living in Japan as a software engineer didn’t look so bad to me. But this trip changed me totally.
 

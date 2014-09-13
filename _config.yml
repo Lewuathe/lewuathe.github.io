@@ -7,7 +7,7 @@ title: The first cry of Atom
 subtitle: The people who are crazy enough to think thay can change the world, are the ones who do
 author: Kai Sasaki
 simple_search: http://google.com/search
-description: Kai keep developing until hearing the first cry of atom
+description:  "I’m a software engineer living in Tokyo, Japan.I have a passion for developing the artificial intelligence that is the dream of humankind for a long time.I long for the world where technology supports our imcompleteness which is burdened since human was born. So I dedicate myself to realize these ideal some day."
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
@@ -63,7 +63,7 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
 # ----------------------- #
 
 # Github repositories
-github_user:
+github_user: Lewuathe
 github_repo_count: 0
 github_show_profile_link: true
 github_skip_forks: true
