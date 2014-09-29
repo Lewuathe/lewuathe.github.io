@@ -4,7 +4,7 @@
   <title><![CDATA[The first cry of Atom]]></title>
   <link href="http://lewuathe.github.io/atom.xml" rel="self"/>
   <link href="http://lewuathe.github.io/"/>
-  <updated>2014-09-29T21:33:42+09:00</updated>
+  <updated>2014-09-29T21:37:08+09:00</updated>
   <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
@@ -43,7 +43,7 @@ Within this list, all you need to install are CMake and ProtocolBuffer.</p>
 
 <h2>ProtocolBuffer</h2>
 
-<p>Download from <a href="https://code.google.com/p/protobuf/downloads/list">here</a>. After unzip it you can walk ordinal steps.</p>
+<p>Download from <a href="https://code.google.com/p/protobuf/downloads/list">here</a>. After unziping it, you can walk ordinal steps.</p>
 
 <pre><code>$ ./configure
 $ make
@@ -60,8 +60,6 @@ $ make install
 <p>All dependencies are installed on your machine now. Let&rsquo;s checkout hadoop source code.</p>
 
 <h1>Hadoop Project</h1>
-
-<p>At last, you can checkout hadoop source tree.</p>
 
 <pre><code>$ svn checkout http://svn.apache.org/repos/asf/hadoop/common/trunk/
 </code></pre>
