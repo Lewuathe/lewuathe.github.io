@@ -4,7 +4,7 @@
   <title><![CDATA[The first cry of Atom]]></title>
   <link href="http://lewuathe.github.io/atom.xml" rel="self"/>
   <link href="http://lewuathe.github.io/"/>
-  <updated>2014-09-13T13:42:02+09:00</updated>
+  <updated>2014-09-29T21:33:42+09:00</updated>
   <id>http://lewuathe.github.io/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
@@ -12,6 +12,82 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Build Hadoop on MacOSX]]></title>
+    <link href="http://lewuathe.github.io/blog/2014/09/29/build-hadoop-on-macosx/"/>
+    <updated>2014-09-29T20:59:22+09:00</updated>
+    <id>http://lewuathe.github.io/blog/2014/09/29/build-hadoop-on-macosx</id>
+    <content type="html"><![CDATA[<p>I am not a veteran Java developer. I don&rsquo;t understand the detail of Java development environment such as build tool or some type of libraries.
+Today, I realised that I need to develop or understand architecture of Hadoop. Hadoop seems to use some kind of Java development tools. Maven, ProtocolBuffer, CMake and so on.
+So in this article I want to record my environment for building hadoop projects on MacOSX.</p>
+
+<!-- more -->
+
+
+<h1>Prerequisites</h1>
+
+<ul>
+<li>JDK 1.6+</li>
+<li>Maven 3.0 or later</li>
+<li>ProtocolBuffer 2.5.0</li>
+<li>CMake 2.6 or newer (if compiling native code)</li>
+<li>Zlib devel (if compiling native code)</li>
+<li>openssl devel ( if compiling native hadoop-pipes )</li>
+<li>Internet connection for first build (to fetch all Maven and Hadoop dependencies)</li>
+</ul>
+
+
+<p>You also can see this list on <a href="https://github.com/apache/hadoop/blob/trunk/BUILDING.txt">BUILDING.txt</a>. On MacOSX, you don&rsquo;t need to install JDK and openssl.
+Within this list, all you need to install are CMake and ProtocolBuffer.</p>
+
+<h2>ProtocolBuffer</h2>
+
+<p>Download from <a href="https://code.google.com/p/protobuf/downloads/list">here</a>. After unzip it you can walk ordinal steps.</p>
+
+<pre><code>$ ./configure
+$ make
+$ make install
+</code></pre>
+
+<h2>CMake</h2>
+
+<p>You can install CMake with Homebrew. It is the easiest way.</p>
+
+<pre><code>$ brew install cmake
+</code></pre>
+
+<p>All dependencies are installed on your machine now. Let&rsquo;s checkout hadoop source code.</p>
+
+<h1>Hadoop Project</h1>
+
+<p>At last, you can checkout hadoop source tree.</p>
+
+<pre><code>$ svn checkout http://svn.apache.org/repos/asf/hadoop/common/trunk/
+</code></pre>
+
+<p>Notice: I tried hadoop GitHub repository, but it was very slow to download it. I recommend you to checkout from svn repository.</p>
+
+<p>And build it.</p>
+
+<pre><code>$ mvn package -DskipTests -Pdist -Dtar
+</code></pre>
+
+<p>Because of some broken tests, you have to write <code>skipTests</code> option. With this command you can command line tools and jar files in <code>hadoop-dist/target/hadoop-X.X.X-SNAPSHOT</code></p>
+
+<pre><code>$ bin/hadoop version
+Hadoop X.X.X-SNAPSHOT
+Subversion https://svn.apache.org/repos/asf/hadoop/common -r 1511192
+Compiled by hadoopworld on 2013-08-07T07:01Z
+From source with checksum c8f4bd45ac25c31b815f311b32ef17
+This command was run using ~/work/trunk/hadoop-dist/target/hadoop-X.X.X-SNAPSHOT
+</code></pre>
+
+<p>All configuration files are under hadoop-dist directory. You can rewrite xml files to change Pseudo distributed mode from stand alone mode.
+After finishing all tasks, I found nothing was hard. I want study the detail of architecture and codebase of hadoop and start writing some patches for hadoop project.
+Thank you.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Noblesse Oblige in Silicon Valley]]></title>
@@ -2498,56 +2574,6 @@ returns the item which matches a given key object. This is simpler than I expect
 I can understand how <code>HashMap</code> works in Java programming language.</p>
 
 <p>This code reading is so fun to me that I want to keep this activity as possible.</p>
-
-<p>Thank you.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[TopCoder With IntelliJ IDEA]]></title>
-    <link href="http://lewuathe.github.io/blog/2014/03/03/topcoder-with-intellij-idea/"/>
-    <updated>2014-03-03T21:45:57+09:00</updated>
-    <id>http://lewuathe.github.io/blog/2014/03/03/topcoder-with-intellij-idea</id>
-    <content type="html"><![CDATA[<p>When you try <a href="http://www.topcoder.com/">TopCoder</a>, as you know, IDE is one of the most efficient options
-to write accurate code very fast. So far, <a href="https://www.eclipse.org/">Eclipse</a> is the most famous IDE in this field.
-However today, I know <a href="http://www.jetbrains.com/idea/">IntelliJ IDEA</a> can also be the great editor to fight it out.
-So I try to install TopCoder plugin into my IntelliJ IDEA which is called <a href="https://github.com/fadeyev/intellijcoder">IntelliJCoder</a>.</p>
-
-<!-- more -->
-
-
-<h2>Install</h2>
-
-<p>By using plugin manager embedded to IntelliJ IDEA, you install IntelliJCoder. Today, its version is v1.6.
-And restart your IDE.</p>
-
-<p><img src="http://lewuathe.github.io/images/posts/2014-03-03-intellijcoder/plugin_install.png" alt="plugin_install" /></p>
-
-<h2>Launch Arena</h2>
-
-<p><img src="http://lewuathe.github.io/images/posts/2014-03-03-intellijcoder/topcoder_icon.png" alt="plugin_install" /></p>
-
-<p>You can see TopCoder icon inside the toolbar. If you cannot see toolbar itself, click view menu and select toolbar.
-Click this icon, and TopCoder arena will be launched. It might takes some minutes.</p>
-
-<p><img src="http://lewuathe.github.io/images/posts/2014-03-03-intellijcoder/toolbar.png" alt="toolbar" />
-<img src="http://lewuathe.github.io/images/posts/2014-03-03-intellijcoder/launch_arena.png" alt="launch_arena" /></p>
-
-<h2>Open problems</h2>
-
-<p>Ok now, let&rsquo;s solve any problems. In the proactive room, select one problem as you like from SRM.
-Select problem, then you can see TopCoder simple editor. If you use any language except for Java, you should select Java.
-And sckelton codes are written into your IntelliJ IDEA automatically. Now it&rsquo;s the time to solve problem. Hack it!</p>
-
-<p><img src="http://lewuathe.github.io/images/posts/2014-03-03-intellijcoder/open_problem.png" alt="open_problem" /></p>
-
-<h2>Test and Submit</h2>
-
-<p>Suprisingly, you can also run test codes generated from this plugin. When you build this code in IntelliJ IDEA, the test codes based on problem examples
-are run. So it is easy to confirm whether your code are correct or not before submitting it.
-Compiling and Submitting is the same way to ordinary one. Definitely you can solve problems faster than your rivals with this plugin.</p>
-
-<p><img src="http://lewuathe.github.io/images/posts/2014-03-03-intellijcoder/run_test.png" alt="run_test" /></p>
 
 <p>Thank you.</p>
 ]]></content>

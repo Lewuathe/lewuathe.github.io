@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Hadoop | The first cry of Atom]]></title>
+  <link href="http://lewuathe.github.io/blog/categories/hadoop/atom.xml" rel="self"/>
+  <link href="http://lewuathe.github.io/"/>
+  <updated>2014-09-29T21:33:42+09:00</updated>
+  <id>http://lewuathe.github.io/</id>
+  <author>
+    <name><![CDATA[Kai Sasaki]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Build Hadoop on MacOSX]]></title>
+    <link href="http://lewuathe.github.io/blog/2014/09/29/build-hadoop-on-macosx/"/>
+    <updated>2014-09-29T20:59:22+09:00</updated>
+    <id>http://lewuathe.github.io/blog/2014/09/29/build-hadoop-on-macosx</id>
+    <content type="html"><![CDATA[<p>I am not a veteran Java developer. I don&rsquo;t understand the detail of Java development environment such as build tool or some type of libraries.
+Today, I realised that I need to develop or understand architecture of Hadoop. Hadoop seems to use some kind of Java development tools. Maven, ProtocolBuffer, CMake and so on.
+So in this article I want to record my environment for building hadoop projects on MacOSX.</p>
+
+<!-- more -->
+
+
+<h1>Prerequisites</h1>
+
+<ul>
+<li>JDK 1.6+</li>
+<li>Maven 3.0 or later</li>
+<li>ProtocolBuffer 2.5.0</li>
+<li>CMake 2.6 or newer (if compiling native code)</li>
+<li>Zlib devel (if compiling native code)</li>
+<li>openssl devel ( if compiling native hadoop-pipes )</li>
+<li>Internet connection for first build (to fetch all Maven and Hadoop dependencies)</li>
+</ul>
+
+
+<p>You also can see this list on <a href="https://github.com/apache/hadoop/blob/trunk/BUILDING.txt">BUILDING.txt</a>. On MacOSX, you don&rsquo;t need to install JDK and openssl.
+Within this list, all you need to install are CMake and ProtocolBuffer.</p>
+
+<h2>ProtocolBuffer</h2>
+
+<p>Download from <a href="https://code.google.com/p/protobuf/downloads/list">here</a>. After unzip it you can walk ordinal steps.</p>
+
+<pre><code>$ ./configure
+$ make
+$ make install
+</code></pre>
+
+<h2>CMake</h2>
+
+<p>You can install CMake with Homebrew. It is the easiest way.</p>
+
+<pre><code>$ brew install cmake
+</code></pre>
+
+<p>All dependencies are installed on your machine now. Let&rsquo;s checkout hadoop source code.</p>
+
+<h1>Hadoop Project</h1>
+
+<p>At last, you can checkout hadoop source tree.</p>
+
+<pre><code>$ svn checkout http://svn.apache.org/repos/asf/hadoop/common/trunk/
+</code></pre>
+
+<p>Notice: I tried hadoop GitHub repository, but it was very slow to download it. I recommend you to checkout from svn repository.</p>
+
+<p>And build it.</p>
+
+<pre><code>$ mvn package -DskipTests -Pdist -Dtar
+</code></pre>
+
+<p>Because of some broken tests, you have to write <code>skipTests</code> option. With this command you can command line tools and jar files in <code>hadoop-dist/target/hadoop-X.X.X-SNAPSHOT</code></p>
+
+<pre><code>$ bin/hadoop version
+Hadoop X.X.X-SNAPSHOT
+Subversion https://svn.apache.org/repos/asf/hadoop/common -r 1511192
+Compiled by hadoopworld on 2013-08-07T07:01Z
+From source with checksum c8f4bd45ac25c31b815f311b32ef17
+This command was run using ~/work/trunk/hadoop-dist/target/hadoop-X.X.X-SNAPSHOT
+</code></pre>
+
+<p>All configuration files are under hadoop-dist directory. You can rewrite xml files to change Pseudo distributed mode from stand alone mode.
+After finishing all tasks, I found nothing was hard. I want study the detail of architecture and codebase of hadoop and start writing some patches for hadoop project.
+Thank you.</p>
+]]></content>
+  </entry>
+  
+</feed>
