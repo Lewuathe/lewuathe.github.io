@@ -4,7 +4,7 @@
   <title><![CDATA[The first cry of Atom]]></title>
   <link href="http://lewuathe.com/atom.xml" rel="self"/>
   <link href="http://lewuathe.com/"/>
-  <updated>2014-10-12T21:47:33+09:00</updated>
+  <updated>2014-10-12T21:50:29+09:00</updated>
   <id>http://lewuathe.com/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Write Octopress Article on Two Machine]]></title>
+    <title type="html"><![CDATA[Write Octopress Article on Two Machines]]></title>
     <link href="http://lewuathe.com/blog/2014/10/12/write-octopress-article-on-two-machine/"/>
     <updated>2014-10-12T20:38:47+09:00</updated>
     <id>http://lewuathe.com/blog/2014/10/12/write-octopress-article-on-two-machine</id>
