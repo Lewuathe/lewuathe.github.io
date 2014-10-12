@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Write Octopress article on Two machine"
+title: "Write Octopress article on Two machines"
 date: 2014-10-12 20:38:47 +0900
 comments: true
 categories: ["Blog", "MacPro"]
