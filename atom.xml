@@ -4,7 +4,7 @@
   <title><![CDATA[The first cry of Atom]]></title>
   <link href="http://lewuathe.com/atom.xml" rel="self"/>
   <link href="http://lewuathe.com/"/>
-  <updated>2014-10-12T20:49:53+09:00</updated>
+  <updated>2014-10-12T21:47:33+09:00</updated>
   <id>http://lewuathe.com/</id>
   <author>
     <name><![CDATA[Kai Sasaki]]></name>
@@ -19,7 +19,50 @@
     <updated>2014-10-12T20:38:47+09:00</updated>
     <id>http://lewuathe.com/blog/2014/10/12/write-octopress-article-on-two-machine</id>
     <content type="html"><![CDATA[<p>By accident, I got <a href="https://www.apple.com/jp/mac-pro/">MacPro</a>. This is my first desktop machine in my life. I usually use notebook or laptop machine because
-there were a lot of time to bring my machine outside. But now I found it is very confortable to use it, large size display, high spec for processing and sufficient amount of</p>
+there were a lot of time to bring my machine outside. But now I found it is very confortable to use it, large size display, high spec for processing and sufficient amount of capacity.</p>
+
+<p><img src="http://lewuathe.com/images/posts/2014-10-12-macpro/macpro.jpg" alt="MacPro" /></p>
+
+<!-- more -->
+
+
+<p>I want to write Octopress article on MacPro. I wrote this on MacBookPro previously. So this time, I&rsquo;d like to record how to achieve this goal.</p>
+
+<h1>Clone source</h1>
+
+<p>First clone your octopress original source.</p>
+
+<pre><code>$ git clone -b source git@github.com:username/username.github.com.git octopress
+</code></pre>
+
+<p>Then octopress has a built site under <code>_deploy</code> directory. You have to pull master branch into this directory.</p>
+
+<pre><code>$ git clone  git@github.com:username/username.github.com.git _deploy
+</code></pre>
+
+<h1>Setup</h1>
+
+<p>Before setting up, you have to install <a href="http://bundler.io/">bundler</a>.</p>
+
+<pre><code>$ gem install bundler
+$ rbenv rehash
+$ bundle install
+</code></pre>
+
+<p>And setup your github pages url.</p>
+
+<pre><code>$ bundle exec rake setup_github_pages
+</code></pre>
+
+<p>Last but not least, update all sources and built files.</p>
+
+<pre><code>$ git pull origin source
+$ cd _deploy
+$ git pull origin master
+</code></pre>
+
+<p>OK this time you can deploy from this new machine. So I wrote this article on my new MacPro. Through this process, I want to say thank you to <a href="http://blog.zerosharp.com/clone-your-octopress-to-blog-from-two-places/">Robert Anderson</a>.
+From now I will keep update my blog on super MacPro.</p>
 ]]></content>
   </entry>
   
