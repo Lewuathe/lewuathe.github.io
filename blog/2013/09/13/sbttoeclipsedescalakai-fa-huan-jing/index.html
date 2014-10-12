@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>SBTとEclipseでScala開発環境 - The first cry of Atom</title>
+  <meta name="author" content="Kai Sasaki">
+
+  
+  <meta name="description" content="SBTとEclipseでScala開発環境 written Sep 13th, 2013 SBTの使い方がなんとなくわかってきたので、今度はEclipseにSBTプロジェクトを導入してみる。 Eclipse plubin for SBTのinstall &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://lewuathe.com/blog/2013/09/13/sbttoeclipsedescalakai-fa-huan-jing">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-44055098-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>SBTとEclipseでScala開発環境</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-09-13T22:17:00+09:00" pubdate data-updated="true">Sep 13<span>th</span>, 2013</time>
+          
+
+
+        </div>
+        <p>SBTの使い方がなんとなくわかってきたので、今度はEclipseにSBTプロジェクトを導入してみる。</p>
+
+<h3>Eclipse plubin for SBTのinstall</h3>
+
+<p>プロジェクトに必要なプラグインをインストールする。この場合は<code>project/plubins.sbt</code>に以下のように記述する。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">resolvers</span> <span class="o">+=</span> <span class="nc">Classpaths</span><span class="o">.</span><span class="n">typesafeResolver</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">addSbtPlugin</span><span class="o">(</span><span class="s">&quot;com.typesafe.sbteclipse&quot;</span> <span class="o">%</span> <span class="s">&quot;sbteclipse-plugin&quot;</span> <span class="o">%</span> <span class="s">&quot;2.1.2&quot;</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ここで以下のコマンドを打てばこのプラグインがインストールされ、Eclipseプロジェクトに必要な.projectファイルができあがる</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">$</span> <span class="n">sbt</span> <span class="n">eclipse</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>これをImportすればいい。Importの方法は</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="nc">File</span> <span class="o">-&gt;</span> <span class="nc">Import</span> <span class="o">-&gt;</span> <span class="nc">General</span> <span class="o">-&gt;</span> <span class="nc">Existing</span> <span class="nc">Projects</span> <span class="n">into</span> <span class="nc">Workspace</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>でできる。</p>
+
+<p>あともっと便利にSBTを使いたければ<a href="http://d.hatena.ne.jp/qtamaki/20121210/1355167655">ここ</a>に書いてある通りにやるとテンプレート展開のためのライブラリとかも入れられる。(g8っつうらしい)</p>
+
+<p>でもどうやら実行とかテストはSBT上でやった方がいいみたい。Eclipseは純粋なエディタとして使う人が多いっぽい。
+確かにJavaのプロジェクトと認識されてしまってうまくコンパイルできないや。</p>
+
+
+        <hr class="divider-short"/>
+        
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2013/09/10/sbtwoshi-tutapuroziekutozuo-cheng-2/" title="Previous Post: SBTを使ったプロジェクト作成(2)">&laquo; Previous: SBTを使ったプロジェクト作成(2)</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2013/09/14/scalanlpfalsetiyutoriaru/" title="Next Post: ScalaNLPのチュートリアル">Next: ScalaNLPのチュートリアル &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/Lewuathe"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/Lewuathe"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Logistics Regression | The first cry of Atom]]></title>
+  <link href="http://lewuathe.com/blog/categories/logistics-regression/atom.xml" rel="self"/>
+  <link href="http://lewuathe.com/"/>
+  <updated>2014-10-12T20:49:53+09:00</updated>
+  <id>http://lewuathe.com/</id>
+  <author>
+    <name><![CDATA[Kai Sasaki]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Logistics Regression With Sparse Vector]]></title>
+    <link href="http://lewuathe.com/blog/2014/03/09/logistics-regression-with-sparse-vector/"/>
+    <updated>2014-03-09T19:54:25+09:00</updated>
+    <id>http://lewuathe.com/blog/2014/03/09/logistics-regression-with-sparse-vector</id>
+    <content type="html"><![CDATA[<p>In my project I have to develop a model that is capable of predicting the count of page view
+from sparse vector data such as</p>
+
+<p><code>
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+</code></p>
+
+<p>However I found it was difficult to make a model which can be applied to practical use case. From sparse vector, my current model
+doesn&rsquo;t look trained sufficiently. I used <a href="http://scikit-learn.org/stable/index.html">scikit-learn</a> in python.</p>
+
+<!-- more -->
+
+
+<p>My current code is below.</p>
+
+<p>```python</p>
+
+<h1>&ndash;<em>&ndash; coding: utf-8 &ndash;</em>&ndash;</h1>
+
+<p>import os
+import sys
+import numpy as np
+import random
+from sklearn import svm</p>
+
+<p>if <strong>name</strong> == &ldquo;<strong>main</strong>&rdquo;:</p>
+
+<pre><code>rand = np.random.RandomState(1234)
+xs = []
+ys = []
+print "Train"
+for i in xrange(0, 30):
+    """
+     x is a sparse vector generated from binomial distribution
+     x has a 1 vector generally speaking
+    """
+    x = rand.binomial(size=100, n=1, p=0.01)
+    xs.append(x)
+
+    """
+     y is obtained from gaussian distribution which has 0.7 as mean value
+    """
+    y = rand.normal(loc=0.7, scale=0.1)
+    ys.append(y)
+
+clf = svm.SVR()
+# Train data
+clf.fit(xs, ys)
+
+print "Test"
+ts = []
+for i in xrange(0, 10):
+    ts.append(rand.binomial(size=100, n=1, p=0.01))
+
+print clf.predict(ts)
+</code></pre>
+
+<p>```</p>
+
+<p>Through this process I can only get these results.</p>
+
+<p><code>python
+[ 0.7507838   0.7507838   0.75058871  0.7507838   0.75058871  0.75058871
+  0.73136874  0.7507838   0.75058871  0.75058871]
+</code></p>
+
+<p>I think this result doesn&rsquo;t have valid significance for predicting. All values look the same to me!
+Simple support vector machine might not be suitable to predict with sparse vector data. But I have no idea
+how to make alternate model that can be constructed with sparse vectors. Is there anyone who have a good idea or
+a paper which has proper algorithm for this case? I want to know the algorithm which can construct better regression
+model from sparse vector. Please let me know that.</p>
+
+<p>Thank you.</p>
+]]></content>
+  </entry>
+  
+</feed>

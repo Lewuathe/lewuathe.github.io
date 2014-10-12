@@ -1,0 +1,530 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Trying Word2vec From Twitter Corpus - The first cry of Atom</title>
+  <meta name="author" content="Kai Sasaki">
+
+  
+  <meta name="description" content="Trying Word2vec From Twitter Corpus written Feb 23rd, 2014 in corpus, twitter, word2vec Do you know word2vec? This library is one of the hottest &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://lewuathe.com/blog/2014/02/23/trying-word2vec-from-twitter-corpus">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-44055098-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Trying Word2vec From Twitter Corpus</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2014-02-23T17:47:16+09:00" pubdate data-updated="true">Feb 23<span>rd</span>, 2014</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/corpus/'>corpus</a>, <a class='category' href='/blog/categories/twitter/'>twitter</a>, <a class='category' href='/blog/categories/word2vec/'>word2vec</a>
+  
+</span>
+
+
+        </div>
+        <p>Do you know <a href="https://github.com/dav/word2vec">word2vec</a>? This library is one of the hottest module which provides an efficient implementation of the continuous bag-of-words and skip-gram architectures for computing vector representations of words.</p>
+
+<p>Recently, my collegues told me what word2vec is. From that time, I want to try this library in some chance. This time, I trained this skip-gram model with twitter corpus.</p>
+
+<!-- more -->
+
+
+<h2>Install word2vec</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git clone https://github.com/dav/word2vec.git</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There are demo scripts. Let me see demo-word.sh.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>DATA_DIR=../data
+</span><span class='line'>BIN_DIR=../bin
+</span><span class='line'>SRC_DIR=../src
+</span><span class='line'>
+</span><span class='line'>TEXT_DATA=$DATA_DIR/text8
+</span><span class='line'>VECTOR_DATA=$DATA_DIR/text8-vector.bin
+</span><span class='line'>
+</span><span class='line'>pushd ${SRC_DIR} && make; popd
+</span><span class='line'>
+</span><span class='line'>if [ ! -e $VECTOR_DATA ]; then
+</span><span class='line'>  
+</span><span class='line'>  if [ ! -e $TEXT_DATA ]; then
+</span><span class='line'>    wget http://mattmahoney.net/dc/text8.zip -O $DATA_DIR/text8.gz
+</span><span class='line'>    gzip -d $DATA_DIR/text8.gz -f
+</span><span class='line'>  fi
+</span><span class='line'>  echo -----------------------------------------------------------------------------------------------------
+</span><span class='line'>  echo -- Training vectors...
+</span><span class='line'>  time $BIN_DIR/word2vec -train $TEXT_DATA -output $VECTOR_DATA -cbow 0 -size 200 -window 5 -negative 0 -hs 1 -sample 1e-3 -threads 12 -binary 1
+</span><span class='line'>  
+</span><span class='line'>fi
+</span><span class='line'>
+</span><span class='line'>echo -----------------------------------------------------------------------------------------------------
+</span><span class='line'>echo -- distance...
+</span><span class='line'>
+</span><span class='line'>$BIN_DIR/distance $DATA_DIR/$VECTOR_DATA</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The main part of demo is below.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> time $BIN_DIR/word2vec -train $TEXT_DATA -output $VECTOR_DATA -cbow 0 -size 200 -window 5 -negative 0 -hs 1 -sample 1e-3 -threads 12 -binary 1</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I found that the only requirement of training data was morphological analyzed text. For example, below.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>病院
+</span><span class='line'>の
+</span><span class='line'>待合室
+</span><span class='line'>に
+</span><span class='line'>い
+</span><span class='line'>たら
+</span><span class='line'>隣
+</span><span class='line'>の
+</span><span class='line'>人
+</span><span class='line'>が</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then how can I make these corpus from twitter API?</p>
+
+<h2>Making twitter corpus</h2>
+
+<p>I wrote this script that access twiter search API. In version 1.1, public timeline API has been remove from service.
+So you should make corpus from only twitter search API if you want to categorize by language type. Because only search API has
+<code>lang</code> parameter.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="c"># -*- coding: utf-8 -*-</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">os</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">sys</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">twitter</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">yaml</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">urllib</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">TwitterSearch</span><span class="p">:</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;./config.yml&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span><span class='line'>            <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">_lang</span> <span class="o">=</span> <span class="s">&#39;ja&#39;</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">_api</span> <span class="o">=</span> <span class="n">twitter</span><span class="o">.</span><span class="n">Api</span><span class="p">(</span>
+</span><span class='line'>            <span class="n">consumer_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="s">&quot;consumer_key&quot;</span><span class="p">],</span>
+</span><span class='line'>            <span class="n">consumer_secret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="s">&quot;consumer_secret&quot;</span><span class="p">],</span>
+</span><span class='line'>            <span class="n">access_token_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="s">&quot;access_token_key&quot;</span><span class="p">],</span>
+</span><span class='line'>            <span class="n">access_token_secret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="s">&quot;access_token_secret&quot;</span><span class="p">]</span>
+</span><span class='line'>        <span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">search_word</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">))</span>    <span class="c"># OK</span>
+</span><span class='line'>        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_api</span><span class="o">.</span><span class="n">GetSearch</span><span class="p">(</span><span class="n">term</span><span class="o">=</span><span class="n">search_word</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_lang</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">status</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">text</span> <span class="o">=</span> <span class="n">status</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;utf-8&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</span><span class='line'>            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span class='line'>    <span class="n">words</span> <span class="o">=</span> <span class="s">u&#39;あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん&#39;</span>
+</span><span class='line'>    <span class="n">t</span> <span class="o">=</span> <span class="n">TwitterSearch</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">t</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Each line has one tweet text. These texts are searched with japanese syllabary, &ldquo;あいうえお&hellip;&rdquo;
+in order to make searching logic more simple. But there might be room for improvement in this part. If you want to create more complex search queries, change <code>words</code>.</p>
+
+<p>This script makes such outputs.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="err">あ、猫話はあちら様の凛ちゃんの話です。うちの凛ちゃんは鮫なので。あしからず。</span>
+</span><span class='line'><span class="err">あああ乱視＆鳥目でこの時間の外出全然見えないいいいいい</span>
+</span><span class='line'><span class="err">お散歩に行きたくなりますね。あ、今日は猫さんの日なんですね！</span>
+</span><span class='line'><span class="err">あぷりを、いんすとーーるしたぜ。</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Morphological analysis</h2>
+
+<p>I used <a href="http://mecab.googlecode.com/svn/trunk/mecab/doc/index.html">MeCab</a> for the morphological analysis.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="err">$</span> <span class="n">mecab</span> <span class="n">row_text</span><span class="o">.</span><span class="n">txt</span> <span class="o">&gt;</span> <span class="n">morphological_output</span><span class="o">.</span><span class="n">txt</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This library generates below output.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="err">病院</span>    <span class="err">名詞</span><span class="p">,</span><span class="err">一般</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="err">病院</span><span class="p">,</span><span class="err">ビョウイン</span><span class="p">,</span><span class="err">ビョーイン</span>
+</span><span class='line'><span class="err">の</span>      <span class="err">助詞</span><span class="p">,</span><span class="err">連体化</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="err">の</span><span class="p">,</span><span class="err">ノ</span><span class="p">,</span><span class="err">ノ</span>
+</span><span class='line'><span class="err">待合室</span>  <span class="err">名詞</span><span class="p">,</span><span class="err">一般</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="err">待合室</span><span class="p">,</span><span class="err">マチアイシツ</span><span class="p">,</span><span class="err">マチアイシツ</span>
+</span><span class='line'><span class="err">に</span>      <span class="err">助詞</span><span class="p">,</span><span class="err">格助詞</span><span class="p">,</span><span class="err">一般</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="err">に</span><span class="p">,</span><span class="err">ニ</span><span class="p">,</span><span class="err">ニ</span>
+</span><span class='line'><span class="err">い</span>      <span class="err">動詞</span><span class="p">,</span><span class="err">自立</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="err">一段</span><span class="p">,</span><span class="err">連用形</span><span class="p">,</span><span class="err">いる</span><span class="p">,</span><span class="err">イ</span><span class="p">,</span><span class="err">イ</span>
+</span><span class='line'><span class="err">たら</span>    <span class="err">助動詞</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="err">特殊・タ</span><span class="p">,</span><span class="err">仮定形</span><span class="p">,</span><span class="err">た</span><span class="p">,</span><span class="err">タラ</span><span class="p">,</span><span class="err">タラ</span>
+</span><span class='line'><span class="err">隣</span>      <span class="err">名詞</span><span class="p">,</span><span class="err">一般</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="err">隣</span><span class="p">,</span><span class="err">トナリ</span><span class="p">,</span><span class="err">トナリ</span>
+</span><span class='line'><span class="err">の</span>      <span class="err">助詞</span><span class="p">,</span><span class="err">連体化</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="err">の</span><span class="p">,</span><span class="err">ノ</span><span class="p">,</span><span class="err">ノ</span>
+</span><span class='line'><span class="err">人</span>      <span class="err">名詞</span><span class="p">,</span><span class="err">一般</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="err">人</span><span class="p">,</span><span class="err">ヒト</span><span class="p">,</span><span class="err">ヒト</span>
+</span><span class='line'><span class="err">が</span>      <span class="err">助詞</span><span class="p">,</span><span class="err">格助詞</span><span class="p">,</span><span class="err">一般</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="err">が</span><span class="p">,</span><span class="err">ガ</span><span class="p">,</span><span class="err">ガ</span>
+</span><span class='line'><span class="err">「</span>      <span class="err">記号</span><span class="p">,</span><span class="err">括弧開</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="err">「</span><span class="p">,</span><span class="err">「</span><span class="p">,</span><span class="err">「</span>
+</span><span class='line'><span class="err">あの</span>    <span class="err">連体詞</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="err">あの</span><span class="p">,</span><span class="err">アノ</span><span class="p">,</span><span class="err">アノ</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This outputs include a part of speech, and prununciations. So remove it with <code>awk</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="err">$</span> <span class="n">awk</span> <span class="s">&#39;{ print $1 }&#39;</span> <span class="o">&lt;</span> <span class="n">morphological_output</span><span class="o">.</span><span class="n">txt</span> <span class="o">&gt;</span> <span class="n">words</span><span class="o">.</span><span class="n">txt</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is output.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="err">病院</span>
+</span><span class='line'><span class="err">の</span>
+</span><span class='line'><span class="err">待合室</span>
+</span><span class='line'><span class="err">に</span>
+</span><span class='line'><span class="err">い</span>
+</span><span class='line'><span class="err">たら</span>
+</span><span class='line'><span class="err">隣</span>
+</span><span class='line'><span class="err">の</span>
+</span><span class='line'><span class="err">人</span>
+</span><span class='line'><span class="err">が</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ok, now you can train skip-gram algorithm with this data.</p>
+
+<h2>Training</h2>
+
+<p>This is my training script.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">DATA_DIR</span><span class="o">=</span>../data
+</span><span class='line'><span class="nv">BIN_DIR</span><span class="o">=</span>../bin
+</span><span class='line'><span class="nv">SRC_DIR</span><span class="o">=</span>../src
+</span><span class='line'>
+</span><span class='line'><span class="nv">TEXT_DATA</span><span class="o">=</span><span class="nv">$DATA_DIR</span>/twitter_text
+</span><span class='line'><span class="nv">VECTOR_DATA</span><span class="o">=</span><span class="nv">$DATA_DIR</span>/twitter_text-vector.bin
+</span><span class='line'>
+</span><span class='line'><span class="nb">pushd</span> <span class="k">${</span><span class="nv">SRC_DIR</span><span class="k">}</span> <span class="o">&amp;&amp;</span> make; <span class="nb">popd</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">echo</span> -- Training vectors...
+</span><span class='line'><span class="nb">time</span> <span class="nv">$BIN_DIR</span>/word2vec -train <span class="nv">$TEXT_DATA</span> -output <span class="nv">$VECTOR_DATA</span> -cbow 0 -size 200 -window 5 -negative 0 -hs 1 -sample 1e-3 -threads 12 -binary 1
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nb">echo</span> -----------------------------------------------------------------------------------------------------
+</span><span class='line'><span class="nb">echo</span> -- distance...
+</span><span class='line'>
+</span><span class='line'><span class="nv">$BIN_DIR</span>/distance <span class="nv">$DATA_DIR</span>/<span class="nv">$VECTOR_DATA</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It is the almost same script to <code>demo-word.sh</code>.</p>
+
+<p>Training takes about 3 seconds. It is very short time. (But it means there are not enough training data) :(</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>% ./twitter-script.sh
+</span><span class='line'>~/Dropbox/MyWorks/algos/word2vec/src ~/Dropbox/MyWorks/algos/word2vec/scripts
+</span><span class='line'>gcc word2vec.c -o ../bin/word2vec -lm -pthread -O2 -Wall -funroll-loops
+</span><span class='line'>gcc word2phrase.c -o ../bin/word2phrase -lm -pthread -O2 -Wall -funroll-loops
+</span><span class='line'>gcc distance.c -o ../bin/distance -lm -pthread -O2 -Wall -funroll-loops
+</span><span class='line'>gcc word-analogy.c -o ../bin/word-analogy -lm -pthread -O2 -Wall -funroll-loops
+</span><span class='line'>gcc compute-accuracy.c -o ../bin/compute-accuracy -lm -pthread -O2 -Wall -funroll-loops
+</span><span class='line'>chmod +x ../scripts/*.sh
+</span><span class='line'>~/Dropbox/MyWorks/algos/word2vec/scripts
+</span><span class='line'>-- Training vectors...
+</span><span class='line'>Starting training using file ../data/twitter_text
+</span><span class='line'>Vocab size: 1516
+</span><span class='line'>Words in train file: 50979
+</span><span class='line'>
+</span><span class='line'>real    0m0.734s
+</span><span class='line'>user    0m1.822s
+</span><span class='line'>sys     0m0.076s
+</span><span class='line'>-----------------------------------------------------------------------------------------------------
+</span><span class='line'>-- distance...
+</span><span class='line'>Enter word or sentence <span class="o">(</span>EXIT to <span class="nb">break</span><span class="o">)</span>:
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Enter some words.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>Enter word or sentence <span class="o">(</span>EXIT to <span class="nb">break</span><span class="o">)</span>:  病院
+</span><span class='line'>                                              Word       Cosine distance
+</span><span class='line'>------------------------------------------------------------------------
+</span><span class='line'>                                               ぶ               0.991685
+</span><span class='line'>                                            ソチ                0.990486
+</span><span class='line'>                                            bottle              0.989918
+</span><span class='line'>                                            点滴                0.988539
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Word &ldquo;病院&rdquo; means hostpital. The forth word that has near vector to hospital is &ldquo;点滴&rdquo;, an intravenous drip. It looks like word2vec working nice, however other data are irrelevant to hospital. That&rsquo;s too bad.</p>
+
+<p>In addition to this error, cosine distance of all data are above 0.98. These distance points suggest word2vec cannot make sound model with this training data.
+Unfortunately, there are also a lot of words that has no counterpart in training data. In many cases, target words that you want to investigate are not included in this model.
+You cannot make use of  this model with such a tiny data extracted from twitter API in practical situation.</p>
+
+<h2>Next</h2>
+
+<p>Next time, I want to try with Wikipedia JP corpus. This famous site includes huge corpus data. I am sure to obtain good results in the next time.</p>
+
+<p>Source codes used this process is <a href="https://github.com/Lewuathe/algos/tree/master/word2vec">here</a>. Please do take a look at these codes!</p>
+
+<p>Thank you.</p>
+
+
+        <hr class="divider-short"/>
+        
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2014/02/21/use-javascriptinterface-on-android/" title="Previous Post: Use JavaScriptInterface on Android">&laquo; Previous: Use JavaScriptInterface on Android</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2014/02/24/optimize-octopress-for-facebook-post/" title="Next Post: Optimize octopress for facebook post">Next: Optimize octopress for facebook post &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/Lewuathe"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/Lewuathe"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

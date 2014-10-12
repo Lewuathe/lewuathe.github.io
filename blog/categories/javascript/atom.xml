@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: JavaScript | The first cry of Atom]]></title>
+  <link href="http://lewuathe.com/blog/categories/javascript/atom.xml" rel="self"/>
+  <link href="http://lewuathe.com/"/>
+  <updated>2014-10-12T20:49:53+09:00</updated>
+  <id>http://lewuathe.com/</id>
+  <author>
+    <name><![CDATA[Kai Sasaki]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Use JavaScriptInterface on Android]]></title>
+    <link href="http://lewuathe.com/blog/2014/02/21/use-javascriptinterface-on-android/"/>
+    <updated>2014-02-21T21:34:20+09:00</updated>
+    <id>http://lewuathe.com/blog/2014/02/21/use-javascriptinterface-on-android</id>
+    <content type="html"><![CDATA[<p>On Android, there is a system for calling Java method from JavaScript. This is called <a href="http://developer.android.com/reference/android/webkit/JavascriptInterface.html">JavaScriptInterface</a>.
+With this class, you can call Java methods run on Android application from JavaScript written on any HTML file.</p>
+
+<p>If you want, you can write good user interface with HTML and JavaScript. And backend logic can be written by Java, Android SDK.
+So this is the potential way to write Android application. Today I&rsquo;d like to introduce this way.</p>
+
+<!-- more -->
+
+
+<h2>Attach WebView</h2>
+
+<p>In order to render HTML, you need to use <a href="http://developer.android.com/reference/android/webkit/WebView.html">WebView</a>.
+So first of all, attach WebView to your layout file.</p>
+
+<p>```xml
+&lt;?xml version=&ldquo;1.0&rdquo; encoding=&ldquo;utf-8&rdquo;?>
+&lt;LinearLayout xmlns:android=&ldquo;<a href="http://schemas.android.com/apk/res/android">http://schemas.android.com/apk/res/android</a>&rdquo;</p>
+
+<pre><code>          android:orientation="vertical"
+          android:layout_width="fill_parent"
+          android:layout_height="fill_parent" &gt;
+
+&lt;WebView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/webView" 
+        android:layout_gravity="center_horizontal"/&gt;
+</code></pre>
+
+<p></LinearLayout>
+```</p>
+
+<h2>Write you HTML</h2>
+
+<p>On previous WebView renders this html file. You need to write this file on your project directory so that an application can use it
+from bundle files. My Sample looks like below.</p>
+
+<p>```html
+&lt;!DOCTYPE html>
+<html>
+<head></p>
+
+<pre><code>&lt;title&gt;JSTest&lt;/title&gt;
+</code></pre>
+
+<p></head>
+<body></p>
+
+<pre><code>&lt;input type="button" value="Call Java" onclick="JSAction.action()" /&gt;
+</code></pre>
+
+<p></body>
+</html></p>
+
+<p>```</p>
+
+<p><code>JSAction</code> is the Java class that implements JavaScriptInterface with annotation.
+So last let&rsquo;s write down this interface class.</p>
+
+<h2>Write JavaScriptInterface class</h2>
+
+<p>```java
+public class MyActivity extends Activity {</p>
+
+<pre><code>/**
+ * Called when the activity is first created.
+ */
+@Override
+public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.main);
+
+    WebView webView = (WebView) findViewById(R.id.webView);
+    webView.setWebViewClient(new WebViewClient());
+    WebSettings settings = webView.getSettings();
+    settings.setJavaScriptEnabled(true);
+
+    webView.addJavascriptInterface(new JavaScriptAction(), "JSAction");
+    webView.loadUrl("file:///android_asset/jstest.html");
+}
+
+
+// This is the JavaScriptInterface class
+// All you need to do is write annotation for JavaScriptInterface. 
+public class JavaScriptAction {
+    @JavascriptInterface
+    public void action() {
+        Toast.makeText(MyActivity.this, 
+                       "Called from JavaScript", 
+                       Toast.LENGTH_SHORT).show();
+    }
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p><img src="/images/posts/2014-02-21-javascriptinterface-android/demo.png" alt="demo" /></p>
+
+<p>That&rsquo;s all. When you click input button, a toast will show on screen.
+By using JavaScriptInterface, you can easily separate UI design and business logic.
+Definitely, this will be the useful option for your development.</p>
+
+<p>If you want to look into the detail of these code, please access <a href="https://github.com/Lewuathe/JavaScriptInterface-sample">here</a>
+This is my sample repository. I&rsquo;m glad to see this repository is used for further development.</p>
+
+<p>Thank you.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Reference Configuration Library in Nodejs]]></title>
+    <link href="http://lewuathe.com/blog/2013/12/30/reference-configuration-library-in-nodejs/"/>
+    <updated>2013-12-30T20:24:00+09:00</updated>
+    <id>http://lewuathe.com/blog/2013/12/30/reference-configuration-library-in-nodejs</id>
+    <content type="html"><![CDATA[<p>I made npm module at the end of this year, <em>readonly</em>.</p>
+
+<p><a href="https://github.com/Lewuathe/readonly">lewuathe/readonly @GitHub</a></p>
+
+<p><a href="https://npmjs.org/package/readonly">readonly @npm</a></p>
+
+<p>readonly is a simple reference restriction library between custom modules in node object.
+When you want to configure access control of specific object from respective modules, this is good option.
+For example, you made two modules, both use the same object.</p>
+
+<!-- more -->
+
+
+<p>```js
+// obj is uses from moduleA and moduleB
+// You want moduleA to read and update obj, but moduleB to read obj only.
+var obj = {&lsquo;A&rsquo;:&lsquo;a&rsquo;,&lsquo;B&rsquo;:&lsquo;b&rsquo;,&lsquo;C&rsquo;:&lsquo;c&rsquo;};</p>
+
+<p>// Embedded in moduleA
+var moduleA = {};
+moduleA.obj = obj;</p>
+
+<p>// Readonly restriction of <code>obj</code> from moduleB
+var moduleB = {};
+moduleB.obj = readonly(obj);</p>
+
+<p>// You can update <code>obj</code> from moduleA
+moduleA.obj.A = &ldquo;d&rdquo;;
+// But you cannot update <code>obj</code> from moduleB
+moduleA.obj.B = &ldquo;e&rdquo;;  // Error
+```</p>
+
+<p>In this situation, you can use <strong>readonly</strong>.</p>
+
+<h2>Install</h2>
+
+<p><code>
+$ npm install readonly
+</code></p>
+
+<h2>Usage</h2>
+
+<p>```
+var readonly = require(&lsquo;readonly&rsquo;);</p>
+
+<p>var obj = {&lsquo;A&rsquo;:&lsquo;a&rsquo;,&lsquo;B&rsquo;:&lsquo;b&rsquo;,&lsquo;C&rsquo;:&lsquo;c&rsquo;};</p>
+
+<p>// Normal ACL. You can use <code>obj</code> through moduleA as you like
+var moduleA = {};
+moduleA.obj = obj;</p>
+
+<p>// Readonly restriction of <code>obj</code> in moduleB
+var moduleB = {};
+moduleB.obj = readonly(obj);</p>
+
+<p>// You can update <code>obj</code> from moduleA
+moduleA.obj.A = &ldquo;d&rdquo;;
+// This updates can be seen from moduleB
+console.log(moduleB.obj.A); // &mdash;> &ldquo;d&rdquo;</p>
+
+<p>// But if you update <code>obj</code> through moduleB, it will throws <code>UnableRewriteException</code>
+moduleA.obj.B = &ldquo;e&rdquo;;  // &mdash;> UnableRewriteException: original cannot be rewrite
+```</p>
+
+<p>With this library, you can access current property from restricted modules if original object is updates.
+In above example, <code>moduleB.obj.A</code> returns <code>"d"</code>. Try it.
+If you find any bugs, please inform me with <a href="https://github.com/Lewuathe/readonly/issues">GitHub</a></p>
+
+<p>Enjoy <strong>readonly</strong> !</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Closure With Async.js]]></title>
+    <link href="http://lewuathe.com/blog/2013/12/05/closure-with-async-dot-js/"/>
+    <updated>2013-12-05T20:29:00+09:00</updated>
+    <id>http://lewuathe.com/blog/2013/12/05/closure-with-async-dot-js</id>
+    <content type="html"><![CDATA[<p>You may use <a href="https://npmjs.org/package/async">Async.js</a> at least one time when you develop with nodejs.</p>
+
+<blockquote><p>Async is a utility module which provides straight-forward, powerful functions for working with asynchronous JavaScript.</p></blockquote>
+
+<p>So if you want to write asynchronous code with JavaScript, I recommend you to use it. It&rsquo;s easy to use, simple syntax.
+However I had trouble with using Async.js in the context of giving dynamic task array. In this article, I want to share
+how to write dynamic task array given to Async.js module.</p>
+
+<h2>Problem</h2>
+
+<p>I wrote like a below code with nodejs.</p>
+
+<p>```js
+var async = require(&lsquo;async&rsquo;);</p>
+
+<p>// Total task is 10 which is executed in parallel
+var TASK_NUM = 10;</p>
+
+<p>// All task functions are put in taskList
+var taskList = [];
+for (var i = 0; i &lt; TASK_NUM; i++) {</p>
+
+<pre><code>taskList.push(function(callback) {
+    console.log(i);
+    callback(null, i);
+});
+</code></pre>
+
+<p>}</p>
+
+<p>async.parallel(taskList, function(err, results) {</p>
+
+<pre><code>console.log(results);
+</code></pre>
+
+<p>});
+```</p>
+
+<p>When you run this code, I obtained below output.</p>
+
+<p><code>
+10
+10
+10
+10
+10
+10
+10
+10
+10
+10
+[ 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ]
+</code></p>
+
+<p>This didn&rsquo;t fit my expectation. I thought all tasks should get i-th argument. So each task&rsquo;s output
+is i-th number, if i-th task runs. However in this case, all task&rsquo;s output is 10. Why closure in function(In JavaScript, <code>function</code> makes variable scope, called closure) might not be effective?</p>
+
+<h2>Answer</h2>
+
+<p>There is answer in <a href="http://stackoverflow.com/questions/12472448/async-parallel-with-functions-dynamic-array">StackOverflow</a>.</p>
+
+<blockquote><p>A closure doesn&rsquo;t &ldquo;trap&rdquo; the value that an outer variable had at the time it was created; it &ldquo;traps&rdquo; a reference to whatever value the outer variable has at the time it&rsquo;s executed (which in this case won&rsquo;t be until well after your for loop has finished.</p></blockquote>
+
+<p>So in this case, closure does not make scope when it is <strong>declared</strong>, but <strong>executed</strong>. The variable <code>i</code> resulted in 10 after <code>for</code> loop in this code. And then each tasks will be executed under the condition that variable <code>i</code> is 10. I understood why these odd phenomenon was occured.</p>
+
+<h2>How to write</h2>
+
+<p>How should I write in order to execute this code as I expected in advance. Same page showed me the answer.</p>
+
+<p><code>
+var deleteFunction = makeDeleteFunction(i, callback);
+</code></p>
+
+<p>Writing wrapper function which wraps my original tasks makes scope under given argument <code>i</code>. When you declare task, you should not make task function directly, but should give parameters which trapped in declaration context to the wrapper function. Here is my sample that is corresponds to above code.</p>
+
+<p>```js
+var async = require(&lsquo;async&rsquo;);</p>
+
+<p>// Wrapper function
+function makeTask(i) {</p>
+
+<pre><code>return function(callback) {
+    console.log(i);
+    callback(null, i);
+};
+</code></pre>
+
+<p>}</p>
+
+<p>// Total task is 10 which is executed in parallel
+var TASK_NUM = 10;</p>
+
+<p>// All task functions are put in taskList
+var taskList = [];
+for (var i = 0; i &lt; TASK_NUM; i++) {</p>
+
+<pre><code>taskList.push(makeTask(i));
+</code></pre>
+
+<p>}</p>
+
+<p>async.parallel(taskList, function(err, results) {</p>
+
+<pre><code>console.log(results);
+</code></pre>
+
+<p>});
+```</p>
+
+<p>Then output is given as I expected.</p>
+
+<p><code>
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+[ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+</code></p>
+
+<p>If you write dynamic task function with Async.js, notice these fact.</p>
+]]></content>
+  </entry>
+  
+</feed>

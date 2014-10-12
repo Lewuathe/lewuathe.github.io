@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>モデルエビデンスの評価 - The first cry of Atom</title>
+  <meta name="author" content="Kai Sasaki">
+
+  
+  <meta name="description" content="モデルエビデンスの評価 written Sep 29th, 2013 in モデルエビデンス, 機械学習 作ったプログラムは以下においたよ。 https://github.com/PhysicsEngine/cpi-stats ここで作成した線形回帰モデルのエビデンス評価をしてみた。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://lewuathe.com/blog/2013/09/29/moderuebidensufalseping-jia">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-44055098-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>モデルエビデンスの評価</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-09-29T10:17:00+09:00" pubdate data-updated="true">Sep 29<span>th</span>, 2013</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/moderuebidensu/'>モデルエビデンス</a>, <a class='category' href='/blog/categories/ji-jie-xue-xi/'>機械学習</a>
+  
+</span>
+
+
+        </div>
+        <p>作ったプログラムは以下においたよ。</p>
+
+<p><a href="https://github.com/PhysicsEngine/cpi-stats">https://github.com/PhysicsEngine/cpi-stats</a></p>
+
+<p>ここで作成した線形回帰モデルのエビデンス評価をしてみた。
+モデルエビデンスはざっくり言うと、訓練データを与える尤度を周辺化した値。つまり、そのデータを与える可能性が最も高いものを選ぶことができればパラメタの複雑さなどを自分で判断しなくてもよいというメリットがある。</p>
+
+<p>今回、実装したのは基底関数を多項式とした場合で各目標値には加法性のガウスノイズがのる前提で計算を行った。</p>
+
+<p>超パラメタalpha(モデルパラメタのばらつき)とbeta(ガウスノイズの精度)はそれぞれ0.0001、15.0にした。推定の方法としてはベイズ推定の予測分布を計算して行った。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="c1">// Mはモデルパラメタの数</span>
+</span><span class='line'><span class="k">val</span> <span class="n">bayesRegression</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">BayesRegression</span><span class="o">(</span><span class="n">M</span><span class="o">,</span> <span class="mf">0.0001</span><span class="o">,</span> <span class="mf">15.0</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>モデルエビデンスの評価</h1>
+
+<p>基本的にはPRML(3.86)式に従った。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="c1">// Alphaはパラメタの分布の事前分布のばらつきを表す超パラメタ</span>
+</span><span class='line'><span class="c1">// Betaはガウスノイズの精度を表す超パラメタ</span>
+</span><span class='line'><span class="c1">// eMnの最大尤度での二乗和誤差</span>
+</span><span class='line'><span class="o">(</span><span class="n">M</span><span class="o">/</span><span class="mf">2.0</span><span class="o">)</span> <span class="o">*</span> <span class="nc">Math</span><span class="o">.</span><span class="n">log</span><span class="o">(</span><span class="nc">Alpha</span><span class="o">)</span> <span class="o">+</span> <span class="o">(</span><span class="n">xlist</span><span class="o">.</span><span class="n">length</span><span class="o">/</span><span class="mf">2.0</span><span class="o">)</span> <span class="o">*</span> <span class="nc">Math</span><span class="o">.</span><span class="n">log</span><span class="o">(</span><span class="nc">Beta</span><span class="o">)</span> <span class="o">-</span> <span class="n">eMn</span> <span class="o">-</span> <span class="mi">1</span><span class="o">/</span><span class="mf">2.0</span> <span class="o">*</span> <span class="nc">Math</span><span class="o">.</span><span class="n">log</span><span class="o">(</span><span class="n">det</span><span class="o">(</span><span class="n">inv</span><span class="o">(</span><span class="nc">_sN</span><span class="o">)))</span> <span class="o">-</span> <span class="n">xlist</span><span class="o">.</span><span class="n">length</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="nc">Math</span><span class="o">.</span><span class="n">log</span><span class="o">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nc">Math</span><span class="o">.</span><span class="nc">PI</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="/images/posts/2013-09-29-ModelEvidense/evidense.png" alt="モデルエビデンス" /></p>
+
+<p>モデルエビデンスをモデルパラメタの複雑さ2~100の間でプロットした。赤線はM=4の位置。M=4で最大となっていることがわかる。というわけでそれぞれの主要な位置で実際のモデルのグラフをプロットしてみた</p>
+
+<h2>M=3の場合</h2>
+
+<p>なんか直線っぽく見えるけれど、二次関数です。ほぼあってないのでエビデンスもすごい低い。二乗和誤差関数の値も大きい。
+このモデルはエビデンスを求めなくても選ばれなさそう。</p>
+
+<p><img src="/images/posts/2013-09-29-ModelEvidense/M=3.png" alt="M=3" /></p>
+
+<h2>M=4の場合</h2>
+
+<p>エビデンスが最大のモデル。見た目かなりよくfittingしている。</p>
+
+<p><img src="/images/posts/2013-09-29-ModelEvidense/M=4.png" alt="M=4" /></p>
+
+<h2>M=9の場合</h2>
+
+<p>むむ、M=4の場合と対して変わらない。</p>
+
+<p><img src="/images/posts/2013-09-29-ModelEvidense/M=9.png" alt="M=9" /></p>
+
+<h2>M=15の場合</h2>
+
+<p>これもあんまり変わらない。対数尺度で見た時に10程度の差しかないからか。この差はエビデンスでみると大して大きな差ではないのかもしれない。</p>
+
+<p><img src="/images/posts/2013-09-29-ModelEvidense/M=15.png" alt="M=15" /></p>
+
+<h2>M=30の場合</h2>
+
+<p>over fittingし始めた。M=15とM=30で大きく異るところはエビデンスの値というよりは訓練データ集合が25個だからそれより多いか少ないかの違いな気がする。</p>
+
+<p>直感的には基底関数を多項式にしているので最尤推定で行うと訓練データ集合よりもモデルパラメータの数が多いとすべての点を通るようなグラフになる。今回はベイズ推定で行っているので事前分布のお陰で全点を通るなんてことはないけれど、それでも過学習をし始める分岐点としては訓練データの数になるかもしれない。</p>
+
+<p>x=1付近でしか過学習してないのが気になるけれど。</p>
+
+<p><img src="/images/posts/2013-09-29-ModelEvidense/M=30.png" alt="M=30" /></p>
+
+<h2>M=100の場合</h2>
+
+<p>もう右側(x=1付近)のグラフはめちゃめちゃ。でもx=0付近はそんなにおかしくないのはなぜだろう。事前分布における精度は常に一定なのでそんなに場所によってばらついたりしなさそうなんだけど。</p>
+
+<p><img src="/images/posts/2013-09-29-ModelEvidense/M=100.png" alt="M=100" /></p>
+
+<h1>まとめ</h1>
+
+<p>評価値xによって過学習したりしてなかったりするのが気になるけれど、全体としてはエビデンス関数を最大化するようなモデルパラメタMを選ぶことによって、最適なモデルを作ることができそう。PRMLにも書いてあったけれど、「目で見りゃいいじゃん」というのはもっと高次元になった場合に通用しなくなるので、解析的にモデルを評価できる手法は有用。しかも割と時間もそんなにかからない。(Scalaでモデル100個の評価を行ったけれど1~2秒ほど)</p>
+
+<p>超パラメタ、alphaとbetaに関しても評価してエビデンスを最大化してみるとよりよいモデルが得られるのかも。</p>
+
+
+        <hr class="divider-short"/>
+        
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2013/09/28/devopsday-tokyo-2013nixing-tutekitayo/" title="Previous Post: DevOpsDay Tokyo 2013に行ってきたよ">&laquo; Previous: DevOpsDay Tokyo 2013に行ってきたよ</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2013/10/04/paseputoronfalseshi-zhuang/" title="Next Post: Scalaでパーセプトロンを作った">Next: Scalaでパーセプトロンを作った &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/Lewuathe"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/Lewuathe"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

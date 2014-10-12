@@ -1,0 +1,354 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Scalaでロジスティクス回帰 - The first cry of Atom</title>
+  <meta name="author" content="Kai Sasaki">
+
+  
+  <meta name="description" content="Scalaでロジスティクス回帰 written Sep 16th, 2013 PRMLをの勉強も兼ねて線形回帰モデルの構築をやってみたよ。
+PRML本の内容とここを参考に書いてみたのでぜひ参考に。
+リポジトリはこちら 最尤推定 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://lewuathe.com/blog/2013/09/16/scaladerozisuteikusuhui-gui">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-44055098-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Scalaでロジスティクス回帰</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-09-16T20:37:00+09:00" pubdate data-updated="true">Sep 16<span>th</span>, 2013</time>
+          
+
+
+        </div>
+        <p>PRMLをの勉強も兼ねて線形回帰モデルの構築をやってみたよ。
+PRML本の内容と<a href="http://aidiary.hatenablog.com/entry/20100404/1270359720">ここ</a>を参考に書いてみたのでぜひ参考に。
+リポジトリは<a href="https://github.com/PhysicsEngine/cpi-stats">こちら</a></p>
+
+<h2>最尤推定</h2>
+
+<p>基本的にはsin関数にガウスノイズを足した20個の訓練データからもとのsin関数が復元できるかということをやった。
+1次元の多項式フィッティングの場合には最尤推定は最小二乗法でとけばいいだけなのでコードはこんな感じ。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">package</span> <span class="nn">com.PhysicsEngine.cpistats</span>
+</span><span class='line'><span class="k">import</span> <span class="nn">breeze.linalg._</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">object</span> <span class="nc">LeastSquares</span> <span class="o">{</span>
+</span><span class='line'>  <span class="c1">// モデルパラメータの数 あとで正則化項を加えて計算したMAP推定と比較したいので割りとデカイ。over fittingしやすい</span>
+</span><span class='line'>  <span class="k">val</span> <span class="n">M</span> <span class="k">=</span> <span class="mi">20</span>
+</span><span class='line'>      <span class="k">def</span> <span class="n">estimate</span><span class="o">(</span><span class="n">dataList</span><span class="k">:</span><span class="kt">List</span><span class="o">[</span><span class="kt">Pair</span><span class="o">[</span><span class="kt">Double</span>,<span class="kt">Double</span><span class="o">]],</span> <span class="n">lam</span><span class="k">:</span><span class="kt">Double</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+</span><span class='line'>    <span class="c1">// The model parameter num</span>
+</span><span class='line'>    <span class="k">val</span> <span class="n">dataLength</span> <span class="k">=</span> <span class="n">dataList</span><span class="o">.</span><span class="n">length</span>
+</span><span class='line'>    <span class="c1">// AはM+1個の微分方程式の係数行列</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">A</span> <span class="k">=</span> <span class="nc">DenseMatrix</span><span class="o">.</span><span class="n">zeros</span><span class="o">[</span><span class="kt">Double</span><span class="o">](</span><span class="n">M</span><span class="o">+</span><span class="mi">1</span><span class="o">,</span> <span class="n">M</span><span class="o">+</span><span class="mi">1</span><span class="o">)</span>
+</span><span class='line'>    <span class="c1">// Tは目標値との掛け算</span>
+</span><span class='line'>    <span class="c1">// 詳しくはPRMLの演習問題(1.1)を読んだ方がいいかも</span>
+</span><span class='line'>    <span class="c1">// 要は微分して0とおいたときの連立方程式を解くための行列とベクトル</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">T</span> <span class="k">=</span> <span class="nc">DenseVector</span><span class="o">.</span><span class="n">zeros</span><span class="o">[</span><span class="kt">Double</span><span class="o">](</span><span class="n">M</span><span class="o">+</span><span class="mi">1</span><span class="o">)</span>
+</span><span class='line'>  
+</span><span class='line'>    <span class="k">for</span><span class="o">(</span><span class="n">i</span> <span class="k">&lt;-</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">M</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="k">for</span><span class="o">(</span> <span class="n">j</span> <span class="k">&lt;-</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">M</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">temp</span> <span class="k">=</span> <span class="mf">0.0</span>
+</span><span class='line'>        <span class="n">dataList</span><span class="o">.</span><span class="n">foreach</span> <span class="o">{</span>
+</span><span class='line'>          <span class="n">dataPair</span> <span class="k">=&gt;</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">temp</span> <span class="o">+=</span> <span class="nc">Math</span><span class="o">.</span><span class="n">pow</span><span class="o">(</span><span class="n">dataPair</span><span class="o">.</span><span class="n">_1</span><span class="o">,</span> <span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="o">)</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="n">A</span><span class="o">(</span><span class="n">i</span><span class="o">,</span> <span class="n">j</span><span class="o">)</span> <span class="k">=</span> <span class="n">temp</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="c1">//print(A)</span>
+</span><span class='line'>  
+</span><span class='line'>    <span class="k">for</span><span class="o">(</span><span class="n">i</span> <span class="k">&lt;-</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">M</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">temp</span> <span class="k">=</span> <span class="mf">0.0</span>
+</span><span class='line'>        <span class="n">dataList</span><span class="o">.</span><span class="n">foreach</span> <span class="o">{</span>
+</span><span class='line'>          <span class="n">dataPair</span> <span class="k">=&gt;</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">temp</span> <span class="o">+=</span> <span class="nc">Math</span><span class="o">.</span><span class="n">pow</span><span class="o">(</span><span class="n">dataPair</span><span class="o">.</span><span class="n">_1</span><span class="o">,</span> <span class="n">i</span><span class="o">)</span> <span class="o">*</span> <span class="n">dataPair</span><span class="o">.</span><span class="n">_2</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="n">T</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="k">=</span> <span class="n">temp</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="c1">//print(T)</span>
+</span><span class='line'>  
+</span><span class='line'>    <span class="k">val</span> <span class="n">wlist</span> <span class="k">=</span> <span class="n">A</span> <span class="o">\</span> <span class="n">T</span>
+</span><span class='line'>    <span class="c1">// この連立方程式をとくとパラメータベクトルが得られる</span>
+</span><span class='line'>    <span class="n">wlist</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>これで解いた場合の回帰曲線がこれ
+<img src="https://raw.github.com/PhysicsEngine/cpi-stats/master/results/LeastSquares_lambda.png" alt="LeastSquares_lambda" /></p>
+
+<p>狙いどおり過学習しております。</p>
+
+<h3>MAP推定</h3>
+
+<p>過学習をふせぐために大きすぎるパラメータにペナルティを与える方法がある。これは正則化項とよばれる項を加えた上での誤差関数を最小化する方法。これはモデルパラメータの事後分布を最大化するようなものを選ぶ方法と同じ。だからMAP推定(Most a posterio)と呼ばれる。やりかたは簡単。さっきの行列Aの対角成分に正則化パラメータを加えればよい。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="c1">// これを A(i, j) = tempの前に書く</span>
+</span><span class='line'><span class="c1">// lam = 0.00001くらいでいい</span>
+</span><span class='line'><span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">j</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">temp</span> <span class="o">+=</span> <span class="n">lam</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>結果は以下。</p>
+
+<p><img src="https://raw.github.com/PhysicsEngine/cpi-stats/master/results/LeastSquares.png" alt="LeastSquares" /></p>
+
+<p>正則化項の値はかなり小さいはずなのに結構効果がある。すごい。ただずれているところはかなりずれているようにも見える。</p>
+
+<h2>ベイズ推定</h2>
+
+<p>というわけでベイズ推定。上の２つは両方ともパラメータwを点推定で決めてしまう決定論的な手法であるのに対してベイズ推定はパラメータ事後分布から予測分布を求めることまでを行う。簡単にいうと各xの値に対してパラメータwはひとつには決めずにある分布に従う確率変数として扱い、目標値に対しても幅を持たせることになる。今回は各訓練データはガウス分布にしたがうノイズがのっているという仮定にもとづいて推定を行う。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">package</span> <span class="nn">com.PhysicsEngine.cpistats</span>
+</span><span class='line'><span class="k">import</span> <span class="nn">breeze.linalg._</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">object</span> <span class="nc">BayesEstimation</span> <span class="o">{</span>
+</span><span class='line'>    <span class="c1">// モデルパラメータの数</span>
+</span><span class='line'>  <span class="k">val</span> <span class="n">M</span> <span class="k">=</span> <span class="mi">20</span>
+</span><span class='line'>  <span class="c1">// BETAとALPHAは事後分布の超パラメータ</span>
+</span><span class='line'>  <span class="k">val</span> <span class="nc">BETA</span> <span class="k">=</span> <span class="mf">11.1</span>
+</span><span class='line'>  <span class="k">val</span> <span class="nc">ALPHA</span> <span class="k">=</span> <span class="mf">0.005</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="c1">// 基底関数。今回は多項式関数をつかっている</span>
+</span><span class='line'>  <span class="k">def</span> <span class="n">phi</span><span class="o">(</span><span class="n">x</span><span class="k">:</span><span class="kt">Double</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">T</span> <span class="k">=</span> <span class="nc">DenseVector</span><span class="o">.</span><span class="n">zeros</span><span class="o">[</span><span class="kt">Double</span><span class="o">](</span><span class="n">M</span><span class="o">+</span><span class="mi">1</span><span class="o">)</span>
+</span><span class='line'>    <span class="k">for</span><span class="o">(</span><span class="n">i</span> <span class="k">&lt;-</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">M</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">T</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="k">=</span> <span class="nc">Math</span><span class="o">.</span><span class="n">pow</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">i</span><span class="o">)</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="n">T</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="c1">// 平均値を求める</span>
+</span><span class='line'>  <span class="c1">// PRML(1.70)</span>
+</span><span class='line'>  <span class="k">def</span> <span class="n">mean</span><span class="o">(</span><span class="n">x</span><span class="k">:</span><span class="kt">Double</span><span class="o">,</span> <span class="n">dataList</span><span class="k">:</span><span class="kt">List</span><span class="o">[</span><span class="kt">Pair</span><span class="o">[</span><span class="kt">Double</span>, <span class="kt">Double</span><span class="o">]],</span> <span class="n">S</span><span class="k">:</span><span class="kt">DenseMatrix</span><span class="o">[</span><span class="kt">Double</span><span class="o">])</span> <span class="k">=</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">val</span> <span class="n">sums</span> <span class="k">=</span> <span class="nc">DenseVector</span><span class="o">.</span><span class="n">zeros</span><span class="o">[</span><span class="kt">Double</span><span class="o">](</span><span class="n">M</span><span class="o">+</span><span class="mi">1</span><span class="o">)</span>
+</span><span class='line'>    <span class="k">for</span><span class="o">(</span><span class="n">i</span> <span class="k">&lt;-</span> <span class="mi">0</span> <span class="n">to</span> <span class="n">dataList</span><span class="o">.</span><span class="n">length</span><span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">sums</span> <span class="o">+=</span> <span class="n">phi</span><span class="o">(</span><span class="n">dataList</span><span class="o">(</span><span class="n">i</span><span class="o">).</span><span class="n">_1</span><span class="o">)</span> <span class="o">:*</span> <span class="n">dataList</span><span class="o">(</span><span class="n">i</span><span class="o">).</span><span class="n">_2</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="nc">BETA</span> <span class="o">*</span> <span class="n">phi</span><span class="o">(</span><span class="n">x</span><span class="o">).</span><span class="n">t</span> <span class="o">*</span> <span class="n">S</span> <span class="o">*</span> <span class="n">sums</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="c1">// 各平均値からの精度</span>
+</span><span class='line'>  <span class="c1">// PRML(1.71)  def variance(x:Double, dataList:List[Pair[Double, Double]], S:DenseMatrix[Double]) = {</span>
+</span><span class='line'>    <span class="n">phi</span><span class="o">(</span><span class="n">x</span><span class="o">).</span><span class="n">t</span> <span class="o">*</span> <span class="n">S</span> <span class="o">*</span> <span class="n">phi</span><span class="o">(</span><span class="n">x</span><span class="o">)</span> <span class="o">+</span> <span class="o">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="nc">BETA</span><span class="o">)</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>これで推定した結果がこちら。</p>
+
+<p><img src="https://raw.github.com/PhysicsEngine/cpi-stats/master/results/BayesEstimation.png" alt="BayesEstimation" /></p>
+
+<p>緑実線が平均値の推定結果で、赤点線がそれぞれ平均値から1σ分だけ離れた曲線を表す。大体あてはまっていることがわかる。もっとパラメータの数を多くすると無理やり、範囲内に訓練データが入るような分布が得られた。
+もう少し汎用的なものを作っていこうかなと思っています。</p>
+
+
+        <hr class="divider-short"/>
+        
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2013/09/14/scalanlpfalsetiyutoriaru/" title="Previous Post: ScalaNLPのチュートリアル">&laquo; Previous: ScalaNLPのチュートリアル</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2013/09/17/baiasu-bariansufen-jie/" title="Next Post: バイアス-バリアンス分解">Next: バイアス-バリアンス分解 &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/Lewuathe"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/Lewuathe"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

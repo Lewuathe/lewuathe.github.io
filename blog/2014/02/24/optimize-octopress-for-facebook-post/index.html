@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Optimize Octopress for Facebook Post - The first cry of Atom</title>
+  <meta name="author" content="Kai Sasaki">
+
+  
+  <meta name="description" content="Optimize Octopress for Facebook Post written Feb 24th, 2014 in facebook, octopress This blog made by octopress, ruby CMS tool.
+As many others do, I &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://lewuathe.com/blog/2014/02/24/optimize-octopress-for-facebook-post">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-44055098-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Optimize Octopress for Facebook Post</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2014-02-24T20:25:45+09:00" pubdate data-updated="true">Feb 24<span>th</span>, 2014</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/facebook/'>facebook</a>, <a class='category' href='/blog/categories/octopress/'>octopress</a>
+  
+</span>
+
+
+        </div>
+        <p>This blog made by <a href="http://octopress.org/">octopress</a>, ruby CMS tool.
+As many others do, I also combined this tool with <a href="http://pages.github.com/">GitHub pages</a>
+But this method has one fault about posting on facebook. Octopress doesn&rsquo;t include ogp properties as default. Ogp properties privide facebook meta information such as title, author, description and url. So without this meta information, you cannot get proper images when you write a post on facebook. In order to attach thumbtail image to your post, you have to write some configuration on octopress.</p>
+
+<!-- more -->
+
+
+
+
+<div style="text-align:center" markdown="1">
+<img src="/images/posts/2014-02-24-octopress-ogp/before.png" />
+</div>
+
+
+<h2>Write appid and locale</h2>
+
+<p>Append below configuration in your <code>_config.yml</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>facebook_app_id: YOUR_APP_ID
+</span><span class='line'>facebook_locale: ja_JP</span></code></pre></td></tr></table></div></figure>
+
+
+<p>YOUR_APP_ID might be listed on <code>/source/_include/facebook_like.html</code> Paste that number.</p>
+
+<h2>Change facebook like action</h2>
+
+<p>Edit <code>/source/_include/facebook_like.html</code> like below. This modification makes this JavaScript code get app_id and locale from <code>_config.yml</code> file.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>&lt;div id="fb-root"&gt;&lt;/div&gt;
+</span><span class='line'>&lt;script&gt;(function(d, s, id) {
+</span><span class='line'>  var js, fjs = d.getElementsByTagName(s)[0];
+</span><span class='line'>  if (d.getElementById(id)) {return;}
+</span><span class='line'>  js = d.createElement(s); js.id = id; js.async = true;
+</span><span class='line'>  js.src = "//connect.facebook.net/ja_JP/all.js#appId=212934732101925&xfbml=1";
+</span><span class='line'>  fjs.parentNode.insertBefore(js, fjs);
+</span><span class='line'>}(document, 'script', 'facebook-jssdk'));&lt;/script&gt;
+</span><span class='line'></span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Add top page flag</h2>
+
+<p>To ditinguish post articles and top page, add this flag to <code>source/index.html</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>---
+</span><span class='line'>layout: default
+</span><span class='line'>index: true  
+</span><span class='line'>---</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Configuration for ogp meta informations</h2>
+
+<p>Write below meta tags to <code>source/_includes/custom/facebook_ogp.html</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>% cat source/_includes/custom/facebook_ogp.html
+</span><span class='line'>&lt;meta property="og:title" content="Optimize octopress for facebook post - The first cry of Atom" &gt;
+</span><span class='line'>&lt;meta property="og:description" content="" /&gt;
+</span><span class='line'>&lt;meta property="og:url" content="http://lewuathe.com" /&gt;
+</span><span class='line'>&lt;meta property="og:image" content="http://lewuathe.com/images/site_image.png" /&gt;
+</span><span class='line'>&lt;meta property="og:author" content="lewuathe" /&gt;
+</span><span class='line'>&lt;meta property="og:site_name" content="The first cry of Atom" /&gt;
+</span><span class='line'>&lt;meta property="og:locale" content="ja_JP" /&gt;
+</span><span class='line'>&lt;meta property="og:type" content="article" /&gt;
+</span><span class='line'>&lt;meta property="fb:app_id" content="212934732101925" /&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Include meta tags</h2>
+
+<p>At last, make header include these meta tags. Write below on <code>source/_include/head.html</code></p>
+
+<p><img src="/images/posts/2014-02-24-octopress-ogp/code.png" /></p>
+
+<p>So that&rsquo;s all. It&rsquo;s ok. Deploy this site and post any entry to facebook.</p>
+
+<div style="text-align:center" markdown="1">
+<img src="/images/posts/2014-02-24-octopress-ogp/after.png" />
+</div>
+
+
+<p>Good, you can see your thumbnail. A research shows that the post that has thumbnail images attracts more people than
+the post that has no image can. If you are using octopress for writing your own blog, it must be the good option for increasing
+the access from facebook.</p>
+
+<p>Thank you.</p>
+
+
+        <hr class="divider-short"/>
+        
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2014/02/23/trying-word2vec-from-twitter-corpus/" title="Previous Post: Trying word2vec from Twitter corpus">&laquo; Previous: Trying word2vec from Twitter corpus</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2014/02/27/tokyo-node-gakuen-11th-period/" title="Next Post: Tokyo Node Gakuen 11th period">Next: Tokyo Node Gakuen 11th period &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/Lewuathe"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/Lewuathe"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

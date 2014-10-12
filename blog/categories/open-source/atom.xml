@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Open Source | The first cry of Atom]]></title>
+  <link href="http://lewuathe.com/blog/categories/open-source/atom.xml" rel="self"/>
+  <link href="http://lewuathe.com/"/>
+  <updated>2014-10-12T20:49:53+09:00</updated>
+  <id>http://lewuathe.com/</id>
+  <author>
+    <name><![CDATA[Kai Sasaki]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Welcome Open Source Movement in Hardware Company]]></title>
+    <link href="http://lewuathe.com/blog/2014/06/13/open-source-movement-in-hardware-compan/"/>
+    <updated>2014-06-13T22:00:35+09:00</updated>
+    <id>http://lewuathe.com/blog/2014/06/13/open-source-movement-in-hardware-compan</id>
+    <content type="html"><![CDATA[<p>Today is the first day of new era for Open Source movements.</p>
+
+<p><a href="http://www.teslamotors.com/blog/all-our-patent-are-belong-you">All Our Patent Are Belong To You</a></p>
+
+<div style="text-align:center" markdown="1">
+<figure>
+<img src="http://lewuathe.com/images/posts/2014-06-13-tesla/motor.jpg" />
+<figure>Tesla Motor by Steve Jurvetson<a href="https://www.flickr.com/photos/jurvetson/2782565657/in/photolist-5eTnPX-kv7w5M-f7WzKj-f7WyNA-dXMDqB-6M2MHW-5eHYAq-6aJA3F-7zhWDy-4t8U5F-dXTjdG-f7WymU-f7GmqF-f7GiuB-BNTx5-6kAGXC-5t76MG-nWXsmN-6kAGoU-6aqomT-chEjh3-6kwyti-5peGWB-aXeXtc-8pSRjC-dxpQbA-atHJJo-aGXy8P-ciZHPf-f7WvB3-6kAGAd-f7Wz5Y-dZ4MiH-atAnS1-eiPF9U-6kAHnJ-dB939C-6DAEpq-dNTgjx-dXMzLa-dXTjfY-f7GjfK-f7GjLF-f7GhVc-5nwqy5-gyBgiX-dXTfQE-79tMEC-9ghJyE-brfREu">flickr</a></figcaption>
+</figure>
+</div>
+
+
+<p>Tesla is famous for its motor products. These opened patents includes EV technologies for the future.
+I think it will accelerate the speed of development of EV vehicles. So this decision plays a big role to
+progress the bright future of motor technologies.</p>
+
+<p>Above all, as a software engineer, it is great thing to spread open source movement into hardware companies.</p>
+]]></content>
+  </entry>
+  
+</feed>

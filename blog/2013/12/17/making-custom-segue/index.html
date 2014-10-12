@@ -1,0 +1,241 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Making Custom Segue - The first cry of Atom</title>
+  <meta name="author" content="Kai Sasaki">
+
+  
+  <meta name="description" content="Making Custom Segue written Dec 17th, 2013 in Custom, Objective-C, iOS, iPhone In developing iOS application, have you wanted to make your own &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://lewuathe.com/blog/2013/12/17/making-custom-segue">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-44055098-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Making Custom Segue</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-12-17T23:21:00+09:00" pubdate data-updated="true">Dec 17<span>th</span>, 2013</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/custom/'>Custom</a>, <a class='category' href='/blog/categories/objective-c/'>Objective-C</a>, <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/iphone/'>iPhone</a>
+  
+</span>
+
+
+        </div>
+        <p>In developing iOS application, have you wanted to make your own cutomized segue? UIKit provides bare segues such as
+<code>push</code>, <code>modal</code>, <code>popover</code> and <code>replace</code>. These are useful in any situations. But sometimes I want to make my own transition.
+So, I wrote down some tips for making your own custom animation used by segue.</p>
+
+<h2>Make custom segue class</h2>
+
+<p>In Xcode, add new files. The name of this class, anything is OK. But you have to set super class <code>UIStoryboardSegue</code>. Otherwise storyboard
+cannot find this custom class subsequently.</p>
+
+<p><img src="/images/posts/2013-12-17-customsegue/create-segue.png" alt="create" /></p>
+
+<p>In this case, I named <code>FlipSegue</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='objective-c'><span class='line'><span class="cp">#import &lt;UIKit/UIKit.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@interface</span> <span class="nc">FlipSegue</span> : <span class="nc">UIStoryboardSegue</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And write animations like below.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='objective-c'><span class='line'><span class="cp">#import &quot;FlipSegue.h&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@implementation</span> <span class="nc">FlipSegue</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">perform</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">UIViewController</span> <span class="o">*</span><span class="n">sourceController</span> <span class="o">=</span> <span class="p">(</span><span class="n">UIViewController</span><span class="o">*</span><span class="p">)</span><span class="n">self</span><span class="p">.</span><span class="n">sourceViewController</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">UIViewController</span> <span class="o">*</span><span class="n">destinationController</span> <span class="o">=</span> <span class="p">(</span><span class="n">UIViewController</span><span class="o">*</span><span class="p">)</span><span class="n">self</span><span class="p">.</span><span class="n">destinationViewController</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">CATransition</span> <span class="o">*</span><span class="n">transition</span> <span class="o">=</span> <span class="p">[</span><span class="n">CATransition</span> <span class="n">animation</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">transition</span><span class="p">.</span><span class="n">duration</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">transition</span><span class="p">.</span><span class="n">timingFunction</span> <span class="o">=</span> <span class="p">[</span><span class="n">CAMediaTimingFunction</span> <span class="nl">functionWithName:</span><span class="n">kCAMediaTimingFunctionEaseInEaseOut</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Set transition animation type</span>
+</span><span class='line'>    <span class="n">transition</span><span class="p">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">kCATransitionFade</span><span class="p">;</span>
+</span><span class='line'>    <span class="c1">// Set transition animation subtype</span>
+</span><span class='line'>    <span class="n">transition</span><span class="p">.</span><span class="n">subtype</span> <span class="o">=</span> <span class="n">kCATransitionFromTop</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Change animation</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">sourceController</span><span class="p">.</span><span class="n">navigationController</span><span class="p">.</span><span class="n">view</span><span class="p">.</span><span class="n">layer</span> <span class="nl">addAnimation:</span><span class="n">transition</span> <span class="nl">forKey:</span><span class="s">@&quot;mytransition&quot;</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Transition </span>
+</span><span class='line'>    <span class="p">[</span><span class="n">sourceController</span><span class="p">.</span><span class="n">navigationController</span> <span class="nl">pushViewController:</span><span class="n">destinationController</span> <span class="nl">animated:</span><span class="n">NO</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When this segue is called, these animation settings are executed automatically. If you want to change animation, <code>type</code> and <code>subtype</code> is the core
+of how the animation moves. These presets are documented in <a href="https://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CATransition_Class/Introduction/Introduction.html">here</a>
+Please see official document for detail. And then we&rsquo;ll use this segue on storyboard.</p>
+
+<h2>Make segue with story board</h2>
+
+<p>You need to draw your custom segue on storyboard.</p>
+
+<p><img src="/images/posts/2013-12-17-customsegue/storyboard-segue.png" alt="storyboard" /></p>
+
+<p>You can see <code>flip</code>, when you drag the arrow of segue on storyboard. This is your custom <code>FlipSegue</code>.
+So choose this segue. And run!! Pusing source button of flip segue, your will see your custom animated transition.</p>
+
+
+        <hr class="divider-short"/>
+        
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2013/12/13/making-widget-plugin/" title="Previous Post: Making Jenkins widget plugin">&laquo; Previous: Making Jenkins widget plugin</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2013/12/23/how-to-start-krakenjs/" title="Next Post: How to start KrakenJS">Next: How to start KrakenJS &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/Lewuathe"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/Lewuathe"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

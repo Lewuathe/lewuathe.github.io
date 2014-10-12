@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Scrum | The first cry of Atom]]></title>
+  <link href="http://lewuathe.com/blog/categories/scrum/atom.xml" rel="self"/>
+  <link href="http://lewuathe.com/"/>
+  <updated>2014-10-12T20:49:53+09:00</updated>
+  <id>http://lewuathe.com/</id>
+  <author>
+    <name><![CDATA[Kai Sasaki]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Scrum Gathering Tokyo 2014]]></title>
+    <link href="http://lewuathe.com/blog/2014/01/19/scrum-gathering-tokyo-2014-1/"/>
+    <updated>2014-01-19T21:08:00+09:00</updated>
+    <id>http://lewuathe.com/blog/2014/01/19/scrum-gathering-tokyo-2014-1</id>
+    <content type="html"><![CDATA[<p>On January 14-15, I participated <strong><a href="http://scrumgatheringtokyo.org/2014/">Scrum Gathering Tokyo 2014</a></strong>.
+Though this conference cost me a little more than I can afford it,
+it was great time to me as scrum master in my project. I want to arrange
+the contents of these sessions, but as there were many sessions it is hard to me.
+So in this entry, I cite one scrum example after another which I heard in these sessions.</p>
+
+<!-- more -->
+
+
+<h1>Enterprise Scrum: the future management (Mike Beedle)</h1>
+
+<h2>Rapid change in Business environment</h2>
+
+<ul>
+<li>Being and Becoming</li>
+<li>The main incomes are from new products
+
+<ul>
+<li>About 70%</li>
+</ul>
+</li>
+<li>Winner innovate faster</li>
+<li>New product developemnt efficiency differences can be huge 1200%
+
+<ul>
+<li>That&rsquo;s why agile is needed in many companies</li>
+</ul>
+</li>
+<li>The origin of scrum is TOYOTA production system</li>
+<li>Scrum is applicable to business, generic and scaled techinics.</li>
+</ul>
+
+
+<h1>Leading the Lean</h1>
+
+<ul>
+<li>SAFe Roots
+
+<ul>
+<li><a href="http://www.scaledagileframework.com/">Scaled Agile framwwork</a></li>
+</ul>
+</li>
+<li>In scrum class, any code cannot be written
+
+<ul>
+<li>The process which can be used in real scene should be progressed in code level.</li>
+</ul>
+</li>
+</ul>
+
+
+<h1>Padawan scrum master</h1>
+
+<h2>First of all, let&rsquo;s study</h2>
+
+<ul>
+<li>Read <a href="http://www.amazon.co.jp/Estimating-Planning-Robert-Martin-Series/dp/0131479415%3FSubscriptionId%3DAKIAJCKXRISJS6UE36NQ%26tag%3Dkakutani-22%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0131479415">Agile Estimating and Planning</a></li>
+<li>Read <a href="http://www.amazon.co.jp/The-Agile-Samurai-Pragmatic-Programmers/dp/1934356581/ref=sr_1_1?s=english-books&amp;ie=UTF8&amp;qid=1390134825&amp;sr=1-1&amp;keywords=Agile+Samurai">Agile Samurai</a></li>
+<li>In the past, XP is the main stream in SIer.
+
+<ul>
+<li>XP is the idealistic thought. So it is not fit the real scene.</li>
+<li>On the halfway, the members are bored with the process.</li>
+<li>In the team which is composed of about 70 members, the standard process or documents should be arranged precisely.</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>And hearing clients about necessary conditions</h2>
+
+<ul>
+<li>Thinging of what to do</li>
+<li>It might be difficult to do scrum in enterprise enviroment</li>
+</ul>
+
+
+<h2>How to estimate</h2>
+
+<ul>
+<li>Very roughtly.</li>
+<li>Hour unit, 3 days unit.</li>
+<li>From the beginning, chart is not burned down. Add tasks every day</li>
+</ul>
+
+
+<h2>How to do contractually</h2>
+
+<ul>
+<li>Introduce <a href="http://www.amazon.co.jp/%E3%83%8F%E3%82%A4%E3%83%96%E3%83%AA%E3%83%83%E3%83%89%E3%82%A2%E3%82%B8%E3%83%A3%E3%82%A4%E3%83%AB%E3%81%AE%E5%AE%9F%E8%B7%B5-%E8%8B%B1-%E7%B9%81%E9%9B%84/dp/4897979358">Hybrid scrum</a></li>
+<li>It is seemed like waterfall from outside.
+
+<ul>
+<li>The process which need approvals shoule be done waterfall process</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>In the case that there are anyone who is negative to agile scrum</h2>
+
+<ul>
+<li>Remove that member</li>
+</ul>
+
+
+<h2>How to cope with the change order</h2>
+
+<ul>
+<li>Require clients to line tasks by order, not attach the priority
+
+<ul>
+<li>If tasks are arranged one line, the order of task is explicit.</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Last but not least</h2>
+
+<ul>
+<li>Scrum should be changed to fit your own team</li>
+<li>Some projects should be facilitated forcibly, like waterfall process</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

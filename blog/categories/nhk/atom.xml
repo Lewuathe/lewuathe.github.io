@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: NHK | The first cry of Atom]]></title>
+  <link href="http://lewuathe.com/blog/categories/nhk/atom.xml" rel="self"/>
+  <link href="http://lewuathe.com/"/>
+  <updated>2014-10-12T20:49:53+09:00</updated>
+  <id>http://lewuathe.com/</id>
+  <author>
+    <name><![CDATA[Kai Sasaki]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Hack NHK]]></title>
+    <link href="http://lewuathe.com/blog/2014/05/26/hack-nhk/"/>
+    <updated>2014-05-26T19:38:04+09:00</updated>
+    <id>http://lewuathe.com/blog/2014/05/26/hack-nhk</id>
+    <content type="html"><![CDATA[<p>Recently, there are a lot of hackathon in Japan. This word &ldquo;Hackathon&rdquo; also have been
+familiar word to non programmers. People want to use this type of event in order to solve
+any problems they have at office, home and life.</p>
+
+<p>NHK is Japan&rsquo;s national public broadcasting organization. The name is abbreviation of &ldquo;Nippon Housou Kyoukai&rdquo;.
+This organization keeps focusing to improve the quality of news broadcasting in terms of equality, accuracy and deepness.
+In this weekend, Hakathon is applied to the field of broadcasting. I attended.</p>
+
+<p><a href="http://www.nhk.or.jp/kokusaihoudou/hackathon/">http://www.nhk.or.jp/kokusaihoudou/hackathon/</a></p>
+
+<div style="text-align:center" markdown="1">
+<img src="http://lewuathe.com/images/posts/2014-05-26-nhk-hackathon/board.jpg" />
+</div>
+
+
+
+
+<!-- more -->
+
+
+<p>The purpose of this event is to answer how to let the youngs see news programs such as <a href="http://www.nhk.or.jp/kokusaihoudou/">&ldquo;Kokusai Houdou 2014&rdquo;</a>.
+To promote the rating of thie program and furthermore the rating of whole news programs, our ideas as hacker, I think, will also help new field
+which is different from our daily life.</p>
+
+<p>Our team developes vizualizing tool for your interest to the news program. While you are watching TV program, you might not want to have trouble with
+recording any captures, time or tracking tweets about target program. All you have to do with our tool is watching TV. The image sensing hardware made by <a href="http://www.omron.co.jp/">omron</a> tracks your emotion toward program automatically. At the end of the program you can review the list of emotions showed by you while you were watching TV.
+With that list of emotion and captures, you can look back inside yourself, your emotions. This leads the new possibility of the style of watching TV and our emotions.</p>
+
+<div style="text-align:center" markdown="1">
+<img src="http://lewuathe.com/images/posts/2014-05-26-nhk-hackathon/members.jpg" />
+</div>
+
+
+<p>As a geek, the most impressive factor I can use in this time was <a href="http://www.nhk.or.jp/hybridcast/online/">Hybridcast</a>. With this technology, I can develop &ldquo;TV&rdquo; application
+like developing web application. I constructed API server, started HTTP proxy server and wrote HTML5 source codes. It was the time when I realised the new technology of TV brought us sufficient generality of web technology even paradoxically. The future is getting around the corner.</p>
+
+<p>To be honest, I don&rsquo;t usually watch TV programs except for NHK. Even NHK, the frequency of watching cannot be necessarily high. I am a resident of internet.</p>
+
+<p>However I can see a little bright future on TV device and contents. I hope to help TV get the power of internet with the explosion of high technologies.
+So from today, I think watching TV is not bad as much as I expected. Oops, <a href="http://www.nhk.or.jp/professional/">&ldquo;The professional&rdquo;</a> starts soon, it&rsquo;s monday.
+Here I close my laptop and watching the future showed on TV calmly.</p>
+
+<p>Thank you.</p>
+]]></content>
+  </entry>
+  
+</feed>

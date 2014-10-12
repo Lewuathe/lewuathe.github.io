@@ -1,0 +1,420 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Restricted Boltzmann Machine in Node - The first cry of Atom</title>
+  <meta name="author" content="Kai Sasaki">
+
+  
+  <meta name="description" content="Restricted Boltzmann Machine in Node written Feb 5th, 2014 in DeepLearning, RBM, node n42 has restricted boltzmann machine. Restricted boltzmann &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://lewuathe.com/blog/2014/02/05/restricted-boltzmann-machine-in-node">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-44055098-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Restricted Boltzmann Machine in Node</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2014-02-05T21:18:00+09:00" pubdate data-updated="true">Feb 5<span>th</span>, 2014</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/deeplearning/'>DeepLearning</a>, <a class='category' href='/blog/categories/rbm/'>RBM</a>, <a class='category' href='/blog/categories/node/'>node</a>
+  
+</span>
+
+
+        </div>
+        <p>n42 has restricted boltzmann machine. Restricted boltzmann machine is a kind of
+autoencoder in order to extract charasteristics. In this article, I would leave out
+the detail of restricted boltzmann machine. I want to introduce how the RBM is written
+in node.</p>
+
+<!-- more -->
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="cm">/*</span>
+</span><span class='line'><span class="cm"> *  Restricted Boltzmann machine</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> *  @module n42</span>
+</span><span class='line'><span class="cm"> *  @class  RBM</span>
+</span><span class='line'><span class="cm"> *  @author Kai Sasaki</span>
+</span><span class='line'><span class="cm"> *  @since 2014/01/28</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">Matrix</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;sylvester&#39;</span><span class="p">).</span><span class="nx">Matrix</span><span class="p">;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">Vector</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;sylvester&#39;</span><span class="p">).</span><span class="nx">Vector</span><span class="p">;</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">utils</span>  <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./utils.js&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">binomial</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;binomial-sampling&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">generator</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;box-muller&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">RBM</span><span class="p">(</span><span class="nx">input</span><span class="p">,</span> <span class="nx">nVisible</span><span class="p">,</span> <span class="nx">nHidden</span><span class="p">,</span> <span class="nx">W</span><span class="p">,</span> <span class="nx">hBias</span><span class="p">,</span> <span class="nx">vBias</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">input</span> <span class="o">=</span> <span class="nx">input</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">nVisible</span> <span class="o">=</span> <span class="nx">nVisible</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">nHidden</span>  <span class="o">=</span> <span class="nx">nHidden</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Initialize weight parameter</span>
+</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">W</span>     <span class="o">=</span> <span class="p">(</span><span class="nx">W</span> <span class="o">!=</span> <span class="kc">undefined</span><span class="p">)</span><span class="o">?</span> <span class="nx">W</span> <span class="o">:</span> <span class="nx">Matrix</span><span class="p">.</span><span class="nx">Random</span><span class="p">(</span><span class="nx">nVisible</span><span class="p">,</span> <span class="nx">nHidden</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Initialize hidden bias parameters</span>
+</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">hBias</span> <span class="o">=</span> <span class="p">(</span><span class="nx">hBias</span> <span class="o">!=</span> <span class="kc">undefined</span><span class="p">)</span><span class="o">?</span> <span class="nx">hBias</span> <span class="o">:</span> <span class="nx">Vector</span><span class="p">.</span><span class="nx">Zero</span><span class="p">(</span><span class="nx">nHidden</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Initialize visual bias parameters</span>
+</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">vBias</span> <span class="o">=</span> <span class="p">(</span><span class="nx">vBias</span> <span class="o">!=</span> <span class="kc">undefined</span><span class="p">)</span><span class="o">?</span> <span class="nx">vBias</span> <span class="o">:</span> <span class="nx">Vector</span><span class="p">.</span><span class="nx">Zero</span><span class="p">(</span><span class="nx">nVisible</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">RBM</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">contrastiveDivergence</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">lr</span><span class="p">,</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">input</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">input</span> <span class="o">=</span> <span class="p">(</span><span class="nx">input</span> <span class="o">!=</span> <span class="kc">undefined</span><span class="p">)</span><span class="o">?</span> <span class="nx">input</span> <span class="o">:</span> <span class="nx">self</span><span class="p">.</span><span class="nx">input</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">ph</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">sampleHGivenV</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">input</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Select phSample</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">chainStart</span> <span class="o">=</span> <span class="nx">ph</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// stepRet[0] v1Means</span>
+</span><span class='line'>    <span class="c1">// stepRet[1] v1Samples</span>
+</span><span class='line'>    <span class="c1">// stepRet[2] h1Means</span>
+</span><span class='line'>    <span class="c1">// stepRet[3] h1Sample</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">step</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">step</span> <span class="o">&lt;</span> <span class="nx">k</span><span class="p">;</span> <span class="nx">step</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">stepRet</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nx">step</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">stepRet</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">gibbsHvh</span><span class="p">(</span><span class="nx">chainStart</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>            <span class="c1">// Select a nhSample</span>
+</span><span class='line'>            <span class="nx">stepRet</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">gibbsHvh</span><span class="p">(</span><span class="nx">stepRet</span><span class="p">[</span><span class="mi">3</span><span class="p">]);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// W += lr * (W.T * phSample - nvSample.T * nhMeans)</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">witem1</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">input</span><span class="p">.</span><span class="nx">transpose</span><span class="p">().</span><span class="nx">x</span><span class="p">(</span><span class="nx">ph</span><span class="p">[</span><span class="mi">1</span><span class="p">]).</span><span class="nx">x</span><span class="p">(</span><span class="nx">lr</span><span class="p">);</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">witem2</span> <span class="o">=</span> <span class="nx">stepRet</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">transpose</span><span class="p">().</span><span class="nx">x</span><span class="p">(</span><span class="nx">stepRet</span><span class="p">[</span><span class="mi">2</span><span class="p">]).</span><span class="nx">x</span><span class="p">(</span><span class="nx">lr</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">W</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">W</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">witem1</span><span class="p">.</span><span class="nx">subtract</span><span class="p">(</span><span class="nx">witem2</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">vitem1</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">input</span><span class="p">.</span><span class="nx">x</span><span class="p">(</span><span class="nx">lr</span><span class="p">);</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">vitem2</span> <span class="o">=</span> <span class="nx">stepRet</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">x</span><span class="p">(</span><span class="nx">lr</span><span class="p">);</span>
+</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">vBias</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">vBias</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">utils</span><span class="p">.</span><span class="nx">mean</span><span class="p">(</span><span class="nx">vitem1</span><span class="p">.</span><span class="nx">subtract</span><span class="p">(</span><span class="nx">vitem2</span><span class="p">),</span> <span class="mi">0</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">hitem1</span> <span class="o">=</span> <span class="nx">ph</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">x</span><span class="p">(</span><span class="nx">lr</span><span class="p">);</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">hitem2</span> <span class="o">=</span> <span class="nx">stepRet</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="nx">x</span><span class="p">(</span><span class="nx">lr</span><span class="p">);</span>
+</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">hBias</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">hBias</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">utils</span><span class="p">.</span><span class="nx">mean</span><span class="p">(</span><span class="nx">hitem1</span><span class="p">.</span><span class="nx">subtract</span><span class="p">(</span><span class="nx">hitem2</span><span class="p">),</span> <span class="mi">0</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">RBM</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">sampleHGivenV</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v0Sample</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">h1Means</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">propup</span><span class="p">(</span><span class="nx">v0Sample</span><span class="p">);</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">h1Sample</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">h1Means</span><span class="p">.</span><span class="nx">rows</span><span class="p">();</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">h1Sample</span><span class="p">.</span><span class="nx">push</span><span class="p">([]);</span>
+</span><span class='line'>        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">h1Means</span><span class="p">.</span><span class="nx">cols</span><span class="p">();</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">h1Sample</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">push</span><span class="p">(</span><span class="nx">binomial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">h1Means</span><span class="p">.</span><span class="nx">e</span><span class="p">(</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nx">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)));</span>
+</span><span class='line'>            <span class="c1">//h1Sample[i].push(generator() + h1Means.e(i+1, j+1));</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="nx">h1Sample</span> <span class="o">=</span> <span class="nx">$M</span><span class="p">(</span><span class="nx">h1Sample</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">[</span><span class="nx">h1Means</span><span class="p">,</span> <span class="nx">h1Sample</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">RBM</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">sampleVGivenH</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">h0Sample</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">v1Means</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">propdown</span><span class="p">(</span><span class="nx">h0Sample</span><span class="p">);</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">v1Sample</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">v1Means</span><span class="p">.</span><span class="nx">rows</span><span class="p">();</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">v1Sample</span><span class="p">.</span><span class="nx">push</span><span class="p">([]);</span>
+</span><span class='line'>        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">v1Means</span><span class="p">.</span><span class="nx">cols</span><span class="p">();</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">v1Sample</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">push</span><span class="p">(</span><span class="nx">binomial</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">v1Means</span><span class="p">.</span><span class="nx">e</span><span class="p">(</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nx">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)));</span>
+</span><span class='line'>            <span class="c1">//v1Sample[i].push(generator()*0.01 + v1Means.e(i+1, j+1))</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="nx">v1Sample</span> <span class="o">=</span> <span class="nx">$M</span><span class="p">(</span><span class="nx">v1Sample</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">[</span><span class="nx">v1Means</span><span class="p">,</span> <span class="nx">v1Sample</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">RBM</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">gibbsHvh</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">h0Sample</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">retV1</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">sampleVGivenH</span><span class="p">(</span><span class="nx">h0Sample</span><span class="p">);</span>
+</span><span class='line'>    <span class="c1">// Given h1Sample == retV1[1]</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">retH1</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">sampleHGivenV</span><span class="p">(</span><span class="nx">retV1</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">[</span><span class="nx">retV1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">retV1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nx">retH1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">retH1</span><span class="p">[</span><span class="mi">1</span><span class="p">]];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">RBM</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">propup</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">preSigmoidActivation</span> <span class="o">=</span> <span class="nx">utils</span><span class="p">.</span><span class="nx">plusBias</span><span class="p">(</span><span class="nx">v</span><span class="p">.</span><span class="nx">x</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">W</span><span class="p">),</span> <span class="nx">self</span><span class="p">.</span><span class="nx">hBias</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">utils</span><span class="p">.</span><span class="nx">sigmoid</span><span class="p">(</span><span class="nx">preSigmoidActivation</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">RBM</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">propdown</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">h</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">preSigmoidActivation</span> <span class="o">=</span> <span class="nx">utils</span><span class="p">.</span><span class="nx">plusBias</span><span class="p">(</span><span class="nx">h</span><span class="p">.</span><span class="nx">x</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">W</span><span class="p">.</span><span class="nx">transpose</span><span class="p">()),</span> <span class="nx">self</span><span class="p">.</span><span class="nx">vBias</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">utils</span><span class="p">.</span><span class="nx">sigmoid</span><span class="p">(</span><span class="nx">preSigmoidActivation</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">RBM</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">reconstruct</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">h</span> <span class="o">=</span> <span class="nx">utils</span><span class="p">.</span><span class="nx">sigmoid</span><span class="p">(</span><span class="nx">utils</span><span class="p">.</span><span class="nx">plusBias</span><span class="p">(</span><span class="nx">v</span><span class="p">.</span><span class="nx">x</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">W</span><span class="p">),</span> <span class="nx">self</span><span class="p">.</span><span class="nx">hBias</span><span class="p">));</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">reconstructedV</span> <span class="o">=</span> <span class="nx">utils</span><span class="p">.</span><span class="nx">sigmoid</span><span class="p">(</span><span class="nx">utils</span><span class="p">.</span><span class="nx">plusBias</span><span class="p">(</span><span class="nx">h</span><span class="p">.</span><span class="nx">x</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">W</span><span class="p">.</span><span class="nx">transpose</span><span class="p">()),</span> <span class="nx">self</span><span class="p">.</span><span class="nx">vBias</span><span class="p">));</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">reconstructedV</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">RBM</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Though I completed to write, this autoencoder has not yet enough accuracy to prediction in compared to
+denoised autoencoder. So I have to pile up some improvements to use practically.
+If you find any bugs, welcome patches!!</p>
+
+
+        <hr class="divider-short"/>
+        
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2014/01/29/stacked-denoised-autoencoder-with-nodejs/" title="Previous Post: Stacked denoised autoencoder with nodejs">&laquo; Previous: Stacked denoised autoencoder with nodejs</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2014/02/14/nn-with-nodejs/" title="Next Post: NN with nodejs">Next: NN with nodejs &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/Lewuathe"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/Lewuathe"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

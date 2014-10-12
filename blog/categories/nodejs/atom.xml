@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Nodejs | The first cry of Atom]]></title>
+  <link href="http://lewuathe.com/blog/categories/nodejs/atom.xml" rel="self"/>
+  <link href="http://lewuathe.com/"/>
+  <updated>2014-10-12T20:49:53+09:00</updated>
+  <id>http://lewuathe.com/</id>
+  <author>
+    <name><![CDATA[Kai Sasaki]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Actor Model With Node Cluster]]></title>
+    <link href="http://lewuathe.com/blog/2014/03/01/actor-model-with-node-cluster/"/>
+    <updated>2014-03-01T02:19:34+09:00</updated>
+    <id>http://lewuathe.com/blog/2014/03/01/actor-model-with-node-cluster</id>
+    <content type="html"><![CDATA[<p>If you want to implement asynchronous parallel system with nodejs, the best and easiest way might be using <a href="http://nodejs.org/api/cluster.html">cluster</a>.
+Cluster module is easy to use and provides you faster implementation. I wrote somewhat Actor like code that uses cluster module.</p>
+
+<!-- more -->
+
+
+<p>```js
+var cluster = require(&lsquo;cluster&rsquo;);
+var http = require(&lsquo;http&rsquo;);</p>
+
+<p>// Get the number of core of your CPU
+var numCPUs = require(&lsquo;os&rsquo;).cpus().length;</p>
+
+<p>if (cluster.isWorker) {</p>
+
+<pre><code>// Starting worker process
+console.log("I am worker " + process.pid);
+
+// Send master process a message
+process.send({ chat: "I am + " + process.pid });
+
+// Event handler that is called when this worker get a message
+process.on('message', function(msg) {
+    console.log('Thank you receiving: ' + msg.chat);
+});
+</code></pre>
+
+<p>}</p>
+
+<p>if (cluster.isMaster) {</p>
+
+<pre><code>// Starting master process
+for (var i = 0; i&lt; numCPUs; i++ ){
+
+    // Create worker process
+    var worker = cluster.fork();
+    console.log("worker forked: pid=" + worker.process.pid);
+
+    // Catch the timing of worker death
+    worker.on('death', function(worker) {
+        console.log('worker ' + worker.process.pid + ' died');
+    });
+
+    // Event hander that is called when the master get a message
+    worker.on('message', function(msg) {
+        console.log('master received: ' + msg.chat);
+        worker.send({chat: 'Hi, I received: ' + msg.chat});
+    });
+}
+</code></pre>
+
+<p>}</p>
+
+<p>// In order to kill all process, you shouldn' forget below part
+process.on(&lsquo;SIGINT&rsquo;, function() {</p>
+
+<pre><code>if (cluster.isMaster) {
+    console.log('master is killed: pid=' + process.pid);
+} else {
+    console.log('worker is killed pid=' + process.pid);
+}
+process.exit(0);
+</code></pre>
+
+<p>});
+```</p>
+
+<p>With cluster, there are two types of actors. One is master process, and the others are worker processes.
+You can let master process and worker process send message respectively. To sending worker a message from master,
+use <code>worker.send({text:"From master to worker"})</code>. On the other hand to sending master a message from worker process,
+use <code>process.send({text:"From worker to master"})</code>.</p>
+
+<p>This asynchronous model looks like Actor and message model. In this model, it is not necessary to implement exclusive control
+because all processes acts harmoniously with only messages. If I can take this model nicely into nodejs, <a href="https://github.com/Lewuathe/n42">n42</a>
+will get better running performance. I&rsquo;ll try it.</p>
+
+<p>Thank you</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Stacked Denoised Autoencoder With Nodejs]]></title>
+    <link href="http://lewuathe.com/blog/2014/01/29/stacked-denoised-autoencoder-with-nodejs/"/>
+    <updated>2014-01-29T21:38:00+09:00</updated>
+    <id>http://lewuathe.com/blog/2014/01/29/stacked-denoised-autoencoder-with-nodejs</id>
+    <content type="html"><![CDATA[<p>I developed deep leanring module which enables you to use stacked denoised autoencoder in nodejs.
+This is called n42. You can train with deep learning algorithm very easily.</p>
+
+<p><a href="https://npmjs.org/package/n42">https://npmjs.org/package/n42</a></p>
+
+<!-- more -->
+
+
+<h2>How to use</h2>
+
+<p>This is how to use it.</p>
+
+<p>```js</p>
+
+<pre><code>var n42 = require('n42');
+
+// input data
+// This is made of sylvester matrix
+var input = $M([
+    [1.0, 1.0, 0.0, 0.0],
+    [1.0, 1.0, 0.2, 0.0],
+    [1.0, 0.9, 0.1, 0.0],
+    [0.0, 0.0, 0.0, 1.0],
+    [0.0, 0.0, 0.8, 1.0],
+    [0.0, 0.0, 1.0, 1.0]
+]);
+
+// label data
+// This is made of sylvester matrix
+var label = $M([
+    [1.0, 0.0],
+    [1.0, 0.0],
+    [1.0, 0.0],
+    [0.0, 1.0],
+    [0.0, 1.0],
+    [0.0, 1.0]
+]);
+
+var sda = new n42.SdA(input, label, 4, [3, 3], 2);
+
+// Training all hidden layers
+sda.pretrain(0.3, 0.01, 1000);
+
+// Tuning output layer which is composed of logistics regression
+sda.finetune(0.3, 50);
+
+// Test data
+var data = $M([
+    [1.0, 1.0, 0.0, 0.0],
+    [0.0, 0.0, 1.0, 1.0]
+]);
+
+console.log(sda.predict(data));
+
+/**
+ *   Predict answers
+ *   [0.9999998973561728, 1.0264382721184357e-7] ~ [1.0, 0.0]
+ *   [4.672230837774381e-28, 1]                  ~ [0.0, 1.0]  
+ */
+</code></pre>
+
+<p>```</p>
+
+<p>If you want to know what stacked denoised autoencoder is, look this <a href="http://deeplearning.net/tutorial/SdA.html">page</a>
+Briefly, stacked denoised autoencoder is multi layer denoised autoencoder.</p>
+
+<p>First you should train denoised autoencoder by
+unsupervised learning. With this process, this network can extract characteristics of input data properly.</p>
+
+<p>Second, you tune output logistics regression layer with gradient descent.</p>
+
+<p>And Last, only predict! It&rsquo;s easy, isn&rsquo;t it?</p>
+
+<p>Now the accuracy is depend on the parameters which you select considerably. Deep leanring algorithm might be the way it is,
+however, I want to develop end implement more general algorithms. In the next step, I&rsquo;ll develop restricted boltzmann machine, and
+deep boltzmann machine. Thouhgh these algorithms are somewhat less accurate than stacked denoised autoencoder, n42 must have this algorithm
+for own diversity, and the number of options.</p>
+
+<h2>Last&hellip;</h2>
+
+<p>And the last but not least, if you find any bugs or any points to be fixed, patches are welcome!!</p>
+]]></content>
+  </entry>
+  
+</feed>

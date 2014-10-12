@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Difference Between PCA and dA - The first cry of Atom</title>
+  <meta name="author" content="Kai Sasaki">
+
+  
+  <meta name="description" content="Difference Between PCA and dA written Mar 10th, 2014 in Machine Learning, PCA, dA Today I gave a presentation about Deep Learning in my office. &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://lewuathe.com/blog/2014/03/10/difference-between-pca-and-da">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-44055098-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Difference Between PCA and dA</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2014-03-10T22:08:40+09:00" pubdate data-updated="true">Mar 10<span>th</span>, 2014</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/machine-learning/'>Machine Learning</a>, <a class='category' href='/blog/categories/pca/'>PCA</a>, <a class='category' href='/blog/categories/da/'>dA</a>
+  
+</span>
+
+
+        </div>
+        <p>Today I gave a presentation about Deep Learning in my office. Through this presentation, I felt
+the difficulty of explanation about mathematic notion without equations. Complex concept should
+be attached with some equations. Simplicity was one of the biggest purpose of my presentaion.</p>
+
+<p>Anyway, there is a question I cannot answer clearly.</p>
+
+<blockquote><p>What&rsquo;s the difference between <a href="http://en.wikipedia.org/wiki/Principal_component_analysis">PCA</a> and <a href="http://en.wikipedia.org/wiki/Nonlinear_dimensionality_reduction#Autoencoders">Denoised Autoencoder</a>?</p></blockquote>
+
+<p>It was a difficult question for me. So I studied what distinguished PCA and dA primaly.</p>
+
+<!-- more -->
+
+
+<h2>PCA</h2>
+
+<p>PCA is an abbreviation of principal component analysis. This algorithm is used when you want to reduce the degree of the input data.
+Machine learning algorithms might work faster with low degree data. If you don&rsquo;t have a firm reason for using original data, it is better
+to reduce the degree from a point of view of performance. In order to work properly with reduced data, processed data should be sparse because
+each data point keeps original characteristics for training a valid model. There are two ways mainly, one is the based on maximizing of variance
+of original data. This method maximizes below covariance matrix.</p>
+
+<div style="text-align:center" markdown="1">
+<img src="/images/posts/2014-03-10-pca-and-sda/covariance.png" />
+</div>
+
+
+<p>This optimization calculation is achieved by obtaining eigenvectors. It is a little slow because of handling matrix.
+The second method is based on error minimization way. In advance you define degree reduced data and minimize its difference.</p>
+
+<div style="text-align:center" markdown="1">
+<img src="/images/posts/2014-03-10-pca-and-sda/error.png" />
+</div>
+
+
+<p>Both method have below features.</p>
+
+<ul>
+<li>Making straight projection</li>
+<li>Irreversible</li>
+<li>Extracting characteristics</li>
+<li>O(D<sup>3</sup>)</li>
+</ul>
+
+
+<h2>Denoised autoencoder</h2>
+
+<p>Denoised autoencoder is a kind of autoencoder which adds some noise on original data delibarately. Through this process this model
+is capable obtaining proper weight for restoring original data. This model is used mainly the field of deep learning.
+This autoencoder has below characteristics.</p>
+
+<ul>
+<li>Making model parameter</li>
+<li>Reversible</li>
+<li>Extracting characteristics</li>
+<li>O(D<sup>2</sup>)</li>
+</ul>
+
+
+<h2>Conclusion</h2>
+
+<p>I think the most essential difference between PCA and denoised autoencoder is reversibility. PCA cannot restore original data bacause
+it losts the distance from the <a href="http://users.ics.aalto.fi/praiko/papers/pca_iconip/node3.html">principal subspace</a>. On the other hands,
+denoised autoencoder keeps its weight matrix inside own model. So it requires only adding transpose matrix of this weight for restoring.
+Please let there be no misunderstanding of usability of PCA, the purpose of PCA is not restoring original data. It is improving calculation cost through
+degree reduction. Denoised autoencoder must have weight parameter for restoring original data because its output become the input of next layer.
+So it has the ability to restore original data.</p>
+
+<p>Though these two algorithms looks same at the first sight, the purposes are different. This produces the different features between PCA and denoised
+autoencoder.</p>
+
+<p>Thank you.</p>
+
+
+        <hr class="divider-short"/>
+        
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2014/03/09/logistics-regression-with-sparse-vector/" title="Previous Post: Logistics Regression with Sparse Vector">&laquo; Previous: Logistics Regression with Sparse Vector</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2014/03/11/forget-grief-keep-data/" title="Next Post: Forget grief, keep data">Next: Forget grief, keep data &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/Lewuathe"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/Lewuathe"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

@@ -1,0 +1,260 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Category: Cross Validation - The first cry of Atom</title>
+  <meta name="author" content="Kai Sasaki">
+
+  
+  <meta name="description" content="Category: Cross Validation">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://lewuathe.comblog/categories/cross-validation">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-44055098-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <div class="all-posts">
+  <div class="container">
+    <div class="row">
+      <div class="list-title col-md-offset-3 col-md-6">
+        <h4>Posts in Cross Validation</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="article-list">
+    <div class="container">
+      
+        
+        <div class="row">
+          <div class="col-md-offset-3 col-md-6">
+            <article>
+  <h2><a href="/blog/2013/11/09/scikit-learndecross-validation/">scikit-learnでCross Validation</a></h2>
+  
+  <p>
+    <p>だんだんとscikit-learnとMachine Learningに慣れてきた。
+今回はCross ValidationとGrid Searchをやってみた。</p>
+
+<h3>Cross Validation</h3>
+
+<p>詳しいことは<a href="http://ja.wikipedia.org/wiki/%E4%BA%A4%E5%B7%AE%E6%A4%9C%E5%AE%9A">Wikipedia</a>に書いてある。
+Cross Validationはモデルの妥当性を検証する方法のひとつ。一般的に開発用のデータは訓練データと検証データに分かれる。
+しかし、このまま行ってしまうと折角の訓練データが減ってしまうことになる上に、訓練データの選び方によって汎化性能が下がってしまう可能性がある。
+Wikipediaに書いてあるもののホールド・アウト検定がこれに当たる。一般にはこれはCross Validationにはあたらない。</p>
+
+<p>ここに書いてあるK-分割交差検定がこれに当たる。K-分割交差検定では開発用のデータをK個に分割しK-1個を訓練用に、残りの一つを検証用に使いモデルの正当性を計算する。
+これにより使える訓練データが増えると同時に、これらを訓練データを変えることにより、汎化性能を上げることができる。</p>
+
+<p>scikit-learnで具体的にどのように行うのか書いてみた。訓練に使ったデータとしてはKaggleの<a href="http://www.kaggle.com/c/data-science-london-scikit-learn">Data Science London</a>で出されているものを用いた。</p>
+
+<h3>SVM</h3>
+
+<p>まずは単純にサポートベクターマシンでクラス分けをさせた時のコード</p>
+
+<p>```python</p>
+
+<h1>&ndash;<em>&ndash; coding: utf-8 &ndash;</em>&ndash;</h1>
+
+<p>import os
+import sys
+from sklearn import svm
+import numpy as np
+import csv</p>
+
+<p>if <strong>name</strong> == &ldquo;<strong>main</strong>&rdquo;:</p>
+
+<pre><code>train_feature_file = np.genfromtxt(open("../data/train.csv", "rb"), delimiter=",", dtype=float)
+train_label_file = np.genfromtxt(open("../data/trainLabels.csv", "rb"), delimiter=",", dtype=float)
+
+train_features = []
+train_labels = []
+for train_feature, train_label in zip(train_feature_file, train_label_file):
+    train_features.append(train_feature)
+    train_labels.append(train_label)
+
+train_features = np.array(train_features)
+train_labels = np.array(train_labels)
+
+clf = svm.SVC(C=100, cache_size=200, class_weight=None, coef0=0.0, degree=3,gamma=0.001, kernel="rbf", max_iter=-1, probability=False,random_state=None, shrinking=True, tol=0.001, verbose=False)
+
+clf.fit(train_features, train_labels)
+
+test_feature_file = np.genfromtxt(open("../data/test.csv", "rb"), delimiter=",", dtype=float)
+
+test_features = []
+print "Id,Solution"
+i = 1
+for test_feature in test_feature_file:
+    print str(i) + "," + str(int(clf.predict(test_feature)[0]))
+    i += 1
+</code></pre>
+
+<p>```</p>
+
+<p>このモデルをCross Validationで検証してみる。</p>
+
+<p>```python
+def get_score(clf, train_features, train_labels):</p>
+
+<pre><code>X_train, X_test, y_train, y_test = cross_validation.train_test_split(train_features, train_labels, test_size=0.4, random_state=0)
+
+clf.fit(X_train, y_train)
+print clf.score(X_test, y_test) 
+</code></pre>
+
+<p>```</p>
+
+<p>cross_validation.train_test_splitは一定の割合が検証用データとなるように開発用データを分割する関数。この場合は<code>test_size=0.4</code>を指定したので、40%のデータを検証用として使うことになる。
+<code>fit</code>が60%の訓練データで行うもので、scoreが残された40%のデータで検証を行いその正答率を出してくれる。これがこのモデルの、このテストデータにおける正当性となる。もちろんこれが高ければ高いほどよいが
+汎化性能が高いかどうかはここからでは読み取ることができない。そのためK分割を行うことでK回の検証を行うことができる。これらのスコアを平均することで汎化性能も含めたモデルの正当性を表すことができる。</p>
+
+<p>```python
+def get_accuracy(clf, train_features, train_labels):</p>
+
+<pre><code>scores = cross_validation.cross_val_score(clf, train_features, train_labels, cv=10)
+print("Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
+</code></pre>
+
+<p>```</p>
+
+<p><code>cross_validation_cross_val_score</code>でこれらの検証のすべてのscoreを得ることができる。<code>cv</code>はK分割の分割の個数を指定することができる。今回は開発用のデータを10個に分割し10回の検証を行う。
+scoresには10個のscoreが入ったリストが返ってくる。これの平均をAccuracyとして出している。これで汎化性能も含めたモデルの正当性を得ることができるが、モデルパラメータのチューニングを手で行う必要がある。
+手で調整して、Accuracyを計算するというのは非常に手間なのでGrid Searchというアルゴリズムでこのチューニングをある程度自動化することができる。</p>
+
+<h3>Grid Search</h3>
+
+<p>パラメータの範囲を指定することで経験的に最適なパラメータの組を探索する方法がGrid Search。Pythonで行うには以下のように書く。</p>
+
+<p>```python
+def grid_search(train_features, train_labels):</p>
+
+<pre><code>param_grid = [
+    {'C': [1, 10, 100, 1000], 'kernel': ['linear']},
+    {'C': [1, 10, 100, 1000], 'gamma': [0.001, 0.0001], 'kernel': ['rbf']},
+]
+
+clf = GridSearchCV(svm.SVC(C=1), param_grid, n_jobs=-1)
+clf.fit(train_features, train_labels)
+print clf.best_estimator_
+</code></pre>
+
+<p>```</p>
+
+<p>param_gridに指定することでこの範囲を指定することができる。n_jobsに並列に計算を行うプロセス数を指定することができる。-1を指定するとコア数をデフォルト選ぶようになっている。与えられた訓練データに対してGrid Searchを行う。
+時間は少しかかるが、この訓練データに対して最もスコアが高くなるようなモデルパラメータを選ぶことができる。この訓練データを実際のテストデータに使うことができる。</p>
+
+<h3>まとめ</h3>
+
+<p>PRMLには実際の機械学習のプロセスみたいなものがあまり細かく書かれていないのでKaggleに提出されているコードとかを実際にみて、こういったプロセスが分かるようになってきた。
+あとscikit-learnが便利すぎて、機械学習の学習アルゴリズムだけじゃなくて特徴抽出とかモデルパラメータの最適化なども整備されていたことに驚いた。</p>
+
+  </p>
+  <span class="meta">
+    written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-11-09T21:56:00+09:00" pubdate data-updated="true">Nov 9<span>th</span>, 2013</time>
+    
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/cross-validation/'>Cross Validation</a>, <a class='category' href='/blog/categories/python/'>Python</a>, <a class='category' href='/blog/categories/scikit-learn/'>scikit-learn</a>
+  
+</span>
+
+
+  </span>
+
+  
+</article>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/Lewuathe"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/Lewuathe"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

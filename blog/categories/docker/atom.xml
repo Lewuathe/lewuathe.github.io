@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Docker | The first cry of Atom]]></title>
+  <link href="http://lewuathe.com/blog/categories/docker/atom.xml" rel="self"/>
+  <link href="http://lewuathe.com/"/>
+  <updated>2014-10-12T20:49:53+09:00</updated>
+  <id>http://lewuathe.com/</id>
+  <author>
+    <name><![CDATA[Kai Sasaki]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Dockerで仮想化をはじめよう]]></title>
+    <link href="http://lewuathe.com/blog/2013/10/20/dockerwoshi-tutemiyou/"/>
+    <updated>2013-10-20T20:30:00+09:00</updated>
+    <id>http://lewuathe.com/blog/2013/10/20/dockerwoshi-tutemiyou</id>
+    <content type="html"><![CDATA[<p>仮想環境構築の方法のひとつに<a href="http://www.docker.io/">Docker</a>を使ってみた。いままではVirtualBoxを使ってVagrantからつないでいく方法をやってみたけれど、仮想マシンをいちいち立ち上げる方法はどうも遅いのでDockerというもので試してみた。</p>
+
+<p>Dockerの特徴は以下記事から抜粋。</p>
+
+<p><a href="http://apatheia.info/blog/2013/06/17/docker/">http://apatheia.info/blog/2013/06/17/docker/</a></p>
+
+<ul>
+<li>仮想マシンを立ち上げるわけではなく、ホスト内の隔離された環境で動作するため起動が速い。<a href="http://linuxcontainers.org/">LXC</a>という技術のことらしい。ここでこの隔離されたシステムのことを <strong>コンテナ</strong> という。</li>
+<li>AUFSを使っている。起動したときはディレクトリを重ねあわせておいて、更新の際に別の場所に書き込むというファイルシステムっぽい。立ち上げ時にイメージコピーがいらないので起動が軽い。</li>
+</ul>
+
+
+<h2>動かしてみた</h2>
+
+<p>環境は以下で行った</p>
+
+<ul>
+<li>MacOSX 10.8</li>
+<li>VirtualBox 4.2</li>
+<li>vagrant 1.2.4</li>
+</ul>
+
+
+<p>他にUbuntu LTS12.04が入ったマシンを持っていたのでVagrant使わずにそっちでトライしたら32bitだとだめらしい。どうもUbuntu日本語コミュニティには32bitイメージしかなかったのでぼけーっと入れたらそっちになってしまったみたい。また入れなおすのもとりあえずめんどくさいのでMacのVagrantにUbuntu仮想マシンを立ち上げてその上にDockerを起動させるという構成。</p>
+
+<p><a href="http://docs.docker.io/en/latest/installation/vagrant/">ここ</a>に従えば特に問題なくいけた。</p>
+
+<p><code>
+$ git clone https://github.com/dotcloud/docker.git
+$ cd docker
+$ vagrant up
+</code></p>
+
+<p>ここまでで10minくらいかかる。でも悪いのはVirtualBoxとvagrant。</p>
+
+<p>```</p>
+
+<h1>dockerが起動するか見てみる</h1>
+
+<p>$ docker</p>
+
+<h1>サブコマンドがだーっと出る</h1>
+
+<p>```</p>
+
+<h2>イメージをダウンロード</h2>
+
+<p><code>
+$ sudo docker pull ubuntu
+</code></p>
+
+<h2>先ほどのコンテナ内でスクリプトを動作させる</h2>
+
+<p>```</p>
+
+<h1>sudo docker run &lt;実行対象コンテナ> &lt;コマンド(引数あってもいい)></h1>
+
+<p>$ sudo docker run ubuntu /bin/echo hello world
+```</p>
+
+<p>別にsudoはなくてもいい
+これらはDockerのコンテナ内で実行されているコマンドだが、いまいち仮想ホスト立てている感じにならない。それを感じるためにはDockerをdaemon化させる必要がある。</p>
+
+<h2>コマンドをdaemon化させる</h2>
+
+<p>走らせるコマンドを定義する。このコマンドはコンテナのIDを返す。このIDをもとにそのコンテナで何がおきているかを見る
+-dはコマンドをdaemon化させるオプション</p>
+
+<p><code>
+$ CONTAINER_ID=$(sudo docker run -d ubuntu /bin/sh -c "while true; do echo hello world; sleep 1; done")
+</code></p>
+
+<p>そして起動させる。</p>
+
+<p><code>
+$ sudo docker logs $CONTAINER_ID
+</code></p>
+
+<p>さっきのコンテナIDが返ってくるのでこいつを<code>docker logs</code>に渡してやると実行されているコマンドの値が見えるようになる。たただしこれは実行が終わったら返ってくるのでリアルタイムにコマンドの結果を見たければ<code>attach</code>を使う</p>
+
+<p><code>
+$ sudo docker attach $CONTAINER_ID
+</code></p>
+
+<p>ここまで適当にやっていったら、いっぱいコンテナができてしまったので確認してみる。dockerが起動したコマンドたちを確認する場合は<code>ps</code>サブコマンドを使う。</p>
+
+<p><code>
+$ docker ps
+ID                  IMAGE               COMMAND                CREATED             STATUS              PORTS
+4841794938a7        ubuntu:12.04        /bin/sh -c while tru   7 minutes ago       Up 7 minutes            
+79b862e271bc        ubuntu:12.04        /bin/sh -c while tru   8 minutes ago       Up 8 minutes                  
+bee9d7a00611        ubuntu:12.04        /bin/sh -c while tru   9 minutes ago       Up 9 minutes           
+</code></p>
+
+<p>こいつらをとめたければ<code>stop</code>を使う</p>
+
+<p>```
+$ sudo docker stop 4841794938a7
+4841794938a7</p>
+
+<p>$ sudo docker ps
+ID                  IMAGE               COMMAND                CREATED             STATUS              PORTS
+79b862e271bc        ubuntu:12.04        /bin/sh -c while tru   13 minutes ago      Up 13 minutes           <br/>
+bee9d7a00611        ubuntu:12.04        /bin/sh -c while tru   14 minutes ago      Up 14 minutes                  <br/>
+```</p>
+
+<h2>まとめ</h2>
+
+<p>今回のチュートリアルは<a href="http://docs.docker.io/en/latest/examples/hello_world/#running-examples">ここ</a>からすべてとった。Dockerかなり簡単だけれど、いまいちコマンドをひとつひとつ打っているだけな気がして仮想マシンをたてて、実行している感じがあまりしない。ここで実際にWebアプリとか作ることとかもできるっぽいのでもうちょっと見ていこうかと。</p>
+]]></content>
+  </entry>
+  
+</feed>

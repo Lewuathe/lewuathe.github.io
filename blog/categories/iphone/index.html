@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Category: iPhone - The first cry of Atom</title>
+  <meta name="author" content="Kai Sasaki">
+
+  
+  <meta name="description" content="Category: iPhone">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://lewuathe.comblog/categories/iphone">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-44055098-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <div class="all-posts">
+  <div class="container">
+    <div class="row">
+      <div class="list-title col-md-offset-3 col-md-6">
+        <h4>Posts in iPhone</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="article-list">
+    <div class="container">
+      
+        
+        <div class="row">
+          <div class="col-md-offset-3 col-md-6">
+            <article>
+  <h2><a href="/blog/2013/12/17/making-custom-segue/">Making Custom Segue</a></h2>
+  
+  <p>
+    <p>In developing iOS application, have you wanted to make your own cutomized segue? UIKit provides bare segues such as
+<code>push</code>, <code>modal</code>, <code>popover</code> and <code>replace</code>. These are useful in any situations. But sometimes I want to make my own transition.
+So, I wrote down some tips for making your own custom animation used by segue.</p>
+
+<h2>Make custom segue class</h2>
+
+<p>In Xcode, add new files. The name of this class, anything is OK. But you have to set super class <code>UIStoryboardSegue</code>. Otherwise storyboard
+cannot find this custom class subsequently.</p>
+
+<p><img src="/images/posts/2013-12-17-customsegue/create-segue.png" alt="create" /></p>
+
+<p>In this case, I named <code>FlipSegue</code></p>
+
+<p>```objective-c</p>
+
+<h1>import &lt;UIKit/UIKit.h></h1>
+
+<p>@interface FlipSegue : UIStoryboardSegue</p>
+
+<p>@end
+```</p>
+
+<p>And write animations like below.</p>
+
+<p>```</p>
+
+<h1>import &ldquo;FlipSegue.h&rdquo;</h1>
+
+<p>@implementation FlipSegue</p>
+
+<ul>
+<li><p>(void)perform {
+  UIViewController <em>sourceController = (UIViewController</em>)self.sourceViewController;
+  UIViewController <em>destinationController = (UIViewController</em>)self.destinationViewController;</p>
+
+<p>  CATransition *transition = [CATransition animation];
+  transition.duration = 0.4;
+  transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];</p>
+
+<p>  // Set transition animation type
+  transition.type = kCATransitionFade;
+  // Set transition animation subtype
+  transition.subtype = kCATransitionFromTop;</p>
+
+<p>  // Change animation
+  [sourceController.navigationController.view.layer addAnimation:transition forKey:@&ldquo;mytransition&rdquo;];</p>
+
+<p>  // Transition
+  [sourceController.navigationController pushViewController:destinationController animated:NO];</p></li>
+</ul>
+
+
+<p>}</p>
+
+<p>@end
+```</p>
+
+<p>When this segue is called, these animation settings are executed automatically. If you want to change animation, <code>type</code> and <code>subtype</code> is the core
+of how the animation moves. These presets are documented in <a href="https://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CATransition_Class/Introduction/Introduction.html">here</a>
+Please see official document for detail. And then we&rsquo;ll use this segue on storyboard.</p>
+
+<h2>Make segue with story board</h2>
+
+<p>You need to draw your custom segue on storyboard.</p>
+
+<p><img src="/images/posts/2013-12-17-customsegue/storyboard-segue.png" alt="storyboard" /></p>
+
+<p>You can see <code>flip</code>, when you drag the arrow of segue on storyboard. This is your custom <code>FlipSegue</code>.
+So choose this segue. And run!! Pusing source button of flip segue, your will see your custom animated transition.</p>
+
+  </p>
+  <span class="meta">
+    written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-12-17T23:21:00+09:00" pubdate data-updated="true">Dec 17<span>th</span>, 2013</time>
+    
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/custom/'>Custom</a>, <a class='category' href='/blog/categories/objective-c/'>Objective-C</a>, <a class='category' href='/blog/categories/ios/'>iOS</a>, <a class='category' href='/blog/categories/iphone/'>iPhone</a>
+  
+</span>
+
+
+  </span>
+
+  
+</article>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/Lewuathe"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/Lewuathe"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

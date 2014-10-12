@@ -1,0 +1,239 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>My First Jenkins Plugin - The first cry of Atom</title>
+  <meta name="author" content="Kai Sasaki">
+
+  
+  <meta name="description" content="My First Jenkins Plugin written Nov 28th, 2013 in Java, Jenkins, Maven, plugin Released my first Jenkins plugin https://github.com/jenkinsci/ &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://lewuathe.com/blog/2013/11/28/my-first-jenkins-plugin">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-44055098-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>My First Jenkins Plugin</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-11-28T21:15:00+09:00" pubdate data-updated="true">Nov 28<span>th</span>, 2013</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/java/'>Java</a>, <a class='category' href='/blog/categories/jenkins/'>Jenkins</a>, <a class='category' href='/blog/categories/maven/'>Maven</a>, <a class='category' href='/blog/categories/plugin/'>plugin</a>
+  
+</span>
+
+
+        </div>
+        <p>Released my first Jenkins plugin</p>
+
+<p><a href="https://github.com/jenkinsci/hckrnews-plugin">https://github.com/jenkinsci/hckrnews-plugin</a></p>
+
+<p><img src="/images/posts/2013-11-28-hckrnews-plugin/screen-shot.png" alt="Screen shot" /></p>
+
+<p>With this plugin, you can read hacker news top time line sitting in front of CI server.
+So you can read top topics about technology and so on at the same time building your project. Does it sound good?</p>
+
+<h2>How to publish Jenkins plugin?</h2>
+
+<h3>Make GitHub repository</h3>
+
+<p>Normal Maven project needs only src/ and pom.xml. Jenkins plugin project is not exception.
+Write right .gitignore, and ignore target/ and work/ directory. These are not necessary.</p>
+
+<h3>Create new jenkins-ci account</h3>
+
+<p>Visit <a href="https://jenkins-ci.org/account/">here</a>. Create your new account.</p>
+
+<h3>Write settings.xml your account information</h3>
+
+<p>Your account name, and password got from above process should be written in <code>~/.m2/settings.xml</code> like below.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;settings&gt;
+</span><span class='line'> ・・・
+</span><span class='line'>  &lt;servers&gt;
+</span><span class='line'>    &lt;server&gt;
+</span><span class='line'>      &lt;id&gt;maven.jenkins-ci.org&lt;/id&gt;
+</span><span class='line'>      &lt;username&gt;XXXXXX&lt;/username&gt;
+</span><span class='line'>      &lt;password&gt;XXXXXX&lt;/password&gt;
+</span><span class='line'>    &lt;/server&gt;
+</span><span class='line'>  &lt;/servers&gt;
+</span><span class='line'>  ・・・
+</span><span class='line'>&lt;/settings&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Application for forking repository</h3>
+
+<p>Send an email to community <a href="https://groups.google.com/forum/#!forum/jenkinsci-ja">mailing list</a> in Japan. If you want to send other community, search <a href="http://jenkins-ci.org/content/mailing-lists">here</a>
+Soon your repository is forked to original jenkinsci organization.</p>
+
+<h3>Modify pom.xml</h3>
+
+<p>Add some line. SCM repository url should be written in your project <code>pom.xml</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;scm&gt;
+</span><span class='line'>    &lt;connection&gt;scm:git:ssh://github.com/jenkinsci/XXXXXXXX.git&lt;/connection&gt;
+</span><span class='line'>    &lt;developerConnection&gt;scm:git:ssh://git@github.com/jenkinsci/XXXXXXXX.git&lt;/developerConnection&gt;
+</span><span class='line'>    &lt;url&gt;https://github.com/jenkinsci/XXXXXXXX.git&lt;/url&gt;
+</span><span class='line'>&lt;/scm&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Release!</h3>
+
+<p>Type below command.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mvn release:prepare release:perform</span></code></pre></td></tr></table></div></figure>
+
+
+<p>One this your should pay attention to is not to add <code>-Dusername</code> and <code>-Dpassword</code> options. These are not used for GitHub but jenkinsci.org
+Congratulations!!</p>
+
+<h3>Future</h3>
+
+<p>In fact, I make this plugin with no experience of writing Java, of course maven.
+Therefore I have to study these tool and Java grammar. In addition to this, I learned how to write some design patterns with coding in accordance with OO programming.</p>
+
+<p>I also wrote some test codes with JUnit in maven. TDD is the method with which I want to develop. In this time, first I wrote unit test code and second logic code. This is fun for me because my code&rsquo;s quality seems to be kept easily. I want to keep writing test code first. This is the best practice for my developing.</p>
+
+<p>This plugin has only simple functions, however, this experience is sufficient value as software engineer.
+In the future, I will seize the moment and make more my own plugins.</p>
+
+<p>Ultimately, please use this plugin. It brings to you a new continuous integration life.</p>
+
+<p>Thank you.</p>
+
+
+        <hr class="divider-short"/>
+        
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2013/11/22/maifalseriteiripoto/" title="Previous Post: マイノリティ・リポート">&laquo; Previous: マイノリティ・リポート</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2013/12/01/how-do-i-change-my-homeland-with-open-data/" title="Next Post: How do I change my homeland with open data?">Next: How do I change my homeland with open data? &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/Lewuathe"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/Lewuathe"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

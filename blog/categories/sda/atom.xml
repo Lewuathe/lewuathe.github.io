@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: SdA | The first cry of Atom]]></title>
+  <link href="http://lewuathe.com/blog/categories/sda/atom.xml" rel="self"/>
+  <link href="http://lewuathe.com/"/>
+  <updated>2014-10-12T20:49:53+09:00</updated>
+  <id>http://lewuathe.com/</id>
+  <author>
+    <name><![CDATA[Kai Sasaki]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Stacked Denoised Autoencoder With Nodejs]]></title>
+    <link href="http://lewuathe.com/blog/2014/01/29/stacked-denoised-autoencoder-with-nodejs/"/>
+    <updated>2014-01-29T21:38:00+09:00</updated>
+    <id>http://lewuathe.com/blog/2014/01/29/stacked-denoised-autoencoder-with-nodejs</id>
+    <content type="html"><![CDATA[<p>I developed deep leanring module which enables you to use stacked denoised autoencoder in nodejs.
+This is called n42. You can train with deep learning algorithm very easily.</p>
+
+<p><a href="https://npmjs.org/package/n42">https://npmjs.org/package/n42</a></p>
+
+<!-- more -->
+
+
+<h2>How to use</h2>
+
+<p>This is how to use it.</p>
+
+<p>```js</p>
+
+<pre><code>var n42 = require('n42');
+
+// input data
+// This is made of sylvester matrix
+var input = $M([
+    [1.0, 1.0, 0.0, 0.0],
+    [1.0, 1.0, 0.2, 0.0],
+    [1.0, 0.9, 0.1, 0.0],
+    [0.0, 0.0, 0.0, 1.0],
+    [0.0, 0.0, 0.8, 1.0],
+    [0.0, 0.0, 1.0, 1.0]
+]);
+
+// label data
+// This is made of sylvester matrix
+var label = $M([
+    [1.0, 0.0],
+    [1.0, 0.0],
+    [1.0, 0.0],
+    [0.0, 1.0],
+    [0.0, 1.0],
+    [0.0, 1.0]
+]);
+
+var sda = new n42.SdA(input, label, 4, [3, 3], 2);
+
+// Training all hidden layers
+sda.pretrain(0.3, 0.01, 1000);
+
+// Tuning output layer which is composed of logistics regression
+sda.finetune(0.3, 50);
+
+// Test data
+var data = $M([
+    [1.0, 1.0, 0.0, 0.0],
+    [0.0, 0.0, 1.0, 1.0]
+]);
+
+console.log(sda.predict(data));
+
+/**
+ *   Predict answers
+ *   [0.9999998973561728, 1.0264382721184357e-7] ~ [1.0, 0.0]
+ *   [4.672230837774381e-28, 1]                  ~ [0.0, 1.0]  
+ */
+</code></pre>
+
+<p>```</p>
+
+<p>If you want to know what stacked denoised autoencoder is, look this <a href="http://deeplearning.net/tutorial/SdA.html">page</a>
+Briefly, stacked denoised autoencoder is multi layer denoised autoencoder.</p>
+
+<p>First you should train denoised autoencoder by
+unsupervised learning. With this process, this network can extract characteristics of input data properly.</p>
+
+<p>Second, you tune output logistics regression layer with gradient descent.</p>
+
+<p>And Last, only predict! It&rsquo;s easy, isn&rsquo;t it?</p>
+
+<p>Now the accuracy is depend on the parameters which you select considerably. Deep leanring algorithm might be the way it is,
+however, I want to develop end implement more general algorithms. In the next step, I&rsquo;ll develop restricted boltzmann machine, and
+deep boltzmann machine. Thouhgh these algorithms are somewhat less accurate than stacked denoised autoencoder, n42 must have this algorithm
+for own diversity, and the number of options.</p>
+
+<h2>Last&hellip;</h2>
+
+<p>And the last but not least, if you find any bugs or any points to be fixed, patches are welcome!!</p>
+]]></content>
+  </entry>
+  
+</feed>

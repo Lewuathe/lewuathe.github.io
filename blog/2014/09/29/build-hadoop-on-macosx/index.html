@@ -1,0 +1,212 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Build Hadoop on MacOSX - The first cry of Atom</title>
+  <meta name="author" content="Kai Sasaki">
+
+  
+  <meta name="description" content="Build Hadoop on MacOSX written Sep 29th, 2014 in Hadoop, MacOSX I am not a veteran Java developer. I don&rsquo;t understand the detail of Java &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://lewuathe.com/blog/2014/09/29/build-hadoop-on-macosx">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-44055098-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Build Hadoop on MacOSX</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2014-09-29T20:59:22+09:00" pubdate data-updated="true">Sep 29<span>th</span>, 2014</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/hadoop/'>Hadoop</a>, <a class='category' href='/blog/categories/macosx/'>MacOSX</a>
+  
+</span>
+
+
+        </div>
+        <p>I am not a veteran Java developer. I don&rsquo;t understand the detail of Java development environment such as build tool or some type of libraries.
+Today, I realised that I need to develop or understand architecture of Hadoop. Hadoop seems to use some kind of Java development tools. Maven, ProtocolBuffer, CMake and so on.
+So in this article I want to record my environment for building hadoop projects on MacOSX.</p>
+
+<!-- more -->
+
+
+<h1>Prerequisites</h1>
+
+<ul>
+<li>JDK 1.6+</li>
+<li>Maven 3.0 or later</li>
+<li>ProtocolBuffer 2.5.0</li>
+<li>CMake 2.6 or newer (if compiling native code)</li>
+<li>Zlib devel (if compiling native code)</li>
+<li>openssl devel ( if compiling native hadoop-pipes )</li>
+<li>Internet connection for first build (to fetch all Maven and Hadoop dependencies)</li>
+</ul>
+
+
+<p>You also can see this list on <a href="https://github.com/apache/hadoop/blob/trunk/BUILDING.txt">BUILDING.txt</a>. On MacOSX, you don&rsquo;t need to install JDK and openssl.
+Within this list, all you need to install are CMake and ProtocolBuffer.</p>
+
+<h2>ProtocolBuffer</h2>
+
+<p>Download from <a href="https://code.google.com/p/protobuf/downloads/list">here</a>. After unziping it, you can walk ordinal steps.</p>
+
+<pre><code>$ ./configure
+$ make
+$ make install
+</code></pre>
+
+<h2>CMake</h2>
+
+<p>You can install CMake with Homebrew. It is the easiest way.</p>
+
+<pre><code>$ brew install cmake
+</code></pre>
+
+<p>All dependencies are installed on your machine now. Let&rsquo;s checkout hadoop source code.</p>
+
+<h1>Hadoop Project</h1>
+
+<pre><code>$ svn checkout http://svn.apache.org/repos/asf/hadoop/common/trunk/
+</code></pre>
+
+<p>Notice: I tried hadoop GitHub repository, but it was very slow to download it. I recommend you to checkout from svn repository.</p>
+
+<p>And build it.</p>
+
+<pre><code>$ mvn package -DskipTests -Pdist -Dtar
+</code></pre>
+
+<p>Because of some broken tests, you have to write <code>skipTests</code> option. With this command you can command line tools and jar files in <code>hadoop-dist/target/hadoop-X.X.X-SNAPSHOT</code></p>
+
+<pre><code>$ bin/hadoop version
+Hadoop X.X.X-SNAPSHOT
+Subversion https://svn.apache.org/repos/asf/hadoop/common -r 1511192
+Compiled by hadoopworld on 2013-08-07T07:01Z
+From source with checksum c8f4bd45ac25c31b815f311b32ef17
+This command was run using ~/work/trunk/hadoop-dist/target/hadoop-X.X.X-SNAPSHOT
+</code></pre>
+
+<p>All configuration files are under hadoop-dist directory. You can rewrite xml files to change Pseudo distributed mode from stand alone mode.
+After finishing all tasks, I found nothing was hard. I want study the detail of architecture and codebase of hadoop and start writing some patches for hadoop project.
+Thank you.</p>
+
+
+        <hr class="divider-short"/>
+        
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2014/09/13/noblesse-oblige-in-silicon-valley/" title="Previous Post: Noblesse Oblige in Silicon Valley">&laquo; Previous: Noblesse Oblige in Silicon Valley</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2014/10/12/write-octopress-article-on-two-machine/" title="Next Post: Write Octopress article on Two machine">Next: Write Octopress article on Two machine &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/Lewuathe"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/Lewuathe"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Agile Samurai Basecamp in Tokyo <1> - The first cry of Atom</title>
+  <meta name="author" content="Kai Sasaki">
+
+  
+  <meta name="description" content="Agile Samurai Basecamp in Tokyo written Dec 8th, 2013 in Agile, Basecaml, TDD" At work, I am a scrum padawan, not yet master :&ndash;) Through &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://lewuathe.com/blog/2013/12/08/whatt-going-on-at-agile-samurai-basecamp">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-44055098-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Agile Samurai Basecamp in Tokyo <1></h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-12-08T19:29:00+09:00" pubdate data-updated="true">Dec 8<span>th</span>, 2013</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/agile/'>Agile</a>, <a class='category' href='/blog/categories/basecaml/'>Basecaml</a>, <a class='category' href='/blog/categories/tdd/'>TDD"</a>
+  
+</span>
+
+
+        </div>
+        <p>At work, I am a scrum padawan, not yet master :&ndash;)</p>
+
+<p>Through developing with agile team, I was taught what scrum is, product backlog is, sprint is.</p>
+
+<p>In order to accelerate this growth as an agile programmer, I took part in TDD section of <a href="http://www.agilesamuraibasecamp.org/">Agile Samurai Basecamp</a>.
+TDD(Test Driven Development) is the most interesting method in my mind. So I wanted to know how to progress TDD in my daily work.
+This article includes TDD core process which I study in basecamp and what I thought for the future career as a programmer.</p>
+
+<h2>Keynote : Shintarou Kakutani</h2>
+
+<p>He is the translator of <em><a href="http://pragprog.com/book/jtrap/the-agile-samurai">The Agile Samurai</a></em> .
+He answered the questions  who is agile samurai, what agile teams are for.</p>
+
+<h3>Who is agile samurai?</h3>
+
+<p><img src="/images/posts/2013-12-08-samurai-1/samurai.jpg" alt="samurai" /></p>
+
+<p>Agile team must keep to delivering valuable software every week. It doesn&rsquo;t mean just delivering lecture or lesson,
+but codes which run as what you and your customer expects. To achieve this, it is very important to tackle problems as <em>&ldquo;whole one team&rdquo;</em>  which includes
+your customers. Customers decide what you make, then your decide how you make. Delivering values to customer and tackling problems as whole one team is the
+core concept of <em><a href="http://pragprog.com/book/jtrap/the-agile-samurai">The Agile Samurai</a></em> .</p>
+
+<h3>Why did you write more Agile book?</h3>
+
+<p>There were already many agile books in stores. Why another agile book is needed at that time?
+In the past, there were no books which compiled main below 7 books which explains agile practice for detail.</p>
+
+<ul>
+<li><a href="http://www.amazon.co.jp/XP%E3%82%A8%E3%82%AF%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E3%83%BB%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E5%85%A5%E9%96%80%E2%80%95%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E9%96%8B%E7%99%BA%E3%81%AE%E7%A9%B6%E6%A5%B5%E3%81%AE%E6%89%8B%E6%B3%95-%E3%82%B1%E3%83%B3%E3%83%88-%E3%83%99%E3%83%83%E3%82%AF/dp/489471275X">Extream programming explained</a></li>
+<li><a href="http://www.amazon.co.jp/Refactoring-Improving-Existing-Addison-Wesley-Technology/dp/0201485672/ref=sr_1_1?s=english-books&amp;ie=UTF8&amp;qid=1386502275&amp;sr=1-1&amp;keywords=refactoring">Refactoring</a></li>
+<li><a href="http://www.amazon.co.jp/XP%E3%82%A8%E3%82%AF%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E3%83%BB%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E5%AE%9F%E8%A1%8C%E8%A8%88%E7%94%BB-The-Series-%E3%82%B1%E3%83%B3%E3%83%88-%E3%83%99%E3%83%83%E3%82%AF/dp/4894713411/ref=sr_1_cc_1?s=aps&amp;ie=UTF8&amp;qid=1386502308&amp;sr=1-1-catcorr&amp;keywords=%E3%82%A8%E3%82%AF%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E3%80%80%E5%AE%9F%E8%A1%8C%E8%A8%88%E7%94%BB">Extream programming planning</a></li>
+<li><a href="http://www.amazon.co.jp/XP%E3%82%A8%E3%82%AF%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E3%83%BB%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E5%B0%8E%E5%85%A5%E7%B7%A8-XP%E5%AE%9F%E8%B7%B5%E3%81%AE%E6%89%8B%E5%BC%95%E3%81%8D-The-XP-Series/dp/4894714914/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1386502350&amp;sr=1-1&amp;keywords=%E3%82%A8%E3%82%AF%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E3%80%80%E5%B0%8E%E5%85%A5%E7%B7%A8">Extream programming installed</a></li>
+<li><a href="http://www.amazon.co.jp/%E3%83%86%E3%82%B9%E3%83%88%E9%A7%86%E5%8B%95%E9%96%8B%E7%99%BA%E5%85%A5%E9%96%80-%E3%82%B1%E3%83%B3%E3%83%88-%E3%83%99%E3%83%83%E3%82%AF/dp/4894717115/ref=sr_1_2?s=books&amp;ie=UTF8&amp;qid=1386502385&amp;sr=1-2&amp;keywords=Test+Driven+Development+by+example">Test Driven Development by example</a></li>
+<li><a href="http://www.amazon.co.jp/User-Stories-Applied-Software-Development-ebook/dp/B0054KOL74/ref=sr_1_cc_1?s=aps&amp;ie=UTF8&amp;qid=1386502435&amp;sr=1-1-catcorr&amp;keywords=User+Stories+applied">User stories applied</a></li>
+<li><a href="http://www.amazon.co.jp/%E3%82%A2%E3%82%B8%E3%83%A3%E3%82%A4%E3%83%AB%E3%81%AA%E8%A6%8B%E7%A9%8D%E3%82%8A%E3%81%A8%E8%A8%88%E7%94%BB%E3%81%A5%E3%81%8F%E3%82%8A-~%E4%BE%A1%E5%80%A4%E3%81%82%E3%82%8B%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%82%92%E8%82%B2%E3%81%A6%E3%82%8B%E6%A6%82%E5%BF%B5%E3%81%A8%E6%8A%80%E6%B3%95~-Mike-Cohn/dp/4839924023/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1386502473&amp;sr=1-1&amp;keywords=%E3%82%A2%E3%82%B8%E3%83%A3%E3%82%A4%E3%83%AB%E3%81%AA%E8%A6%8B%E7%A9%8D%E3%82%82%E3%82%8A%E3%81%A8%E8%A8%88%E7%94%BB%E4%BD%9C%E3%82%8A">Agile Estimating and Planning</a></li>
+</ul>
+
+
+<p><em><a href="http://pragprog.com/book/jtrap/the-agile-samurai">The Agile Samurai</a></em> collects the essences of these books. In addition to these concepts, this book add new stuff.
+So it&rsquo;s inception deck. If you want to know about inception deck, read this book. And the session of inception deck was also held at this bootcamp. This is important concept of agile practice.</p>
+
+<h3>Why a hero in this book is called &ldquo;Samurai&rdquo;?</h3>
+
+<p>The author, Jonathan Rasmusson likes <em>&ldquo;<a href="http://www.amazon.com/Way-Peaceful-Warrior-Changes-Lives/dp/0915811898">Peaceful Warrior</a>&rdquo;</em> . Initial title of &ldquo;Agile samurai&rdquo; was &ldquo;Agile peaceful warrior&rdquo; after this novel title. But it was not grasped by other people who have not read this book. So collaborators recommended him the word, &ldquo;Samurai&rdquo; which means same notion as peaceful warrior. &ldquo;Samurai&rdquo; is more perspicuous than &ldquo;peaceful warrior&rdquo; to the people of all over the world. Master sensei is also only the notion, not real samurai characters who lived in Japan.</p>
+
+<h3>What is the agile practice?</h3>
+
+<p>Agile development means the way of keeping feedback under the cooperative environment. To achieve team&rsquo;s goal, taking action requires cooperative environment of your team. All members must have the sense of ownership of their products. This thought makes good mood and necessary environment. But this practice can be accomplished only by your learning with on-the-job training. There is no secret ingredient. It&rsquo;s just you.</p>
+
+<h3>Last but not least</h3>
+
+<ol>
+<li>Sharing what you learn with others</li>
+<li>Keep searching the better answers</li>
+<li>Enjoy!</li>
+</ol>
+
+
+<p>Enjoy your agile life!</p>
+
+
+        <hr class="divider-short"/>
+        
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2013/12/05/closure-with-async-dot-js/" title="Previous Post: Closure with Async.js">&laquo; Previous: Closure with Async.js</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2013/12/09/agile-samurai-basecamp-in-tokyo/" title="Next Post: Agile Samurai Basecamp in Tokyo <2>">Next: Agile Samurai Basecamp in Tokyo <2> &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/Lewuathe"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/Lewuathe"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

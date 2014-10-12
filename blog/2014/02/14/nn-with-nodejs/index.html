@@ -1,0 +1,370 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>NN With Nodejs - The first cry of Atom</title>
+  <meta name="author" content="Kai Sasaki">
+
+  
+  <meta name="description" content="NN With Nodejs written Feb 14th, 2014 in Machine learning, Newral network 2 layer newral network is added to n42
+This network is simple newral &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://lewuathe.com/blog/2014/02/14/nn-with-nodejs">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-44055098-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>NN With Nodejs</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2014-02-14T22:23:00+09:00" pubdate data-updated="true">Feb 14<span>th</span>, 2014</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/machine-learning/'>Machine learning</a>, <a class='category' href='/blog/categories/newral-network/'>Newral network</a>
+  
+</span>
+
+
+        </div>
+        <p>2 layer newral network is added to <a href="https://github.com/Lewuathe/n42">n42</a>
+This network is simple newral network which can trained throught gradient descent optimization calculation.
+It is the same algorithm to the one of denoised autoencoder used by n42. So implementation itself was not diffucult.
+The code is showed below.</p>
+
+<!-- more -->
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> *   Training weight parameters with supervised learning</span>
+</span><span class='line'><span class="cm"> *</span>
+</span><span class='line'><span class="cm"> *   @method train</span>
+</span><span class='line'><span class="cm"> *   @param  lr {float}  learning rate</span>
+</span><span class='line'><span class="cm"> *   @param  input {Matrix} input data (option)</span>
+</span><span class='line'><span class="cm"> *   @param  label {Matrix} label data (option)</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="nx">NN</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">train</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">lr</span><span class="p">,</span> <span class="nx">input</span><span class="p">,</span> <span class="nx">label</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">self</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">x</span>     <span class="o">=</span> <span class="p">(</span><span class="nx">input</span> <span class="o">!=</span> <span class="kc">undefined</span><span class="p">)</span><span class="o">?</span> <span class="nx">input</span> <span class="o">:</span> <span class="nx">self</span><span class="p">.</span><span class="nx">input</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">label</span> <span class="o">=</span> <span class="p">(</span><span class="nx">label</span> <span class="o">!=</span> <span class="kc">undefined</span><span class="p">)</span><span class="o">?</span> <span class="nx">label</span> <span class="o">:</span> <span class="nx">self</span><span class="p">.</span><span class="nx">label</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">x</span><span class="p">;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="c1">// Get hidden layer value</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">getHiddenValues</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// The output of this network</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">z</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">getOutput</span><span class="p">(</span><span class="nx">y</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// The error of output layer. </span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">lH2</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">label</span><span class="p">.</span><span class="nx">subtract</span><span class="p">(</span><span class="nx">z</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Restortion to the error of each hidden layer unit</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">sigma</span> <span class="o">=</span> <span class="nx">lH2</span><span class="p">.</span><span class="nx">x</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">W2</span><span class="p">.</span><span class="nx">transpose</span><span class="p">());</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">lH1</span> <span class="o">=</span> <span class="p">[];</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">sigma</span><span class="p">.</span><span class="nx">rows</span><span class="p">();</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">lH1</span><span class="p">.</span><span class="nx">push</span><span class="p">([]);</span>
+</span><span class='line'>        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">sigma</span><span class="p">.</span><span class="nx">cols</span><span class="p">();</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">lH1</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">push</span><span class="p">(</span><span class="nx">sigma</span><span class="p">.</span><span class="nx">e</span><span class="p">(</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nx">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="nx">y</span><span class="p">.</span><span class="nx">e</span><span class="p">(</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nx">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="nx">y</span><span class="p">.</span><span class="nx">e</span><span class="p">(</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nx">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)));</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Make sylvester matrix</span>
+</span><span class='line'>    <span class="nx">lH1</span> <span class="o">=</span> <span class="nx">$M</span><span class="p">(</span><span class="nx">lH1</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// lW1 is the weight matrix from input layer to hidden layer</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">lW1</span> <span class="o">=</span> <span class="nx">x</span><span class="p">.</span><span class="nx">transpose</span><span class="p">().</span><span class="nx">x</span><span class="p">(</span><span class="nx">lH1</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// lW2 is the weight matrix from hidden layer to output layer</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">lW2</span> <span class="o">=</span> <span class="nx">y</span><span class="p">.</span><span class="nx">transpose</span><span class="p">().</span><span class="nx">x</span><span class="p">(</span><span class="nx">lH2</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Add gradient to weight matrix respectively</span>
+</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">W1</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">W1</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">lW1</span><span class="p">.</span><span class="nx">x</span><span class="p">(</span><span class="nx">lr</span><span class="p">));</span>
+</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">W2</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">W2</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">lW2</span><span class="p">.</span><span class="nx">x</span><span class="p">(</span><span class="nx">lr</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// vBias is the input layer bias parameters</span>
+</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">vBias</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">vBias</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">utils</span><span class="p">.</span><span class="nx">mean</span><span class="p">(</span><span class="nx">lH2</span><span class="p">,</span> <span class="mi">0</span><span class="p">).</span><span class="nx">x</span><span class="p">(</span><span class="nx">lr</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// hBias is the hidden layer bias parameters</span>
+</span><span class='line'>    <span class="nx">self</span><span class="p">.</span><span class="nx">hBias</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">hBias</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">utils</span><span class="p">.</span><span class="nx">mean</span><span class="p">(</span><span class="nx">lH1</span><span class="p">,</span> <span class="mi">0</span><span class="p">).</span><span class="nx">x</span><span class="p">(</span><span class="nx">lr</span><span class="p">));</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Trying.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">input</span> <span class="o">=</span> <span class="nx">$M</span><span class="p">([</span>
+</span><span class='line'>  <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+</span><span class='line'>  <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+</span><span class='line'>  <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+</span><span class='line'>  <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.98</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+</span><span class='line'>  <span class="p">[</span><span class="mf">0.98</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+</span><span class='line'>  <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+</span><span class='line'>  <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+</span><span class='line'>  <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+</span><span class='line'>  <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span>
+</span><span class='line'>  <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.98</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
+</span><span class='line'><span class="p">]);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">label</span> <span class="o">=</span> <span class="nx">$M</span><span class="p">([</span>
+</span><span class='line'>  <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+</span><span class='line'>  <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+</span><span class='line'>  <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+</span><span class='line'>  <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+</span><span class='line'>  <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+</span><span class='line'>  <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+</span><span class='line'>  <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+</span><span class='line'>  <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+</span><span class='line'>  <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+</span><span class='line'>  <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
+</span><span class='line'><span class="p">]);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">nn</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">NN</span><span class="p">(</span><span class="nx">input</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">label</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">100000</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// 0.1 is learning rate</span>
+</span><span class='line'>  <span class="nx">nn</span><span class="p">.</span><span class="nx">train</span><span class="p">(</span><span class="mf">0.1</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">$M</span><span class="p">([</span>
+</span><span class='line'>  <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+</span><span class='line'>  <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
+</span><span class='line'><span class="p">]);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">nn</span><span class="p">.</span><span class="nx">predict</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
+</span><span class='line'><span class="c1">// [0.9999597224429988, 0.000040673558435336644]</span>
+</span><span class='line'><span class="c1">// [0.0000455181928397141, 0.9999544455271699]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Activation function</h2>
+
+<p>This prediction seems rather good, but the activation function was changed to sigmoid function, not softmax function in this case. In the multi class categorizing problem, soft max function usually used to predict. But I can get good result with sigmoid function rather than softmax function. With softmax function, the result is below.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="c1">// [0.5242635012777253, 0.47573649872227464]</span>
+</span><span class='line'><span class="c1">// [0.2690006890629063, 0.7309993109370937]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Further trying</h2>
+
+<p>Umm, this is not the result I want to get. I can&rsquo;t grasp why the result is not correct sufficiently.
+I want to keep tracking whether there are any problems in my program.
+And with this network, I want to try kaggle mnist problem. Now n42 is run to train mnist data. It takes a lot of time.
+If any good result is obtained through this process, I will introduce this blog. Welcome feedback, thank you!!</p>
+
+
+        <hr class="divider-short"/>
+        
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2014/02/05/restricted-boltzmann-machine-in-node/" title="Previous Post: Restricted Boltzmann Machine in node">&laquo; Previous: Restricted Boltzmann Machine in node</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2014/02/15/yes-you-are-malala/" title="Next Post: Yes, You are Malala">Next: Yes, You are Malala &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/Lewuathe"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/Lewuathe"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

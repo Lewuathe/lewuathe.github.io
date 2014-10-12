@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: AtCoder | The first cry of Atom]]></title>
+  <link href="http://lewuathe.com/blog/categories/atcoder/atom.xml" rel="self"/>
+  <link href="http://lewuathe.com/"/>
+  <updated>2014-10-12T20:49:53+09:00</updated>
+  <id>http://lewuathe.com/</id>
+  <author>
+    <name><![CDATA[Kai Sasaki]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Marble Problem]]></title>
+    <link href="http://lewuathe.com/blog/2014/03/18/marble-problem/"/>
+    <updated>2014-03-18T21:45:14+09:00</updated>
+    <id>http://lewuathe.com/blog/2014/03/18/marble-problem</id>
+    <content type="html"><![CDATA[<p>I tried this problem.</p>
+
+<h2>Marble</h2>
+
+<p>There are boxes infinitely in a straight line. Each box is labeled from left side &hellip;,-2,-1,0,1,2,&hellip; to the right side.
+Now <em>R</em> red marbles are in the -100th box. In the same way, <em>G</em> green mables are in the 0th box and <em>B</em> blue mables are in the 100th box.
+There no other marbles in all boxes. All boxes should have one marble at most.
+Repeat below process and make the number of marbles of each each at most one.</p>
+
+<ul>
+<li>Select one marble, move it left box or right box.</li>
+<li>However one box must not have more than two marbles that has different colors each other</li>
+</ul>
+
+
+<p>Calculate minimum required steps.</p>
+
+<!-- more -->
+
+
+<p>I wrote below code.</p>
+
+<p>```java
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;</p>
+
+<p>/<em>*
+ * Created by sasakiumi on 3/18/14.
+ </em>/
+public class Main {</p>
+
+<pre><code>public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+
+    int r = sc.nextInt();
+    int g = sc.nextInt();
+    int b = sc.nextInt();
+
+    int max = Math.max(Math.max(r, g), b);
+
+    List&lt;Integer&gt; steps = new ArrayList&lt;Integer&gt;();
+    steps.add(0);
+    for (int i = 1; i &lt;= max; i++) {
+        Integer pre = steps.get(i - 1);
+        steps.add(pre + (i / 2));
+    }
+
+    Integer ans = steps.get(r) + steps.get(g) + steps.get(b);
+    System.out.println(ans);
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p>OK. I understand this code does not put the case of 100 marbles that is same color into consideration.
+If there are 200 red marbles, this code does not work properly. But I have not found effective way to solve all cases.
+I will update this problem later. If you have any good idea, please let me know.</p>
+
+<p>Thank you.</p>
+]]></content>
+  </entry>
+  
+</feed>

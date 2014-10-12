@@ -1,0 +1,376 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Case Class for Swift - The first cry of Atom</title>
+  <meta name="author" content="Kai Sasaki">
+
+  
+  <meta name="description" content="Case Class for Swift written Jun 19th, 2014 in Case class, Scala, Swift Last week, Apple new programming language Swift was released.
+From that time &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://lewuathe.com/blog/2014/06/19/case-class-for-swift">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-44055098-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Case Class for Swift</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2014-06-19T19:15:40+09:00" pubdate data-updated="true">Jun 19<span>th</span>, 2014</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/case-class/'>Case class</a>, <a class='category' href='/blog/categories/scala/'>Scala</a>, <a class='category' href='/blog/categories/swift/'>Swift</a>
+  
+</span>
+
+
+        </div>
+        <p>Last week, Apple new programming language <a href="https://developer.apple.com/swift/">Swift</a> was released.
+From that time I keep considering Swift looks like <a href="http://www.scala-lang.org/">Scala</a> language.
+Scala has two sides as object-oriented-language and functional-programming-language. So there are many features
+you should learn from scala. One of the most powerful feature of scala is pattern matching. This feature in scala context
+can be applied to all type objects. It is called constructor pattern matching.</p>
+
+<!-- more -->
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">case</span> <span class="k">class</span> <span class="nc">User</span><span class="o">(</span><span class="n">name</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">age</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="o">{}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">val</span> <span class="n">u</span> <span class="k">=</span> <span class="nc">User</span><span class="o">(</span><span class="s">&quot;NOBITA&quot;</span><span class="o">,</span> <span class="mi">12</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">val</span> <span class="n">ret</span> <span class="k">=</span> <span class="n">u</span> <span class="k">match</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">case</span> <span class="nc">User</span><span class="o">(</span><span class="s">&quot;TAKESHI&quot;</span><span class="o">,</span> <span class="mi">12</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="k">case</span> <span class="nc">User</span><span class="o">(</span><span class="s">&quot;NOBITA&quot;</span><span class="o">,</span> <span class="mi">12</span><span class="o">)</span>  <span class="k">=&gt;</span> <span class="mi">2</span>
+</span><span class='line'>    <span class="k">case</span> <span class="nc">User</span><span class="o">(</span><span class="s">&quot;NOBITA&quot;</span><span class="o">,</span> <span class="mi">13</span><span class="o">)</span>  <span class="k">=&gt;</span> <span class="mi">3</span>
+</span><span class='line'>    <span class="k">case</span> <span class="k">_</span> <span class="k">=&gt;</span> <span class="mi">4</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// ret is 2</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>All you should do to use pattern match with your custom class is declare <code>case</code> class.
+The scala compiler generates <code>unapply</code> method called extractors automatically. So you can use
+these feature very easily.</p>
+
+<p>So Swift is also functional programming language. And it has pattern matchin with <code>switch</code> control flow. But I think it is not sufficient in comparison with Scala.</p>
+
+<p>Therefore I tried it.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="c1">//</span>
+</span><span class='line'><span class="c1">//  SwiftCase.swift</span>
+</span><span class='line'><span class="c1">//  SwiftCase</span>
+</span><span class='line'><span class="c1">//</span>
+</span><span class='line'><span class="c1">//  Created by Sasaki Kai on 6/19/14.</span>
+</span><span class='line'><span class="c1">//  Copyright (c) 2014 Sasaki Kai. All rights reserved.</span>
+</span><span class='line'><span class="c1">//</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">import</span> <span class="nn">Foundation</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// For matching, unapply method is necessary</span>
+</span><span class='line'><span class="n">protocol</span> <span class="nc">SwiftCase</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">func</span> <span class="n">unapply</span><span class="o">()</span> <span class="o">-&gt;</span> <span class="nc">Array</span><span class="o">&lt;</span><span class="nc">NSObject</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">SwiftPair</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">let</span> <span class="n">first</span><span class="k">:</span> <span class="kt">SwiftCase</span>
+</span><span class='line'>    <span class="n">let</span> <span class="n">second</span><span class="k">:</span> <span class="kt">AnyObject</span>
+</span><span class='line'>    <span class="n">init</span><span class="o">(</span><span class="n">first</span><span class="k">:</span> <span class="kt">SwiftCase</span><span class="o">,</span> <span class="n">second</span><span class="k">:</span> <span class="kt">AnyObject</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">self</span><span class="o">.</span><span class="n">first</span> <span class="k">=</span> <span class="n">first</span>
+</span><span class='line'>        <span class="n">self</span><span class="o">.</span><span class="n">second</span> <span class="k">=</span> <span class="n">second</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// DSL like logic for generating pair (Matching object, Result object)</span>
+</span><span class='line'><span class="nd">@infix</span> <span class="n">func</span> <span class="o">~&gt;</span> <span class="o">(</span><span class="n">source</span><span class="k">:</span> <span class="kt">SwiftCase</span><span class="o">,</span> <span class="n">target</span><span class="k">:</span> <span class="kt">AnyObject</span><span class="o">)-&gt;</span> <span class="nc">SwiftPair</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nc">SwiftPair</span><span class="o">(</span><span class="n">first</span><span class="k">:</span> <span class="kt">source</span><span class="o">,</span> <span class="n">second</span><span class="k">:</span> <span class="kt">target</span><span class="o">)</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">func</span> <span class="k">match</span><span class="o">(</span><span class="n">c</span><span class="k">:</span> <span class="kt">SwiftCase</span><span class="o">)(</span><span class="n">arr</span><span class="k">:</span> <span class="kt">Array&lt;SwiftPair&gt;</span><span class="o">)-&gt;</span> <span class="nc">AnyObject</span><span class="o">?</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">pair</span> <span class="n">in</span> <span class="n">arr</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">let</span> <span class="n">matchArr</span> <span class="k">=</span> <span class="o">(</span><span class="n">pair</span><span class="o">.</span><span class="n">first</span> <span class="n">as</span> <span class="nc">SwiftCase</span><span class="o">).</span><span class="n">unapply</span><span class="o">()</span>
+</span><span class='line'>        <span class="n">let</span> <span class="n">originArr</span> <span class="k">=</span> <span class="n">c</span><span class="o">.</span><span class="n">unapply</span><span class="o">()</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">isOk</span> <span class="k">=</span> <span class="kc">true</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">matchArr</span><span class="o">.</span><span class="n">count</span> <span class="o">==</span> <span class="n">originArr</span><span class="o">.</span><span class="n">count</span> <span class="o">{</span>
+</span><span class='line'>           <span class="k">for</span> <span class="k">var</span> <span class="n">i</span> <span class="k">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">matchArr</span><span class="o">.</span><span class="n">count</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span> <span class="o">{</span>
+</span><span class='line'>                <span class="k">if</span> <span class="n">matchArr</span><span class="o">[</span><span class="kt">i</span><span class="o">]</span> <span class="o">!=</span> <span class="n">originArr</span><span class="o">[</span><span class="kt">i</span><span class="o">]</span> <span class="o">{</span>
+</span><span class='line'>                    <span class="n">isOk</span> <span class="k">=</span> <span class="kc">false</span>
+</span><span class='line'>                <span class="o">}</span>
+</span><span class='line'>           <span class="o">}</span>
+</span><span class='line'>           <span class="k">if</span> <span class="n">isOk</span> <span class="o">{</span>
+</span><span class='line'>              <span class="k">return</span> <span class="n">pair</span><span class="o">.</span><span class="n">second</span>
+</span><span class='line'>           <span class="o">}</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">nil</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>With this class and functions, you can write below code.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">class</span> <span class="nc">User</span><span class="k">:</span> <span class="kt">SwiftCase</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kt">let</span> <span class="kt">name:</span> <span class="kt">String</span>
+</span><span class='line'>    <span class="kt">let</span> <span class="kt">age:</span> <span class="kt">Int</span>
+</span><span class='line'>    <span class="n">init</span><span class="o">(</span><span class="n">name</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">age</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">self</span><span class="o">.</span><span class="n">name</span> <span class="k">=</span> <span class="n">name</span>
+</span><span class='line'>        <span class="n">self</span><span class="o">.</span><span class="n">age</span> <span class="k">=</span> <span class="n">age</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">func</span> <span class="n">unapply</span><span class="o">()</span> <span class="o">-&gt;</span> <span class="nc">Array</span><span class="o">&lt;</span><span class="nc">NSObject</span><span class="o">&gt;</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="o">[</span><span class="kt">self.name</span>, <span class="kt">self.age</span><span class="o">]</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">OtherUser</span><span class="k">:</span> <span class="kt">SwiftCase</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kt">let</span> <span class="kt">name:</span> <span class="kt">String</span>
+</span><span class='line'>    <span class="kt">let</span> <span class="kt">age:</span> <span class="kt">Int</span>
+</span><span class='line'>    <span class="n">let</span> <span class="n">address</span><span class="k">:</span> <span class="kt">String</span>
+</span><span class='line'>    <span class="n">init</span><span class="o">(</span><span class="n">name</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">age</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">address</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>       <span class="n">self</span><span class="o">.</span><span class="n">name</span> <span class="k">=</span> <span class="n">name</span>
+</span><span class='line'>       <span class="n">self</span><span class="o">.</span><span class="n">age</span> <span class="k">=</span> <span class="n">age</span>
+</span><span class='line'>       <span class="n">self</span><span class="o">.</span><span class="n">address</span> <span class="k">=</span> <span class="n">address</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">func</span> <span class="n">unapply</span><span class="o">()</span> <span class="o">-&gt;</span> <span class="nc">Array</span><span class="o">&lt;</span><span class="nc">NSObject</span><span class="o">&gt;</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="o">[</span><span class="kt">self.name</span>, <span class="kt">self.age</span>, <span class="kt">self.address</span><span class="o">]</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">let</span> <span class="n">user</span> <span class="k">=</span> <span class="nc">User</span><span class="o">(</span><span class="n">name</span><span class="k">:</span> <span class="err">&quot;</span><span class="kt">NOBITA</span><span class="err">&quot;</span><span class="o">,</span> <span class="n">age</span><span class="k">:</span> <span class="err">34</span><span class="o">)</span>
+</span><span class='line'><span class="n">let</span> <span class="n">ret</span> <span class="k">:</span> <span class="kt">AnyObject?</span> <span class="o">=</span> <span class="k">match</span><span class="o">(</span><span class="n">user</span><span class="o">)(</span><span class="n">arr</span><span class="k">:</span> <span class="err">[</span>
+</span><span class='line'>    <span class="kt">User</span><span class="o">(</span><span class="kt">name:</span> <span class="err">&quot;</span><span class="kt">TAKESHI</span><span class="err">&quot;</span><span class="o">,</span> <span class="kt">age:</span> <span class="err">23</span><span class="o">)</span> <span class="o">~&gt;</span> <span class="mi">1</span><span class="o">,</span>
+</span><span class='line'>    <span class="nc">User</span><span class="o">(</span><span class="n">name</span><span class="k">:</span> <span class="err">&quot;</span><span class="kt">NOBITA</span><span class="err">&quot;</span><span class="o">,</span> <span class="n">age</span><span class="k">:</span> <span class="err">32</span><span class="o">)</span> <span class="o">~&gt;</span> <span class="mi">2</span><span class="o">,</span>
+</span><span class='line'>    <span class="nc">User</span><span class="o">(</span><span class="n">name</span><span class="k">:</span> <span class="err">&quot;</span><span class="kt">NOBITA</span><span class="err">&quot;</span><span class="o">,</span> <span class="n">age</span><span class="k">:</span> <span class="err">34</span><span class="o">)</span> <span class="o">~&gt;</span> <span class="mi">3</span><span class="o">,</span>
+</span><span class='line'>    <span class="nc">OtherUser</span><span class="o">(</span><span class="n">name</span><span class="k">:</span> <span class="err">&quot;</span><span class="kt">NOBITA</span><span class="err">&quot;</span><span class="o">,</span> <span class="n">age</span><span class="k">:</span> <span class="err">20</span><span class="o">,</span> <span class="n">address</span><span class="k">:</span> <span class="err">&quot;</span><span class="kt">TOKYO</span><span class="err">&quot;</span><span class="o">)</span> <span class="o">~&gt;</span> <span class="mi">4</span>
+</span><span class='line'><span class="err">]</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// ret is 3</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Is it looks like matching DSL in Swift? So I want to make this class more sophisticated. Some symbols are not easy to understand
+and match function need to receive <code>Array</code> parameter. It is not cool ;(</p>
+
+<p>The repository is <a href="https://github.com/Lewuathe/SwiftCase">here</a>. If you have some advice, please let me know.
+Thank you.</p>
+
+
+        <hr class="divider-short"/>
+        
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2014/06/13/open-source-movement-in-hardware-compan/" title="Previous Post: Welcome Open Source movement in Hardware company">&laquo; Previous: Welcome Open Source movement in Hardware company</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2014/09/12/living-in-silicon-valley/" title="Next Post: Living in Silicon Valley">Next: Living in Silicon Valley &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/Lewuathe"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/Lewuathe"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

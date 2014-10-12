@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: DevOpsDay | The first cry of Atom]]></title>
+  <link href="http://lewuathe.com/blog/categories/devopsday/atom.xml" rel="self"/>
+  <link href="http://lewuathe.com/"/>
+  <updated>2014-10-12T20:49:53+09:00</updated>
+  <id>http://lewuathe.com/</id>
+  <author>
+    <name><![CDATA[Kai Sasaki]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[DevOpsDay Tokyo 2013に行ってきたよ]]></title>
+    <link href="http://lewuathe.com/blog/2013/09/28/devopsday-tokyo-2013nixing-tutekitayo/"/>
+    <updated>2013-09-28T10:37:00+09:00</updated>
+    <id>http://lewuathe.com/blog/2013/09/28/devopsday-tokyo-2013nixing-tutekitayo</id>
+    <content type="html"><![CDATA[<p><img src="/images/posts/2013-09-28-DevOpsDay/DevOpsDay-2013.jpg" alt="ノベルティ" /></p>
+
+<p>印象に残った話しをざっとまとめてみる。なぜならBlogをかくまでがDev Ops Dayだから！！</p>
+
+<h1>&ldquo;Making Operations Visible&rdquo; Nick Galbreath</h1>
+
+<p>使いやすいツールとか紹介</p>
+
+<p>DevOpsとはコミュニケーション（マシン間、人間の間、組織の間）</p>
+
+<p>ビジネス側から見えないから価値がない</p>
+
+<p>DevとOpsとBizで相互不信的な感じになると Destructiveですよね。だから、データを使おう（運用としてだけではなく、会社の仕組みとして）</p>
+
+<p>ビジネス視点でのDevOpsと大事なことはコミュニケーションだと言い切ったところが新鮮だった。</p>
+
+<p>Graphiteという統計可視化ツールの話。</p>
+
+<p><a href="https://github.com/graphite-project">https://github.com/graphite-project</a></p>
+
+<p>Diamond brightcoveは使いやすい</p>
+
+<p>StatsDの話。
+リアルタイムに統計計算をしてくれる。ログイン回数とか。それをGraphiteに書き込んでいく。特徴的なのはUDPパケットで送信を行うところ。そのためアプリケーション自体には過負荷にならない。またハンドリングとか要らないからエラーが起きない、必要ない。</p>
+
+<h1>&ldquo;introduction to Sensu&rdquo; Sean Porter</h1>
+
+<p>Sensuのお話。いろいろな機能をひとつにまとめて使いやすくしたよ。大事なコンセプトは以下。</p>
+
+<ul>
+<li>Autmatic client registration</li>
+<li>Utilize existing Nagios checks</li>
+<li>Handle network interrunptions</li>
+<li>Easy to drive with CM(chef)</li>
+<li>Easy to scale out</li>
+<li><strong>API</strong></li>
+</ul>
+
+
+<p>Sonial（スポンサー）でしばらく使ってみて役に立つことがわかった</p>
+
+<p>Sensuのワークフローとしては</p>
+
+<ol>
+<li>Check</li>
+<li>Result</li>
+<li>Event</li>
+<li>Handle</li>
+</ol>
+
+
+<p>マシンの集まりに対して設定できる(roleみたいなものが設定できる)
+JSONの設定ファイルを書いていくだけで使える。割と設定は簡単そう。
+SensuはChefと相性が良さそう。</p>
+
+<p>PagerDutyはテキストにもとづいてロボットが電話をかけてくる。日本で作りたい場合はTwilio使ってみましょうということだった。USBに入れられたVirtualBoxのimage入りのsandboxが配られた。すごいセットアップ簡単！
+個人的にはGraphiteは見た目あんまりかっこよくないけど、SensuのSenseはいい（笑）</p>
+
+<p>Chef + Sensu + PagerDutyは使えそう。今度自前で立ててみたい。</p>
+
+<p>そして、お昼ごはん！久々の石巻復興弁当！</p>
+
+<p><img src="/images/posts/2013-09-28-DevOpsDay/DevOpsDay-2013_2.jpg" alt="石巻復興弁当" /></p>
+
+<p>途中からスポンサーさんのセッション。</p>
+
+<p>Microsoftの偉大さと力強さを改めて実感。</p>
+
+<h1>&ldquo;Taking Devops to the Next Level&rdquo; Max Martin</h1>
+
+<p>puppet labsの話 DepOpの次の段階へ。
+Chefがもてはやされているけれど、Puppetも頑張っているよという話。
+最近以下のアップデートとか頑張ったよ。</p>
+
+<ul>
+<li>Puppet3.x</li>
+<li>Hiera integration</li>
+<li>PuppetDB</li>
+<li>Mcollective2.x</li>
+<li>Geppetto</li>
+<li>Puppet Forge</li>
+<li>Puppet3.xは2.xとくらべてだいぶパフォーマンス上がったよ</li>
+<li>PuppetDBはClojureで書かれているよ、BaseはPostgreSQL、JVM上で動くよ</li>
+</ul>
+
+
+<p>僕は用事があったのでここまで。DevOpsの概念というかスタンスみたいなものが結構聞けたのが収穫。技術的には、Sensuは自前で立てていろいろ弄ってみたいなと思った。</p>
+
+<p>朝早起きだったから眠かったけれど、楽しいセッションばかりで良かった！</p>
+]]></content>
+  </entry>
+  
+</feed>

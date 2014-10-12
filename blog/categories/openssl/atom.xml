@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: OpenSSL | The first cry of Atom]]></title>
+  <link href="http://lewuathe.com/blog/categories/openssl/atom.xml" rel="self"/>
+  <link href="http://lewuathe.com/"/>
+  <updated>2014-10-12T20:49:53+09:00</updated>
+  <id>http://lewuathe.com/</id>
+  <author>
+    <name><![CDATA[Kai Sasaki]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Heart Bleedを読んだ]]></title>
+    <link href="http://lewuathe.com/blog/2014/04/08/opensslfalsecui-ruo-xing-wodu-nta/"/>
+    <updated>2014-04-08T21:06:12+09:00</updated>
+    <id>http://lewuathe.com/blog/2014/04/08/opensslfalsecui-ruo-xing-wodu-nta</id>
+    <content type="html"><![CDATA[<p>今日の日本時間13:00頃、OpenSSLに致命的なバグがあることがわかった。全世界で動いているSSLプロセスが影響を受ける。
+簡単に言うと、メモリ上にある任意のデータを漏洩する可能性があるバグだ。
+このバグはもう2年も前からあったらしいがGoogle Security TeamのNeel Mentaに見つけられたのはつい最近で、パッチがあたったのは十数時間前だ。</p>
+
+<p><a href="https://github.com/openssl/openssl/commit/96db9023b881d7cd9f379b0c154650d6c108e9a3">Add heartbeat extension bounds check.</a></p>
+
+<p>基本的には<a href="http://heartbleed.com/">heartbleed.com</a>に詳細が記載されていて、危険なOpenSSLのバージョン、ディストリビューションが書いてある。
+対応方法も書いてある。今回はエンジニアとして、コードを読んでどういうバグだったのか理解してみたかったので書いてみる。</p>
+
+<!-- more -->
+
+
+<h2>問題の箇所</h2>
+
+<p>修正箇所である<code>ssl/d1_both.c</code>の該当関数を見てみる。</p>
+
+<p>```c
+int
+dtls1_process_heartbeat(SSL *s)</p>
+
+<pre><code>{
+unsigned char *p = &amp;s-&gt;s3-&gt;rrec.data[0], *pl;
+unsigned short hbtype;
+unsigned int payload;
+unsigned int padding = 16; /* Use minimum padding */
+</code></pre>
+
+<p>```</p>
+
+<p>heartbeatという機能の詳しいことは調べられていないけれどどうやらクライアントーサーバ型の機能を提供するものらしい。
+つまり何らかのリクエストを受け取ってレスポンスを返すようなサービスを提供するものらしい。<code>dtls1_process_heartbeat</code>で大事なのは
+ポインタ<code>p</code>だ。これはリクエストデータを受け取って格納している。このリクエストデータは構造体になっていて、以下のように記述されている。</p>
+
+<p>```c
+typedef struct ssl3_record_st</p>
+
+<pre><code>{
+    int type;               /* type of record */
+    unsigned int length;    /* How many bytes available */
+    unsigned int off;       /* read/write offset into 'buf' */
+    unsigned char *data;    /* pointer to the record data */
+    unsigned char *input;   /* where the decode bytes are */
+    unsigned char *comp;    /* only used with decompression - malloc()ed */
+    unsigned long epoch;    /* epoch number, needed by DTLS1 */
+    unsigned char seq_num[8]; /* sequence number, needed by DTLS1 */
+} SSL3_RECORD;
+</code></pre>
+
+<p>```</p>
+
+<p><code>data</code>が実際の受け取っているデータ。このデータは先頭1byteがheart beatのtypeを表し、次の2byteがそのリクエストの長さを表すような
+データになっている。これを処理するコードが以下。</p>
+
+<p>```c
+/<em> Read type and payload length first </em>/
+hbtype = *p++;
+n2s(p, payload);
+pl = p;</p>
+
+<p>```</p>
+
+<p><code>hbtype</code>に先頭1byteのheart beatのtypeが格納される。そしてn2sは次の2byteを格納するためのマクロで以下のように定義されている。</p>
+
+<p>```c
+/<em> straight from the openssl source </em>/</p>
+
+<h1>define n2s(c,s)    ((s=(((unsigned int)(c[0]))&lt;&lt; 8)| (((unsigned int)(c[1]))   )),c+=2)</h1>
+
+<h1>define s2n(s,c)    ((c[0]=(unsigned char)(((s)>> 8)&amp;0xff), c[1]=(unsigned char)(((s)    )&amp;0xff)),c+=2)</h1>
+
+<p>```</p>
+
+<p><code>s2n</code>も後で使うことになる。つまり変数<code>payload</code>にはクライアントから受け取ったデータに設定されている、<code>length</code>を読み取って格納している。
+ここでpayloadには実際に受け取ったデータの長さをチェックして格納されたわけではなく、あくまでもユーザクライアントが送ってきたlengthをそのまま設定していることを覚えておいてほしい。</p>
+
+<p>さて次にレスポンスを返す部分のコードだ。</p>
+
+<p>```c
+unsigned char <em>buffer, </em>bp;
+int r;</p>
+
+<p>/<em> Allocate memory for the response, size is 1 byte
+ * message type, plus 2 bytes payload length, plus
+ * payload, plus padding
+ </em>/
+buffer = OPENSSL_malloc(1 + 2 + payload + padding);
+bp = buffer;</p>
+
+<p>```</p>
+
+<p>bufferはレスポンスを返すための実体となるが、ここでの大きさはtype用の1byteとlength用の2byte、そして実データの長さpayloadで設定された大きさ
+に余白(これは16byteに設定されている)を合わせて大きさを確保している。実際に走査するときは<code>bp</code>を通してとなる。
+これに対してレスポンスデータを構築してやる。</p>
+
+<p>```c
+/<em> Enter response type, length and copy payload </em>/
+*bp++ = TLS1_HB_RESPONSE;
+s2n(payload, bp);
+memcpy(bp, pl, payload);</p>
+
+<p>```</p>
+
+<p>リクエストデータと同じようにまず先頭1byteにheart beatのtypeを設定してやる。<code>TLS1_HB_RESPONSE</code>だ。そして先程の <code>n2s</code>の逆を行うマクロ<code>s2n</code>を利用する。
+つまり<code>payload</code>に設定されている値を<code>bp</code>の次の2byteに設定する。そして最後の行がキモだ。</p>
+
+<p>```c
+memcpy(bp, pl, payload);</p>
+
+<p>```</p>
+
+<p>先ほどのリクエストから得た<code>payload</code>分の長さのデータを<code>pl</code>から<code>bp</code>にコピーしている。これでレスポンスデータを構築したことになる。
+これをユーザクライアントに返すことになるわけだ。</p>
+
+<p>さて今回見つかったバグは既にここまでのコードの中にある。</p>
+
+<h2>バグ</h2>
+
+<p>注意して欲しいのは変数<code>payload</code>は<strong>ユーザから与えられたデータ</strong>ということだ。つまりだれでも勝手に設定できるため、<strong>正しい値が入っていない</strong>可能性がある。
+この場合の正しさというのはリクエストデータの大きさを正しく反映しているかどうかということだ。
+もしこの<code>payload</code>変数(受け取ったデータの先頭から2byteの値)がデータの長さを正しく反映していない、特に実際のデータ長よりも
+長い値が<code>payload</code>に設定されているとしたらどうだろう。レスポンスデータを作る以下のコードは正しく動作するだろうか。</p>
+
+<p>```c
+memcpy(bp, pl, payload);</p>
+
+<p>```</p>
+
+<p>正しく動作しない。正確にいうと動作に特に影響はないが、余計なものを送ってしまう可能性がある。ここに脆弱性が生まれる。実際の<code>pl</code>に入っているデータは<code>payload</code>に設定されている値よりも短いため、<code>pl</code>から連続したメモリ領域を<code>bp</code>に
+コピーしてしまう。そして、このあふれた領域にSSL秘密鍵のデータが載っていたらどうだろうか。OpenSSLプロセスであれば秘密鍵のデータをプロセスメモリ上に乗せているのは
+十分考えられることだ。
+このコピーされてしまったSSL秘密鍵のデータは<code>bp</code>を経由してそのままクライアントの手にわたってしまうことになる。
+もちろん、最近のコンピュータはプロセスあたりのヒープ領域が大きいため、ただちに秘密鍵の値をコピーしてしまうことにはならないが、やはり可能性はゼロではない。
+OpenSSLチームは以下のような修正を加えたパッチを配布している。</p>
+
+<h2>修正</h2>
+
+<p>```c
+/<em> Read type and payload length first </em>/
+if (1 + 2 + 16 > s->s3->rrec.length)</p>
+
+<pre><code>return 0; /* silently discard */
+hbtype = *p++;
+n2s(p, payload);
+</code></pre>
+
+<p>if (1 + 2 + payload + 16 > s->s3->rrec.length)</p>
+
+<pre><code>return 0; /* silently discard per RFC 6520 sec. 4 */
+pl = p;
+</code></pre>
+
+<p>```</p>
+
+<p>安易にユーザの設定したpayload lengthを信用するのではなくチェックをおこなってる。読み取るまえにそもそもデータ長がゼロであれば捨てる。
+読み取ったあとも、実際のデータ長さよりも設定されているpayload lengthの方が大きい場合はリクエストを破棄するようにしている。
+これで本来読み取られてはいけない部分のデータがレスポンスとして返ることはない。
+至ってシンプルなFixだけれど、こういったものでも見逃すことはある。今回のように世界的に影響力のあるソフトウェアに対して優れたエンジニア達が
+メンテを行っていてもそうなのだ。自分がコードを書くときの戒めともしたい。</p>
+
+<p>以下を教訓としておこう。</p>
+
+<ul>
+<li>ちゃんと単体テストを書こう</li>
+<li>Cよりももっとsecureな言語を使おう</li>
+</ul>
+
+
+<p>参考: <a href="http://blog.existentialize.com/diagnosis-of-the-openssl-heartbleed-bug.html">Diagnosis of the OpenSSL Heartbleed Bug</a></p>
+]]></content>
+  </entry>
+  
+</feed>
