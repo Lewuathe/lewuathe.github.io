@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: AI | The first cry of Atom]]></title>
+  <link href="http://lewuathe.com/blog/categories/ai/atom.xml" rel="self"/>
+  <link href="http://lewuathe.com/"/>
+  <updated>2014-10-12T21:50:29+09:00</updated>
+  <id>http://lewuathe.com/</id>
+  <author>
+    <name><![CDATA[Kai Sasaki]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Scalaを使うことに]]></title>
+    <link href="http://lewuathe.com/blog/2013/09/07/scalawoshi-ukotoni/"/>
+    <updated>2013-09-07T23:22:00+09:00</updated>
+    <id>http://lewuathe.com/blog/2013/09/07/scalawoshi-ukotoni</id>
+    <content type="html"><![CDATA[<p>汎用人工知能の開発をするにあたって使う言語とかを考えていた。汎用人工知能（まだそれが何を意味するのか明瞭にはわかってない)で必要なスペックは次のものなのではないかなとあげてみた。</p>
+
+<ul>
+<li>高速</li>
+<li>並列処理に向いている</li>
+<li>関数型（少なくとも副作用を前提としないプログラム）</li>
+</ul>
+
+
+<p>ここであげた条件には自分の好み、向き不向きが含まれているけれど漠然とした現状を考えるとこれが妥当なのではないかな。
+高速であることはいうまでもない。多分CとかC++が一番よい。でもC、C++はメモリ管理とか大変そうで個人的にはデカイものを書くときには向いてない気がする。
+並列処理に向いているというのは機械学習を行わせたいので今流行のMahoutもJubatusも並列で計算をおこなっているのでそれが向いているものがいい。ErlangとかScalaがいいらしい。特にScalaのActorアーキテクチャはデッドロックや並列計算での問題が解消されやすいみたい。</p>
+
+<p><a href="http://www.atmarkit.co.jp/ait/articles/1209/06/news134.html">http://www.atmarkit.co.jp/ait/articles/1209/06/news134.html</a></p>
+
+<p>あと関数型。副作用を前提とした言語だとプログラムを書いていてバグを埋め込みやすいのでできれば関数型言語を使いたい。Haskellなんかは純粋関数型言語で今流行だけど、ライブラリの数とかでは叶わない。あとはちょっとこてこてなのでSchemeとかかな。</p>
+
+<p>というわけで選んだのは<strong>Scala</strong>です。一番バランスがよかったのでこの言語で作っていこうと思います。今はこちらでScalaの勉強中。</p>
+
+<p><a href="http://www.atmarkit.co.jp/ait/articles/1202/10/news122.html">http://www.atmarkit.co.jp/ait/articles/1202/10/news122.html</a></p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Dockerで仮想化をはじめよう - The first cry of Atom</title>
+  <meta name="author" content="Kai Sasaki">
+
+  
+  <meta name="description" content="Dockerで仮想化をはじめよう written Oct 20th, 2013 in Docker 仮想環境構築の方法のひとつにDockerを使ってみた。いままではVirtualBoxを使ってVagrantからつないでいく方法をやってみたけれど、 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://lewuathe.com/blog/2013/10/20/dockerwoshi-tutemiyou">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-44055098-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Dockerで仮想化をはじめよう</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-10-20T20:30:00+09:00" pubdate data-updated="true">Oct 20<span>th</span>, 2013</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/docker/'>Docker</a>
+  
+</span>
+
+
+        </div>
+        <p>仮想環境構築の方法のひとつに<a href="http://www.docker.io/">Docker</a>を使ってみた。いままではVirtualBoxを使ってVagrantからつないでいく方法をやってみたけれど、仮想マシンをいちいち立ち上げる方法はどうも遅いのでDockerというもので試してみた。</p>
+
+<p>Dockerの特徴は以下記事から抜粋。</p>
+
+<p><a href="http://apatheia.info/blog/2013/06/17/docker/">http://apatheia.info/blog/2013/06/17/docker/</a></p>
+
+<ul>
+<li>仮想マシンを立ち上げるわけではなく、ホスト内の隔離された環境で動作するため起動が速い。<a href="http://linuxcontainers.org/">LXC</a>という技術のことらしい。ここでこの隔離されたシステムのことを <strong>コンテナ</strong> という。</li>
+<li>AUFSを使っている。起動したときはディレクトリを重ねあわせておいて、更新の際に別の場所に書き込むというファイルシステムっぽい。立ち上げ時にイメージコピーがいらないので起動が軽い。</li>
+</ul>
+
+
+<h2>動かしてみた</h2>
+
+<p>環境は以下で行った</p>
+
+<ul>
+<li>MacOSX 10.8</li>
+<li>VirtualBox 4.2</li>
+<li>vagrant 1.2.4</li>
+</ul>
+
+
+<p>他にUbuntu LTS12.04が入ったマシンを持っていたのでVagrant使わずにそっちでトライしたら32bitだとだめらしい。どうもUbuntu日本語コミュニティには32bitイメージしかなかったのでぼけーっと入れたらそっちになってしまったみたい。また入れなおすのもとりあえずめんどくさいのでMacのVagrantにUbuntu仮想マシンを立ち上げてその上にDockerを起動させるという構成。</p>
+
+<p><a href="http://docs.docker.io/en/latest/installation/vagrant/">ここ</a>に従えば特に問題なくいけた。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git clone https://github.com/dotcloud/docker.git
+</span><span class='line'>$ cd docker
+</span><span class='line'>$ vagrant up</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ここまでで10minくらいかかる。でも悪いのはVirtualBoxとvagrant。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># dockerが起動するか見てみる
+</span><span class='line'>$ docker
+</span><span class='line'># サブコマンドがだーっと出る</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>イメージをダウンロード</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo docker pull ubuntu</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>先ほどのコンテナ内でスクリプトを動作させる</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># sudo docker run &lt;実行対象コンテナ&gt; &lt;コマンド(引数あってもいい)&gt;
+</span><span class='line'>$ sudo docker run ubuntu /bin/echo hello world</span></code></pre></td></tr></table></div></figure>
+
+
+<p>別にsudoはなくてもいい
+これらはDockerのコンテナ内で実行されているコマンドだが、いまいち仮想ホスト立てている感じにならない。それを感じるためにはDockerをdaemon化させる必要がある。</p>
+
+<h2>コマンドをdaemon化させる</h2>
+
+<p>走らせるコマンドを定義する。このコマンドはコンテナのIDを返す。このIDをもとにそのコンテナで何がおきているかを見る
+-dはコマンドをdaemon化させるオプション</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ CONTAINER_ID=$(sudo docker run -d ubuntu /bin/sh -c "while true; do echo hello world; sleep 1; done")</span></code></pre></td></tr></table></div></figure>
+
+
+<p>そして起動させる。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo docker logs $CONTAINER_ID</span></code></pre></td></tr></table></div></figure>
+
+
+<p>さっきのコンテナIDが返ってくるのでこいつを<code>docker logs</code>に渡してやると実行されているコマンドの値が見えるようになる。たただしこれは実行が終わったら返ってくるのでリアルタイムにコマンドの結果を見たければ<code>attach</code>を使う</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo docker attach $CONTAINER_ID</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ここまで適当にやっていったら、いっぱいコンテナができてしまったので確認してみる。dockerが起動したコマンドたちを確認する場合は<code>ps</code>サブコマンドを使う。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ docker ps
+</span><span class='line'>ID                  IMAGE               COMMAND                CREATED             STATUS              PORTS
+</span><span class='line'>4841794938a7        ubuntu:12.04        /bin/sh -c while tru   7 minutes ago       Up 7 minutes            
+</span><span class='line'>79b862e271bc        ubuntu:12.04        /bin/sh -c while tru   8 minutes ago       Up 8 minutes                  
+</span><span class='line'>bee9d7a00611        ubuntu:12.04        /bin/sh -c while tru   9 minutes ago       Up 9 minutes           </span></code></pre></td></tr></table></div></figure>
+
+
+<p>こいつらをとめたければ<code>stop</code>を使う</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo docker stop 4841794938a7 
+</span><span class='line'>4841794938a7 
+</span><span class='line'>
+</span><span class='line'>$ sudo docker ps
+</span><span class='line'>ID                  IMAGE               COMMAND                CREATED             STATUS              PORTS
+</span><span class='line'>79b862e271bc        ubuntu:12.04        /bin/sh -c while tru   13 minutes ago      Up 13 minutes             
+</span><span class='line'>bee9d7a00611        ubuntu:12.04        /bin/sh -c while tru   14 minutes ago      Up 14 minutes                    </span></code></pre></td></tr></table></div></figure>
+
+
+<h2>まとめ</h2>
+
+<p>今回のチュートリアルは<a href="http://docs.docker.io/en/latest/examples/hello_world/#running-examples">ここ</a>からすべてとった。Dockerかなり簡単だけれど、いまいちコマンドをひとつひとつ打っているだけな気がして仮想マシンをたてて、実行している感じがあまりしない。ここで実際にWebアプリとか作ることとかもできるっぽいのでもうちょっと見ていこうかと。</p>
+
+
+        <hr class="divider-short"/>
+        
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2013/10/18/masutasenseihaxu-wotukanai/" title="Previous Post: マスターセンセイは嘘をつかない">&laquo; Previous: マスターセンセイは嘘をつかない</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2013/10/25/osswoshi-u%2C-zuo-ru/" title="Next Post: OSSを使う、作る">Next: OSSを使う、作る &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/Lewuathe"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/Lewuathe"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

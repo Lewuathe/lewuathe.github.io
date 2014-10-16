@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Async | The first cry of Atom]]></title>
+  <link href="http://lewuathe.com/blog/categories/async/atom.xml" rel="self"/>
+  <link href="http://lewuathe.com/"/>
+  <updated>2014-10-12T21:50:29+09:00</updated>
+  <id>http://lewuathe.com/</id>
+  <author>
+    <name><![CDATA[Kai Sasaki]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Closure With Async.js]]></title>
+    <link href="http://lewuathe.com/blog/2013/12/05/closure-with-async-dot-js/"/>
+    <updated>2013-12-05T20:29:00+09:00</updated>
+    <id>http://lewuathe.com/blog/2013/12/05/closure-with-async-dot-js</id>
+    <content type="html"><![CDATA[<p>You may use <a href="https://npmjs.org/package/async">Async.js</a> at least one time when you develop with nodejs.</p>
+
+<blockquote><p>Async is a utility module which provides straight-forward, powerful functions for working with asynchronous JavaScript.</p></blockquote>
+
+<p>So if you want to write asynchronous code with JavaScript, I recommend you to use it. It&rsquo;s easy to use, simple syntax.
+However I had trouble with using Async.js in the context of giving dynamic task array. In this article, I want to share
+how to write dynamic task array given to Async.js module.</p>
+
+<h2>Problem</h2>
+
+<p>I wrote like a below code with nodejs.</p>
+
+<p>```js
+var async = require(&lsquo;async&rsquo;);</p>
+
+<p>// Total task is 10 which is executed in parallel
+var TASK_NUM = 10;</p>
+
+<p>// All task functions are put in taskList
+var taskList = [];
+for (var i = 0; i &lt; TASK_NUM; i++) {</p>
+
+<pre><code>taskList.push(function(callback) {
+    console.log(i);
+    callback(null, i);
+});
+</code></pre>
+
+<p>}</p>
+
+<p>async.parallel(taskList, function(err, results) {</p>
+
+<pre><code>console.log(results);
+</code></pre>
+
+<p>});
+```</p>
+
+<p>When you run this code, I obtained below output.</p>
+
+<p><code>
+10
+10
+10
+10
+10
+10
+10
+10
+10
+10
+[ 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 ]
+</code></p>
+
+<p>This didn&rsquo;t fit my expectation. I thought all tasks should get i-th argument. So each task&rsquo;s output
+is i-th number, if i-th task runs. However in this case, all task&rsquo;s output is 10. Why closure in function(In JavaScript, <code>function</code> makes variable scope, called closure) might not be effective?</p>
+
+<h2>Answer</h2>
+
+<p>There is answer in <a href="http://stackoverflow.com/questions/12472448/async-parallel-with-functions-dynamic-array">StackOverflow</a>.</p>
+
+<blockquote><p>A closure doesn&rsquo;t &ldquo;trap&rdquo; the value that an outer variable had at the time it was created; it &ldquo;traps&rdquo; a reference to whatever value the outer variable has at the time it&rsquo;s executed (which in this case won&rsquo;t be until well after your for loop has finished.</p></blockquote>
+
+<p>So in this case, closure does not make scope when it is <strong>declared</strong>, but <strong>executed</strong>. The variable <code>i</code> resulted in 10 after <code>for</code> loop in this code. And then each tasks will be executed under the condition that variable <code>i</code> is 10. I understood why these odd phenomenon was occured.</p>
+
+<h2>How to write</h2>
+
+<p>How should I write in order to execute this code as I expected in advance. Same page showed me the answer.</p>
+
+<p><code>
+var deleteFunction = makeDeleteFunction(i, callback);
+</code></p>
+
+<p>Writing wrapper function which wraps my original tasks makes scope under given argument <code>i</code>. When you declare task, you should not make task function directly, but should give parameters which trapped in declaration context to the wrapper function. Here is my sample that is corresponds to above code.</p>
+
+<p>```js
+var async = require(&lsquo;async&rsquo;);</p>
+
+<p>// Wrapper function
+function makeTask(i) {</p>
+
+<pre><code>return function(callback) {
+    console.log(i);
+    callback(null, i);
+};
+</code></pre>
+
+<p>}</p>
+
+<p>// Total task is 10 which is executed in parallel
+var TASK_NUM = 10;</p>
+
+<p>// All task functions are put in taskList
+var taskList = [];
+for (var i = 0; i &lt; TASK_NUM; i++) {</p>
+
+<pre><code>taskList.push(makeTask(i));
+</code></pre>
+
+<p>}</p>
+
+<p>async.parallel(taskList, function(err, results) {</p>
+
+<pre><code>console.log(results);
+</code></pre>
+
+<p>});
+```</p>
+
+<p>Then output is given as I expected.</p>
+
+<p><code>
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+[ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+</code></p>
+
+<p>If you write dynamic task function with Async.js, notice these fact.</p>
+]]></content>
+  </entry>
+  
+</feed>

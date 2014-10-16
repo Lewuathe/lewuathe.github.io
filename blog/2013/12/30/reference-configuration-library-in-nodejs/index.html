@@ -1,0 +1,253 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Reference Configuration Library in Nodejs - The first cry of Atom</title>
+  <meta name="author" content="Kai Sasaki">
+
+  
+  <meta name="description" content="Reference Configuration Library in Nodejs written Dec 30th, 2013 in JavaScript, node, npm, readonly I made npm module at the end of this year, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://lewuathe.com/blog/2013/12/30/reference-configuration-library-in-nodejs">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-44055098-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Reference Configuration Library in Nodejs</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-12-30T20:24:00+09:00" pubdate data-updated="true">Dec 30<span>th</span>, 2013</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/javascript/'>JavaScript</a>, <a class='category' href='/blog/categories/node/'>node</a>, <a class='category' href='/blog/categories/npm/'>npm</a>, <a class='category' href='/blog/categories/readonly/'>readonly</a>
+  
+</span>
+
+
+        </div>
+        <p>I made npm module at the end of this year, <em>readonly</em>.</p>
+
+<p><a href="https://github.com/Lewuathe/readonly">lewuathe/readonly @GitHub</a></p>
+
+<p><a href="https://npmjs.org/package/readonly">readonly @npm</a></p>
+
+<p>readonly is a simple reference restriction library between custom modules in node object.
+When you want to configure access control of specific object from respective modules, this is good option.
+For example, you made two modules, both use the same object.</p>
+
+<!-- more -->
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="c1">// obj is uses from moduleA and moduleB</span>
+</span><span class='line'><span class="c1">// You want moduleA to read and update obj, but moduleB to read obj only.</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="o">:</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;B&#39;</span><span class="o">:</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="o">:</span><span class="s1">&#39;c&#39;</span><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Embedded in moduleA</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">moduleA</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'><span class="nx">moduleA</span><span class="p">.</span><span class="nx">obj</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Readonly restriction of `obj` from moduleB</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">moduleB</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'><span class="nx">moduleB</span><span class="p">.</span><span class="nx">obj</span> <span class="o">=</span> <span class="nx">readonly</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// You can update `obj` from moduleA</span>
+</span><span class='line'><span class="nx">moduleA</span><span class="p">.</span><span class="nx">obj</span><span class="p">.</span><span class="nx">A</span> <span class="o">=</span> <span class="s2">&quot;d&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="c1">// But you cannot update `obj` from moduleB</span>
+</span><span class='line'><span class="nx">moduleA</span><span class="p">.</span><span class="nx">obj</span><span class="p">.</span><span class="nx">B</span> <span class="o">=</span> <span class="s2">&quot;e&quot;</span><span class="p">;</span>  <span class="c1">// Error</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In this situation, you can use <strong>readonly</strong>.</p>
+
+<h2>Install</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">$</span> <span class="nx">npm</span> <span class="nx">install</span> <span class="nx">readonly</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Usage</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">readonly</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;readonly&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="o">:</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;B&#39;</span><span class="o">:</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="o">:</span><span class="s1">&#39;c&#39;</span><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Normal ACL. You can use `obj` through moduleA as you like</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">moduleA</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'><span class="nx">moduleA</span><span class="p">.</span><span class="nx">obj</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Readonly restriction of `obj` in moduleB</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">moduleB</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'><span class="nx">moduleB</span><span class="p">.</span><span class="nx">obj</span> <span class="o">=</span> <span class="nx">readonly</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// You can update `obj` from moduleA</span>
+</span><span class='line'><span class="nx">moduleA</span><span class="p">.</span><span class="nx">obj</span><span class="p">.</span><span class="nx">A</span> <span class="o">=</span> <span class="s2">&quot;d&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="c1">// This updates can be seen from moduleB</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">moduleB</span><span class="p">.</span><span class="nx">obj</span><span class="p">.</span><span class="nx">A</span><span class="p">);</span> <span class="c1">// --&gt; &quot;d&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// But if you update `obj` through moduleB, it will throws `UnableRewriteException`</span>
+</span><span class='line'><span class="nx">moduleA</span><span class="p">.</span><span class="nx">obj</span><span class="p">.</span><span class="nx">B</span> <span class="o">=</span> <span class="s2">&quot;e&quot;</span><span class="p">;</span>  <span class="c1">// --&gt; UnableRewriteException: original cannot be rewrite</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>With this library, you can access current property from restricted modules if original object is updates.
+In above example, <code>moduleB.obj.A</code> returns <code>"d"</code>. Try it.
+If you find any bugs, please inform me with <a href="https://github.com/Lewuathe/readonly/issues">GitHub</a></p>
+
+<p>Enjoy <strong>readonly</strong> !</p>
+
+
+        <hr class="divider-short"/>
+        
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2013/12/23/how-to-start-krakenjs/" title="Previous Post: How to start KrakenJS">&laquo; Previous: How to start KrakenJS</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2014/01/09/hack-tessel/" title="Next Post: Hack Tessel!">Next: Hack Tessel! &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/Lewuathe"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/Lewuathe"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

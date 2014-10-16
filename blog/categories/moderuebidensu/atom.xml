@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: モデルエビデンス | The first cry of Atom]]></title>
+  <link href="http://lewuathe.com/blog/categories/moderuebidensu/atom.xml" rel="self"/>
+  <link href="http://lewuathe.com/"/>
+  <updated>2014-10-12T21:50:29+09:00</updated>
+  <id>http://lewuathe.com/</id>
+  <author>
+    <name><![CDATA[Kai Sasaki]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[モデルエビデンスの評価]]></title>
+    <link href="http://lewuathe.com/blog/2013/09/29/moderuebidensufalseping-jia/"/>
+    <updated>2013-09-29T10:17:00+09:00</updated>
+    <id>http://lewuathe.com/blog/2013/09/29/moderuebidensufalseping-jia</id>
+    <content type="html"><![CDATA[<p>作ったプログラムは以下においたよ。</p>
+
+<p><a href="https://github.com/PhysicsEngine/cpi-stats">https://github.com/PhysicsEngine/cpi-stats</a></p>
+
+<p>ここで作成した線形回帰モデルのエビデンス評価をしてみた。
+モデルエビデンスはざっくり言うと、訓練データを与える尤度を周辺化した値。つまり、そのデータを与える可能性が最も高いものを選ぶことができればパラメタの複雑さなどを自分で判断しなくてもよいというメリットがある。</p>
+
+<p>今回、実装したのは基底関数を多項式とした場合で各目標値には加法性のガウスノイズがのる前提で計算を行った。</p>
+
+<p>超パラメタalpha(モデルパラメタのばらつき)とbeta(ガウスノイズの精度)はそれぞれ0.0001、15.0にした。推定の方法としてはベイズ推定の予測分布を計算して行った。</p>
+
+<p><code>scala
+// Mはモデルパラメタの数
+val bayesRegression = new BayesRegression(M, 0.0001, 15.0)
+</code></p>
+
+<h1>モデルエビデンスの評価</h1>
+
+<p>基本的にはPRML(3.86)式に従った。</p>
+
+<p><code>
+// Alphaはパラメタの分布の事前分布のばらつきを表す超パラメタ
+// Betaはガウスノイズの精度を表す超パラメタ
+// eMnの最大尤度での二乗和誤差
+(M/2.0) * Math.log(Alpha) + (xlist.length/2.0) * Math.log(Beta) - eMn - 1/2.0 * Math.log(det(inv(_sN))) - xlist.length / 2.0 * Math.log(2 * Math.PI)
+</code></p>
+
+<p><img src="/images/posts/2013-09-29-ModelEvidense/evidense.png" alt="モデルエビデンス" /></p>
+
+<p>モデルエビデンスをモデルパラメタの複雑さ2~100の間でプロットした。赤線はM=4の位置。M=4で最大となっていることがわかる。というわけでそれぞれの主要な位置で実際のモデルのグラフをプロットしてみた</p>
+
+<h2>M=3の場合</h2>
+
+<p>なんか直線っぽく見えるけれど、二次関数です。ほぼあってないのでエビデンスもすごい低い。二乗和誤差関数の値も大きい。
+このモデルはエビデンスを求めなくても選ばれなさそう。</p>
+
+<p><img src="/images/posts/2013-09-29-ModelEvidense/M=3.png" alt="M=3" /></p>
+
+<h2>M=4の場合</h2>
+
+<p>エビデンスが最大のモデル。見た目かなりよくfittingしている。</p>
+
+<p><img src="/images/posts/2013-09-29-ModelEvidense/M=4.png" alt="M=4" /></p>
+
+<h2>M=9の場合</h2>
+
+<p>むむ、M=4の場合と対して変わらない。</p>
+
+<p><img src="/images/posts/2013-09-29-ModelEvidense/M=9.png" alt="M=9" /></p>
+
+<h2>M=15の場合</h2>
+
+<p>これもあんまり変わらない。対数尺度で見た時に10程度の差しかないからか。この差はエビデンスでみると大して大きな差ではないのかもしれない。</p>
+
+<p><img src="/images/posts/2013-09-29-ModelEvidense/M=15.png" alt="M=15" /></p>
+
+<h2>M=30の場合</h2>
+
+<p>over fittingし始めた。M=15とM=30で大きく異るところはエビデンスの値というよりは訓練データ集合が25個だからそれより多いか少ないかの違いな気がする。</p>
+
+<p>直感的には基底関数を多項式にしているので最尤推定で行うと訓練データ集合よりもモデルパラメータの数が多いとすべての点を通るようなグラフになる。今回はベイズ推定で行っているので事前分布のお陰で全点を通るなんてことはないけれど、それでも過学習をし始める分岐点としては訓練データの数になるかもしれない。</p>
+
+<p>x=1付近でしか過学習してないのが気になるけれど。</p>
+
+<p><img src="/images/posts/2013-09-29-ModelEvidense/M=30.png" alt="M=30" /></p>
+
+<h2>M=100の場合</h2>
+
+<p>もう右側(x=1付近)のグラフはめちゃめちゃ。でもx=0付近はそんなにおかしくないのはなぜだろう。事前分布における精度は常に一定なのでそんなに場所によってばらついたりしなさそうなんだけど。</p>
+
+<p><img src="/images/posts/2013-09-29-ModelEvidense/M=100.png" alt="M=100" /></p>
+
+<h1>まとめ</h1>
+
+<p>評価値xによって過学習したりしてなかったりするのが気になるけれど、全体としてはエビデンス関数を最大化するようなモデルパラメタMを選ぶことによって、最適なモデルを作ることができそう。PRMLにも書いてあったけれど、「目で見りゃいいじゃん」というのはもっと高次元になった場合に通用しなくなるので、解析的にモデルを評価できる手法は有用。しかも割と時間もそんなにかからない。(Scalaでモデル100個の評価を行ったけれど1~2秒ほど)</p>
+
+<p>超パラメタ、alphaとbetaに関しても評価してエビデンスを最大化してみるとよりよいモデルが得られるのかも。</p>
+]]></content>
+  </entry>
+  
+</feed>

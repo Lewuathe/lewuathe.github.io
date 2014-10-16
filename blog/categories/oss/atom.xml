@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: OSS | The first cry of Atom]]></title>
+  <link href="http://lewuathe.com/blog/categories/oss/atom.xml" rel="self"/>
+  <link href="http://lewuathe.com/"/>
+  <updated>2014-10-12T21:50:29+09:00</updated>
+  <id>http://lewuathe.com/</id>
+  <author>
+    <name><![CDATA[Kai Sasaki]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Welcome Open Source Movement in Hardware Company]]></title>
+    <link href="http://lewuathe.com/blog/2014/06/13/open-source-movement-in-hardware-compan/"/>
+    <updated>2014-06-13T22:00:35+09:00</updated>
+    <id>http://lewuathe.com/blog/2014/06/13/open-source-movement-in-hardware-compan</id>
+    <content type="html"><![CDATA[<p>Today is the first day of new era for Open Source movements.</p>
+
+<p><a href="http://www.teslamotors.com/blog/all-our-patent-are-belong-you">All Our Patent Are Belong To You</a></p>
+
+<div style="text-align:center" markdown="1">
+<figure>
+<img src="http://lewuathe.com/images/posts/2014-06-13-tesla/motor.jpg" />
+<figure>Tesla Motor by Steve Jurvetson<a href="https://www.flickr.com/photos/jurvetson/2782565657/in/photolist-5eTnPX-kv7w5M-f7WzKj-f7WyNA-dXMDqB-6M2MHW-5eHYAq-6aJA3F-7zhWDy-4t8U5F-dXTjdG-f7WymU-f7GmqF-f7GiuB-BNTx5-6kAGXC-5t76MG-nWXsmN-6kAGoU-6aqomT-chEjh3-6kwyti-5peGWB-aXeXtc-8pSRjC-dxpQbA-atHJJo-aGXy8P-ciZHPf-f7WvB3-6kAGAd-f7Wz5Y-dZ4MiH-atAnS1-eiPF9U-6kAHnJ-dB939C-6DAEpq-dNTgjx-dXMzLa-dXTjfY-f7GjfK-f7GjLF-f7GhVc-5nwqy5-gyBgiX-dXTfQE-79tMEC-9ghJyE-brfREu">flickr</a></figcaption>
+</figure>
+</div>
+
+
+<p>Tesla is famous for its motor products. These opened patents includes EV technologies for the future.
+I think it will accelerate the speed of development of EV vehicles. So this decision plays a big role to
+progress the bright future of motor technologies.</p>
+
+<p>Above all, as a software engineer, it is great thing to spread open source movement into hardware companies.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[OSSを使う、作る]]></title>
+    <link href="http://lewuathe.com/blog/2013/10/25/osswoshi-u%2C-zuo-ru/"/>
+    <updated>2013-10-25T21:53:00+09:00</updated>
+    <id>http://lewuathe.com/blog/2013/10/25/osswoshi-u,-zuo-ru</id>
+    <content type="html"><![CDATA[<p>昨日、以前作ったOSSのライブラリにpatchが送られてきた。</p>
+
+<p><a href="https://github.com/Lewuathe/passport-yj">https://github.com/Lewuathe/passport-yj</a></p>
+
+<p><img src="/images/posts/2013-10-25-oss/code.png" alt="passport-yj" /></p>
+
+<p>友人とかなり昔に作ったので、存在を忘れていたとまではいかないがpatchが送られてきたときは驚いた。何したらいいんだろうという感じだった。
+patchの内容はpassport-yjの依存しているpassportモジュールの仕様が変わったから対応したらーということで送ってくれた。</p>
+
+<p>僕は正直passportの仕様をキャッチアップできていなかったので、こうやってpatchが送られてきて嬉しかった。</p>
+
+<p>自分たちが作ったソフトウェアがよりよくなるということ、そして何よりどこかの誰かが使ってくれているということが目で見える形で分かったからだ。</p>
+
+<p>patchを送ってくれた人は少なくとも日本人ではあるみたいだけれど僕とは縁もゆかりもない人だ。(もっとも顔写真もなにもないので、縁もゆかりも本当にないのかもよくわからない)
+そんな人がどこかでこのライブラリを使って、改善点があったのでpatchを送ってくれた。送られたpatchを落としてきてテストして動作を確認する。僕自身も今までに大きなプロジェクト、小さなプロジェクトにちょこちょこpatchを送っていた。そこでディスカッションをしたり、取り込んでもらえたりもらえなかったり。そのコードはそういう意味で書いてあるのかと疑問が氷解したり。</p>
+
+<p>そして気づいた。ああ、これがOSSへの貢献なんじゃないかと。</p>
+
+<p>LinuxとかWebKitとか、大きなプロジェクトへの貢献を夢見てなんとなく憧れを抱いていたけど、今自分がやっていたことは紛れもなくOSS活動じゃないか。ずっとやりたいと思っていたことをいつの間にか僕はやっていた。誰かが仕事から帰ってちょこちょこっと作った小さなライブラリ僕が使い、僕が週末に作った小さなモジュールをどこかの誰かが使う。その誰かは日本の人かもしれないし、外国の人かもしれないし、人間ですらないかもしれない。(さっき見たら<a href="https://github.com/Lewuathe/node-jp">node-jp</a>はbotっぽいのにたくさんforkされてた)そういうコードを介した会話みたいなものはまさにソーシャルコーディングだし、僕はそれがやりたかった。</p>
+
+<p>誰かが少しだけ世界を良くしようと思って作ったものを、他の誰かが使って実際に世界を少しだけ良くしている。大きさとか規模はあんまり関係なくて自分がそれを感じることができるかどうか。僕は見ず知らずの人からpatchが送られてくることでそれを感じた。</p>
+
+<p>またいつでもpatchが来てもいいように、折角なので自動化テストを書いておこう。</p>
+
+<p>きっと世界が少しだけ良くなると思う。</p>
+]]></content>
+  </entry>
+  
+</feed>

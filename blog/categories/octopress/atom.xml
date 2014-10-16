@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Octopress | The first cry of Atom]]></title>
+  <link href="http://lewuathe.com/blog/categories/octopress/atom.xml" rel="self"/>
+  <link href="http://lewuathe.com/"/>
+  <updated>2014-10-12T21:50:29+09:00</updated>
+  <id>http://lewuathe.com/</id>
+  <author>
+    <name><![CDATA[Kai Sasaki]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Optimize Octopress for Facebook Post]]></title>
+    <link href="http://lewuathe.com/blog/2014/02/24/optimize-octopress-for-facebook-post/"/>
+    <updated>2014-02-24T20:25:45+09:00</updated>
+    <id>http://lewuathe.com/blog/2014/02/24/optimize-octopress-for-facebook-post</id>
+    <content type="html"><![CDATA[<p>This blog made by <a href="http://octopress.org/">octopress</a>, ruby CMS tool.
+As many others do, I also combined this tool with <a href="http://pages.github.com/">GitHub pages</a>
+But this method has one fault about posting on facebook. Octopress doesn&rsquo;t include ogp properties as default. Ogp properties privide facebook meta information such as title, author, description and url. So without this meta information, you cannot get proper images when you write a post on facebook. In order to attach thumbtail image to your post, you have to write some configuration on octopress.</p>
+
+<!-- more -->
+
+
+
+
+<div style="text-align:center" markdown="1">
+<img src="http://lewuathe.com/images/posts/2014-02-24-octopress-ogp/before.png" />
+</div>
+
+
+<h2>Write appid and locale</h2>
+
+<p>Append below configuration in your <code>_config.yml</code></p>
+
+<p><code>
+facebook_app_id: YOUR_APP_ID
+facebook_locale: ja_JP
+</code></p>
+
+<p>YOUR_APP_ID might be listed on <code>/source/_include/facebook_like.html</code> Paste that number.</p>
+
+<h2>Change facebook like action</h2>
+
+<p>Edit <code>/source/_include/facebook_like.html</code> like below. This modification makes this JavaScript code get app_id and locale from <code>_config.yml</code> file.</p>
+
+<p>```
+</p>
+
+<div id="fb-root"></div>
+
+
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/ja_JP/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+<p>
+```</p>
+
+<h2>Add top page flag</h2>
+
+<p>To ditinguish post articles and top page, add this flag to <code>source/index.html</code></p>
+
+<h2>```</h2>
+
+<p>layout: default</p>
+
+<h2>index: true  </h2>
+
+<p>```</p>
+
+<h2>Configuration for ogp meta informations</h2>
+
+<p>Write below meta tags to <code>source/_includes/custom/facebook_ogp.html</code></p>
+
+<p><code>
+% cat source/_includes/custom/facebook_ogp.html
+&lt;meta property="og:title" content="Category: octopress - The first cry of Atom" &gt;
+&lt;meta property="og:description" content="" /&gt;
+&lt;meta property="og:url" content="http://lewuathe.com" /&gt;
+&lt;meta property="og:image" content="http://lewuathe.com/images/site_image.png" /&gt;
+&lt;meta property="og:author" content="lewuathe" /&gt;
+&lt;meta property="og:site_name" content="The first cry of Atom" /&gt;
+&lt;meta property="og:locale" content="ja_JP" /&gt;
+&lt;meta property="og:type" content="article" /&gt;
+&lt;meta property="fb:app_id" content="212934732101925" /&gt;
+</code></p>
+
+<h2>Include meta tags</h2>
+
+<p>At last, make header include these meta tags. Write below on <code>source/_include/head.html</code></p>
+
+<p><img src="http://lewuathe.com/images/posts/2014-02-24-octopress-ogp/code.png" /></p>
+
+<p>So that&rsquo;s all. It&rsquo;s ok. Deploy this site and post any entry to facebook.</p>
+
+<div style="text-align:center" markdown="1">
+<img src="http://lewuathe.com/images/posts/2014-02-24-octopress-ogp/after.png" />
+</div>
+
+
+<p>Good, you can see your thumbnail. A research shows that the post that has thumbnail images attracts more people than
+the post that has no image can. If you are using octopress for writing your own blog, it must be the good option for increasing
+the access from facebook.</p>
+
+<p>Thank you.</p>
+]]></content>
+  </entry>
+  
+</feed>

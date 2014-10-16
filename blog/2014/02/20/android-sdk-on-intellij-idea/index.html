@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Android SDK on IntelliJ IDEA - The first cry of Atom</title>
+  <meta name="author" content="Kai Sasaki">
+
+  
+  <meta name="description" content="Android SDK on IntelliJ IDEA written Feb 20th, 2014 in Android, IntelliJ IDEA Eventually, I finished android lecture that is introduced on previous &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://lewuathe.com/blog/2014/02/20/android-sdk-on-intellij-idea">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-44055098-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Android SDK on IntelliJ IDEA</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2014-02-20T21:24:56+09:00" pubdate data-updated="true">Feb 20<span>th</span>, 2014</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/android/'>Android</a>, <a class='category' href='/blog/categories/intellij-idea/'>IntelliJ IDEA</a>
+  
+</span>
+
+
+        </div>
+        <p>Eventually, I finished android lecture that is introduced on <a href="http://lewuathe.com/blog/2014/02/18/useful-shortcuts-for-intellij-idea/">previous post</a>
+In this lecture, I learned how to use <a href="https://www.eclipse.org/">Eclipse</a>, <a href="http://java.com/ja/">Java</a> and of course <a href="http://developer.android.com/sdk/index.html">Android SDK</a></p>
+
+<p>After coming home, I tried to creating a environent for android application development. However only installing Eclipse and creating same environment to lectures one
+makes me tired. So I create this environment with <a href="http://www.jetbrains.com/idea/">IntelliJ IDEA</a>.</p>
+
+<!-- more -->
+
+
+<p>I use IntelliJ IDEA community edition because it is free. Until now I don&rsquo;t think there is any lack of function with community edition</p>
+
+<h2>Install IntelliJ IDEA</h2>
+
+<p>From <a href="http://www.jetbrains.com/idea/">this page</a>, download IntelliJ IDEA community edition. Follow the instructions of wizard. Done!</p>
+
+<p><img src="/images/posts/2014-02-20-androidsdk-with-intellijidea/intellijidea-ce.png" alt="android project" /></p>
+
+<h2>Install Android SDK</h2>
+
+<p>From <a href="http://dl.google.com/android/android-sdk_r22.2.1-macosx.zip">here</a>, download android SDK. But there is one thing to pay attention. You don&rsquo;t have to install ADT bundler version, bacause this package includes Eclipse and its plugins. With IntelliJ IDEA, these are not necessary to install.</p>
+
+<p>And then, unzip this package. Put <code>android-sdk-macosx</code> on any directory. For example, I put on my home directory.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>~/android-sdk-macosx</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Run android package manager, and install requires packages.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ cd ~/android-sdk-macosx
+</span><span class='line'>$ ./android-sdk-macosx/tools/android</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Create project</h2>
+
+<p>Select android application module project.</p>
+
+<p><img src="/images/posts/2014-02-20-androidsdk-with-intellijidea/android-project.png" alt="android project" /></p>
+
+<p>And select android SDK version that you installed previously. In this capture, I selected API version 19.</p>
+
+<p><img src="/images/posts/2014-02-20-androidsdk-with-intellijidea/android-sdk.png" alt="android project" /></p>
+
+<p>It is very easy, isn&rsquo;t it?</p>
+
+<p>But unfortunately, android simulator is no more faster :(</p>
+
+<p>I pray for the faster android emulator to Google.</p>
+
+<p>Thank you :)</p>
+
+
+        <hr class="divider-short"/>
+        
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2014/02/18/useful-shortcuts-for-intellij-idea/" title="Previous Post: Useful shortcuts for IntelliJ IDEA">&laquo; Previous: Useful shortcuts for IntelliJ IDEA</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2014/02/21/use-javascriptinterface-on-android/" title="Next Post: Use JavaScriptInterface on Android">Next: Use JavaScriptInterface on Android &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/Lewuathe"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/Lewuathe"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Data | The first cry of Atom]]></title>
+  <link href="http://lewuathe.com/blog/categories/data/atom.xml" rel="self"/>
+  <link href="http://lewuathe.com/"/>
+  <updated>2014-10-12T21:50:29+09:00</updated>
+  <id>http://lewuathe.com/</id>
+  <author>
+    <name><![CDATA[Kai Sasaki]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How Do I Change My Homeland With Open Data?]]></title>
+    <link href="http://lewuathe.com/blog/2013/12/01/how-do-i-change-my-homeland-with-open-data/"/>
+    <updated>2013-12-01T19:09:00+09:00</updated>
+    <id>http://lewuathe.com/blog/2013/12/01/how-do-i-change-my-homeland-with-open-data</id>
+    <content type="html"><![CDATA[<p>Open data will change the world, and nations. How do I change my homeland with open data?</p>
+
+<p>I find this article today
+<a href="http://www.soumu.go.jp/menu_news/s-news/01ryutsu02_02000081.html">http://www.soumu.go.jp/menu_news/s-news/01ryutsu02_02000081.html</a></p>
+
+<p>This is the software application contest using open data given by Ministry of Internal Affairs and Communications. I am interested in this content from two view points.</p>
+
+<p>First, as a software developer, I am interested technologies used for mobile applications such as iOS or Android. For my engineer career and satisfying my interest, I want develop mobile applications this time.</p>
+
+<p>Second, I want to develop an application which is able to answer social problems such as economic gap, social security, low birthrate and longevity. Open data enables us to develop such applications easily. I think all software should be developed and used for making our society good place. Solving all problems is real hacker mind. With open data, I want to make our homeland better place.</p>
+
+<p>Given data listed below.</p>
+
+<ol>
+<li>Administration data stored local authorities.</li>
+<li>Usability and cost of social capital</li>
+<li>Information for travellers</li>
+<li>Disaster prevention data</li>
+<li>Information of transportation system</li>
+<li>A large variety of statistics data</li>
+</ol>
+
+
+<p>I cannot understand what these data is completely. This contest deadline is February, 2014. There is not much time for me, but enough.</p>
+
+<h2>My open data library.</h2>
+
+<p>Already I have developed a library for iOS.</p>
+
+<p><a href="https://github.com/Lewuathe/LEStatsRequest">https://github.com/Lewuathe/LEStatsRequest</a></p>
+
+<p>LEStatsRequest is the API client of statistics of Japan government. This library contributes open data movement in Japan. You can obtain official data with this client espacially in iOS device. iOS device is restricted memory capacity, so this library parses response XML and make useful objects. With this library, you can use Japan open data easily. If you have some interest in open data, please check it.</p>
+
+<p>In the future, open data surely changes our life. Our involvement with government and society will require our more positiveness. I think this is good thing for current closed our society.</p>
+
+<p>I want to make the use of my ability for our society.</p>
+]]></content>
+  </entry>
+  
+</feed>

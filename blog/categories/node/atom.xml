@@ -1,0 +1,705 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Node | The first cry of Atom]]></title>
+  <link href="http://lewuathe.com/blog/categories/node/atom.xml" rel="self"/>
+  <link href="http://lewuathe.com/"/>
+  <updated>2014-10-12T21:50:29+09:00</updated>
+  <id>http://lewuathe.com/</id>
+  <author>
+    <name><![CDATA[Kai Sasaki]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Tokyo Node Gakuen 11th Period]]></title>
+    <link href="http://lewuathe.com/blog/2014/02/27/tokyo-node-gakuen-11th-period/"/>
+    <updated>2014-02-27T21:34:24+09:00</updated>
+    <id>http://lewuathe.com/blog/2014/02/27/tokyo-node-gakuen-11th-period</id>
+    <content type="html"><![CDATA[<p>Yesterday, I took part in <a href="http://connpass.com/event/5071/">Tokyo Node Gakuen 11th period</a> for the first time.
+Though I want to attend this meeting to be a node hacker for a long time, I have not been able to get a chance to do so.
+About two weeks ago, I semi-completed <a href="https://github.com/Lewuathe/n42">n42</a> that implements some deep learning algorithms,
+stacked denoised autoencoder, deep belief network. So time has come, and I realized that I have something to tell and
+where I can convey my passions through one software stack, nodejs.</p>
+
+<!-- more -->
+
+
+<h2><strong>Talk about the future of nodejs</strong></h2>
+
+<p>Presented by <a href="https://twitter.com/yosuke_furukawa">@yosuke_furukawa</a>. He is the next representative of nodejs Japan community.
+He is young and so vital, passionate that I believe that future of nodejs.jp must be bright. Please go for it!</p>
+
+<div style="width: 65%;text-align:center;" markdown="1">
+<script async class="speakerdeck-embed" data-id="a753718081010131e5751252e28d83c2" data-ratio="1.33333333333333" src="http://lewuathe.com//speakerdeck.com/assets/embed.js"></script>
+</div>
+
+
+<p>He introduced some new features of nodejs v0.12 and hot libraries supported by nodejs community such as <a href="http://koajs.com/">koa</a> (Official site is so cool!) and <a href="http://primus.io/">Primus</a>. These libraries were unfamiliar to me this time. So this introduction was good to me in order to understand the current situation of nodejs roughtly. Thank you.</p>
+
+<h2><strong>Getting started browserify</strong></h2>
+
+<p>Next presenter was <a href="https://twitter.com/hitsujiwool">@hitsujiwool</a>. He looks very familiar with client JavaScript technologies. Especially in this session, he talked about the overview of <a href="http://browserify.org/">browserify</a>. This tool converts the codes written in <a href="http://en.wikipedia.org/wiki/CommonJS">CommonJS</a> style into the executable code in web browser. I cannot understand easily at that time. And unfortunately, this situation does not change now.</p>
+
+<div style="width: 65%;text-align:center;" markdown="1">
+<script async class="speakerdeck-embed" data-id="d0609f0080f90131e5751252e28d83c2" data-ratio="1.29456384323641" src="http://lewuathe.com//speakerdeck.com/assets/embed.js"></script>
+</div>
+
+
+<p>However, roma was not built in a day. I understand sufficiently the necessity of study client JavaScript technology stacks and trend. So I won&rsquo;t lose this chance. Even if it takes some month, I have a desire to grasp the concept of this technology at last.</p>
+
+<p>And below is LT session.</p>
+
+<h2><strong>Deep learning with nodejs</strong></h2>
+
+<p>This is my session. As I said previously, I developed deep learning module in nodejs called <a href="https://www.npmjs.org/package/n42">n42</a>. n42 was named after <a href="http://en.wikipedia.org/wiki/The_Hitchhiker's_Guide_to_the_Galaxy">The Hitchhiker&rsquo;s Guide to the Galaxy</a>. A super computer called &ldquo;deep thought&rdquo; enters in this movie. People asked one diffucult question to this computer bacause this computer is so smart that it can always answer any questions. The question was this.</p>
+
+<blockquote><p>the Answer to the Ultimate Question of Life, the Universe, and Everything</p></blockquote>
+
+<p>After 750million years, deep thought answered.</p>
+
+<blockquote><p>42</p></blockquote>
+
+<p>What? The answer of every thing is really only 42? I also doubt the validity of this answer, but I like this story very much. I want to see the day when n42 can give me the answer of everything :)</p>
+
+<iframe src="http://www.slideshare.net/slideshow/embed_code/31651520" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px 1px 0; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/lewuathe/deeplearning-with-node" title="Deeplearning with node" target="_blank">Deeplearning with node</a> </strong> from <strong><a href="http://www.slideshare.net/lewuathe" target="_blank">Kai Sasaki</a></strong> </div></p>
+
+<h2><strong>node.js as Gips for training asynchronous programming</strong></h2>
+
+<p>I&rsquo;m afraid to say, but I could not find the presentation slide.
+The presenter was <a href="https://twitter.com/niryuu">@niryuu</a>. His presentation was exciting.
+The most impressive word I can remember is</p>
+
+<blockquote><p>Do it properly</p></blockquote>
+
+<p>Asynchronous programming in nodejs becomes sometimes very halmful such as callback hell.
+He solved this problem simple concept. Return values properly. Using Primise etc.
+These motivations had stimulated me to write code properly in any situation.
+I feel that I can make use of this phrase when I was discouraged. Thank you.</p>
+
+<h2><strong>With node.js, a novice programmer can make online fighting game easily</strong></h2>
+
+<p>This session was given by <a href="https://twitter.com/pegass85">@pegass85</a>. He was so passionate that I enjoy his presentaion profoundly. He seems that he loves games very much. So he intruduced some games that released about a decade ago. Through his talking, I can feel that he really enjoy programming and games. It reminded me of the importance of enjoying programming as a hobbiest not a worker. I am looking forward the day when his game of &ldquo;paper, stone and scissors&rdquo; running properly online.</p>
+
+<iframe src="http://www.slideshare.net/slideshow/embed_code/31621477" width="427" height="356" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px 1px 0; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+
+
+<p> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/yuusuketakeuchi96/nodejs-31621477" title="Node.jsなら日曜プログラマーでも簡単に通信対戦ゲームが作れる" target="_blank">Node.jsなら日曜プログラマーでも簡単に通信対戦ゲームが作れる</a> </strong> from <strong><a href="http://www.slideshare.net/yuusuketakeuchi96" target="_blank">Yuusuke Takeuchi</a></strong> </div></p>
+
+<h2>Last but not least</h2>
+
+<p>Throught these sessions, I can see the potential of nodejs in a new light.
+By the huge power of community, these softwares are given its futures.
+I was forced to realize that fact by these passionate developers of nodejs.
+The main theme of this seminor was</p>
+
+<blockquote><p>Talk about the future of nodejs</p></blockquote>
+
+<p>I have a desire of the bright future of nodejs when a lot of developers and users
+make world better place helping each other with this software.
+After meeting these passionate developers, this desire changed to confidence.</p>
+
+<p>Thank you.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Restricted Boltzmann Machine in Node]]></title>
+    <link href="http://lewuathe.com/blog/2014/02/05/restricted-boltzmann-machine-in-node/"/>
+    <updated>2014-02-05T21:18:00+09:00</updated>
+    <id>http://lewuathe.com/blog/2014/02/05/restricted-boltzmann-machine-in-node</id>
+    <content type="html"><![CDATA[<p>n42 has restricted boltzmann machine. Restricted boltzmann machine is a kind of
+autoencoder in order to extract charasteristics. In this article, I would leave out
+the detail of restricted boltzmann machine. I want to introduce how the RBM is written
+in node.</p>
+
+<!-- more -->
+
+
+<p>```js
+/<em>
+ *  Restricted Boltzmann machine
+ *
+ *  @module n42
+ *  @class  RBM
+ *  @author Kai Sasaki
+ *  @since 2014/01/28
+ *
+ </em>/</p>
+
+<p>var Matrix = require(&lsquo;sylvester&rsquo;).Matrix;
+var Vector = require(&lsquo;sylvester&rsquo;).Vector;
+var utils  = require(&lsquo;./utils.js&rsquo;);
+var binomial = require(&lsquo;binomial-sampling&rsquo;);
+var generator = require(&lsquo;box-muller&rsquo;);</p>
+
+<p>function RBM(input, nVisible, nHidden, W, hBias, vBias) {</p>
+
+<pre><code>var self = this;
+
+self.input = input;
+self.nVisible = nVisible;
+self.nHidden  = nHidden;
+
+// Initialize weight parameter
+self.W     = (W != undefined)? W : Matrix.Random(nVisible, nHidden);
+
+// Initialize hidden bias parameters
+self.hBias = (hBias != undefined)? hBias : Vector.Zero(nHidden);
+
+// Initialize visual bias parameters
+self.vBias = (vBias != undefined)? vBias : Vector.Zero(nVisible);
+</code></pre>
+
+<p>}</p>
+
+<p>RBM.prototype.contrastiveDivergence = function(lr, k, input) {</p>
+
+<pre><code>var self = this;
+self.input = (input != undefined)? input : self.input
+var ph = self.sampleHGivenV(self.input);
+
+// Select phSample
+var chainStart = ph[1];
+
+// stepRet[0] v1Means
+// stepRet[1] v1Samples
+// stepRet[2] h1Means
+// stepRet[3] h1Sample
+
+for (var step = 0; step &lt; k; step++) {
+    var stepRet;
+    if (step == 0) {
+        stepRet = self.gibbsHvh(chainStart);
+    } else {
+        // Select a nhSample
+        stepRet = self.gibbsHvh(stepRet[3]);
+    }
+}
+
+// W += lr * (W.T * phSample - nvSample.T * nhMeans)
+var witem1 = self.input.transpose().x(ph[1]).x(lr);
+var witem2 = stepRet[1].transpose().x(stepRet[2]).x(lr)
+self.W = self.W.add(witem1.subtract(witem2));
+
+var vitem1 = self.input.x(lr);
+var vitem2 = stepRet[1].x(lr);
+self.vBias = self.vBias.add(utils.mean(vitem1.subtract(vitem2), 0));
+
+var hitem1 = ph[1].x(lr);
+var hitem2 = stepRet[2].x(lr);
+self.hBias = self.hBias.add(utils.mean(hitem1.subtract(hitem2), 0));
+</code></pre>
+
+<p>}</p>
+
+<p>RBM.prototype.sampleHGivenV = function(v0Sample) {</p>
+
+<pre><code>var self = this;
+var h1Means = self.propup(v0Sample);
+var h1Sample = [];
+for (var i = 0; i &lt; h1Means.rows(); i++) {
+    h1Sample.push([]);
+    for (var j = 0; j &lt; h1Means.cols(); j++) {
+        h1Sample[i].push(binomial(1, h1Means.e(i+1, j+1)));
+        //h1Sample[i].push(generator() + h1Means.e(i+1, j+1));
+    }
+}
+h1Sample = $M(h1Sample);
+return [h1Means, h1Sample];
+</code></pre>
+
+<p>}</p>
+
+<p>RBM.prototype.sampleVGivenH = function(h0Sample) {</p>
+
+<pre><code>var self = this;
+var v1Means = self.propdown(h0Sample);
+var v1Sample = [];
+for (var i = 0; i &lt; v1Means.rows(); i++) {
+    v1Sample.push([]);
+    for (var j = 0; j &lt; v1Means.cols(); j++) {
+        v1Sample[i].push(binomial(1, v1Means.e(i+1, j+1)));
+        //v1Sample[i].push(generator()*0.01 + v1Means.e(i+1, j+1))
+    }
+}
+v1Sample = $M(v1Sample);
+return [v1Means, v1Sample];
+</code></pre>
+
+<p>}</p>
+
+<p>RBM.prototype.gibbsHvh = function(h0Sample) {</p>
+
+<pre><code>var self = this;
+var retV1 = self.sampleVGivenH(h0Sample);
+// Given h1Sample == retV1[1]
+var retH1 = self.sampleHGivenV(retV1[1]);
+return [retV1[0], retV1[1], retH1[0], retH1[1]];
+</code></pre>
+
+<p>}</p>
+
+<p>RBM.prototype.propup = function(v) {</p>
+
+<pre><code>var self = this;
+var preSigmoidActivation = utils.plusBias(v.x(self.W), self.hBias);
+return utils.sigmoid(preSigmoidActivation);
+</code></pre>
+
+<p>}</p>
+
+<p>RBM.prototype.propdown = function(h) {</p>
+
+<pre><code>var self = this;
+var preSigmoidActivation = utils.plusBias(h.x(self.W.transpose()), self.vBias);
+return utils.sigmoid(preSigmoidActivation);
+</code></pre>
+
+<p>}</p>
+
+<p>RBM.prototype.reconstruct = function(v) {</p>
+
+<pre><code>var self = this;
+var h = utils.sigmoid(utils.plusBias(v.x(self.W), self.hBias));
+var reconstructedV = utils.sigmoid(utils.plusBias(h.x(self.W.transpose()), self.vBias));
+return reconstructedV;
+</code></pre>
+
+<p>}</p>
+
+<p>module.exports = RBM;
+```</p>
+
+<p>Though I completed to write, this autoencoder has not yet enough accuracy to prediction in compared to
+denoised autoencoder. So I have to pile up some improvements to use practically.
+If you find any bugs, welcome patches!!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Autoencoder With node.js]]></title>
+    <link href="http://lewuathe.com/blog/2014/01/26/autoencoder-with-node-dot-js/"/>
+    <updated>2014-01-26T21:14:00+09:00</updated>
+    <id>http://lewuathe.com/blog/2014/01/26/autoencoder-with-node-dot-js</id>
+    <content type="html"><![CDATA[<p><a href="https://en.wikipedia.org/wiki/Autoencoder">Auto encoder</a> is used for deep learning. Auto encoder extract characteristics of data through
+unsupervised learning. This is a kind of newral network. By using an auto encoder, you don&rsquo;t have to
+be in trouble with choicing extracting algorithm, or doing yourself. Therefore, in deepleanring field,
+this algorithm is used very actively. There are many implementation such as Python or Java, which are
+used in machine learning frequently, but I cannot find this in nodejs. So this weekend, I wrote autoencoder in nodejs.</p>
+
+<!-- more -->
+
+
+<p>When I started writing this code, I referred <a href="https://github.com/yusugomori/DeepLearning">@yusugomori/DeepLearning</a>.
+I would like to take this opportunity to express my appreciation and gratitude to him for his great code.</p>
+
+<p><a href="https://github.com/Lewuathe/n42/blob/master/lib/dA.js">GitHub source</a></p>
+
+<p>The major linear algebra library is <a href="http://sylvester.jcoglan.com/">sylvelster</a> in JavaScript. This is simple and user friendly
+library. So if you cannot decide which library you should use in JavaScript, I recommend sylvester.</p>
+
+<p>```js
+var Matrix = require(&lsquo;sylvester&rsquo;).Matrix;
+var Vector = require(&lsquo;sylvester&rsquo;).Vector;
+var utils  = require(&lsquo;./utils.js&rsquo;);
+var assert = require(&lsquo;assert&rsquo;);
+var generator = require(&lsquo;box-muller&rsquo;);</p>
+
+<p>function dA(input, nVisible, nHidden, W, hBias, vBias) {</p>
+
+<pre><code>var self = this;
+self.input    = input;
+self.nVisible = nVisible;
+self.nHidden  = nHidden;
+// Initialize weight parameter
+self.W     = (W != undefined)? W : Matrix.Random(nVisible, nHidden);
+
+// Initialize hidden bias parameters
+self.hBias = (hBias != undefined)? hBias : Vector.Zero(nHidden);
+
+// Initialize visual bias parameters
+self.vBias = (vBias != undefined)? vBias : Vector.Zero(nVisible);
+
+self.wPrime = self.W.transpose();
+</code></pre>
+
+<p>}</p>
+
+<p>dA.prototype.getCorruptedInput = function(input, corruptionLevel) {</p>
+
+<pre><code>// Return noised data
+assert.isTrue(corruptionLevel &lt; 1);
+noised = [];
+for (var i = 0; i &lt; input.rows(); i++) {
+    noised.push([]);
+    for (var j = 0; j &lt; input.cols(); j++) {
+        // generator returns sampling value according to regular gaussian distribution
+        noised[i].push((generator() * corruptionLevel + 1.0) * input.e(i+1, j+1));;
+    }
+}
+return $M(noised);
+</code></pre>
+
+<p>}</p>
+
+<p>dA.prototype.getHiddenValues = function(input) {</p>
+
+<pre><code>var self = this;
+// Calculate plus weight
+var rowValues = input.x(self.W);
+return utils.sigmoid(utils.plusBias(rowValues, self.hBias));
+</code></pre>
+
+<p>}</p>
+
+<p>dA.prototype.getReconstructedInput = function(hidden) {</p>
+
+<pre><code>var self = this;
+var rowValues = hidden.x(self.W.transpose());
+return utils.sigmoid(utils.plusBias(rowValues, self.vBias));
+</code></pre>
+
+<p>}</p>
+
+<p>dA.prototype.train = function(lr, corruptionLevel, input) {</p>
+
+<pre><code>var self = this;
+self.x = (input != undefined)? input : self.input;
+
+var x = self.x;
+// Noised data
+var tildeX = self.getCorruptedInput(x, corruptionLevel);
+var y = self.getHiddenValues(tildeX);
+var z = self.getReconstructedInput(y);
+
+// Below this line, backpropagation algorithm is used
+var lH2 = x.subtract(z);
+var sigma = lH2.x(self.W);
+var lH1 = [];
+for (var i = 0; i &lt; sigma.rows(); i++) {
+    lH1.push([]);
+    for (var j = 0; j &lt; sigma.cols(); j++) {
+        lH1[i].push(sigma.e(i+1, j+1) * y.e(i+1, j+1) * (1 - y.e(i+1, j+1)));
+    }
+}
+lH1 = $M(lH1);
+
+
+var lW = tildeX.transpose().x(lH1).add(lH2.transpose().x(y));
+
+self.W = self.W.add(lW.x(lr));
+
+
+self.vBias = self.vBias.add(utils.mean(lH2, 0).x(lr));
+self.hBias = self.hBias.add(utils.mean(lH1, 0).x(lr));
+</code></pre>
+
+<p>}</p>
+
+<p>dA.prototype.reconstruct = function(x) {</p>
+
+<pre><code>var self = this;
+var y = self.getHiddenValues(x);
+var z = self.getReconstructedInput(y);
+return z
+</code></pre>
+
+<p>}
+```</p>
+
+<h2>Traning and result</h2>
+
+<p>Try auto encoder!!</p>
+
+<p>```
+var data = [</p>
+
+<pre><code>        [1.0, 1.0, 1.0],
+        [1.0, 1.0, 0.0],
+        [1.0, 0.0, 1.0],
+        [0.0, 1.0, 1.0],
+        [1.0, 0.0, 0.0],
+        [0.0, 0.0, 1.0],
+        [0.0, 1.0, 0.0],
+        [0.0, 0.0, 0.0],
+</code></pre>
+
+<p>];</p>
+
+<p>var da = new dA($M(data), 3, 2);</p>
+
+<p>for (var i = 0; i &lt; 1000; i++) {</p>
+
+<pre><code>// 0.1 is learning rate which is used gradient decent
+// 0.02 is standard deviation which is used for add noise to original data
+da.train(0.1, 0.02);
+</code></pre>
+
+<p>}</p>
+
+<p>da.reconstruct($M([[1.0, 1.0, 0.0], [0.0, 0.0, 1.0], [0.0, 1.0, 0.0]]));</p>
+
+<p>/<em> <br/>
+ *   Returns
+ *   [0.5055820272991076, 0.9979837957439818, 0.007330556962859083] <br/>
+ *   [0.5042481334395964, 0.006342602394604374, 0.9970156469919944]
+ *   [0.5055017563352926, 0.9979783271177022, 0.007473069891271281]
+ *
+ </em>/</p>
+
+<p>```</p>
+
+<p>In general, this auto encoder looks like working properly. I think the error of difference between original data
+and reconstructed data was induced by below two points.</p>
+
+<ul>
+<li>Lack of divergence of training data</li>
+<li>Parameter tuning</li>
+</ul>
+
+
+<p>I didn&rsquo;t write many training examples. So in spite of many decent times, the parameters
+cannot be updated properly. And I skipped parameter tuning completly :)</p>
+
+<h2>Deep learning module</h2>
+
+<p>I will make a deep learning module which uses this auto encoder. Please keep follow <a href="https://github.com/Lewuathe/n42">n42</a>!!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Hack Tessel!]]></title>
+    <link href="http://lewuathe.com/blog/2014/01/09/hack-tessel/"/>
+    <updated>2014-01-09T21:25:00+09:00</updated>
+    <id>http://lewuathe.com/blog/2014/01/09/hack-tessel</id>
+    <content type="html"><![CDATA[<p><meta property=”og:image” content=”http://lewuathe.com/images/posts/2014-01-09-tessel-first/bootstrap_tessel.jpg” /></p>
+
+<p>Yesterday, I got a <a href="http://tessel.io/">tessel</a>. With twists and turns, I overcome some obstacles for hacking this tiny but not little possibility board. So writing this post.</p>
+
+<p>First and unfortunately, these client modules are only used for beta testers now.
+So these are not opend yet. Please be understanding of this point.</p>
+
+<!-- more -->
+
+
+<h2>Environment</h2>
+
+<ul>
+<li>MacOSX 10.9.1</li>
+<li>git 1.8.3.4 (Apple Git-47)</li>
+<li>java 1.7.0_45</li>
+<li>node v0.10.16 (with nvm)</li>
+</ul>
+
+
+<h2>Install drivers for OSX</h2>
+
+<p><code>
+$ brew install libusb
+$ brew install pkg-config
+</code></p>
+
+<p>In order to connect tessel with USB, these drivers are needed.
+After installing the drivers, you can use <code>tessel</code> command. This command is used for
+connecting tessel server or pushing your codes, etc. So your development cycle of tessel
+will be work around this command. It&rsquo;s very important.</p>
+
+<p>```
+$ tessel
+Tessel CLI
+Usage:
+   tessel <filename>
+   tessel list
+   tessel logs
+   tessel push <filename> [-r &lt;ip[:port>]] [-s] [-b <file>] [-a [options]]</p>
+
+<pre><code>      -r wireless pushing of code (inactive at the moment)
+      -s saves the file that is getting passed to Tessel as builtin.tar.gz
+      -b pushes a binary
+      -a passes arguments to tessel scripts
+</code></pre>
+
+<p>   tessel wifi <ssid> <pass> <security (wep/wap/wap2, wap2 by default)>
+   tessel wifi <ssid></p>
+
+<pre><code>      connects to a wifi network without a password
+</code></pre>
+
+<p>   tessel wifi</p>
+
+<pre><code>      see current wifi status
+</code></pre>
+
+<p>   tessel stop
+   tessel dfu-restore &lt;firmware.bin></p>
+
+<pre><code>      upload new firmware when in DFU mode
+</code></pre>
+
+<p>```</p>
+
+<h2>Connecting</h2>
+
+<p>After installing these prerequisites, you can connect tessel to your PC with USB cable.
+For confirming the connection between tessel and my MAC, <code>verbose</code> subcommand is useful.</p>
+
+<p><code>
+% tessel verbose
+TESSEL? No Tessel found, waiting...
+</code></p>
+
+<p>Umm?. I cannot connect. No matter how long I wait, there are no sign of connecting.
+So here is answer.</p>
+
+<p><img src="/images/posts/2014-01-09-tessel-first/bootstrap_tessel.jpg" alt="Boostrap" /></p>
+
+<p>I have to wait for the LED lamps off. I cannot understand why these waiting is necessary now, but anyway after the LEDs are off, I can connect to the tessel board. Great!</p>
+
+<p><code>
+% tessel verbose
+TESSEL! Connected to /dev/cu.usbmodem1421.
+H { date: 'Jan  3 2014', time: '17:50:43' }
+l Tessel, by Technical Machine &lt;http://technical.io&gt;
+l Firmware version: e1b13fc
+l Runtime version: 7d86665
+l Build time: Jan  3 2014 17:50:43
+l Board version: 2
+l Board serial: 428-0-4026571312-1578983944
+d
+l Run 'tessel push &lt;path to code&gt;' from the command line to push code.
+w Connecting to last available network...
+w CC3000 firmware version: 1.24
+W { cc3000firmware: '1.24' }
+w CC3000 firmware version: 1.24
+W { cc3000firmware: '1.24' }
+w Couldn't connect to saved network.
+w
+W { connected: 0, ip: null }
+L 1
+d Ready.
+</code></p>
+
+<h2>Demo</h2>
+
+<p>Tessel has LED lamps as default. So I run sample code which can blink these LED.
+It&rsquo;s below.</p>
+
+<p>```
+var tessel = require(&lsquo;tessel&rsquo;);</p>
+
+<p>// high means flashing
+var led1 = tessel.led(1).output().high();
+// low means going off
+var led2 = tessel.led(2).output().low();</p>
+
+<p>var i = 0;
+setInterval(function () {
+  console.log(i++);
+  // Switching on and off this function
+  led1.toggle();
+  led2.toggle();
+}, 100);
+```</p>
+
+<p>And pushing it.</p>
+
+<p><code>
+$ tessel push index.js
+</code></p>
+
+<iframe width="420" height="315" src="http://lewuathe.com//www.youtube.com/embed/aKLGnU9wsTo" frameborder="0" allowfullscreen></iframe>
+
+
+<p><strong>BLINK!!!</strong></p>
+
+<h2>More module</h2>
+
+<p>There are many <a href="http://tessel.io/modules">modules</a> with tessel. For humidity, SDCard, Wifi, GPS, Serve etc.
+So I want to try these modules more, and expand the possibility of embedded JavaScript.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Reference Configuration Library in Nodejs]]></title>
+    <link href="http://lewuathe.com/blog/2013/12/30/reference-configuration-library-in-nodejs/"/>
+    <updated>2013-12-30T20:24:00+09:00</updated>
+    <id>http://lewuathe.com/blog/2013/12/30/reference-configuration-library-in-nodejs</id>
+    <content type="html"><![CDATA[<p>I made npm module at the end of this year, <em>readonly</em>.</p>
+
+<p><a href="https://github.com/Lewuathe/readonly">lewuathe/readonly @GitHub</a></p>
+
+<p><a href="https://npmjs.org/package/readonly">readonly @npm</a></p>
+
+<p>readonly is a simple reference restriction library between custom modules in node object.
+When you want to configure access control of specific object from respective modules, this is good option.
+For example, you made two modules, both use the same object.</p>
+
+<!-- more -->
+
+
+<p>```js
+// obj is uses from moduleA and moduleB
+// You want moduleA to read and update obj, but moduleB to read obj only.
+var obj = {&lsquo;A&rsquo;:&lsquo;a&rsquo;,&lsquo;B&rsquo;:&lsquo;b&rsquo;,&lsquo;C&rsquo;:&lsquo;c&rsquo;};</p>
+
+<p>// Embedded in moduleA
+var moduleA = {};
+moduleA.obj = obj;</p>
+
+<p>// Readonly restriction of <code>obj</code> from moduleB
+var moduleB = {};
+moduleB.obj = readonly(obj);</p>
+
+<p>// You can update <code>obj</code> from moduleA
+moduleA.obj.A = &ldquo;d&rdquo;;
+// But you cannot update <code>obj</code> from moduleB
+moduleA.obj.B = &ldquo;e&rdquo;;  // Error
+```</p>
+
+<p>In this situation, you can use <strong>readonly</strong>.</p>
+
+<h2>Install</h2>
+
+<p><code>
+$ npm install readonly
+</code></p>
+
+<h2>Usage</h2>
+
+<p>```
+var readonly = require(&lsquo;readonly&rsquo;);</p>
+
+<p>var obj = {&lsquo;A&rsquo;:&lsquo;a&rsquo;,&lsquo;B&rsquo;:&lsquo;b&rsquo;,&lsquo;C&rsquo;:&lsquo;c&rsquo;};</p>
+
+<p>// Normal ACL. You can use <code>obj</code> through moduleA as you like
+var moduleA = {};
+moduleA.obj = obj;</p>
+
+<p>// Readonly restriction of <code>obj</code> in moduleB
+var moduleB = {};
+moduleB.obj = readonly(obj);</p>
+
+<p>// You can update <code>obj</code> from moduleA
+moduleA.obj.A = &ldquo;d&rdquo;;
+// This updates can be seen from moduleB
+console.log(moduleB.obj.A); // &mdash;> &ldquo;d&rdquo;</p>
+
+<p>// But if you update <code>obj</code> through moduleB, it will throws <code>UnableRewriteException</code>
+moduleA.obj.B = &ldquo;e&rdquo;;  // &mdash;> UnableRewriteException: original cannot be rewrite
+```</p>
+
+<p>With this library, you can access current property from restricted modules if original object is updates.
+In above example, <code>moduleB.obj.A</code> returns <code>"d"</code>. Try it.
+If you find any bugs, please inform me with <a href="https://github.com/Lewuathe/readonly/issues">GitHub</a></p>
+
+<p>Enjoy <strong>readonly</strong> !</p>
+]]></content>
+  </entry>
+  
+</feed>

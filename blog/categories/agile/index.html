@@ -1,0 +1,501 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Category: Agile - The first cry of Atom</title>
+  <meta name="author" content="Kai Sasaki">
+
+  
+  <meta name="description" content="Category: Agile">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://lewuathe.comblog/categories/agile">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-44055098-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <div class="all-posts">
+  <div class="container">
+    <div class="row">
+      <div class="list-title col-md-offset-3 col-md-6">
+        <h4>Posts in Agile</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="article-list">
+    <div class="container">
+      
+        
+        <div class="row">
+          <div class="col-md-offset-3 col-md-6">
+            <article>
+  <h2><a href="/blog/2014/01/19/scrum-gathering-tokyo-2014-1/">Scrum Gathering Tokyo 2014</a></h2>
+  
+  <p>
+    <p>On January 14-15, I participated <strong><a href="http://scrumgatheringtokyo.org/2014/">Scrum Gathering Tokyo 2014</a></strong>.
+Though this conference cost me a little more than I can afford it,
+it was great time to me as scrum master in my project. I want to arrange
+the contents of these sessions, but as there were many sessions it is hard to me.
+So in this entry, I cite one scrum example after another which I heard in these sessions.</p>
+
+  </p>
+  <span class="meta">
+    written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2014-01-19T21:08:00+09:00" pubdate data-updated="true">Jan 19<span>th</span>, 2014</time>
+    
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/agile/'>Agile</a>, <a class='category' href='/blog/categories/scrum/'>Scrum</a>, <a class='category' href='/blog/categories/tokyo/'>Tokyo</a>
+  
+</span>
+
+
+  </span>
+
+  
+    <a class="full-article-link pull-right" rel="full-article" href="/blog/2014/01/19/scrum-gathering-tokyo-2014-1/">Read on &rarr;</a>
+  
+</article>
+
+          </div>
+        </div>
+      
+        
+        <div class="row">
+          <div class="col-md-offset-3 col-md-6">
+            <article>
+  <h2><a href="/blog/2013/12/09/agile-samurai-basecamp-in-tokyo/">Agile Samurai Basecamp in Tokyo <2></a></h2>
+  
+  <p>
+    <p>This entry follows previous post.
+The practical methods about TDD are explained in this section.</p>
+
+<p>And also, it is written as an article of <a href="http://qiita.com/advent-calendar/2013/tddadventjp">TDD advent calendar on 10th day</a>.</p>
+
+<h2>How to start TDD? Takuto Wada(twada)</h2>
+
+<p>The left wing of agile is what about team environment, management, scrum, iteration and standup meeting. On the other hand, the right wing of agile is not perceived enough to ordinary people.
+It&rsquo;s CI/CD and automation. These are also as important as the formers. There is apparent difference between making software and keeping making software. Agile programming always requires refactoring.
+In TDD process, refactoring is the core process. You cannot say that you achieve TDD without refactoring your program.</p>
+
+<h3>Write running code, and then write clean code</h3>
+
+<p>Making Good design previously is difficult task. Besides we don&rsquo;t know what is good design on the system undefined yet. Software and program are too complex for us to understand perfectly.
+So we cannot avoid progressing development with positivism notion. In other words, write code first! However we cannot solve all problems yet. The codes once confirmed as what runs with no bugs
+are not willing to be refactored. We are afraid of changing running code. TDD enables us to pass over these fears. The concrete cycle of TDD is below.</p>
+
+<h3>TDD cycle</h3>
+
+<ol>
+<li>Make TODO list</li>
+<li>Write test code first</li>
+<li>Running test and fail (<em>Red phase</em>)</li>
+<li>Write product code</li>
+<li>Running test and success (<em>Green phase</em>)</li>
+<li>Refactoring product code with keeping Green</li>
+<li>Repeat 1~6 process</li>
+</ol>
+
+
+<p>The most important process in these 7 phases is refactoring. If you result in failure of TDD, the main reason is to neglect refactoring your product code. It needs more power of the will.
+So it is better to insert refactoring into TDD process. You don&rsquo;t do refactoring as an addition, but do as necessary process.</p>
+
+<p><img src="/images/posts/2013-12-10-samurai-2/golden_cycle.jpg" alt="Golden Cycle" /></p>
+
+<h3>The secrets of TDD</h3>
+
+<p>To achive TDD, you should know how to start TDD at your daily work.</p>
+
+<h3><em>Small start one by one</em></h3>
+
+<p>You should make small TODO list as possible. It is good to reduce each task within the span which you can complete red, green and refactoring cycle in 15~30minutes.
+The more fast you can complete, the better your TODO list is.</p>
+
+<h3><em>Tackle one enemy in one time</em></h3>
+
+<p>However, if you can reduce each task in small unit, starting all tasks at one time is not good work. As Samurai(Musashi Miyamoto) did, you have to also complete tasks one by one.
+You can concentrate the essentials of each task,</p>
+
+<h3><em>You are the first user</em></h3>
+
+<p>When you write test code, you should take care of the usability. The interface of your product code is determined when you write your test code.
+So before write your test code and while writing your test code, your should try and make the interface better bacause you are the first user of your product.
+The only way to know how user friendly your product is using it yourself. In other words, let&rsquo;s test it.</p>
+
+<h3><em>Test your uncertain</em></h3>
+
+<p>The purpose of TDD is not mainly to guarantee software quality, but to take your ease in order to sleep peacefully. If there are no automatic test codes, it is horror.
+The every time you release your products, you are to end up with praying for the success of the release. Or in order to assure that there are no bugs in your software,
+you might have to many overtime work. That&rsquo;s too bad :(. To avoid this situation, test codes are selected and written under the criteria of how this test makes you peaceful.</p>
+
+<h3><em>Knit a lifeline</em></h3>
+
+<p>This is relevant to previous item. Compiled a lot of test codes will help you when you are in danger or crisis. This test codes become a lifeline knitted over many layers
+It will support you in any situation strongly.</p>
+
+<h3><em>The essencial goal of TDD</em></h3>
+
+<p>The best goal of TDD is keeping your health. This means your code health, your team health and of course your code health. Bacause of TDD, all developers can go home early,
+take a meal with your family and friends, make your product with peaceful mind. This is the essential goal of TDD for all software engineers. Conquering your anxiety and keeping you healthy.</p>
+
+<h1>After session</h1>
+
+<p>This goal made me realize why I am a software engineer again. Programming, writing code should always be fun. It should always be what makes me happy.
+If you are unhappy with writing code as work, it mistakes the means for the end, doesn&rsquo;t it? TDD is the one way of making my life as software engineer more joyful.
+That mind must not be forgot whenever I type my test code.</p>
+
+<p>The each line of your test codes makes you happy, I believe.</p>
+
+  </p>
+  <span class="meta">
+    written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-12-09T20:16:00+09:00" pubdate data-updated="true">Dec 9<span>th</span>, 2013</time>
+    
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/agile/'>Agile</a>, <a class='category' href='/blog/categories/samurai/'>Samurai</a>, <a class='category' href='/blog/categories/tdd/'>TDD</a>
+  
+</span>
+
+
+  </span>
+
+  
+</article>
+
+          </div>
+        </div>
+      
+        
+        <div class="row">
+          <div class="col-md-offset-3 col-md-6">
+            <article>
+  <h2><a href="/blog/2013/12/08/whatt-going-on-at-agile-samurai-basecamp/">Agile Samurai Basecamp in Tokyo <1></a></h2>
+  
+  <p>
+    <p>At work, I am a scrum padawan, not yet master :&ndash;)</p>
+
+<p>Through developing with agile team, I was taught what scrum is, product backlog is, sprint is.</p>
+
+<p>In order to accelerate this growth as an agile programmer, I took part in TDD section of <a href="http://www.agilesamuraibasecamp.org/">Agile Samurai Basecamp</a>.
+TDD(Test Driven Development) is the most interesting method in my mind. So I wanted to know how to progress TDD in my daily work.
+This article includes TDD core process which I study in basecamp and what I thought for the future career as a programmer.</p>
+
+<h2>Keynote : Shintarou Kakutani</h2>
+
+<p>He is the translator of <em><a href="http://pragprog.com/book/jtrap/the-agile-samurai">The Agile Samurai</a></em> .
+He answered the questions  who is agile samurai, what agile teams are for.</p>
+
+<h3>Who is agile samurai?</h3>
+
+<p><img src="/images/posts/2013-12-08-samurai-1/samurai.jpg" alt="samurai" /></p>
+
+<p>Agile team must keep to delivering valuable software every week. It doesn&rsquo;t mean just delivering lecture or lesson,
+but codes which run as what you and your customer expects. To achieve this, it is very important to tackle problems as <em>&ldquo;whole one team&rdquo;</em>  which includes
+your customers. Customers decide what you make, then your decide how you make. Delivering values to customer and tackling problems as whole one team is the
+core concept of <em><a href="http://pragprog.com/book/jtrap/the-agile-samurai">The Agile Samurai</a></em> .</p>
+
+<h3>Why did you write more Agile book?</h3>
+
+<p>There were already many agile books in stores. Why another agile book is needed at that time?
+In the past, there were no books which compiled main below 7 books which explains agile practice for detail.</p>
+
+<ul>
+<li><a href="http://www.amazon.co.jp/XP%E3%82%A8%E3%82%AF%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E3%83%BB%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E5%85%A5%E9%96%80%E2%80%95%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E9%96%8B%E7%99%BA%E3%81%AE%E7%A9%B6%E6%A5%B5%E3%81%AE%E6%89%8B%E6%B3%95-%E3%82%B1%E3%83%B3%E3%83%88-%E3%83%99%E3%83%83%E3%82%AF/dp/489471275X">Extream programming explained</a></li>
+<li><a href="http://www.amazon.co.jp/Refactoring-Improving-Existing-Addison-Wesley-Technology/dp/0201485672/ref=sr_1_1?s=english-books&amp;ie=UTF8&amp;qid=1386502275&amp;sr=1-1&amp;keywords=refactoring">Refactoring</a></li>
+<li><a href="http://www.amazon.co.jp/XP%E3%82%A8%E3%82%AF%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E3%83%BB%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E5%AE%9F%E8%A1%8C%E8%A8%88%E7%94%BB-The-Series-%E3%82%B1%E3%83%B3%E3%83%88-%E3%83%99%E3%83%83%E3%82%AF/dp/4894713411/ref=sr_1_cc_1?s=aps&amp;ie=UTF8&amp;qid=1386502308&amp;sr=1-1-catcorr&amp;keywords=%E3%82%A8%E3%82%AF%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E3%80%80%E5%AE%9F%E8%A1%8C%E8%A8%88%E7%94%BB">Extream programming planning</a></li>
+<li><a href="http://www.amazon.co.jp/XP%E3%82%A8%E3%82%AF%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E3%83%BB%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E5%B0%8E%E5%85%A5%E7%B7%A8-XP%E5%AE%9F%E8%B7%B5%E3%81%AE%E6%89%8B%E5%BC%95%E3%81%8D-The-XP-Series/dp/4894714914/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1386502350&amp;sr=1-1&amp;keywords=%E3%82%A8%E3%82%AF%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E3%80%80%E5%B0%8E%E5%85%A5%E7%B7%A8">Extream programming installed</a></li>
+<li><a href="http://www.amazon.co.jp/%E3%83%86%E3%82%B9%E3%83%88%E9%A7%86%E5%8B%95%E9%96%8B%E7%99%BA%E5%85%A5%E9%96%80-%E3%82%B1%E3%83%B3%E3%83%88-%E3%83%99%E3%83%83%E3%82%AF/dp/4894717115/ref=sr_1_2?s=books&amp;ie=UTF8&amp;qid=1386502385&amp;sr=1-2&amp;keywords=Test+Driven+Development+by+example">Test Driven Development by example</a></li>
+<li><a href="http://www.amazon.co.jp/User-Stories-Applied-Software-Development-ebook/dp/B0054KOL74/ref=sr_1_cc_1?s=aps&amp;ie=UTF8&amp;qid=1386502435&amp;sr=1-1-catcorr&amp;keywords=User+Stories+applied">User stories applied</a></li>
+<li><a href="http://www.amazon.co.jp/%E3%82%A2%E3%82%B8%E3%83%A3%E3%82%A4%E3%83%AB%E3%81%AA%E8%A6%8B%E7%A9%8D%E3%82%8A%E3%81%A8%E8%A8%88%E7%94%BB%E3%81%A5%E3%81%8F%E3%82%8A-~%E4%BE%A1%E5%80%A4%E3%81%82%E3%82%8B%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%82%92%E8%82%B2%E3%81%A6%E3%82%8B%E6%A6%82%E5%BF%B5%E3%81%A8%E6%8A%80%E6%B3%95~-Mike-Cohn/dp/4839924023/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1386502473&amp;sr=1-1&amp;keywords=%E3%82%A2%E3%82%B8%E3%83%A3%E3%82%A4%E3%83%AB%E3%81%AA%E8%A6%8B%E7%A9%8D%E3%82%82%E3%82%8A%E3%81%A8%E8%A8%88%E7%94%BB%E4%BD%9C%E3%82%8A">Agile Estimating and Planning</a></li>
+</ul>
+
+
+<p><em><a href="http://pragprog.com/book/jtrap/the-agile-samurai">The Agile Samurai</a></em> collects the essences of these books. In addition to these concepts, this book add new stuff.
+So it&rsquo;s inception deck. If you want to know about inception deck, read this book. And the session of inception deck was also held at this bootcamp. This is important concept of agile practice.</p>
+
+<h3>Why a hero in this book is called &ldquo;Samurai&rdquo;?</h3>
+
+<p>The author, Jonathan Rasmusson likes <em>&ldquo;<a href="http://www.amazon.com/Way-Peaceful-Warrior-Changes-Lives/dp/0915811898">Peaceful Warrior</a>&rdquo;</em> . Initial title of &ldquo;Agile samurai&rdquo; was &ldquo;Agile peaceful warrior&rdquo; after this novel title. But it was not grasped by other people who have not read this book. So collaborators recommended him the word, &ldquo;Samurai&rdquo; which means same notion as peaceful warrior. &ldquo;Samurai&rdquo; is more perspicuous than &ldquo;peaceful warrior&rdquo; to the people of all over the world. Master sensei is also only the notion, not real samurai characters who lived in Japan.</p>
+
+<h3>What is the agile practice?</h3>
+
+<p>Agile development means the way of keeping feedback under the cooperative environment. To achieve team&rsquo;s goal, taking action requires cooperative environment of your team. All members must have the sense of ownership of their products. This thought makes good mood and necessary environment. But this practice can be accomplished only by your learning with on-the-job training. There is no secret ingredient. It&rsquo;s just you.</p>
+
+<h3>Last but not least</h3>
+
+<ol>
+<li>Sharing what you learn with others</li>
+<li>Keep searching the better answers</li>
+<li>Enjoy!</li>
+</ol>
+
+
+<p>Enjoy your agile life!</p>
+
+  </p>
+  <span class="meta">
+    written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-12-08T19:29:00+09:00" pubdate data-updated="true">Dec 8<span>th</span>, 2013</time>
+    
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/agile/'>Agile</a>, <a class='category' href='/blog/categories/basecaml/'>Basecaml</a>, <a class='category' href='/blog/categories/tdd/'>TDD"</a>
+  
+</span>
+
+
+  </span>
+
+  
+</article>
+
+          </div>
+        </div>
+      
+        
+        <div class="row">
+          <div class="col-md-offset-3 col-md-6">
+            <article>
+  <h2><a href="/blog/2013/10/18/masutasenseihaxu-wotukanai/">マスターセンセイは嘘をつかない</a></h2>
+  
+  <p>
+    <p>仕事で、あるアジャイルプロジェクトに関わってきた。</p>
+
+<p>スクラムマスターとなり、初めてのアジャイルプロジェクトを進めてもう3ヶ月ほどになる。</p>
+
+<p>今日、アジャイルのススメ方についてこれまでも指導をくれていた人から幾つか言葉をもらったので
+これまでの３ヶ月、これからのこと、アジャイルですすめることの本質とか考えてみたのでまとめる。</p>
+
+<p>ちなみにこの人は僕の中ではマスターセンセイと呼んでいるので、以下同一人物。</p>
+
+<h2>無理はしない</h2>
+
+<p>アジャイルの根底にある本質を一言で表せと言われたらこの言葉になると思う。無理はしないというと消極的に思われるかもしれないので
+足るを知ると言ってもいいかもしれない。自分たちに何ができて何ができないかをきちんと知ろうという姿勢はあるような気がする。
+毎日のデイリースクラムに遅刻してくるメンバーがいたら彼が来られるようにしてあげるか、あるいは彼が来られる時間にしてあげるかだ。
+もちろん無理はあってはいけないから彼が無理しなくては来られないのであれば前者はなしだ。プロジェクトを進める上で無理はあってはいけない。
+それはリスクの増加につながるからだ。</p>
+
+<p><img src="/images/posts/2013-10-18-agile_scrum/daily_scrum.png" alt="Daily Scrum" /></p>
+
+<h2>「使うかもしれない」はきっと「使わない」</h2>
+
+<p>今考えられるユーザストーリとか、タスクとか。スクラムにあったら便利かもと思うようなツールとかスキーマとか。そういうものを
+必要になっていないのに取り出しはじめるのは良くないということ。具体的に言おう。僕達は各タスクに「優先度シール」なるものを
+貼っていたときがある。これはプロダクトバックログがまだ優先度順に並んでいなくてコンポーネントごとに貼り付けてしまっていたことが
+原因だった。（つまり優先順位順に並べることができなかった）その中でも何を優先するべきかを表示するラベルを僕達は作った。そして捨てた。
+もうユーザストーリリストごとにタスクをリストアップできるようになったからだ。それでも「優先度シール」あっても良かったかもしれない。
+だっていつか「使うかもしれない」。またプロダクトバックログの順序がばらばらになる時がくるかもしれない。
+悩んでいるとマスターセンセイは教えてくれた。</p>
+
+<p><blockquote><p>でもそれは捨てるべきなんだ。</p></blockquote></p>
+
+<p><img src="/images/posts/2013-10-18-agile_scrum/rolex.png" alt="Trash" /></p>
+
+<p>必要になったらまた作ればいい。アジャイルというのは小回りを効かせるために身軽さを求めるものなのかもしれない。
+プロジェクトのフレームワークに必要のなくなった「もの」は基本的にはその場から捨ててしまうのがいい。
+アジャイルをすすめる前に決めたインセプションデッキの問いのひとつにはこんなものがある。</p>
+
+<p>「なぜ僕たちはここにいるのか」</p>
+
+<p>この「使うかもしれない」を増やしていくとこの問に答えづらくなっていってしまうんじゃないかな。と僕は思う。</p>
+
+<p>ちなみにマスターセンセイは『<a href="http://www.amazon.co.jp/%E3%83%88%E3%83%A8%E3%82%BF%E3%81%AE%E7%89%87%E3%81%A5%E3%81%91-OJT%E3%82%BD%E3%83%AA%E3%83%A5%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%BA/dp/4806145483">トヨタの片付け</a>』という本も紹介してくれた。</p>
+
+<h2>兼務はしない</h2>
+
+<p>１人が１度に抱えるタスクは最大で２つまでだ。これは『<a href="http://www.amazon.co.jp/%E3%82%A2%E3%82%B8%E3%83%A3%E3%82%A4%E3%83%AB%E3%81%AA%E8%A6%8B%E7%A9%8D%E3%82%8A%E3%81%A8%E8%A8%88%E7%94%BB%E3%81%A5%E3%81%8F%E3%82%8A-~%E4%BE%A1%E5%80%A4%E3%81%82%E3%82%8B%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%82%92%E8%82%B2%E3%81%A6%E3%82%8B%E6%A6%82%E5%BF%B5%E3%81%A8%E6%8A%80%E6%B3%95~-Mike-Cohn/dp/4839924023/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1382104183&amp;sr=1-1&amp;keywords=%E3%82%A2%E3%82%B8%E3%83%A3%E3%82%A4%E3%83%AB%E3%81%AA%E8%A6%8B%E7%A9%8D%E3%82%82%E3%82%8A%E3%81%A8%E8%A8%88%E7%94%BB%E3%81%A5%E3%81%8F%E3%82%8A">アジャイルな見積もりと計画づくり</a>』の中で語られているデータにもとづいている。その中で語られていることはこうだ。</p>
+
+<ul>
+<li>マルチタスク化は生産性に甚大な悪影響を与える</li>
+<li>クラークとウィールライトによるマルチタスク化の研究で、個人が3つ以上の作業を並行して進めると、価値を生み出す作業に使える時間が大幅に減少することがわかった</li>
+<li>2つの作業を変更に進めると、片方の作業が進められなくなったときに、もう片方の作業に切り替えることができるため、効率があがる</li>
+</ul>
+
+
+<p>僕達はずっと兼務を続けていた。しかも兼務をしているにもかかわらずアジャイルの中でのタスク割り振りまで重複して行ってしまっていた。これはまずい。
+これは理由はどうあれ効率が落ちるからだ。データが示している。タスクAとタスクBをこなす必要があるのであれば、必ずAの次にBだ(もちろんBの次にAでもいいが同時はダメだ)
+本の中では2つのタスクは気分転換の意味もあり、少しではあるが１０%ほど効率があがると書いてあるが、僕達はそもそもが兼務で集まったチームなのでダメだ。
+人間は最大のパフォーマンスを発揮して且つ１度にできることは１つなのだと思う。マスターセンセイはこう言っていた。</p>
+
+<p><blockquote><p>僕達みたいな普通の人がマルチタスクで片手間に作ったものなんて大したものができないんだよ</p></blockquote></p>
+
+<p><img src="/images/posts/2013-10-18-agile_scrum/enough.png" alt="Enough!" /></p>
+
+<p>非凡な才能溢れる人間でない限りは複数のことを１度に進めてはいけない。</p>
+
+<h2>おまじないなんてない</h2>
+
+<p>アジャイルで進めているプラクティスはどれもデータにもとづいて考えられたものだ。だからそこにおまじないはない。「どうしてこれをやっているんだろう」と思ったら
+それは調べるべきだ。きっと答えはある。僕達はバーンダウンチャートを書いていく上で正規のタスク見積もり線の上に３掛けした線をもう一本引いていた。
+どうしてかって。僕達がお手本にしていたプロジェクトが行っていたからだ。でもその理由は知らない。さりげなくそのことについてマスターセンセイに聞いた。</p>
+
+<p><blockquote><p>上の線は本来はメンバーの持てるのすべての時間を表す。そこから７掛けして見積もり線を出せば各タスクのバッファを考えずにスプリント単位でずれを吸収してくれるんだよ</p></blockquote></p>
+
+<p>なるほど、そういうことだったのか。</p>
+
+<p>ちなみにこの７割という数字も多くのプロジェクトを研究して出した数字らしい。</p>
+
+<p><img src="/images/posts/2013-10-18-agile_scrum/magic.png" alt="magic" /></p>
+
+<p>教訓：疑問に思ったら調べろ</p>
+
+<h2>まとめ</h2>
+
+<p>３ヶ月で何が分かるかというぐらいアジャイルは奥深い。けれど最後に書いたようにアジャイルスクラムは魔法のメソッドなんてものではなくて、自分で考え試行錯誤していかなくちゃいけないものだとわかった。</p>
+
+<p>でもひとつ大事なことは、アジャイルには「無理をしない」という点で１つ筋が通っているような気がした。できるものはできないし、できないものはできない。そのことをなんとなしに言ってしまうのではなくきちんと計測可能な数値で考えることができるフレームワークがアジャイルスクラムなのだと思う。</p>
+
+  </p>
+  <span class="meta">
+    written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-10-18T22:25:00+09:00" pubdate data-updated="true">Oct 18<span>th</span>, 2013</time>
+    
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/agile/'>Agile</a>
+  
+</span>
+
+
+  </span>
+
+  
+</article>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/Lewuathe"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/Lewuathe"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

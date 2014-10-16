@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>SBTを使ったプロジェクト作成(2) - The first cry of Atom</title>
+  <meta name="author" content="Kai Sasaki">
+
+  
+  <meta name="description" content="SBTを使ったプロジェクト作成(2) written Sep 10th, 2013 スコープに関するお話 昨日の続き。
+実はSettingKeyにはスコープがあり、異なるプロジェクトではことなる値を使うことができる。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://lewuathe.com/blog/2013/09/10/sbtwoshi-tutapuroziekutozuo-cheng-2">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-44055098-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>SBTを使ったプロジェクト作成(2)</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-09-10T21:23:00+09:00" pubdate data-updated="true">Sep 10<span>th</span>, 2013</time>
+          
+
+
+        </div>
+        <h3>スコープに関するお話</h3>
+
+<p>昨日の続き。
+実はSettingKeyにはスコープがあり、異なるプロジェクトではことなる値を使うことができる。そもそも同じ場所に置くなよという気はするがテスト用とかリリース用にビルドしたい場合に便利。このビルドの設定を分けるスコープの&#8221;軸&#8221;がSBTには３つある。</p>
+
+<ul>
+<li>プロジェクト</li>
+<li>コンフィギュレーション</li>
+<li>タスク</li>
+</ul>
+
+
+<h4>プロジェクト軸によるスコープ</h4>
+
+<p>それぞれのプロジェクトに対して設定が必要という場合がこのケース。ビルド全体（全プロジェクト）でもよい。</p>
+
+<h4>コンフィギュレーション軸によるスコープ</h4>
+
+<p>ビルドの種類によるわけかた。テストとかリリース用とか、デバッグ用とか。</p>
+
+<h4>タスク軸によるスコープ</h4>
+
+<p>少しよくわからないけれど、他のタスクに影響を受けるようなスコープのことらしい。</p>
+
+<p>スコープは<code>inspect</code>コマンドで調べられるらしい。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sbt
+</span><span class='line'>&gt; inspect name
+</span><span class='line'>[info] Setting: java.lang.String = hello
+</span><span class='line'>[info] Description:
+</span><span class='line'>[info]  Project name.
+</span><span class='line'>[info] Provided by:
+</span><span class='line'>[info]  {file:/Users/sasakiumi/MyWorks/hello/}default-6cbc7c/*:name
+</span><span class='line'>[info] Defined at:
+</span><span class='line'>[info]  /Users/sasakiumi/MyWorks/hello/build.sbt:1
+</span><span class='line'>[info] Reverse dependencies:
+</span><span class='line'>[info]  *:normalized-name
+</span><span class='line'>[info]  *:project-info
+</span><span class='line'>[info]  *:organization
+</span><span class='line'>[info]  *:description
+</span><span class='line'>[info]  *:on-load-message
+</span><span class='line'>[info] Delegates:
+</span><span class='line'>[info]  *:name
+</span><span class='line'>[info]  {.}/*:name
+</span><span class='line'>[info]  */*:name
+</span><span class='line'>&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>Provided by</code>で書かれた部分を見ると</p>
+
+<ul>
+<li>{file:/Users/sasakiumi/MyWorks/hello/}default-6cbc7c/ → プロジェクト</li>
+<li>アスタリスク → コンフィギュレーション</li>
+<li>→なし</li>
+</ul>
+
+
+<p>ということらしい。</p>
+
+<h3>ライブラリ依存性</h3>
+
+<p>SBTはプロジェクトが必要なライブラリとかパッケージを管理してくれる。この依存ライブラリの管理には２つのタイプがある。</p>
+
+<h4>アンマネージ依存性</h4>
+
+<p>libディレクトリに直にjarファイルを入れるタイプ。特に管理とかされているわけではなく自分でダウンロードして、設置する必要があるのでアンマネージ。lib以下に入れるとプロジェクトのクラスパスに追加される。それだけだ！</p>
+
+<h4>マネージ依存性</h4>
+
+<p><strong>Apache Ivy</strong>を使ってライブラリの依存解決を行う。これを使うためには<code>libraryDependencies</code>キーに値を入れるだけでうまくいく。グループ、ライブラリ名、バージョンの順番だ。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.apache.derby&quot;</span> <span class="o">%</span> <span class="s">&quot;derby&quot;</span> <span class="o">%</span> <span class="s">&quot;10.4.1.3&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>これをbuild.sbtに書いて<code>update</code>を打つと大体うまくいく。でも時折、参照先のリポジトリに欲しいパッケージがない場合がある。この場合はSBTにリポジトリを追加してやらないといけない。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">solvers</span> <span class="o">+=</span> <span class="s">&quot;Sonatype OSS Snapshots&quot;</span> <span class="n">at</span> <span class="s">&quot;https://oss.sonatype.org/content/repositories/snapshots&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>名前 at URL</code>というフォーマット。</p>
+
+<h3>.scalaビルド設定</h3>
+
+<p>build.sbt以外にもproject/に置いたscalaファイルでビルド設定できる。
+厳密にはbuils.sbtは結局project/以下のビルド設定にマージされることになるので、単なる略記法という意味以上のものはない。とはいっても便利。具体例で説明。</p>
+
+<figure class='code'><figcaption><span>project/Build.scala</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">import</span> <span class="nn">sbt._</span>
+</span><span class='line'><span class="k">import</span> <span class="nn">Keys._</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">object</span> <span class="nc">HelloBuild</span> <span class="k">extends</span> <span class="nc">Build</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">val</span> <span class="n">sampleKeyA</span> <span class="k">=</span> <span class="nc">SettingKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;sample-a&quot;</span><span class="o">,</span> <span class="s">&quot;demo key A&quot;</span><span class="o">)</span>
+</span><span class='line'>    <span class="k">val</span> <span class="n">sampleKeyB</span> <span class="k">=</span> <span class="nc">SettingKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;sample-b&quot;</span><span class="o">,</span> <span class="s">&quot;demo key B&quot;</span><span class="o">)</span>
+</span><span class='line'>    <span class="k">val</span> <span class="n">sampleKeyC</span> <span class="k">=</span> <span class="nc">SettingKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;sample-c&quot;</span><span class="o">,</span> <span class="s">&quot;demo key C&quot;</span><span class="o">)</span>
+</span><span class='line'>    <span class="k">val</span> <span class="n">sampleKeyD</span> <span class="k">=</span> <span class="nc">SettingKey</span><span class="o">[</span><span class="kt">String</span><span class="o">](</span><span class="s">&quot;sample-d&quot;</span><span class="o">,</span> <span class="s">&quot;demo key D&quot;</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">override</span> <span class="k">lazy</span> <span class="k">val</span> <span class="n">settings</span> <span class="k">=</span> <span class="k">super</span><span class="o">.</span><span class="n">settings</span> <span class="o">++</span>
+</span><span class='line'>        <span class="nc">Seq</span><span class="o">(</span><span class="n">sampleKeyA</span> <span class="o">:=</span> <span class="s">&quot;A: in Build.settings in Build.scala&quot;</span><span class="o">,</span> <span class="n">resolvers</span> <span class="o">:=</span> <span class="nc">Seq</span><span class="o">())</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">lazy</span> <span class="k">val</span> <span class="n">root</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">(</span><span class="n">id</span> <span class="k">=</span> <span class="s">&quot;hello&quot;</span><span class="o">,</span>
+</span><span class='line'>                            <span class="n">base</span> <span class="k">=</span> <span class="n">file</span><span class="o">(</span><span class="s">&quot;.&quot;</span><span class="o">),</span>
+</span><span class='line'>                            <span class="n">settings</span> <span class="k">=</span> <span class="nc">Project</span><span class="o">.</span><span class="n">defaultSettings</span> <span class="o">++</span> <span class="nc">Seq</span><span class="o">(</span><span class="n">sampleKeyB</span> <span class="o">:=</span> <span class="s">&quot;B: in the root project settings in Build.scala&quot;</span><span class="o">))</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>次にbuild.sbt</p>
+
+<figure class='code'><figcaption><span>build.sbt</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">sampleKeyC</span> <span class="n">in</span> <span class="nc">ThisBuild</span> <span class="o">:=</span> <span class="s">&quot;C: in build.sbt scoped to ThisBuild&quot;</span>
+</span><span class='line'><span class="n">sampleKeyD</span> <span class="o">:=</span> <span class="s">&quot;D: in build.sbt&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ここでsbtインタラクティブモードで<code>inspect sample-a</code>とうつ</p>
+
+<figure class='code'><figcaption><span>bash</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">$</span> <span class="n">sbt</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="n">inspect</span> <span class="n">sample</span><span class="o">-</span><span class="n">a</span>
+</span><span class='line'><span class="o">[</span><span class="kt">info</span><span class="o">]</span> <span class="nc">Setting</span><span class="k">:</span> <span class="kt">java.lang.String</span> <span class="o">=</span> <span class="n">A</span><span class="k">:</span> <span class="kt">in</span> <span class="kt">Build.settings</span> <span class="kt">in</span> <span class="kt">Build.scala</span>
+</span><span class='line'><span class="o">[</span><span class="kt">info</span><span class="o">]</span> <span class="nc">Provided</span> <span class="n">by</span><span class="k">:</span>
+</span><span class='line'><span class="err">[</span><span class="kt">info</span><span class="err">]</span>  <span class="o">{</span><span class="kt">file:/home/hp/checkout/hello/</span><span class="o">}</span><span class="kt">/*:sample-a</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>続いてsample-c</p>
+
+<figure class='code'><figcaption><span>bash</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="o">&gt;</span> <span class="n">inspect</span> <span class="n">sample</span><span class="o">-</span><span class="n">c</span>
+</span><span class='line'><span class="o">[</span><span class="kt">info</span><span class="o">]</span> <span class="nc">Setting</span><span class="k">:</span> <span class="kt">java.lang.String</span> <span class="o">=</span> <span class="n">C</span><span class="k">:</span> <span class="kt">in</span> <span class="kt">build.sbt</span> <span class="kt">scoped</span> <span class="kt">to</span> <span class="kt">ThisBuild</span>
+</span><span class='line'><span class="o">[</span><span class="kt">info</span><span class="o">]</span> <span class="nc">Provided</span> <span class="n">by</span><span class="k">:</span>
+</span><span class='line'><span class="err">[</span><span class="kt">info</span><span class="err">]</span>  <span class="o">{</span><span class="kt">file:/home/hp/checkout/hello/</span><span class="o">}</span><span class="kt">/*:sample-c</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>Provided by</code>で表示されるスコープは同じなため、.sbtと.scalaはどちらに何を設定しても同じということになる。</p>
+
+<figure class='code'><figcaption><span>bash</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="o">&gt;</span> <span class="n">inspect</span> <span class="n">sample</span><span class="o">-</span><span class="n">b</span>
+</span><span class='line'><span class="o">[</span><span class="kt">info</span><span class="o">]</span> <span class="nc">Setting</span><span class="k">:</span> <span class="kt">java.lang.String</span> <span class="o">=</span> <span class="n">B</span><span class="k">:</span> <span class="kt">in</span> <span class="kt">the</span> <span class="kt">root</span> <span class="kt">project</span> <span class="kt">settings</span> <span class="kt">in</span> <span class="kt">Build.scala</span>
+</span><span class='line'><span class="o">[</span><span class="kt">info</span><span class="o">]</span> <span class="nc">Provided</span> <span class="n">by</span><span class="k">:</span>
+</span><span class='line'><span class="err">[</span><span class="kt">info</span><span class="err">]</span>  <span class="o">{</span><span class="kt">file:/home/hp/checkout/hello/</span><span class="o">}</span><span class="kt">hello/*:sample-b</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="n">inspect</span> <span class="n">sample</span><span class="o">-</span><span class="n">d</span>
+</span><span class='line'><span class="o">[</span><span class="kt">info</span><span class="o">]</span> <span class="nc">Setting</span><span class="k">:</span> <span class="kt">java.lang.String</span> <span class="o">=</span> <span class="n">D</span><span class="k">:</span> <span class="kt">in</span> <span class="kt">build.sbt</span>
+</span><span class='line'><span class="o">[</span><span class="kt">info</span><span class="o">]</span> <span class="nc">Provided</span> <span class="n">by</span><span class="k">:</span>
+</span><span class='line'><span class="err">[</span><span class="kt">info</span><span class="err">]</span>  <span class="o">{</span><span class="kt">file:/home/hp/checkout/hello/</span><span class="o">}</span><span class="kt">hello/*:sample-d</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>sample-b</code>は異なるスコープになっていることがわかる。これは<code>sample-d</code>に対応していることがわかる。</p>
+
+<p>あとはプラグインとかの話しがあったけれど、ここらで自分なりにプロジェクトを作ってみたいと思う。
+まとめのページはここ。このページもGitHub Pagesでできてるのか。</p>
+
+<p><a href="http://scalajp.github.io/sbt-getting-started-guide-ja/summary/">http://scalajp.github.io/sbt-getting-started-guide-ja/summary/</a>
+でも開発がそんなに活発でないかも。Epicの開発はほぼ停止してるみたいだし。</p>
+
+
+        <hr class="divider-short"/>
+        
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2013/09/09/sbtwoshi-tutapuroziekutozuo-cheng/" title="Previous Post: SBTを使ったプロジェクト作成(1)">&laquo; Previous: SBTを使ったプロジェクト作成(1)</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2013/09/13/sbttoeclipsedescalakai-fa-huan-jing/" title="Next Post: SBTとEclipseでScala開発環境">Next: SBTとEclipseでScala開発環境 &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/Lewuathe"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/Lewuathe"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

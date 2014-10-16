@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>OSSを使う、作る - The first cry of Atom</title>
+  <meta name="author" content="Kai Sasaki">
+
+  
+  <meta name="description" content="OSSを使う、作る written Oct 25th, 2013 in OSS 昨日、以前作ったOSSのライブラリにpatchが送られてきた。 https://github.com/Lewuathe/passport-yj 友人とかなり昔に作ったので、 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://lewuathe.com/blog/2013/10/25/osswoshi-u%2C-zuo-ru">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-44055098-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>OSSを使う、作る</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-10-25T21:53:00+09:00" pubdate data-updated="true">Oct 25<span>th</span>, 2013</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/oss/'>OSS</a>
+  
+</span>
+
+
+        </div>
+        <p>昨日、以前作ったOSSのライブラリにpatchが送られてきた。</p>
+
+<p><a href="https://github.com/Lewuathe/passport-yj">https://github.com/Lewuathe/passport-yj</a></p>
+
+<p><img src="/images/posts/2013-10-25-oss/code.png" alt="passport-yj" /></p>
+
+<p>友人とかなり昔に作ったので、存在を忘れていたとまではいかないがpatchが送られてきたときは驚いた。何したらいいんだろうという感じだった。
+patchの内容はpassport-yjの依存しているpassportモジュールの仕様が変わったから対応したらーということで送ってくれた。</p>
+
+<p>僕は正直passportの仕様をキャッチアップできていなかったので、こうやってpatchが送られてきて嬉しかった。</p>
+
+<p>自分たちが作ったソフトウェアがよりよくなるということ、そして何よりどこかの誰かが使ってくれているということが目で見える形で分かったからだ。</p>
+
+<p>patchを送ってくれた人は少なくとも日本人ではあるみたいだけれど僕とは縁もゆかりもない人だ。(もっとも顔写真もなにもないので、縁もゆかりも本当にないのかもよくわからない)
+そんな人がどこかでこのライブラリを使って、改善点があったのでpatchを送ってくれた。送られたpatchを落としてきてテストして動作を確認する。僕自身も今までに大きなプロジェクト、小さなプロジェクトにちょこちょこpatchを送っていた。そこでディスカッションをしたり、取り込んでもらえたりもらえなかったり。そのコードはそういう意味で書いてあるのかと疑問が氷解したり。</p>
+
+<p>そして気づいた。ああ、これがOSSへの貢献なんじゃないかと。</p>
+
+<p>LinuxとかWebKitとか、大きなプロジェクトへの貢献を夢見てなんとなく憧れを抱いていたけど、今自分がやっていたことは紛れもなくOSS活動じゃないか。ずっとやりたいと思っていたことをいつの間にか僕はやっていた。誰かが仕事から帰ってちょこちょこっと作った小さなライブラリ僕が使い、僕が週末に作った小さなモジュールをどこかの誰かが使う。その誰かは日本の人かもしれないし、外国の人かもしれないし、人間ですらないかもしれない。(さっき見たら<a href="https://github.com/Lewuathe/node-jp">node-jp</a>はbotっぽいのにたくさんforkされてた)そういうコードを介した会話みたいなものはまさにソーシャルコーディングだし、僕はそれがやりたかった。</p>
+
+<p>誰かが少しだけ世界を良くしようと思って作ったものを、他の誰かが使って実際に世界を少しだけ良くしている。大きさとか規模はあんまり関係なくて自分がそれを感じることができるかどうか。僕は見ず知らずの人からpatchが送られてくることでそれを感じた。</p>
+
+<p>またいつでもpatchが来てもいいように、折角なので自動化テストを書いておこう。</p>
+
+<p>きっと世界が少しだけ良くなると思う。</p>
+
+
+        <hr class="divider-short"/>
+        
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2013/10/20/dockerwoshi-tutemiyou/" title="Previous Post: Dockerで仮想化をはじめよう">&laquo; Previous: Dockerで仮想化をはじめよう</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2013/11/03/tf-idfdetagufu-ke/" title="Next Post: TF-IDFでタグ付け">Next: TF-IDFでタグ付け &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/Lewuathe"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/Lewuathe"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Readonly | The first cry of Atom]]></title>
+  <link href="http://lewuathe.com/blog/categories/readonly/atom.xml" rel="self"/>
+  <link href="http://lewuathe.com/"/>
+  <updated>2014-10-12T21:50:29+09:00</updated>
+  <id>http://lewuathe.com/</id>
+  <author>
+    <name><![CDATA[Kai Sasaki]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Reference Configuration Library in Nodejs]]></title>
+    <link href="http://lewuathe.com/blog/2013/12/30/reference-configuration-library-in-nodejs/"/>
+    <updated>2013-12-30T20:24:00+09:00</updated>
+    <id>http://lewuathe.com/blog/2013/12/30/reference-configuration-library-in-nodejs</id>
+    <content type="html"><![CDATA[<p>I made npm module at the end of this year, <em>readonly</em>.</p>
+
+<p><a href="https://github.com/Lewuathe/readonly">lewuathe/readonly @GitHub</a></p>
+
+<p><a href="https://npmjs.org/package/readonly">readonly @npm</a></p>
+
+<p>readonly is a simple reference restriction library between custom modules in node object.
+When you want to configure access control of specific object from respective modules, this is good option.
+For example, you made two modules, both use the same object.</p>
+
+<!-- more -->
+
+
+<p>```js
+// obj is uses from moduleA and moduleB
+// You want moduleA to read and update obj, but moduleB to read obj only.
+var obj = {&lsquo;A&rsquo;:&lsquo;a&rsquo;,&lsquo;B&rsquo;:&lsquo;b&rsquo;,&lsquo;C&rsquo;:&lsquo;c&rsquo;};</p>
+
+<p>// Embedded in moduleA
+var moduleA = {};
+moduleA.obj = obj;</p>
+
+<p>// Readonly restriction of <code>obj</code> from moduleB
+var moduleB = {};
+moduleB.obj = readonly(obj);</p>
+
+<p>// You can update <code>obj</code> from moduleA
+moduleA.obj.A = &ldquo;d&rdquo;;
+// But you cannot update <code>obj</code> from moduleB
+moduleA.obj.B = &ldquo;e&rdquo;;  // Error
+```</p>
+
+<p>In this situation, you can use <strong>readonly</strong>.</p>
+
+<h2>Install</h2>
+
+<p><code>
+$ npm install readonly
+</code></p>
+
+<h2>Usage</h2>
+
+<p>```
+var readonly = require(&lsquo;readonly&rsquo;);</p>
+
+<p>var obj = {&lsquo;A&rsquo;:&lsquo;a&rsquo;,&lsquo;B&rsquo;:&lsquo;b&rsquo;,&lsquo;C&rsquo;:&lsquo;c&rsquo;};</p>
+
+<p>// Normal ACL. You can use <code>obj</code> through moduleA as you like
+var moduleA = {};
+moduleA.obj = obj;</p>
+
+<p>// Readonly restriction of <code>obj</code> in moduleB
+var moduleB = {};
+moduleB.obj = readonly(obj);</p>
+
+<p>// You can update <code>obj</code> from moduleA
+moduleA.obj.A = &ldquo;d&rdquo;;
+// This updates can be seen from moduleB
+console.log(moduleB.obj.A); // &mdash;> &ldquo;d&rdquo;</p>
+
+<p>// But if you update <code>obj</code> through moduleB, it will throws <code>UnableRewriteException</code>
+moduleA.obj.B = &ldquo;e&rdquo;;  // &mdash;> UnableRewriteException: original cannot be rewrite
+```</p>
+
+<p>With this library, you can access current property from restricted modules if original object is updates.
+In above example, <code>moduleB.obj.A</code> returns <code>"d"</code>. Try it.
+If you find any bugs, please inform me with <a href="https://github.com/Lewuathe/readonly/issues">GitHub</a></p>
+
+<p>Enjoy <strong>readonly</strong> !</p>
+]]></content>
+  </entry>
+  
+</feed>

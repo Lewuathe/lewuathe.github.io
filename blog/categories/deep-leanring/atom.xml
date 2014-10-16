@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Deep Leanring | The first cry of Atom]]></title>
+  <link href="http://lewuathe.com/blog/categories/deep-leanring/atom.xml" rel="self"/>
+  <link href="http://lewuathe.com/"/>
+  <updated>2014-10-12T21:50:29+09:00</updated>
+  <id>http://lewuathe.com/</id>
+  <author>
+    <name><![CDATA[Kai Sasaki]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Autoencoder With node.js]]></title>
+    <link href="http://lewuathe.com/blog/2014/01/26/autoencoder-with-node-dot-js/"/>
+    <updated>2014-01-26T21:14:00+09:00</updated>
+    <id>http://lewuathe.com/blog/2014/01/26/autoencoder-with-node-dot-js</id>
+    <content type="html"><![CDATA[<p><a href="https://en.wikipedia.org/wiki/Autoencoder">Auto encoder</a> is used for deep learning. Auto encoder extract characteristics of data through
+unsupervised learning. This is a kind of newral network. By using an auto encoder, you don&rsquo;t have to
+be in trouble with choicing extracting algorithm, or doing yourself. Therefore, in deepleanring field,
+this algorithm is used very actively. There are many implementation such as Python or Java, which are
+used in machine learning frequently, but I cannot find this in nodejs. So this weekend, I wrote autoencoder in nodejs.</p>
+
+<!-- more -->
+
+
+<p>When I started writing this code, I referred <a href="https://github.com/yusugomori/DeepLearning">@yusugomori/DeepLearning</a>.
+I would like to take this opportunity to express my appreciation and gratitude to him for his great code.</p>
+
+<p><a href="https://github.com/Lewuathe/n42/blob/master/lib/dA.js">GitHub source</a></p>
+
+<p>The major linear algebra library is <a href="http://sylvester.jcoglan.com/">sylvelster</a> in JavaScript. This is simple and user friendly
+library. So if you cannot decide which library you should use in JavaScript, I recommend sylvester.</p>
+
+<p>```js
+var Matrix = require(&lsquo;sylvester&rsquo;).Matrix;
+var Vector = require(&lsquo;sylvester&rsquo;).Vector;
+var utils  = require(&lsquo;./utils.js&rsquo;);
+var assert = require(&lsquo;assert&rsquo;);
+var generator = require(&lsquo;box-muller&rsquo;);</p>
+
+<p>function dA(input, nVisible, nHidden, W, hBias, vBias) {</p>
+
+<pre><code>var self = this;
+self.input    = input;
+self.nVisible = nVisible;
+self.nHidden  = nHidden;
+// Initialize weight parameter
+self.W     = (W != undefined)? W : Matrix.Random(nVisible, nHidden);
+
+// Initialize hidden bias parameters
+self.hBias = (hBias != undefined)? hBias : Vector.Zero(nHidden);
+
+// Initialize visual bias parameters
+self.vBias = (vBias != undefined)? vBias : Vector.Zero(nVisible);
+
+self.wPrime = self.W.transpose();
+</code></pre>
+
+<p>}</p>
+
+<p>dA.prototype.getCorruptedInput = function(input, corruptionLevel) {</p>
+
+<pre><code>// Return noised data
+assert.isTrue(corruptionLevel &lt; 1);
+noised = [];
+for (var i = 0; i &lt; input.rows(); i++) {
+    noised.push([]);
+    for (var j = 0; j &lt; input.cols(); j++) {
+        // generator returns sampling value according to regular gaussian distribution
+        noised[i].push((generator() * corruptionLevel + 1.0) * input.e(i+1, j+1));;
+    }
+}
+return $M(noised);
+</code></pre>
+
+<p>}</p>
+
+<p>dA.prototype.getHiddenValues = function(input) {</p>
+
+<pre><code>var self = this;
+// Calculate plus weight
+var rowValues = input.x(self.W);
+return utils.sigmoid(utils.plusBias(rowValues, self.hBias));
+</code></pre>
+
+<p>}</p>
+
+<p>dA.prototype.getReconstructedInput = function(hidden) {</p>
+
+<pre><code>var self = this;
+var rowValues = hidden.x(self.W.transpose());
+return utils.sigmoid(utils.plusBias(rowValues, self.vBias));
+</code></pre>
+
+<p>}</p>
+
+<p>dA.prototype.train = function(lr, corruptionLevel, input) {</p>
+
+<pre><code>var self = this;
+self.x = (input != undefined)? input : self.input;
+
+var x = self.x;
+// Noised data
+var tildeX = self.getCorruptedInput(x, corruptionLevel);
+var y = self.getHiddenValues(tildeX);
+var z = self.getReconstructedInput(y);
+
+// Below this line, backpropagation algorithm is used
+var lH2 = x.subtract(z);
+var sigma = lH2.x(self.W);
+var lH1 = [];
+for (var i = 0; i &lt; sigma.rows(); i++) {
+    lH1.push([]);
+    for (var j = 0; j &lt; sigma.cols(); j++) {
+        lH1[i].push(sigma.e(i+1, j+1) * y.e(i+1, j+1) * (1 - y.e(i+1, j+1)));
+    }
+}
+lH1 = $M(lH1);
+
+
+var lW = tildeX.transpose().x(lH1).add(lH2.transpose().x(y));
+
+self.W = self.W.add(lW.x(lr));
+
+
+self.vBias = self.vBias.add(utils.mean(lH2, 0).x(lr));
+self.hBias = self.hBias.add(utils.mean(lH1, 0).x(lr));
+</code></pre>
+
+<p>}</p>
+
+<p>dA.prototype.reconstruct = function(x) {</p>
+
+<pre><code>var self = this;
+var y = self.getHiddenValues(x);
+var z = self.getReconstructedInput(y);
+return z
+</code></pre>
+
+<p>}
+```</p>
+
+<h2>Traning and result</h2>
+
+<p>Try auto encoder!!</p>
+
+<p>```
+var data = [</p>
+
+<pre><code>        [1.0, 1.0, 1.0],
+        [1.0, 1.0, 0.0],
+        [1.0, 0.0, 1.0],
+        [0.0, 1.0, 1.0],
+        [1.0, 0.0, 0.0],
+        [0.0, 0.0, 1.0],
+        [0.0, 1.0, 0.0],
+        [0.0, 0.0, 0.0],
+</code></pre>
+
+<p>];</p>
+
+<p>var da = new dA($M(data), 3, 2);</p>
+
+<p>for (var i = 0; i &lt; 1000; i++) {</p>
+
+<pre><code>// 0.1 is learning rate which is used gradient decent
+// 0.02 is standard deviation which is used for add noise to original data
+da.train(0.1, 0.02);
+</code></pre>
+
+<p>}</p>
+
+<p>da.reconstruct($M([[1.0, 1.0, 0.0], [0.0, 0.0, 1.0], [0.0, 1.0, 0.0]]));</p>
+
+<p>/<em> <br/>
+ *   Returns
+ *   [0.5055820272991076, 0.9979837957439818, 0.007330556962859083] <br/>
+ *   [0.5042481334395964, 0.006342602394604374, 0.9970156469919944]
+ *   [0.5055017563352926, 0.9979783271177022, 0.007473069891271281]
+ *
+ </em>/</p>
+
+<p>```</p>
+
+<p>In general, this auto encoder looks like working properly. I think the error of difference between original data
+and reconstructed data was induced by below two points.</p>
+
+<ul>
+<li>Lack of divergence of training data</li>
+<li>Parameter tuning</li>
+</ul>
+
+
+<p>I didn&rsquo;t write many training examples. So in spite of many decent times, the parameters
+cannot be updated properly. And I skipped parameter tuning completly :)</p>
+
+<h2>Deep learning module</h2>
+
+<p>I will make a deep learning module which uses this auto encoder. Please keep follow <a href="https://github.com/Lewuathe/n42">n42</a>!!</p>
+]]></content>
+  </entry>
+  
+</feed>

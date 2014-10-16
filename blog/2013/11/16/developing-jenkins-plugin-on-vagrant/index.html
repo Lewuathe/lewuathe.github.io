@@ -1,0 +1,293 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Developing Jenkins Plugin on Vagrant - The first cry of Atom</title>
+  <meta name="author" content="Kai Sasaki">
+
+  
+  <meta name="description" content="Developing Jenkins Plugin on Vagrant written Nov 16th, 2013 in Jenkins, Ubuntu, Vagrant Recently I investigate the scalability of Jenkins. In my &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://lewuathe.com/blog/2013/11/16/developing-jenkins-plugin-on-vagrant">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-44055098-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Developing Jenkins Plugin on Vagrant</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-11-16T21:09:00+09:00" pubdate data-updated="true">Nov 16<span>th</span>, 2013</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/jenkins/'>Jenkins</a>, <a class='category' href='/blog/categories/ubuntu/'>Ubuntu</a>, <a class='category' href='/blog/categories/vagrant/'>Vagrant</a>
+  
+</span>
+
+
+        </div>
+        <p>Recently I investigate the scalability of Jenkins. In my idea, I want to make hot standby Jenkins server with NFS. So the plugins which enable us to do that are required. And for my study, I decided to develop on Vagrant and VirtualBox. It costs me very little because there is no need to get real server.  So in this post, I will describe how to set up your jenkins plugin environment on your vagrant Ubuntu.</p>
+
+<h2>Start vagrant</h2>
+
+<p>My <code>Vagrantfile</code> is below. Before this, you should download precise64 box on vagrant <a href="http://www.vagrantbox.es/">site</a></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># -*- mode: ruby -*-
+</span><span class='line'># vi: set ft=ruby :
+</span><span class='line'>
+</span><span class='line'>Vagrant.configure("2") do |config|
+</span><span class='line'>  # Every Vagrant virtual environment requires a box to build off of.
+</span><span class='line'>  config.vm.box = "ubuntu"
+</span><span class='line'>
+</span><span class='line'>  # Create a forwarded port mapping which allows access to a specific port
+</span><span class='line'>  # within the machine from a port on the host machine. In the example below,
+</span><span class='line'>  # accessing "localhost:8080" will access port 80 on the guest machine.
+</span><span class='line'>  config.vm.network :forwarded_port, guest: 8080, host: 8080
+</span><span class='line'>
+</span><span class='line'> end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Jenkins plugin server starts on port 8080. So you need to write guest port 8080. Host port can be written any number.
+And start vagrant.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ vagrant up</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Set up maven3</h2>
+
+<p>Jenkins plugins are build with Maven. In this time, Maven3 can build sample plugin easily, so I recommend that you download maven3.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo apt-get install maven</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Write settings.xml</h2>
+
+<p>Write settings.xml as below.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;settings&gt;
+</span><span class='line'>  &lt;pluginGroups&gt;
+</span><span class='line'>    &lt;pluginGroup&gt;org.jenkins-ci.tools&lt;/pluginGroup&gt;
+</span><span class='line'>  &lt;/pluginGroups&gt;
+</span><span class='line'>
+</span><span class='line'>  &lt;profiles&gt;
+</span><span class='line'>    &lt;!-- Give access to Jenkins plugins --&gt;
+</span><span class='line'>    &lt;profile&gt;
+</span><span class='line'>      &lt;id&gt;jenkins&lt;/id&gt;
+</span><span class='line'>      &lt;activation&gt;
+</span><span class='line'>        &lt;activeByDefault&gt;true&lt;/activeByDefault&gt; &lt;!-- change this to false, if you don't like to have it on per default --&gt;
+</span><span class='line'>      &lt;/activation&gt;
+</span><span class='line'>      &lt;repositories&gt;
+</span><span class='line'>        &lt;repository&gt;
+</span><span class='line'>          &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
+</span><span class='line'>          &lt;url&gt;http://repo.jenkins-ci.org/public/&lt;/url&gt;
+</span><span class='line'>        &lt;/repository&gt;
+</span><span class='line'>      &lt;/repositories&gt;
+</span><span class='line'>      &lt;pluginRepositories&gt;
+</span><span class='line'>        &lt;pluginRepository&gt;
+</span><span class='line'>          &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
+</span><span class='line'>          &lt;url&gt;http://repo.jenkins-ci.org/public/&lt;/url&gt;
+</span><span class='line'>        &lt;/pluginRepository&gt;
+</span><span class='line'>      &lt;/pluginRepositories&gt;
+</span><span class='line'>    &lt;/profile&gt;
+</span><span class='line'>  &lt;/profiles&gt;
+</span><span class='line'>  &lt;mirrors&gt;
+</span><span class='line'>    &lt;mirror&gt;
+</span><span class='line'>      &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
+</span><span class='line'>      &lt;url&gt;http://repo.jenkins-ci.org/public/&lt;/url&gt;
+</span><span class='line'>      &lt;mirrorOf&gt;m.g.o-public&lt;/mirrorOf&gt;
+</span><span class='line'>    &lt;/mirror&gt;
+</span><span class='line'>  &lt;/mirrors&gt;
+</span><span class='line'>&lt;/settings&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>JDK!!</h2>
+
+<p>I failed to create my plugin in this time bacause of lack of JDK. Ubuntu 12.04 LTS doesn&rsquo;t have JDK in own image. You have to install it.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ sudo apt-get install default-jdk</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Build plugin</h2>
+
+<p>Building plugin with maven command.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mvn install</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And demonstrate your plugin.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mvn hpi:run</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can see Jenkins web UI on <a href="http://localhost:8080/jenkins">http://localhost:8080/jenkins</a> unless maven command has not exit.
+So now, I can get multi Jenkins server for mutual mount on NFS. My Jenkins study has been continued.</p>
+
+
+        <hr class="divider-short"/>
+        
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2013/11/10/nu-li-falseli-you/" title="Previous Post: 頑張る理由">&laquo; Previous: 頑張る理由</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2013/11/22/maifalseriteiripoto/" title="Next Post: マイノリティ・リポート">Next: マイノリティ・リポート &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/Lewuathe"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/Lewuathe"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

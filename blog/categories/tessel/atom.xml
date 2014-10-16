@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Tessel | The first cry of Atom]]></title>
+  <link href="http://lewuathe.com/blog/categories/tessel/atom.xml" rel="self"/>
+  <link href="http://lewuathe.com/"/>
+  <updated>2014-10-12T21:50:29+09:00</updated>
+  <id>http://lewuathe.com/</id>
+  <author>
+    <name><![CDATA[Kai Sasaki]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Hack Tessel!]]></title>
+    <link href="http://lewuathe.com/blog/2014/01/09/hack-tessel/"/>
+    <updated>2014-01-09T21:25:00+09:00</updated>
+    <id>http://lewuathe.com/blog/2014/01/09/hack-tessel</id>
+    <content type="html"><![CDATA[<p><meta property=”og:image” content=”http://lewuathe.com/images/posts/2014-01-09-tessel-first/bootstrap_tessel.jpg” /></p>
+
+<p>Yesterday, I got a <a href="http://tessel.io/">tessel</a>. With twists and turns, I overcome some obstacles for hacking this tiny but not little possibility board. So writing this post.</p>
+
+<p>First and unfortunately, these client modules are only used for beta testers now.
+So these are not opend yet. Please be understanding of this point.</p>
+
+<!-- more -->
+
+
+<h2>Environment</h2>
+
+<ul>
+<li>MacOSX 10.9.1</li>
+<li>git 1.8.3.4 (Apple Git-47)</li>
+<li>java 1.7.0_45</li>
+<li>node v0.10.16 (with nvm)</li>
+</ul>
+
+
+<h2>Install drivers for OSX</h2>
+
+<p><code>
+$ brew install libusb
+$ brew install pkg-config
+</code></p>
+
+<p>In order to connect tessel with USB, these drivers are needed.
+After installing the drivers, you can use <code>tessel</code> command. This command is used for
+connecting tessel server or pushing your codes, etc. So your development cycle of tessel
+will be work around this command. It&rsquo;s very important.</p>
+
+<p>```
+$ tessel
+Tessel CLI
+Usage:
+   tessel <filename>
+   tessel list
+   tessel logs
+   tessel push <filename> [-r &lt;ip[:port>]] [-s] [-b <file>] [-a [options]]</p>
+
+<pre><code>      -r wireless pushing of code (inactive at the moment)
+      -s saves the file that is getting passed to Tessel as builtin.tar.gz
+      -b pushes a binary
+      -a passes arguments to tessel scripts
+</code></pre>
+
+<p>   tessel wifi <ssid> <pass> <security (wep/wap/wap2, wap2 by default)>
+   tessel wifi <ssid></p>
+
+<pre><code>      connects to a wifi network without a password
+</code></pre>
+
+<p>   tessel wifi</p>
+
+<pre><code>      see current wifi status
+</code></pre>
+
+<p>   tessel stop
+   tessel dfu-restore &lt;firmware.bin></p>
+
+<pre><code>      upload new firmware when in DFU mode
+</code></pre>
+
+<p>```</p>
+
+<h2>Connecting</h2>
+
+<p>After installing these prerequisites, you can connect tessel to your PC with USB cable.
+For confirming the connection between tessel and my MAC, <code>verbose</code> subcommand is useful.</p>
+
+<p><code>
+% tessel verbose
+TESSEL? No Tessel found, waiting...
+</code></p>
+
+<p>Umm?. I cannot connect. No matter how long I wait, there are no sign of connecting.
+So here is answer.</p>
+
+<p><img src="/images/posts/2014-01-09-tessel-first/bootstrap_tessel.jpg" alt="Boostrap" /></p>
+
+<p>I have to wait for the LED lamps off. I cannot understand why these waiting is necessary now, but anyway after the LEDs are off, I can connect to the tessel board. Great!</p>
+
+<p><code>
+% tessel verbose
+TESSEL! Connected to /dev/cu.usbmodem1421.
+H { date: 'Jan  3 2014', time: '17:50:43' }
+l Tessel, by Technical Machine &lt;http://technical.io&gt;
+l Firmware version: e1b13fc
+l Runtime version: 7d86665
+l Build time: Jan  3 2014 17:50:43
+l Board version: 2
+l Board serial: 428-0-4026571312-1578983944
+d
+l Run 'tessel push &lt;path to code&gt;' from the command line to push code.
+w Connecting to last available network...
+w CC3000 firmware version: 1.24
+W { cc3000firmware: '1.24' }
+w CC3000 firmware version: 1.24
+W { cc3000firmware: '1.24' }
+w Couldn't connect to saved network.
+w
+W { connected: 0, ip: null }
+L 1
+d Ready.
+</code></p>
+
+<h2>Demo</h2>
+
+<p>Tessel has LED lamps as default. So I run sample code which can blink these LED.
+It&rsquo;s below.</p>
+
+<p>```
+var tessel = require(&lsquo;tessel&rsquo;);</p>
+
+<p>// high means flashing
+var led1 = tessel.led(1).output().high();
+// low means going off
+var led2 = tessel.led(2).output().low();</p>
+
+<p>var i = 0;
+setInterval(function () {
+  console.log(i++);
+  // Switching on and off this function
+  led1.toggle();
+  led2.toggle();
+}, 100);
+```</p>
+
+<p>And pushing it.</p>
+
+<p><code>
+$ tessel push index.js
+</code></p>
+
+<iframe width="420" height="315" src="http://lewuathe.com//www.youtube.com/embed/aKLGnU9wsTo" frameborder="0" allowfullscreen></iframe>
+
+
+<p><strong>BLINK!!!</strong></p>
+
+<h2>More module</h2>
+
+<p>There are many <a href="http://tessel.io/modules">modules</a> with tessel. For humidity, SDCard, Wifi, GPS, Serve etc.
+So I want to try these modules more, and expand the possibility of embedded JavaScript.</p>
+]]></content>
+  </entry>
+  
+</feed>

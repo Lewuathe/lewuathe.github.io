@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Category: Ubuntu - The first cry of Atom</title>
+  <meta name="author" content="Kai Sasaki">
+
+  
+  <meta name="description" content="Category: Ubuntu">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://lewuathe.comblog/categories/ubuntu">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-44055098-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <div class="all-posts">
+  <div class="container">
+    <div class="row">
+      <div class="list-title col-md-offset-3 col-md-6">
+        <h4>Posts in Ubuntu</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="article-list">
+    <div class="container">
+      
+        
+        <div class="row">
+          <div class="col-md-offset-3 col-md-6">
+            <article>
+  <h2><a href="/blog/2013/11/16/developing-jenkins-plugin-on-vagrant/">Developing Jenkins Plugin on Vagrant</a></h2>
+  
+  <p>
+    <p>Recently I investigate the scalability of Jenkins. In my idea, I want to make hot standby Jenkins server with NFS. So the plugins which enable us to do that are required. And for my study, I decided to develop on Vagrant and VirtualBox. It costs me very little because there is no need to get real server.  So in this post, I will describe how to set up your jenkins plugin environment on your vagrant Ubuntu.</p>
+
+<h2>Start vagrant</h2>
+
+<p>My <code>Vagrantfile</code> is below. Before this, you should download precise64 box on vagrant <a href="http://www.vagrantbox.es/">site</a></p>
+
+<p>```</p>
+
+<h1>&ndash;<em>&ndash; mode: ruby &ndash;</em>&ndash;</h1>
+
+<h1>vi: set ft=ruby :</h1>
+
+<p>Vagrant.configure(&ldquo;2&rdquo;) do |config|
+  # Every Vagrant virtual environment requires a box to build off of.
+  config.vm.box = &ldquo;ubuntu&rdquo;</p>
+
+<p>  # Create a forwarded port mapping which allows access to a specific port
+  # within the machine from a port on the host machine. In the example below,
+  # accessing &ldquo;localhost:8080&rdquo; will access port 80 on the guest machine.
+  config.vm.network :forwarded_port, guest: 8080, host: 8080</p>
+
+<p> end
+```
+Jenkins plugin server starts on port 8080. So you need to write guest port 8080. Host port can be written any number.
+And start vagrant.</p>
+
+<p><code>
+$ vagrant up
+</code></p>
+
+<h2>Set up maven3</h2>
+
+<p>Jenkins plugins are build with Maven. In this time, Maven3 can build sample plugin easily, so I recommend that you download maven3.</p>
+
+<p><code>
+$ sudo apt-get install maven
+</code></p>
+
+<h2>Write settings.xml</h2>
+
+<p>Write settings.xml as below.</p>
+
+<p>```
+<settings>
+  <pluginGroups></p>
+
+<pre><code>&lt;pluginGroup&gt;org.jenkins-ci.tools&lt;/pluginGroup&gt;
+</code></pre>
+
+<p>  </pluginGroups></p>
+
+<p>  <profiles></p>
+
+<pre><code>&lt;!-- Give access to Jenkins plugins --&gt;
+&lt;profile&gt;
+  &lt;id&gt;jenkins&lt;/id&gt;
+  &lt;activation&gt;
+    &lt;activeByDefault&gt;true&lt;/activeByDefault&gt; &lt;!-- change this to false, if you don't like to have it on per default --&gt;
+  &lt;/activation&gt;
+  &lt;repositories&gt;
+    &lt;repository&gt;
+      &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
+      &lt;url&gt;http://repo.jenkins-ci.org/public/&lt;/url&gt;
+    &lt;/repository&gt;
+  &lt;/repositories&gt;
+  &lt;pluginRepositories&gt;
+    &lt;pluginRepository&gt;
+      &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
+      &lt;url&gt;http://repo.jenkins-ci.org/public/&lt;/url&gt;
+    &lt;/pluginRepository&gt;
+  &lt;/pluginRepositories&gt;
+&lt;/profile&gt;
+</code></pre>
+
+<p>  </profiles>
+  <mirrors></p>
+
+<pre><code>&lt;mirror&gt;
+  &lt;id&gt;repo.jenkins-ci.org&lt;/id&gt;
+  &lt;url&gt;http://repo.jenkins-ci.org/public/&lt;/url&gt;
+  &lt;mirrorOf&gt;m.g.o-public&lt;/mirrorOf&gt;
+&lt;/mirror&gt;
+</code></pre>
+
+<p>  </mirrors>
+</settings>
+```</p>
+
+<h2>JDK!!</h2>
+
+<p>I failed to create my plugin in this time bacause of lack of JDK. Ubuntu 12.04 LTS doesn&rsquo;t have JDK in own image. You have to install it.</p>
+
+<p><code>
+$ sudo apt-get install default-jdk
+</code></p>
+
+<h2>Build plugin</h2>
+
+<p>Building plugin with maven command.</p>
+
+<p><code>
+$ mvn install
+</code></p>
+
+<p>And demonstrate your plugin.</p>
+
+<p><code>
+$ mvn hpi:run
+</code></p>
+
+<p>You can see Jenkins web UI on <a href="http://localhost:8080/jenkins">http://localhost:8080/jenkins</a> unless maven command has not exit.
+So now, I can get multi Jenkins server for mutual mount on NFS. My Jenkins study has been continued.</p>
+
+  </p>
+  <span class="meta">
+    written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2013-11-16T21:09:00+09:00" pubdate data-updated="true">Nov 16<span>th</span>, 2013</time>
+    
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/jenkins/'>Jenkins</a>, <a class='category' href='/blog/categories/ubuntu/'>Ubuntu</a>, <a class='category' href='/blog/categories/vagrant/'>Vagrant</a>
+  
+</span>
+
+
+  </span>
+
+  
+</article>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/Lewuathe"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/Lewuathe"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>

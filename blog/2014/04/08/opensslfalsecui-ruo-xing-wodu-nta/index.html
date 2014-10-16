@@ -1,0 +1,343 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Heart Bleedを読んだ - The first cry of Atom</title>
+  <meta name="author" content="Kai Sasaki">
+
+  
+  <meta name="description" content="Heart Bleedを読んだ written Apr 8th, 2014 in OpenSSL, Security 今日の日本時間13:00頃、OpenSSLに致命的なバグがあることがわかった。全世界で動いているSSLプロセスが影響を受ける。
+簡単に言うと、 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://lewuathe.com/blog/2014/04/08/opensslfalsecui-ruo-xing-wodu-nta">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="The first cry of Atom" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-44055098-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+  <body>
+    <a href="/" class="home-icon">
+      <img src="/images/home.png"/>
+    </a>
+
+    <article role="article" class="full-single-article">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h1>Heart Bleedを読んだ</h1>
+        <div class="meta">
+          written 
+
+
+
+
+
+
+
+
+  
+
+
+
+<time datetime="2014-04-08T21:06:12+09:00" pubdate data-updated="true">Apr 8<span>th</span>, 2014</time>
+          
+
+in
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/openssl/'>OpenSSL</a>, <a class='category' href='/blog/categories/security/'>Security</a>
+  
+</span>
+
+
+        </div>
+        <p>今日の日本時間13:00頃、OpenSSLに致命的なバグがあることがわかった。全世界で動いているSSLプロセスが影響を受ける。
+簡単に言うと、メモリ上にある任意のデータを漏洩する可能性があるバグだ。
+このバグはもう2年も前からあったらしいがGoogle Security TeamのNeel Mentaに見つけられたのはつい最近で、パッチがあたったのは十数時間前だ。</p>
+
+<p><a href="https://github.com/openssl/openssl/commit/96db9023b881d7cd9f379b0c154650d6c108e9a3">Add heartbeat extension bounds check.</a></p>
+
+<p>基本的には<a href="http://heartbleed.com/">heartbleed.com</a>に詳細が記載されていて、危険なOpenSSLのバージョン、ディストリビューションが書いてある。
+対応方法も書いてある。今回はエンジニアとして、コードを読んでどういうバグだったのか理解してみたかったので書いてみる。</p>
+
+<!-- more -->
+
+
+<h2>問題の箇所</h2>
+
+<p>修正箇所である<code>ssl/d1_both.c</code>の該当関数を見てみる。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">int</span>
+</span><span class='line'><span class="nf">dtls1_process_heartbeat</span><span class="p">(</span><span class="n">SSL</span> <span class="o">*</span><span class="n">s</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>    <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">s</span><span class="o">-&gt;</span><span class="n">s3</span><span class="o">-&gt;</span><span class="n">rrec</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">*</span><span class="n">pl</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">hbtype</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">payload</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">padding</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span> <span class="cm">/* Use minimum padding */</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>heartbeatという機能の詳しいことは調べられていないけれどどうやらクライアントーサーバ型の機能を提供するものらしい。
+つまり何らかのリクエストを受け取ってレスポンスを返すようなサービスを提供するものらしい。<code>dtls1_process_heartbeat</code>で大事なのは
+ポインタ<code>p</code>だ。これはリクエストデータを受け取って格納している。このリクエストデータは構造体になっていて、以下のように記述されている。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="k">typedef</span> <span class="k">struct</span> <span class="n">ssl3_record_st</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">type</span><span class="p">;</span>               <span class="cm">/* type of record */</span>
+</span><span class='line'>        <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">length</span><span class="p">;</span>    <span class="cm">/* How many bytes available */</span>
+</span><span class='line'>        <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">off</span><span class="p">;</span>       <span class="cm">/* read/write offset into &#39;buf&#39; */</span>
+</span><span class='line'>        <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">data</span><span class="p">;</span>    <span class="cm">/* pointer to the record data */</span>
+</span><span class='line'>        <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">input</span><span class="p">;</span>   <span class="cm">/* where the decode bytes are */</span>
+</span><span class='line'>        <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">comp</span><span class="p">;</span>    <span class="cm">/* only used with decompression - malloc()ed */</span>
+</span><span class='line'>        <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">epoch</span><span class="p">;</span>    <span class="cm">/* epoch number, needed by DTLS1 */</span>
+</span><span class='line'>        <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">seq_num</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span> <span class="cm">/* sequence number, needed by DTLS1 */</span>
+</span><span class='line'>    <span class="p">}</span> <span class="n">SSL3_RECORD</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>data</code>が実際の受け取っているデータ。このデータは先頭1byteがheart beatのtypeを表し、次の2byteがそのリクエストの長さを表すような
+データになっている。これを処理するコードが以下。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cm">/* Read type and payload length first */</span>
+</span><span class='line'><span class="n">hbtype</span> <span class="o">=</span> <span class="o">*</span><span class="n">p</span><span class="o">++</span><span class="p">;</span>
+</span><span class='line'><span class="n">n2s</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">payload</span><span class="p">);</span>
+</span><span class='line'><span class="n">pl</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>hbtype</code>に先頭1byteのheart beatのtypeが格納される。そしてn2sは次の2byteを格納するためのマクロで以下のように定義されている。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cm">/* straight from the openssl source */</span>
+</span><span class='line'><span class="cp">#define n2s(c,s)    ((s=(((unsigned int)(c[0]))&lt;&lt; 8)| (((unsigned int)(c[1]))   )),c+=2)</span>
+</span><span class='line'><span class="cp">#define s2n(s,c)    ((c[0]=(unsigned char)(((s)&gt;&gt; 8)&amp;0xff), c[1]=(unsigned char)(((s)    )&amp;0xff)),c+=2)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>s2n</code>も後で使うことになる。つまり変数<code>payload</code>にはクライアントから受け取ったデータに設定されている、<code>length</code>を読み取って格納している。
+ここでpayloadには実際に受け取ったデータの長さをチェックして格納されたわけではなく、あくまでもユーザクライアントが送ってきたlengthをそのまま設定していることを覚えておいてほしい。</p>
+
+<p>さて次にレスポンスを返す部分のコードだ。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="n">buffer</span><span class="p">,</span> <span class="o">*</span><span class="n">bp</span><span class="p">;</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">r</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/* Allocate memory for the response, size is 1 byte</span>
+</span><span class='line'><span class="cm"> * message type, plus 2 bytes payload length, plus</span>
+</span><span class='line'><span class="cm"> * payload, plus padding</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="n">buffer</span> <span class="o">=</span> <span class="n">OPENSSL_malloc</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">payload</span> <span class="o">+</span> <span class="n">padding</span><span class="p">);</span>
+</span><span class='line'><span class="n">bp</span> <span class="o">=</span> <span class="n">buffer</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>bufferはレスポンスを返すための実体となるが、ここでの大きさはtype用の1byteとlength用の2byte、そして実データの長さpayloadで設定された大きさ
+に余白(これは16byteに設定されている)を合わせて大きさを確保している。実際に走査するときは<code>bp</code>を通してとなる。
+これに対してレスポンスデータを構築してやる。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cm">/* Enter response type, length and copy payload */</span>
+</span><span class='line'><span class="o">*</span><span class="n">bp</span><span class="o">++</span> <span class="o">=</span> <span class="n">TLS1_HB_RESPONSE</span><span class="p">;</span>
+</span><span class='line'><span class="n">s2n</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">bp</span><span class="p">);</span>
+</span><span class='line'><span class="n">memcpy</span><span class="p">(</span><span class="n">bp</span><span class="p">,</span> <span class="n">pl</span><span class="p">,</span> <span class="n">payload</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>リクエストデータと同じようにまず先頭1byteにheart beatのtypeを設定してやる。<code>TLS1_HB_RESPONSE</code>だ。そして先程の <code>n2s</code>の逆を行うマクロ<code>s2n</code>を利用する。
+つまり<code>payload</code>に設定されている値を<code>bp</code>の次の2byteに設定する。そして最後の行がキモだ。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">memcpy</span><span class="p">(</span><span class="n">bp</span><span class="p">,</span> <span class="n">pl</span><span class="p">,</span> <span class="n">payload</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>先ほどのリクエストから得た<code>payload</code>分の長さのデータを<code>pl</code>から<code>bp</code>にコピーしている。これでレスポンスデータを構築したことになる。
+これをユーザクライアントに返すことになるわけだ。</p>
+
+<p>さて今回見つかったバグは既にここまでのコードの中にある。</p>
+
+<h2>バグ</h2>
+
+<p>注意して欲しいのは変数<code>payload</code>は<strong>ユーザから与えられたデータ</strong>ということだ。つまりだれでも勝手に設定できるため、<strong>正しい値が入っていない</strong>可能性がある。
+この場合の正しさというのはリクエストデータの大きさを正しく反映しているかどうかということだ。
+もしこの<code>payload</code>変数(受け取ったデータの先頭から2byteの値)がデータの長さを正しく反映していない、特に実際のデータ長よりも
+長い値が<code>payload</code>に設定されているとしたらどうだろう。レスポンスデータを作る以下のコードは正しく動作するだろうか。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">memcpy</span><span class="p">(</span><span class="n">bp</span><span class="p">,</span> <span class="n">pl</span><span class="p">,</span> <span class="n">payload</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>正しく動作しない。正確にいうと動作に特に影響はないが、余計なものを送ってしまう可能性がある。ここに脆弱性が生まれる。実際の<code>pl</code>に入っているデータは<code>payload</code>に設定されている値よりも短いため、<code>pl</code>から連続したメモリ領域を<code>bp</code>に
+コピーしてしまう。そして、このあふれた領域にSSL秘密鍵のデータが載っていたらどうだろうか。OpenSSLプロセスであれば秘密鍵のデータをプロセスメモリ上に乗せているのは
+十分考えられることだ。
+このコピーされてしまったSSL秘密鍵のデータは<code>bp</code>を経由してそのままクライアントの手にわたってしまうことになる。
+もちろん、最近のコンピュータはプロセスあたりのヒープ領域が大きいため、ただちに秘密鍵の値をコピーしてしまうことにはならないが、やはり可能性はゼロではない。
+OpenSSLチームは以下のような修正を加えたパッチを配布している。</p>
+
+<h2>修正</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cm">/* Read type and payload length first */</span>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">16</span> <span class="o">&gt;</span> <span class="n">s</span><span class="o">-&gt;</span><span class="n">s3</span><span class="o">-&gt;</span><span class="n">rrec</span><span class="p">.</span><span class="n">length</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span> <span class="cm">/* silently discard */</span>
+</span><span class='line'>  <span class="n">hbtype</span> <span class="o">=</span> <span class="o">*</span><span class="n">p</span><span class="o">++</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">n2s</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">payload</span><span class="p">);</span>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">payload</span> <span class="o">+</span> <span class="mi">16</span> <span class="o">&gt;</span> <span class="n">s</span><span class="o">-&gt;</span><span class="n">s3</span><span class="o">-&gt;</span><span class="n">rrec</span><span class="p">.</span><span class="n">length</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span> <span class="cm">/* silently discard per RFC 6520 sec. 4 */</span>
+</span><span class='line'>  <span class="n">pl</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>安易にユーザの設定したpayload lengthを信用するのではなくチェックをおこなってる。読み取るまえにそもそもデータ長がゼロであれば捨てる。
+読み取ったあとも、実際のデータ長さよりも設定されているpayload lengthの方が大きい場合はリクエストを破棄するようにしている。
+これで本来読み取られてはいけない部分のデータがレスポンスとして返ることはない。
+至ってシンプルなFixだけれど、こういったものでも見逃すことはある。今回のように世界的に影響力のあるソフトウェアに対して優れたエンジニア達が
+メンテを行っていてもそうなのだ。自分がコードを書くときの戒めともしたい。</p>
+
+<p>以下を教訓としておこう。</p>
+
+<ul>
+<li>ちゃんと単体テストを書こう</li>
+<li>Cよりももっとsecureな言語を使おう</li>
+</ul>
+
+
+<p>参考: <a href="http://blog.existentialize.com/diagnosis-of-the-openssl-heartbleed-bug.html">Diagnosis of the OpenSSL Heartbleed Bug</a></p>
+
+
+        <hr class="divider-short"/>
+        
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+<hr class="divider-short"/>
+
+<div class="archive-link">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        
+          <a class="pull-left" href="/blog/2014/03/29/wen-quan-jin-nite/" title="Previous Post: 温泉津にて">&laquo; Previous: 温泉津にて</a>
+        
+
+        
+          <a class="pull-right" href="/blog/2014/04/10/patterns-about-bfs-in-commetitive-programming/" title="Next Post: Patterns about BFS in competitive programming">Next: Patterns about BFS in competitive programming &raquo;</a>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+    <footer id="footer" class="her-row">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1">
+  <a href="/"><h4>Home</h4></a>
+</div>
+
+<div class="col-md-2">
+  <div class="social-icon-list">
+    
+    <a href="https://twitter.com/Lewuathe"><img src="/images/glyphicons_social_31_twitter.png"/></a>
+    
+
+    
+    <a href="https://github.com/Lewuathe"><img src="/images/glyphicons_social_21_github.png"/></a>
+    
+
+    
+
+    
+  </div>
+</div>
+
+<div class="pull-right">
+  <h4>Powered by <a href="http://octopress.org/">Octopress</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</div>
+
+
+    </div>
+  </div>
+</footer>
+
+  </body>
+</html>
