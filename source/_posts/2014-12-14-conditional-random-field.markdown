@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Training Conditional Random Field"
-date: 2014-12-14 12:08:09 +0900
+date: 2014-12-16 12:08:09 +0900
 comments: true
 categories: ["Machine Learning", "CRF"]
 author: Kai Sasaki
@@ -10,10 +10,11 @@ author: Kai Sasaki
 This article is written as 17th entry of [Qiita machine learning advent calendar](http://qiita.com/advent-calendar/2014/machinelearning).
 
 Conditional random field, CRF, is a kind of discriminative model for sequential data. This model is used widely for labeling natural language sequences such as "I have a pen". There is a motivation to attach tags to this sequence. For example, "I have a pen" can be tagged as "I(Noun) have(Verb) a(Article) pen(Noun)". You can train CRF to predict these tags with given sequential data. CRF is not a forefront algorithm but its knowledges and notions included in CRF must be valuable for understanding a lot of types of probability models. In this entry I'd like to explain the training and prediction process which are used by CRF, especially linear chain CRF.
+<!-- more -->
 
 <div style="text-align:center"><img src ="/images/posts/2014-12-16-crf/crf.jpg" /></div>
 
-<!-- more -->
+
 
 # Model
 CRF is a discriminative model. This model is expressed as below formula.
