@@ -1,0 +1,24 @@
+---
+layout: post
+title: "Targets in 2015"
+date: 2015-01-06 08:10:46 +0900
+comments: true
+categories: ["Life", "Targets"]
+author: Kai Sasaki
+---
+
+This is my first post in 2015. There was a lot of things in last year and so will it this year.
+At the beginning of new year, I'd like to write down three targets I want to achieve.
+
+<!-- more -->
+
+## Deep Learning
+As this blog title is describing, I am very interested in artificial intelligence especially deep learning nowadays. I have kept learning deep learning algorithms and notions last year. Of course my first target is keep learning it but also my focus is now writing some codes to implement deep learning algorithms which runs efficiently. I hope I can create de fact implementation in this field. This is my first target.
+
+## Big Data
+At the end quarter of last year, I changed my field to analyzing big data and developing data infrastructure. I am a novice engineer in this field but I believe that accumulating small facts and knowledge will make me a great software engineer. The keywords are **"Realtime"**, **"Storage"**. With these knowledge and skills, I want to make my interests and skillset more broad and profound.
+
+## OSS Contribution
+So combining above two targets, oss contribution is the most reasonable option for me. There are a lot of implementations in which I am interested now. Above all machine learning libraries is good resource I should study and tackle to. The last target I set in this year is contributing open source software more and more. Now I am starting committing [Apache Spark](https://spark.apache.org/) and [Apache Storm](https://storm.apache.org/). These softwares are main targets I want to track and contribute to for the present.
+
+Of course these are only current goals which are set at the beginning of this year. There are enough possibility of changing my ultimate targets in the mid of 2015. But this is my thought now. I'll let you know good news about these targets at the end of this year. Thank you.

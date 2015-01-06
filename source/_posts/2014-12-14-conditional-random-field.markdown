@@ -136,7 +136,7 @@ $$
 
 $T(t, y_t)$ represents the max probability of specific observation. $S(t, y_t)$ represents the label which has the max probability in that position. Viterbi algorithm updates these formula through the sequence. This updating is done through sequential observations. Each labels has previous labels which give a max probability to current label. So eventually, we can obtain the labels which give a max probability by returning from the last observation to each previous ones.
 
-Forward-Backward algorithm and Viterbi algorithm look very complex. At first it was too hard for me to understand. That's the reason why I wrote this article. I have a plan to implement a linear chain CRF by myself. I'll write about it another chance. I hope thia post will help you understand the piece of CRF notions. Thank you.
+Forward-Backward algorithm and Viterbi algorithm look very complex. At first it was too hard for me to understand. That's the reason why I wrote this article. I have a plan to implement a linear chain CRF by myself. I'll write about it another chance. I hope this post will help you understand the piece of CRF notions. Thank you.
 
 
 # References
