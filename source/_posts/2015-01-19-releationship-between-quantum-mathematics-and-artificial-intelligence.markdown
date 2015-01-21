@@ -16,6 +16,8 @@ notions. What is car? Who are you? You can extract these essential concept of a 
 linear algebra, it is easy to understand eigen state. Have you ever heard of eigen vector or eigen value? These are almost same.
 A notion's essential can be found through the operation of calculating eigen state.
 
+![test](/images/posts/2015-01-19-scanamind/math.jpg)
+
 This is totally new concept as the way to know what the thing is. Almost all machine algorithms try to extract features from the
 thing itself. However, the approach of scanamind is different. It extracts features from the relationship between around things.
 I'd like to learn quantum mathematics and implement some algorithms as the format anyone can read and modify one. If you have any
