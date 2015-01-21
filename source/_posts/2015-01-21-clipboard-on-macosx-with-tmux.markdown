@@ -12,6 +12,14 @@ selected text to clipboard. But the number of keys you have to touch when you se
 annoying. By using reattach-to-user-namespace, you can copy any text from copy mode of tmux to mac clipboard.
 Below is the process.
 
+First you have to install reattach-to-user-namespace. If you have Homebrew, it is easy.
+
+```
+$ brew install reattach-to-user-namespace
+```
+
+Then write your tmux.conf below.
+
 ```
 # Use vim keybindings in copy mode
 setw -g mode-keys vi
