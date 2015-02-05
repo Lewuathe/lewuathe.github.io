@@ -8,7 +8,7 @@ author: Kai Sasaki
 ---
 
 Yesterday, I attended [this seminar](http://connpass.com/event/10510/), "An Introduction mathematics for all programmers".
-This seminar was held to exchange information each other who come from various type of fields. I gave a presentation about AutoEncoder which is used DeepLearning recently. I thought it is very attractive theme itself, but because of my lack of presentation skill to explain with simple words, some attendees cannot grasp whole notions. I'm so sorry and I'll
+This seminar was held to exchange information each other who come from various types of fields. I gave a presentation about AutoEncoder which is used in DeepLearning recently. I thought it is very attractive theme itself, but because of my lack of presentation skill to explain with simple words, some attendees cannot grasp whole notions. I'm so sorry and I'll
 do more practices toward next time.
 
 <!-- more -->
@@ -33,7 +33,7 @@ can be used after sessions. But I didn't know the fact this time :)
 <iframe src="//www.slideshare.net/slideshow/embed_code/44068064" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/junpeitsuji/maths4pj" title="「明日話したくなる「素数」のお話」第1回プログラマのための数学勉強会 #maths4pg " target="_blank">「明日話したくなる「素数」のお話」第1回プログラマのための数学勉強会 #maths4pg </a> </strong> from <strong><a href="//www.slideshare.net/junpeitsuji" target="_blank">Junpei Tsuji</a></strong> </div>
 </div>
 
-Lehman prediction problem is famous for its difficulty to solve and its relation to prime number distributions. But I didn't
+Riemann hypothesis problem is famous for its difficulty to solve and its relation to prime number distributions. But I didn't
 fully understand the importance of this problem. Why does solving this problem give us the mystery of prime numbers.
 The essence of this was explained through this power point, please check it out.
 
@@ -44,7 +44,7 @@ The essence of this was explained through this power point, please check it out.
 </div>
 
 It was the first time for me to see 4D object on 2D screen. Although I could not understand what 4D object is,
-the mapping logic that 4D object is transfered 2D space. I want to relearn technical terms appeared in this session later.
+the mapping logic that 4D object is transfered 2D space was so interesting for me. I want to relearn technical terms appeared in this session later.
 
 ## Deep Learning
 
