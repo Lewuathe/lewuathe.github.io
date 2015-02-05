@@ -7,7 +7,7 @@ categories: ["AWS", "Storm"]
 author: Kai Sasaki
 ---
 
-The other day, I released [storm deployment tool for QA and development](https://github.com/Lewuathe/storm-devenv), storm-devenv. I update this tool to create cluster on both EC2 and VirtualBox. VirtualBox of course provides us enough
+The other day, I released [storm deployment tool for QA and development](https://github.com/Lewuathe/storm-devenv), [storm-devenv](https://github.com/Lewuathe/storm-devenv). I update this tool to create cluster on both EC2 and VirtualBox. VirtualBox of course provides us enough
 power to check my storm patches is valid or not. But there are some cased when I want to check it on the environment which
 is more close to production's one. So it is EC2 for us. storm-devenv now supports EC2 deployment as on VirtualBox.
 
