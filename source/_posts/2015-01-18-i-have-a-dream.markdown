@@ -18,7 +18,7 @@ We bought an amazake and takoyaki from one of them. We sat by one table. For a w
 I found something strange to me.
 
 Yasukuni shrine is famous for the relationship with war criminals who are judged by the Allied.
-This shrine often becomes a cause of confliction between Chine and Japan. So this is a kind of symbol of confliction kept from
+This shrine often becomes a cause of confliction between China and Japan. So this is a kind of symbol of confliction kept from
 the before war. By a curious coincidence, we have a takoyaki and enjoyed talking at such place. We are simple colleague in one company,
 we are team to achieve our goals efficiently and resolve technological issued faced to our everyday. Is there any confliction between us? When I think carefully, the fact
 that we are enjoying to talk without care about the past of history is a wonderful thing. We, ordinary people, don't hope confliction
