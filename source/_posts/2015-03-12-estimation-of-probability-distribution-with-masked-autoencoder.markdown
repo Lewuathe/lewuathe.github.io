@@ -1,0 +1,55 @@
+---
+layout: post
+title: "Estimation of probability distribution with Masked autoencoder"
+date: 2015-03-12 21:18:14 +0900
+comments: true
+categories: ["Machine learning", "Deep learning"]
+author: Kai Sasaki
+---
+
+Autoencoder can extract various type of features from image sets. [As I have done this before](http://www.lewuathe.com/blog/2014/11/30/implement-random-feedback-neural-network/) with MNIST datasets, we can
+see this result with our eyes by making images which represent its weight parameter. Today I tried other type of autoencoder which is called **MADE(Masked Autoencoder for Distribution Estimation)**. This kind of autoencoder is published by [this paper](http://arxiv.org/abs/1502.03509).
+
+<!-- more -->
+
+Ordinal autoencoders such as Denoising autoencoder can detect some features from image sets. However these extraction process
+does not estimate the probability distribution of input images. If a network can estimate such distribution, network itself
+can generate a image after training process. So I implement MADE network and compare the extraction result from the images
+which is visualized with their weight parameters. The codes used this experiment are [here](https://github.com/Lewuathe/neurallib).
+
+## Denoising autoencoder
+
+First, I want to show the weight parameters of denoising autoencoder as gif animation. This autoencoder was trained
+MNIST 10000 datasets and calculated through 30 iterations. The transition of animation expresses each iteration.
+
+<div style="text-align:center">
+<img src="/images/posts/2015-03-12-made-network/dae-weights.gif" />
+</div>
+
+DAE(Denoising autoencoder) seems to be able to extract features from training image sets to some extent. However these features looks based on only local information
+of each image such as a line or curve. Although all numbers(0~9) are of course composed of these features, a DAE cannot retain
+global features which are composed of these local feature itself. This result does not depend on the length of iterations.
+
+## MADE network
+
+Next here is MADE network weight parameters. This network was also trained with MNIST 10000 datasets and calculated through
+30 iterations.
+
+<div style="text-align:center">
+<img src="/images/posts/2015-03-12-made-network/made-weights.gif" />
+</div>
+
+With this weight parameters, we can confirm the fact that each weight represents exactly a type of number. MADE network can detect more complex features than normal denoising autoencoder can. We can predict each number features with only one MADE network. This fact indicates MADE can extract some type of global features from training sets. Moreover this process is unsupervised learning as denoising autoencoder does.
+
+## Consideration
+
+I don't fully figure out the theory which supports this result. But I want to list up the possible answers I can come up with now.
+
+MADE trains various type probability conditions with masked network connections. It corresponds to training various type probability models in its own network. Each numbers might have some type of probability structure. MADE can extract and estimate this structure through training a lot of probability distributions. Training a lot of models in one network cannot be done with one simple denoising autoencoder.
+
+And also, I want to refer the efficiency of MADE network. All codes I added this time are the process which create masks matrix
+and multiple to each weight parameters. Of course these addition increases the calculation complexity. But logic is hardly ever changed. This is up to the simpicity of MADE network itself. From the view point of performance, I want to compare at next time.
+
+Anyway, MADE network has a possibility of extracting global feature from image set. I'll do some experiments especially about in order to define new features which can be used general images in more broad fields.
+
+Thank you.
