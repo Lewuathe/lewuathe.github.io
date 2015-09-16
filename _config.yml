@@ -4,10 +4,12 @@
 
 url: http://lewuathe.com
 title: The first cry of Atom
-subtitle: The people who are crazy enough to think thay can change the world, are the ones who do
+#subtitle: The people who are crazy enough to think thay can change the world, are the ones who do
+subtitle: ""
 author: Kai Sasaki
 simple_search: http://google.com/search
 description:  "I’m a software engineer living in Tokyo, Japan.I have a passion for developing the artificial intelligence that is the dream of humankind for a long time.I long for the world where technology supports our imcompleteness which is burdened since human was born. So I dedicate myself to realize these ideal some day."
+
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
