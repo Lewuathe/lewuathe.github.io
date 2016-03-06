@@ -1,0 +1,395 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>
+      Japan Population transition 1985~2014
+    </title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="css/style.css">
+    <link type="text/css" rel="stylesheet" href="css/materialize.css" />
+    <script type="text/javascript" src="js/lib/d3.v3.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/lib/three.min.js"></script>
+    <script type="text/javascript" src="js/lib/TrackballControls.js"></script>
+    <script type="text/javascript" src="js/lib/Detector.js"></script>
+    <script type="text/javascript" src="js/lib/turf.min.js"></script>
+    <script type="text/javascript" src="js/lib/materialize.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <script type="text/javascript" src="js/geo.js"></script>
+  </head>
+  <body>
+    <div class="container" >
+      <div class="row">
+        <div class="col s6" id="sidebar">
+            <h2>Japanese Educational Background</h2>
+            <p>
+              This diagram shows the number of people who has the corresponding educational background in each prefecture.
+              The data is collected by the census held in H22. The original data is provided by <a href="http://www.data.go.jp/data/dataset/soumu_20140909_0681/resource/81ff1c38-017b-44b4-924b-17ee71e1b48c">data.go.jp</a>.
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <th>color</th>
+                  <th>description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr id="elementary_school_select">
+                  <td>
+                    <div class="curled-box" style="background-color: #ffff2b;"></div>
+                  </td>
+                  <td>
+                    Graduated Elementary School or Junior High School.
+                  </td>
+                </tr>
+                <tr id="high_school_select">
+                  <td>
+                    <div class="curled-box" style="background-color: #80d52b;"></div>
+                  </td>
+                  <td>
+                    Graduated High School
+                  </td>
+                </tr>
+                <tr id="colledge_select">
+                  <td>
+                    <div class="curled-box" style="background-color: #ff952b;"></div>
+                  </td>
+                  <td>
+                    Graduated Colledge
+                  </td>
+                </tr>
+                <tr id="university_select">
+                  <td>
+                    <div class="curled-box" style="background-color: #952bff;"></div>
+                  </td>
+                  <td>
+                    Graduated University
+                  </td>
+                </tr>
+                <tr id="preschool_select">
+                  <td>
+                    <div class="curled-box" style="background-color: #dc4e95;"></div>
+                  </td>
+                  <td>
+                    Preschool
+                  </td>
+                </tr>
+                <tr id="be_in_school_select">
+                  <td>
+                    <div class="curled-box" style="background-color: #2b95ff;"></div>
+                  </td>
+                  <td>
+                    Be in School
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+        <div class="col s6">
+          <div id="webgl"></div>
+        </div>
+    </div>
+    <script>
+      var json;
+      var propName = "elementary_school";
+      var propColor = [
+        '#ffffd5',
+        '#ffff80',
+        '#ffff2b',
+        '#d5d500'
+      ]
+
+      $(function() {
+        $('#elementary_school_select').click(function() {
+          propName = "elementary_school";
+          propColor = [
+            '#ffffd5',
+            '#ffff80',
+            '#ffff2b',
+            '#d5d500'
+          ];
+          update();
+        });
+        $('#high_school_select').click(function() {
+          propName = "high_school";
+          propColor = [
+            '#d5f1b8',
+            '#aae272',
+            '#80d52b',
+            '#558d1d'
+          ];
+          update();
+        });
+        $('#colledge_select').click(function() {
+          propName = "colledge";
+          propColor = [
+            '#ffead5',
+            '#ffbf80',
+            '#ff952b',
+            '#d56a00'
+          ];
+          update();
+        });
+        $('#university_select').click(function() {
+          propName = "university";
+          propColor = [
+            '#ead5ff',
+            '#bf80ff',
+            '#952bff',
+            '#6a00d5'
+          ];
+          update();
+        });
+        $('#preschool_select').click(function() {
+          propName = "not_educated";
+          propColor = [
+            '#f8dcea',
+            '#ea95bf',
+            '#dc4e95',
+            '#b1236a'
+          ];
+          update();
+        });
+        $('#be_in_school_select').click(function() {
+          propName = "not_graduated";
+          propColor = [
+            '#d5eaff',
+            '#80bfff',
+            '#2b95ff',
+            '#006ad5'
+          ];
+          update();
+        });
+      });
+
+      var materials = {
+        phong: function(color) {
+          return new THREE.MeshPhongMaterial({
+            color: color, side: THREE.DoubleSide
+          });
+        },
+        meshLambert: function(color) {
+          return new THREE.MeshLambertMaterial({
+            color: color,
+            specular: 0x009900,
+            shininess: 30,
+            shading: THREE.SmoothShading,
+            transparent:true
+          });
+        },
+        meshWireFrame: function(color) {
+          return new THREE.MeshBasicMaterial({
+             color: color,
+            specular: 0x009900,
+            shininess: 30,
+            shading: THREE.SmoothShading,
+            wireframe:true,
+            transparent:true
+          });
+        },
+        meshBasic: function(color) {
+          return new THREE.MeshBasicMaterial({
+            color: color,
+            specular: 0x009900,
+            shininess: 30,
+            shading: THREE.SmoothShading,
+            transparent: true
+          });
+        }
+      };
+
+      if (!Detector.webgl) {
+        Detector.addGetWebGLMessage();
+      }
+
+      var container;
+      var camera, controls, scene, renderer;
+      var light, spotLight, ambientLight;
+      var cross;
+
+      function onWindowResize() {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        controls.handleResize();
+        render();
+      }
+
+      function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+      }
+
+      function render() {
+        renderer.render(scene, camera);
+      }
+
+      function init() {
+        container = document.getElementById('webgl');
+
+        camera = new THREE.PerspectiveCamera( 70, container.clientWidth / container.clientHeight, 0.1, 10000);
+        camera.position.z = Math.min(container.clientWidth, container.clientHeight) * 0.6;
+        camera.position.x = -container.clientWidth * 0.1;
+        camera.position.y = -container.clientHeight * 0.1;
+        controls = new THREE.TrackballControls(camera, container);
+        controls.rotateSpeed = 1.0;
+        controls.zoomSpeed = 1.2;
+        controls.panSpeed = 0.8;
+        controls.noZoom = false;
+        controls.noPan = false;
+        controls.staticMoving = true;
+        controls.dynamicDampingFactor = 0.3;
+        controls.keys = [65, 83, 68];
+        controls.addEventListener('change', render);
+
+        // World
+        scene = new THREE.Scene();
+
+        // Lights
+        light = new THREE.DirectionalLight(0xffffff);
+        light.position.set(1, 1, 1);
+        scene.add(light);
+
+        spotLight = new THREE.SpotLight(0xffffff);
+        spotLight.position.set(-1000, -1000, 1000);
+        spotLight.castShadow = true;
+        scene.add(spotLight);
+
+        ambientLight = new THREE.AmbientLight(0x333333);
+        scene.add(ambientLight);
+
+        // Renderer
+        renderer = new THREE.WebGLRenderer({antialias: true});
+        renderer.setPixelRatio( window.devicePixelRatio );
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setClearColor(0xffffff, 1);
+        container.appendChild(renderer.domElement);
+
+        // Shadows
+        renderer.shadowMapEnabled = true;
+        renderer.shadowMapSoft = true;
+        renderer.shadowCameraNear = 1;
+        renderer.shadowCameraFar = camera.far;
+        renderer.shadowCameraFov = 60;
+        renderer.shadowMapBias = 0.0025;
+        renderer.shadowMapDarkness = 0.5;
+        renderer.shadowMapWidth = 1024;
+        renderer.shadowMapHeight = 1024;
+
+        window.addEventListener('resize', onWindowResize, false);
+        onWindowResize();
+        render();
+
+        update();
+      }
+
+      function clearGroups() {
+        if (json) {
+          if (json.type === 'FeatureCollection') {
+            json.features.forEach(function(feature) {
+              scene.remove(feature._group);
+            });
+          }
+        }
+        render();
+      }
+
+      function update() {
+        clearGroups();
+        var width = container.clientWidth;
+        var height = container.clientHeight;
+
+        var url = './data/education.geojson';
+
+        d3.json(url, function(data) {
+          json = data;
+
+          var functions = {};
+          if (json.type === 'FeatureCollection') {
+
+            var projection = getProjection(json, width, height);
+
+            json.features.forEach(function(feature) {
+              var group = addFeature(feature, projection, functions);
+              feature._group = group;
+            });
+          } else {
+            console.log('This tutorial only renders TopoJSON and GeoJSON FeatureCollections')
+          }
+
+          render();
+        });
+      }
+
+      function addShape(group, shape, extrudeSettings, material, color, x, y, z, rx, ry, rz, s) {
+        var geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+
+        var mesh = new THREE.Mesh(geometry, materials[material](color));
+
+        // Add shadows
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
+
+        mesh.position.set(x, y, z);
+        mesh.rotation.set(rx, ry, rz);
+        mesh.scale.set(s, s, s);
+        group.add(mesh);
+      }
+
+      function addFeature(feature, projection, functions) {
+        var group = new THREE.Group();
+        scene.add(group);
+
+        var color;
+        var amount;
+
+        try {
+          prop = feature.properties[propName];
+          console.log(prop);
+          if (prop < 100000.0) {
+            color = propColor[0];
+          } else if(prop < 300000.0) {
+            color = propColor[1];
+          } else if (prop < 500000.0) {
+            color = propColor[2];
+          } else {
+            color = propColor[3];
+          }
+        } catch(err) {
+          console.log(err);
+        }
+
+        try {
+          amount = feature.properties[propName] * 1e-4;
+        } catch(err) {
+          console.log(err);
+        }
+
+        var extrudeSettings = {
+          amount: amount,
+          bevelEnabled: false
+        };
+
+        var material = 'phong';
+
+        if (feature.geometry.type === 'Polygon') {
+          var shape = createPolygonShape(feature.geometry.coordinates, projection);
+          addShape(group, shape, extrudeSettings, material, color, 0, 0, amount, Math.PI, 0, 0, 1);
+        } else if (feature.geometry.type === 'MultiPolygon') {
+          feature.geometry.coordinates.forEach(function(polygon) {
+            var shape = createPolygonShape(polygon, projection);
+            addShape(group, shape, extrudeSettings, material, color, 0, 0, amount, Math.PI, 0, 0, 1);
+          });
+        } else {
+          console.log('This tutorial only renders Polygons and MultiPolygons')
+        }
+
+        return group;
+      }
+
+      init();
+      animate();
+    </script>
+
+  </body>
+</html>
