@@ -31,9 +31,15 @@ h1 {
   top: 0;
   height: 100%;
   position: absolute;
-  left: 0;
+  left: 20px;
   width: 400px;
   z-index: 1;
+}
+
+#detail {
+  left: 420px;
+  top: 50px;
+  position: absolute;
 }
 
 header {
@@ -46,7 +52,7 @@ header {
 
 #webgl {
   position: absolute;
-  left: 0px;
+  left: 150px;
   right: 0;
   background-color: white;
   height: 100%;
@@ -83,4 +89,18 @@ header {
     border-radius: 3px;
     height: 15px;
     width: 15px;
+}
+
+#detail_title {
+  font-size: 20pt;
+}
+
+#detail_description {
+  font-size: 20px
+}
+
+.footer {
+  position: absolute;
+  right: 10px;
+  bottom: 5px;
 }

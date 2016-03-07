@@ -13,6 +13,7 @@
     <script type="text/javascript" src="js/lib/TrackballControls.js"></script>
     <script type="text/javascript" src="js/lib/Detector.js"></script>
     <script type="text/javascript" src="js/lib/turf.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
     <script type="text/javascript" src="js/lib/materialize.min.js"></script>
     <script type="text/javascript" src="js/geo.js"></script>
   </head>
@@ -23,7 +24,7 @@
             <h2>Japanese Population Growth</h2>
             <p>
               Japanese population transition distribution per each prefecture. This diagram shows the transition from 1985 to 2014.
-              Height represents the difference of population in the span.
+              Height represents the difference of population in the span. The data is provided by <a href="http://www.data.go.jp/data/dataset/mhlw_20160201_0018">data.go.jp</a>.
             </p>
             <table>
               <thead>
@@ -67,14 +68,40 @@
                 </tr>
               </tbody>
             </table>
+            <br>
+            <a class="waves-effect waves-light btn" id="to2D">2D</a>
+            <a class="waves-effect waves-light btn" id="to3D">3D</a>
         </div>
         <div class="col s6">
           <div id="webgl"></div>
+          <div id="flat">
+            <div id="detail">
+              <p><nobr>Pref: <div id="detail_title"></div></nobr></p>
+              <p><nobr>Population Growth: <div id="detail_description"></div></nobr></p>
+            </div>
+          </div>
         </div>
+      </div>
+      <div class="footer">
+        Powerd by <a href="http://www.data.go.jp">data.go.jp</a>
+      </div>
     </div>
     <script>
       var json;
+      var url = './data/population.geojson';
 
+      $(function() {
+        $("#detail").css("visibility", "hidden");
+        $("#webgl").css("visibility", "hidden");
+        $("#to2D").click(function() {
+          $("#webgl").css("visibility", "hidden");
+          $("#flat").css("visibility", "visible");
+        });
+        $("#to3D").click(function() {
+          $("#webgl").css("visibility", "visible");
+          $("#flat").css("visibility", "hidden");
+        });
+      });
       var materials = {
         phong: function(color) {
           return new THREE.MeshPhongMaterial({
@@ -213,7 +240,7 @@
         var width = container.clientWidth;
         var height = container.clientHeight;
 
-        var url = './data/population.geojson';
+
 
         d3.json(url, function(data) {
           json = data;
@@ -259,7 +286,6 @@
 
         try {
           var pop_diff = feature.properties["pop_diff"];
-          console.log(pop_diff);
           if (pop_diff < -100000.0) {
             color = "#ff0000";
           } else if(pop_diff < 0.0) {
@@ -301,8 +327,73 @@
         return group;
       }
 
+      function showFlat() {
+        var width = 1000;
+        var height = 800;
+        var svg = d3.select("#flat").append("svg")
+          .attr("width", width)
+          .attr("height", height);
+
+        var color = d3.scale.category20();
+
+        var mercator = d3.geo.mercator()
+          .center([136.0,35.6])
+          .translate([width/2, height/2])
+          .scale(1500);
+        var geopath = d3.geo.path().projection(mercator);
+
+        d3.json(url, function(error, geoJp) {
+          svg.selectAll("path")
+            .data(geoJp.features)
+            .enter().append("path")
+            .on("mouseover", function(d) {
+              // console.log(d.properties["nam_ja"]);
+              $("#detail").css("visibility", "visible");
+              $("#detail_title").text(d.properties["nam"]);
+              $("#detail_description").text(d.properties["pop_diff"]);
+              var t = d3.select(this);
+              t.attr("fill", function(d) {
+                return "#ffff00";
+              });
+            })
+            .on("mouseout", function(d) {
+              $("#detail").css("visibility", "hidden");
+              var t = d3.select(this);
+              t.attr("fill", function(d) {
+                var pop_diff = d.properties["pop_diff"];
+                if (pop_diff < -100000.0) {
+                  color = "#ff0000";
+                } else if(pop_diff < 0.0) {
+                  color = "#ff8000";
+                } else if (pop_diff < 100000.0) {
+                  color = "#80ffff";
+                } else {
+                  color = "#0080ff";
+                }
+                return color;
+              });
+            })
+            .attr("class", function(d) { return d.id; })
+            .attr("d", geopath)
+            .attr("fill", function(d){
+              var pop_diff = d.properties["pop_diff"];
+              if (pop_diff < -100000.0) {
+                color = "#ff0000";
+              } else if(pop_diff < 0.0) {
+                color = "#ff8000";
+              } else if (pop_diff < 100000.0) {
+                color = "#80ffff";
+              } else {
+                color = "#0080ff";
+              }
+              return color;
+            });
+        });
+      }
+
       init();
       animate();
+      showFlat();
     </script>
 
   </body>
