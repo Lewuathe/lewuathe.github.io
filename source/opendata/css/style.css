@@ -58,6 +58,13 @@ header {
   height: 100%;
 }
 
+#flat {
+  position: absolute;
+  left: 150px;
+  right: 0;
+  height: 100%;
+}
+
 #sidebar textarea,
 #sidebar .CodeMirror {
   width: 100%;

@@ -74,11 +74,11 @@
         </div>
         <div>
           <div id="webgl" style="position: absolute; left: 300px;"></div>
+          <div id="detail">
+            <p><nobr>Region: <div id="detail_title"></div></nobr></p>
+            <p><nobr>Population Growth: <div id="detail_description"></div></nobr></p>
+          </div>
           <div id="flat">
-            <div id="detail">
-              <p><nobr>Region: <div id="detail_title"></div></nobr></p>
-              <p><nobr>Population Growth: <div id="detail_description"></div></nobr></p>
-            </div>
           </div>
         </div>
       </div>
@@ -328,8 +328,8 @@
       }
 
       function showFlat() {
-        var width = 1000;
-        var height = 800;
+        var width = $("#flat").width();
+        var height = $("#flat").height();
         var svg = d3.select("#flat").append("svg")
           .attr("width", width)
           .attr("height", height);
@@ -337,9 +337,9 @@
         var color = d3.scale.category20();
 
         var mercator = d3.geo.mercator()
-          .center([140.0,37.2])
+          .center([139.5,37.2])
           .translate([width/2, height/2])
-          .scale(16000);
+          .scale(height * 20.0);
         var geopath = d3.geo.path().projection(mercator);
 
         d3.json(url, function(error, geoJp) {
