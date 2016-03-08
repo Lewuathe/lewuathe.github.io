@@ -168,9 +168,9 @@
         container = document.getElementById('webgl');
 
         camera = new THREE.PerspectiveCamera( 70, container.clientWidth / container.clientHeight, 0.1, 10000);
-        camera.position.z = Math.min(container.clientWidth, container.clientHeight);
-        camera.position.x = -container.clientWidth * 0.4;
-        camera.position.y = -container.clientHeight * 0.1;
+        camera.position.z = Math.min(container.clientWidth, container.clientHeight) * 1.2;
+        // camera.position.x = -container.clientWidth;
+        // camera.position.y = -container.clientHeight * 0.1;
         controls = new THREE.TrackballControls(camera, container);
         controls.rotateSpeed = 1.0;
         controls.zoomSpeed = 1.2;
@@ -337,7 +337,7 @@
         var color = d3.scale.category20();
 
         var mercator = d3.geo.mercator()
-          .center([139.5,37.2])
+          .center([139.7,37.2])
           .translate([width/2, height/2])
           .scale(height * 20.0);
         var geopath = d3.geo.path().projection(mercator);

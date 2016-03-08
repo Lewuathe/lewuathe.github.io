@@ -257,9 +257,7 @@
         container = document.getElementById('webgl');
 
         camera = new THREE.PerspectiveCamera( 70, container.clientWidth / container.clientHeight, 0.1, 10000);
-        camera.position.z = Math.min(container.clientWidth, container.clientHeight) * 0.6;
-        camera.position.x = -container.clientWidth * 0.1;
-        camera.position.y = -container.clientHeight * 0.1;
+        camera.position.z = Math.min(container.clientWidth, container.clientHeight) * 0.7;
         controls = new THREE.TrackballControls(camera, container);
         controls.rotateSpeed = 1.0;
         controls.zoomSpeed = 1.2;
