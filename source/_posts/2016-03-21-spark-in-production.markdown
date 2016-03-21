@@ -9,6 +9,7 @@ author: ["Kai Sasaki"]
 
 Finally the book I wrote at the first time in my life has been [published today](http://amzn.com/1119254019). It is the first chance to write a published book written on paper.
 I'm amazed at the fact that I can complete to write a book in English though I'm not an native English speaker. Of course it is not totally owe to myself.
+I cannot say thank you enough to editors and publishers of the book.
 
 [![Spark in Production](/images/posts/2016-03-21-spark-in-production/spark_in_production.png)](http://amzn.com/1119254019)
 
