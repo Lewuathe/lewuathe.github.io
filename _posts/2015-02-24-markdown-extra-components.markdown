@@ -1,6 +1,7 @@
 ---
 title: "Markdown Extra Components"
 layout: post
+blog: true
 date: 2016-02-24 22:48
 tag:
 - markdown

@@ -1,0 +1,50 @@
+---
+layout: post
+blog: true
+title: "Hack NHK"
+date: 2014-05-26 19:38:04 +0900
+comments: true
+categories: ["Hackathon", "NHK"]
+author: Kai Sasaki
+---
+
+Recently, there are a lot of hackathon in Japan. This word "Hackathon" also have been
+familiar word to non programmers. People want to use this type of event in order to solve
+any problems they have at office, home and life.
+
+NHK is Japan's national public broadcasting organization. The name is abbreviation of "Nippon Housou Kyoukai".
+This organization keeps focusing to improve the quality of news broadcasting in terms of equality, accuracy and deepness.
+In this weekend, Hakathon is applied to the field of broadcasting. I attended.
+
+http://www.nhk.or.jp/kokusaihoudou/hackathon/
+
+<div style="text-align:center" markdown="1">
+<img src="/images/posts/2014-05-26-nhk-hackathon/board.jpg" />
+</div>
+
+<!-- more -->
+
+
+The purpose of this event is to answer how to let the youngs see news programs such as ["Kokusai Houdou 2014"](http://www.nhk.or.jp/kokusaihoudou/).
+To promote the rating of thie program and furthermore the rating of whole news programs, our ideas as hacker, I think, will also help new field
+which is different from our daily life.
+
+Our team developes vizualizing tool for your interest to the news program. While you are watching TV program, you might not want to have trouble with
+recording any captures, time or tracking tweets about target program. All you have to do with our tool is watching TV. The image sensing hardware made by [omron](http://www.omron.co.jp/) tracks your emotion toward program automatically. At the end of the program you can review the list of emotions showed by you while you were watching TV.
+With that list of emotion and captures, you can look back inside yourself, your emotions. This leads the new possibility of the style of watching TV and our emotions.
+
+<div style="text-align:center" markdown="1">
+<img src="/images/posts/2014-05-26-nhk-hackathon/members.jpg" />
+</div>
+
+
+As a geek, the most impressive factor I can use in this time was [Hybridcast](http://www.nhk.or.jp/hybridcast/online/). With this technology, I can develop "TV" application
+like developing web application. I constructed API server, started HTTP proxy server and wrote HTML5 source codes. It was the time when I realised the new technology of TV brought us sufficient generality of web technology even paradoxically. The future is getting around the corner.
+
+To be honest, I don't usually watch TV programs except for NHK. Even NHK, the frequency of watching cannot be necessarily high. I am a resident of internet.
+
+However I can see a little bright future on TV device and contents. I hope to help TV get the power of internet with the explosion of high technologies.
+So from today, I think watching TV is not bad as much as I expected. Oops, ["The professional"](http://www.nhk.or.jp/professional/) starts soon, it's monday.
+Here I close my laptop and watching the future showed on TV calmly.
+
+Thank you.

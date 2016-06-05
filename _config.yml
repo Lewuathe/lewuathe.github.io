@@ -1,19 +1,22 @@
 # main text of home
-name: John Doe
-bio: 'A Man who travels the world eating noodles'
+name: Kai Sasaki
+bio: 'People who are crazy enough to think they can change the world, are the ones who do.'
 
 # if it's an external image, update below for true
 # better with square images
 external-image: false
-picture: 'assets/images/profile.jpg'
+picture: 'images/my_image.jpg'
 
-url: http://koppl.in/indigo
+url: http://www.lewuathe.com
 # your url: http://USERNAME.github.io
 
 permalink: /:title/
 
+# markdown: redcarpet
 markdown: kramdown
 highlighter: rouge
+redcarpet:
+  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "superscript"]
 
 # To enable google analytics, supply your token below
 # analytics-google: 'UA-MYANALYTICS'
@@ -23,21 +26,21 @@ highlighter: rouge
 # analytics-piwik-id: 1
 
 # if you don't want comments in your posts, set to false
-disqus: mydisqus
+# disqus: mydisqus
 
 # if you don't have any of social below, comment the line
-facebook: myfacebook
-twitter: mytwitter
+facebook: lewuathe
+twitter: Lewuathe
 # google: mygoogle
 # instagram: myinstagram
 # pinterest: mypinterest
 # linkedin: mylinkedin
-youtube: myyoutube
-spotify: myspotify
-github: mygithub
-medium: medium
-vimeo: myvimeo
-email: myemail@gmail.com
+# youtube: myyoutube
+# spotify: myspotify
+github: Lewuathe
+# medium: medium
+# vimeo: myvimeo
+# email: myemail@gmail.com
 
 # do you want a larger site? change the option below
 # options: [normal, large] | default: normal
@@ -49,14 +52,14 @@ width: normal
 # paginate_path: "blog/:num/"
 
 # if you don't need projects, comment the *projects* configs below
-projects: true
+# projects: true
 
 # if you don't need "about" or "blog", comment them out below
 about: true
 blog: true
 
 # do you want to show the "read time" of the posts?
-read-time: true
+# read-time: true
 
 # do you want to show the "tags" inside the posts?
 show-tags: true
@@ -87,3 +90,5 @@ jekyll-mentions:
     base_url: https://github.com
 
 exclude: [README.md, Gemfile, Gemfile.lock, node_modules, gulpfile.js, package.json, _site, src, vendor, CNAME, indigo-gh-pages.zip, Rakefile, screen-shot.png, travis.sh, tasks]
+
+analytics-google: UA-44055098-1

@@ -46,10 +46,10 @@ POSTPATH="${BINPATH}/_posts"
 DIST_FOLDER="$POSTPATH"
 
 # Set your blog URL
-BLOG_URL="https://koppl.in/indigo"
+BLOG_URL="https://www.lewuathe.com"
 
 # Set your assets URL
-ASSETS_URL="assets/images/"
+ASSETS_URL="images/"
 # ----------------------------------------------------------------
 
 
@@ -113,7 +113,7 @@ echo "---"
 echo "title: \"${POST_TITLE}\""
 echo "layout: post"
 echo "date: ${CURRENT_DATE} ${TIME}"
-echo "image: '/assets/images/'"
+echo "image: 'images/'"
 echo "description:"
 echo "tags:"
 echo "blog: true"
