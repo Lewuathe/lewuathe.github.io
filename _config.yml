@@ -10,7 +10,7 @@ picture: 'images/my_image.jpg'
 url: http://www.lewuathe.com
 # your url: http://USERNAME.github.io
 
-permalink: /:title/
+permalink: /blog/:title/
 
 # markdown: redcarpet
 markdown: kramdown

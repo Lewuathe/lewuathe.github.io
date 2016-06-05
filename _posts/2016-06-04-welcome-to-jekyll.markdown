@@ -1,10 +1,9 @@
 ---
 layout: post
 blog: true
-blog: true
 title:  "Welcome to Jekyll!"
 date:   2016-06-04 22:00:10 +0900
-categories: jekyll update
+tags: ["Jekyll", "Update"]
 ---
 
 I updated the site powered by Jekyll from Octopress.
