@@ -37,7 +37,8 @@ $ mysql <database name> <table name> > dump.sql
 If you want to restrict dumped records with given conditions like you use in `WHERE` clause, you can do this.
 
 ```
-$ mysqldump <database name> <table name> --where="id like '12345'" > dump.sql
+$ mysqldump <database name> <table name> \
+  --where="id like '12345'" > dump.sql
 ```
 
 So `dump.sql` only includes a record whose id is '12345'. One thing to note here is you can not use '=' in `--where` option, I don't know the reason.
@@ -49,7 +50,8 @@ When you move records one by one with above queries, you might not want to recre
 Although this is default behaviour of `mysqldump` there is an option not to `DROP TABLE` and recreate table every time.
 
 ```
-$ mysqldump <database name> <table name> --where="id like '12345'" --no-create-info
+$ mysqldump <database name> <table name> \
+  --where="id like '12345'" --no-create-info
 ```
 
 By using `--no-create-info`, you can omit `DROP TABLE` and `CREATE TABLE` queries in your dump file.
