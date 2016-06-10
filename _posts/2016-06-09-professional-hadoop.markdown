@@ -2,7 +2,7 @@
 title: "Professional Hadoop"
 layout: post
 date: 2016-06-09 21:02:02 +0900
-image: 'images/'
+image: '/images/posts/2016-06-09-professional-hadoop/professional_hadoop.png'
 description:
 tags: ["Hadoop", "Book"]
 blog: true
