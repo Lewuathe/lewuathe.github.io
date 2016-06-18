@@ -55,7 +55,7 @@ paginate_path: "blog/:num/"
 # projects: true
 
 # if you don't need "about" or "blog", comment them out below
-about: true
+about: false
 blog: true
 
 # do you want to show the "read time" of the posts?
@@ -66,6 +66,9 @@ show-tags: true
 
 # related posts inside a post?
 related: true
+
+# show next & prev links in blog post?
+blog-nav-links: false
 
 # show author block at the end of a post ?
 show-author: true
