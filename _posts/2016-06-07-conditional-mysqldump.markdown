@@ -7,6 +7,7 @@ description:
 tags: ["MySQL", 'mysqldump']
 blog: true
 jemoji:
+author: lewuathe
 ---
 
 `mysqldump` is a useful tool for migration of database. This tool enables us to move a data

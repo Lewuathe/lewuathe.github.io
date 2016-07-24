@@ -7,6 +7,7 @@ description:
 tags: ["Hadoop", "Book"]
 blog: true
 jemoji:
+author: lewuathe
 ---
 
 [Wiley](http://as.wiley.com/) gave me another chance to write a book about Big Data technology. This was offered at the almost same time

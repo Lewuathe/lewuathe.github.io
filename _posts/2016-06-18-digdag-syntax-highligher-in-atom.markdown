@@ -7,6 +7,7 @@ description:
 tags: ["Digdag", "Atom"]
 blog: true
 jemoji:
+author: lewuathe
 ---
 
 [Digdag](http://www.digdag.io) was released from [Treasure Data](http://www.treasuredata.com).
