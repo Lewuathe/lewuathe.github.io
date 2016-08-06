@@ -25,7 +25,8 @@ to understand internal architecture and some of tips to use distributed system e
 
 Presto install instruction can be found [official documentation](https://prestodb.io/docs/current/installation/deployment.html)
 or [Teradata documentation](http://teradata.github.io/presto/docs/141t/server-installation.html). These instructions are written
-mainly for production usage. Since I want to try Presto easily for development usage.
+mainly for production usage. However I want to try Presto easily for development usage, which means we can build, launch, test cycle
+fast.
 
 So that's the reason why I wrote [docker-presto-cluster](https://github.com/Lewuathe/docker-presto-cluster). docker-presto-cluster
 was made for same reason of the [docker-hadoop-cluster](https://github.com/Lewuathe/docker-hadoop-cluster).
