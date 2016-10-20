@@ -7,7 +7,7 @@ bio: 'People who are crazy enough to think they can change the world, are the on
 external-image: false
 picture: 'images/my_image.jpg'
 
-url: http://www.lewuathe.com
+url: https://www.lewuathe.com
 # your url: http://USERNAME.github.io
 
 permalink: /blog/:title/
