@@ -12,7 +12,7 @@ author: "lewuathe"
 
 I keep thinking about releasing self developed deep learning for a few years. That's a good way to motivate my learning about deep learning. I've already done several time with [n42](https://github.com/Lewuathe/n42) and [neurallib](https://mvnrepository.com/artifact/com.lewuathe/neurallib_2.10). But they are not so much general and hard to extend. So I reinitialize the project re-introduce brand new deep learning framework named [dllib](http://www.lewuathe.com/dllib/).
 
-![dllib site](/images/posts/2017-01-21-dllib/dllib_site.png)
+[![dllib site](/images/posts/2017-01-21-dllib/dllib_site.png)](http://www.lewuathe.com/dllib/)
 
 dllin is a simple deep learning framework running on Apache Spark. The framework was develped to achieve
 
