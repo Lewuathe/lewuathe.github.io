@@ -10,7 +10,7 @@ jemoji:
 author: "lewuathe"
 ---
 
-I keep thinking about releasing self developed deep learning for a few years. That's a good way to motivate my learning about deep learning. I've already done several time with [n42](https://github.com/Lewuathe/n42) and [neurallib](https://mvnrepository.com/artifact/com.lewuathe/neurallib_2.10). But they are not so much general and hard to extend. So I reinitialize the project re-introduce brand new deep learning framework named [dllib](http://www.lewuathe.com/dllib/).
+I keep thinking about releasing self developed deep learning for a few years. That's a good way to motivate my learning about deep learning. I've already done several times with [n42](https://github.com/Lewuathe/n42) and [neurallib](https://mvnrepository.com/artifact/com.lewuathe/neurallib_2.10). But they are not so much general and hard to extend. So I reinitialize the project and re-introduce brand new deep learning framework named [dllib](http://www.lewuathe.com/dllib/).
 
 [![dllib site](/images/posts/2017-01-21-dllib/dllib_site.png)](http://www.lewuathe.com/dllib/)
 
@@ -20,7 +20,7 @@ dllin is a simple deep learning framework running on Apache Spark. The framework
 - Easy to learn distributed deep learning algorithms and design
 - Compatible Spark ML Dataset based interface
 
-The usage is easy for some developers who are already familiar with existing high level deep learning frameworks such as Keras.
+The usage is easy for some developers who are already familiar with existing high level deep learning frameworks such as [Keras](https://keras.io/).
 
 ```scala
 import com.lewuathe.dllib.graph.Graph
@@ -58,9 +58,9 @@ The imporant components to create network are three.
 - `Graph`
 - `Model`
 
-`Layer` is a component which specifies a layer of neural network. The layer transforms a vector into another vector one by one. `Graph` specifies the structure of whole network components. So we can create neural network model with adding `Layer`s to `Graph`. One thing to notice is `Layer` and `Graph` have no persistent data in themselves. So parameters to be trained should be given other parts. This is `Model`. Model keeps whole parameters of each `Layer`. So if we want to predict after training, we can give trained `Model` to your network. Though currently we have only in-memory model, we'll implement distributed versions by using parameters server. That must provide high performance with [model parallelism](https://research.google.com/pubs/pub40565.html).
+`Layer` is a component which specifies a layer of neural network. The layer transforms a vector into another vector one by one. `Graph` specifies the structure of whole network components. So we can create neural network model by adding `Layer`s to `Graph`. One thing to notice is `Layer` and `Graph` have no persistent data in themselves. So parameters to be trained should be given other parts. This is `Model`. Model keeps whole parameters of each `Layer`. So if we want to predict after training, we can give trained `Model` to your network. Though currently we have only in-memory model, we'll implement distributed versions by using parameters server. That must provide high performance with [model parallelism](https://research.google.com/pubs/pub40565.html).
 
-Since dllib is compatible with [Spark ML Dataset based interface](https://spark.apache.org/docs/latest/ml-guide.html), we can easily import existing data into dllib we you already have Spark cluster. Spark ML can be run on local machine as well as distributed mode. You can try with `packages` option immediately.
+Since dllib is compatible with [Spark ML Dataset based interface](https://spark.apache.org/docs/latest/ml-guide.html), we can easily import existing data into dllib if you already have Spark cluster. Spark ML can be run on local machine as well as distributed mode. You can try with `packages` option immediately.
 
 ```
 $ ./bin/spark-shell --packages Lewuathe:dllib:0.0.9
