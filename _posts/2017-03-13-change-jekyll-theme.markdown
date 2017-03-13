@@ -50,3 +50,9 @@ $ jekyll serve
 画像も
 
 ![Code](/images/posts/2017-03-13-use-lagrande-theme/code.png)
+
+数式も
+
+$$
+e^{i \pi} + 1 = 0
+$$
