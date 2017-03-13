@@ -1,0 +1,398 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>
+      Japan Population transition 1985~2014
+    </title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="css/style.css">
+    <link type="text/css" rel="stylesheet" href="css/materialize.css" />
+    <script type="text/javascript" src="js/lib/d3.v3.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/lib/three.min.js"></script>
+    <script type="text/javascript" src="js/lib/TrackballControls.js"></script>
+    <script type="text/javascript" src="js/lib/Detector.js"></script>
+    <script type="text/javascript" src="js/lib/turf.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <script type="text/javascript" src="js/lib/materialize.min.js"></script>
+    <script type="text/javascript" src="js/geo.js"></script>
+  </head>
+  <body>
+    <div class="container" >
+      <div class="row">
+        <div class="col s6" id="sidebar">
+            <h2>Japanese Population Growth</h2>
+            <p>
+              Japanese population transition distribution per each prefecture. This diagram shows the transition from 1985 to 2014.
+              Height represents the difference of population in the span. The data is provided by <a href="http://www.data.go.jp/data/dataset/mhlw_20160201_0018">data.go.jp</a>.
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <th>color</th>
+                  <th>description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="curled-box" style="background-color: #ff0000;"></div>
+                  </td>
+                  <td>
+                    Decreased over 100000 people
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="curled-box" style="background-color: #ff8000;"></div>
+                  </td>
+                  <td>
+                    Decreased less than 100000 people
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="curled-box" style="background-color: #80ffff;"></div>
+                  </td>
+                  <td>
+                    Increased less than 100000 people
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="curled-box" style="background-color: #0080ff;"></div>
+                  </td>
+                  <td>
+                    Increased over 100000 people
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <a class="waves-effect waves-light btn" id="to2D">2D</a>
+            <a class="waves-effect waves-light btn" id="to3D">3D</a>
+        </div>
+        <div class="col s6">
+          <div id="webgl"></div>
+          <div id="detail">
+            <p><nobr>Pref: <div id="detail_title"></div></nobr></p>
+            <p><nobr>Population Growth: <div id="detail_description"></div></nobr></p>
+          </div>
+          <div id="flat">
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        Powerd by <a href="http://www.data.go.jp">data.go.jp</a>
+      </div>
+    </div>
+    <script>
+      var json;
+      var url = './data/population.geojson';
+
+      $(function() {
+        $("#detail").css("visibility", "hidden");
+        $("#webgl").css("visibility", "hidden");
+        $("#to2D").click(function() {
+          $("#webgl").css("visibility", "hidden");
+          $("#flat").css("visibility", "visible");
+        });
+        $("#to3D").click(function() {
+          $("#webgl").css("visibility", "visible");
+          $("#flat").css("visibility", "hidden");
+        });
+      });
+      var materials = {
+        phong: function(color) {
+          return new THREE.MeshPhongMaterial({
+            color: color, side: THREE.DoubleSide
+          });
+        },
+        meshLambert: function(color) {
+          return new THREE.MeshLambertMaterial({
+            color: color,
+            specular: 0x009900,
+            shininess: 30,
+            shading: THREE.SmoothShading,
+            transparent:true
+          });
+        },
+        meshWireFrame: function(color) {
+          return new THREE.MeshBasicMaterial({
+             color: color,
+            specular: 0x009900,
+            shininess: 30,
+            shading: THREE.SmoothShading,
+            wireframe:true,
+            transparent:true
+          });
+        },
+        meshBasic: function(color) {
+          return new THREE.MeshBasicMaterial({
+            color: color,
+            specular: 0x009900,
+            shininess: 30,
+            shading: THREE.SmoothShading,
+            transparent: true
+          });
+        }
+      };
+
+      if (!Detector.webgl) {
+        Detector.addGetWebGLMessage();
+      }
+
+      var container;
+      var camera, controls, scene, renderer;
+      var light, spotLight, ambientLight;
+      var cross;
+
+      function onWindowResize() {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        controls.handleResize();
+        render();
+      }
+
+      function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+      }
+
+      function render() {
+        renderer.render(scene, camera);
+      }
+
+      function init() {
+        container = document.getElementById('webgl');
+
+        camera = new THREE.PerspectiveCamera( 70, container.clientWidth / container.clientHeight, 0.1, 10000);
+        camera.position.z = Math.min(container.clientWidth, container.clientHeight) * 0.7;
+        controls = new THREE.TrackballControls(camera, container);
+        controls.rotateSpeed = 1.0;
+        controls.zoomSpeed = 1.2;
+        controls.panSpeed = 0.8;
+        controls.noZoom = false;
+        controls.noPan = false;
+        controls.staticMoving = true;
+        controls.dynamicDampingFactor = 0.3;
+        controls.keys = [65, 83, 68];
+        controls.addEventListener('change', render);
+
+        // World
+        scene = new THREE.Scene();
+
+        // Lights
+        light = new THREE.DirectionalLight(0xffffff);
+        light.position.set(1, 1, 1);
+        scene.add(light);
+
+        spotLight = new THREE.SpotLight(0xffffff);
+        spotLight.position.set(-1000, -1000, 1000);
+        spotLight.castShadow = true;
+        scene.add(spotLight);
+
+        ambientLight = new THREE.AmbientLight(0x333333);
+        scene.add(ambientLight);
+
+        // Renderer
+        renderer = new THREE.WebGLRenderer({antialias: true});
+        renderer.setPixelRatio( window.devicePixelRatio );
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setClearColor(0xffffff, 1);
+        container.appendChild(renderer.domElement);
+
+        // Shadows
+        renderer.shadowMapEnabled = true;
+        renderer.shadowMapSoft = true;
+        renderer.shadowCameraNear = 1;
+        renderer.shadowCameraFar = camera.far;
+        renderer.shadowCameraFov = 60;
+        renderer.shadowMapBias = 0.0025;
+        renderer.shadowMapDarkness = 0.5;
+        renderer.shadowMapWidth = 1024;
+        renderer.shadowMapHeight = 1024;
+
+        window.addEventListener('resize', onWindowResize, false);
+        onWindowResize();
+        render();
+
+        update();
+      }
+
+      function clearGroups() {
+        if (json) {
+          if (json.type === 'FeatureCollection') {
+            json.features.forEach(function(feature) {
+              scene.remove(feature._group);
+            });
+          }
+        }
+        render();
+      }
+
+      function update() {
+        clearGroups();
+
+        var width = container.clientWidth;
+        var height = container.clientHeight;
+
+
+
+        d3.json(url, function(data) {
+          json = data;
+
+          var functions = {};
+          if (json.type === 'FeatureCollection') {
+
+            var projection = getProjection(json, width, height);
+
+            json.features.forEach(function(feature) {
+              var group = addFeature(feature, projection, functions);
+              feature._group = group;
+            });
+          } else {
+            console.log('This tutorial only renders TopoJSON and GeoJSON FeatureCollections')
+          }
+
+          render();
+        });
+      }
+
+      function addShape(group, shape, extrudeSettings, material, color, x, y, z, rx, ry, rz, s) {
+        var geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+
+        var mesh = new THREE.Mesh(geometry, materials[material](color));
+
+        // Add shadows
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
+
+        mesh.position.set(x, y, z);
+        mesh.rotation.set(rx, ry, rz);
+        mesh.scale.set(s, s, s);
+        group.add(mesh);
+      }
+
+      function addFeature(feature, projection, functions) {
+        var group = new THREE.Group();
+        scene.add(group);
+
+        var color;
+        var amount;
+
+        try {
+          var pop_diff = feature.properties["pop_diff"];
+          if (pop_diff < -100000.0) {
+            color = "#ff0000";
+          } else if(pop_diff < 0.0) {
+            color = "#ff8000";
+          } else if (pop_diff < 100000.0) {
+            color = "#80ffff";
+          } else {
+            color = "#0080ff";
+          }
+        } catch(err) {
+          console.log(err);
+        }
+
+        try {
+          amount = feature.properties["pop_diff"] * 1e-4;
+        } catch(err) {
+          console.log(err);
+        }
+
+        var extrudeSettings = {
+          amount: amount,
+          bevelEnabled: false
+        };
+
+        var material = 'phong';
+
+        if (feature.geometry.type === 'Polygon') {
+          var shape = createPolygonShape(feature.geometry.coordinates, projection);
+          addShape(group, shape, extrudeSettings, material, color, 0, 0, amount, Math.PI, 0, 0, 1);
+        } else if (feature.geometry.type === 'MultiPolygon') {
+          feature.geometry.coordinates.forEach(function(polygon) {
+            var shape = createPolygonShape(polygon, projection);
+            addShape(group, shape, extrudeSettings, material, color, 0, 0, amount, Math.PI, 0, 0, 1);
+          });
+        } else {
+          console.log('This tutorial only renders Polygons and MultiPolygons')
+        }
+
+        return group;
+      }
+
+      function showFlat() {
+        var width = $("#flat").width();
+        var height = $("#flat").height();
+        var svg = d3.select("#flat").append("svg")
+          .attr("width", width)
+          .attr("height", height);
+
+        var color = d3.scale.category20();
+
+        var mercator = d3.geo.mercator()
+          .center([136.0,35.6])
+          .translate([width/2, height/2])
+          .scale(height * 2.0);
+        var geopath = d3.geo.path().projection(mercator);
+
+        d3.json(url, function(error, geoJp) {
+          svg.selectAll("path")
+            .data(geoJp.features)
+            .enter().append("path")
+            .on("mouseover", function(d) {
+              // console.log(d.properties["nam_ja"]);
+              $("#detail").css("visibility", "visible");
+              $("#detail_title").text(d.properties["nam"]);
+              $("#detail_description").text(d.properties["pop_diff"]);
+              var t = d3.select(this);
+              t.attr("fill", function(d) {
+                return "#ffff00";
+              });
+            })
+            .on("mouseout", function(d) {
+              $("#detail").css("visibility", "hidden");
+              var t = d3.select(this);
+              t.attr("fill", function(d) {
+                var pop_diff = d.properties["pop_diff"];
+                if (pop_diff < -100000.0) {
+                  color = "#ff0000";
+                } else if(pop_diff < 0.0) {
+                  color = "#ff8000";
+                } else if (pop_diff < 100000.0) {
+                  color = "#80ffff";
+                } else {
+                  color = "#0080ff";
+                }
+                return color;
+              });
+            })
+            .attr("class", function(d) { return d.id; })
+            .attr("d", geopath)
+            .attr("fill", function(d){
+              var pop_diff = d.properties["pop_diff"];
+              if (pop_diff < -100000.0) {
+                color = "#ff0000";
+              } else if(pop_diff < 0.0) {
+                color = "#ff8000";
+              } else if (pop_diff < 100000.0) {
+                color = "#80ffff";
+              } else {
+                color = "#0080ff";
+              }
+              return color;
+            });
+        });
+      }
+
+      init();
+      animate();
+      showFlat();
+    </script>
+
+  </body>
+</html>

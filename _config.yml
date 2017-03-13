@@ -1,19 +1,18 @@
 # Site Settings
-title:               Lagrange
-tagline:             a minimalist Jekyll theme
+title:               The First Cry of Atom
+tagline:             Today is the first day of the rest of my life.
 description:
 baseurl:            #"/Lagrange"
-url:                #"https://lenpaul.github.io"
+url:                #"https://lewuathe.github.io"
 github:
-  url:               #"https://lenpaul.github.io/Lagrange"
+  url:               #"https://github.com/Lewuathe"
 author:
-  name:              "Paul Le"
-  email:             "l.nguyen.paul@gmail.com"
-  twitter:           "paululele"
-  instagram:         "paululele"
-  github:            "lenpaul"
-  facebook:          "Le.Paul.94"
-  linkedin:          "lenpaul"
+  name:              "Kai Sasaki"
+  twitter:           "Lewuathe"
+  instagram:         "lewuathe"
+  github:            "Lewuathe"
+  facebook:          "lewuathe"
+  linkedin:          "kaisasaki"
 navigation:
 - title: About
   url: /about

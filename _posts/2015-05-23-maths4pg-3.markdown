@@ -1,0 +1,71 @@
+---
+layout: post
+blog: true
+title: "Report about #maths4pg 3"
+date: 2015-05-23 17:26:04 +0900
+comments: true
+categories: ["Math"]
+author: Kai Sasaki
+---
+
+The other day, we were running a seminar called [**"The math learning seminar for all programmers"**](http://maths4pg.connpass.com/event/14367/).
+This was the third time. The first time was the beginning of this year.
+This seminar keeps attracting a lot of people in spite of the deepness and difficulties of mastering maths. The field covered in the seminar was always very vast and interesting.If you are interested in math and programming or either or even neither, I bet you can have a great time to touch the profundity. This is one of the best seminar
+I want to recommend this to you among recent learning seminars. In this post, I'd like to file all sessions which is held in this 3rd seminar. I hope you feel like coming next time.
+
+<!-- more -->
+
+# Base conversion, Eigen value・vector, and further
+
+<div style="text-align:center;">
+<iframe src="//www.slideshare.net/slideshow/embed_code/key/jKY6dTp5odWuj5" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/taketo1024/ss-48472383" title="基底変換、固有値・固有ベクトル、そしてその先" target="_blank">基底変換、固有値・固有ベクトル、そしてその先</a> </strong> from <strong><a href="//www.slideshare.net/taketo1024" target="_blank">Taketo Sano</a></strong> </div>
+</div>
+
+He ([Taketo Sano](https://twitter.com/taketo1024)) is the host of this seminar. He always keeps a great passion to math and wants to create the field where all members
+can have a talk about the joy of doing math and programming together. And this seminar is it. In this time, he gave a presentation about the beginning of linear algebra especially
+eigen vector and base conversion. This is the third one of his series session and may be last one. The presentation gave us the inspiring fundamentals for later sessions.
+
+# The reason why we cannot solve 5th degree equations
+
+<div style="text-align:center;">
+<iframe src="//www.slideshare.net/slideshow/embed_code/key/GI6voDK0ekyGIS" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/junpeitsuji/maths4pg-48479177" title="「五次方程式が代数的に解けないわけ」第３回プログラマのための数学勉強会 #maths4pg " target="_blank">「五次方程式が代数的に解けないわけ」第３回プログラマのための数学勉強会 #maths4pg </a> </strong> from <strong><a href="//www.slideshare.net/junpeitsuji" target="_blank">Junpei Tsuji</a></strong> </div>
+</div>
+
+He ([Junpei Tsuji](https://twitter.com/tsujimotter)) is also a regular member in this seminar. I am always taken breath away by his passion to math. In addition to this,
+he looks very enjoy when he is talking about math. This attitude must make more people be interested in math as his dream. Unfortunately, this session was diffucult to me
+when entering into the world of solving 5th degree equations. I want to re-learn the essence of Galois theory and algebra.
+
+# Connection, Distortion and Size
+
+<div style="text-align:center;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/WNM-cljizF0" frameborder="0" allowfullscreen></iframe>
+</div>
+
+[matsumoring](https://twitter.com/matsumoring) gave a presentation about three meaurements of topology, connection, distortion and size. Euler number expressed by `V-E+F` is always 2. Although I don't know the reason and also I cannot figure out what is the essence of this number before hearing his talk. With this presentation, you can obtain
+the notion of the relationship between Euler number and the distortion of space. I think I can take a first step toward understanding of topology.
+
+# Linear programming method and Karmarkar method
+
+<div style="text-align:center;">
+<script async class="speakerdeck-embed" data-id="0559bfe4e65f4d7bbe076924c8c44be3" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
+</div>
+
+I was looking forward to Karmarkar's algorithm because I didn't know what it was! Although as you see this slide we cannot hear what it was, this is the most useful session
+to all programmers. Yes, I think this is the only session which include the factor of some programming. (**Of course this is great thing!**) He explained the detail of simplex method and linear programming problems. The interesting point was we can touch the [OR](http://ja.wikipedia.org/wiki/%E3%82%AA%E3%83%9A%E3%83%AC%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%BA%E3%83%BB%E3%83%AA%E3%82%B5%E3%83%BC%E3%83%81) field. This is one of the field which should be solved by computer science and our software engineers.
+
+# Differential equations and calculations in physics
+
+<div style="text-align: center;">
+<iframe src="//www.slideshare.net/slideshow/embed_code/key/dWH3wd7EwPyeJq" width="425" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/kyutoku/yahoo150522" title="Yahoo150522" target="_blank">Yahoo150522</a> </strong> from <strong><a href="//www.slideshare.net/kyutoku" target="_blank">kyutoku</a></strong> </div>
+</div>
+
+This is the last session of yesterday. Mainly focused on the calculation of differential equations. He explained the fundamentals of differential equations to be understandable
+with the knowledge obtained until high school. Some type of differential equation such as non-linear one can only be solved by our programs. I think this is also the combination field between software engineering and mathmatics. Maybe I learned some algorithm to calculate these equations when I was student... I should re-open my text book.
+
+# Close
+
+At third time, even more people attended to this seminar. I'd like to say thank you in this entry again. And also anyone who read these contents can come to next time, even
+not understand whole things(moreover even not at all). We are all on the way to enjoy the math yet. Would you mind joining this inspiring tour with us?
+
+Thank you.
+

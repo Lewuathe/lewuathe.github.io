@@ -1,0 +1,400 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>
+      Japan Population transition 1985~2014
+    </title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="css/style.css">
+    <link type="text/css" rel="stylesheet" href="css/materialize.css" />
+    <script type="text/javascript" src="js/lib/d3.v3.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/lib/three.min.js"></script>
+    <script type="text/javascript" src="js/lib/TrackballControls.js"></script>
+    <script type="text/javascript" src="js/lib/Detector.js"></script>
+    <script type="text/javascript" src="js/lib/turf.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <script type="text/javascript" src="js/lib/materialize.min.js"></script>
+    <script type="text/javascript" src="js/geo.js"></script>
+  </head>
+  <body>
+    <div class="container" >
+      <div class="row">
+        <div id="sidebar">
+            <h2>Fukushima Moving out People</h2>
+            <p>
+              The diagram represents the number of people who moves out Fukushima from H23 to H26 as measured social dynamic statistics.
+              Height represents the number of people. The data is provided by <a href="http://www.pref.fukushima.lg.jp/sec/11045b/16890.html">Fukushima-ken</a>.
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <th>color</th>
+                  <th>description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="curled-box" style="background-color: #ffd5ea;"></div>
+                  </td>
+                  <td>
+                    Moving out less than 1000 people
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="curled-box" style="background-color: #ff80bf;"></div>
+                  </td>
+                  <td>
+                    Moving out less than 5000 people
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="curled-box" style="background-color: #ff2b95;"></div>
+                  </td>
+                  <td>
+                    Moving out less than 9000 people
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="curled-box" style="background-color: #d5006a;"></div>
+                  </td>
+                  <td>
+                    Moving out more than 9000 people
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <a class="waves-effect waves-light btn" id="to2D">2D</a>
+            <a class="waves-effect waves-light btn" id="to3D">3D</a>
+        </div>
+        <div>
+          <div id="webgl" style="position: absolute; left: 300px;"></div>
+          <div id="detail">
+            <p><nobr>Region: <div id="detail_title"></div></nobr></p>
+            <p><nobr>Population Growth: <div id="detail_description"></div></nobr></p>
+          </div>
+          <div id="flat">
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        Powerd by <a href="http://www.pref.fukushima.lg.jp/">Fukushima-ken</a>
+      </div>
+    </div>
+    <script>
+      var json;
+      var url = './data/fukushima_move_out.geojson';
+
+      $(function() {
+        $("#detail").css("visibility", "hidden");
+        $("#webgl").css("visibility", "hidden");
+        $("#to2D").click(function() {
+          $("#webgl").css("visibility", "hidden");
+          $("#flat").css("visibility", "visible");
+        });
+        $("#to3D").click(function() {
+          $("#webgl").css("visibility", "visible");
+          $("#flat").css("visibility", "hidden");
+        });
+      });
+      var materials = {
+        phong: function(color) {
+          return new THREE.MeshPhongMaterial({
+            color: color, side: THREE.DoubleSide
+          });
+        },
+        meshLambert: function(color) {
+          return new THREE.MeshLambertMaterial({
+            color: color,
+            specular: 0x009900,
+            shininess: 30,
+            shading: THREE.SmoothShading,
+            transparent:true
+          });
+        },
+        meshWireFrame: function(color) {
+          return new THREE.MeshBasicMaterial({
+             color: color,
+            specular: 0x009900,
+            shininess: 30,
+            shading: THREE.SmoothShading,
+            wireframe:true,
+            transparent:true
+          });
+        },
+        meshBasic: function(color) {
+          return new THREE.MeshBasicMaterial({
+            color: color,
+            specular: 0x009900,
+            shininess: 30,
+            shading: THREE.SmoothShading,
+            transparent: true
+          });
+        }
+      };
+
+      if (!Detector.webgl) {
+        Detector.addGetWebGLMessage();
+      }
+
+      var container;
+      var camera, controls, scene, renderer;
+      var light, spotLight, ambientLight;
+      var cross;
+
+      function onWindowResize() {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        controls.handleResize();
+        render();
+      }
+
+      function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+      }
+
+      function render() {
+        renderer.render(scene, camera);
+      }
+
+      function init() {
+        container = document.getElementById('webgl');
+
+        camera = new THREE.PerspectiveCamera( 70, container.clientWidth / container.clientHeight, 0.1, 10000);
+        camera.position.z = Math.min(container.clientWidth, container.clientHeight) * 1.2;
+        // camera.position.x = -container.clientWidth;
+        // camera.position.y = -container.clientHeight * 0.1;
+        controls = new THREE.TrackballControls(camera, container);
+        controls.rotateSpeed = 1.0;
+        controls.zoomSpeed = 1.2;
+        controls.panSpeed = 0.8;
+        controls.noZoom = false;
+        controls.noPan = false;
+        controls.staticMoving = true;
+        controls.dynamicDampingFactor = 0.3;
+        controls.keys = [65, 83, 68];
+        controls.addEventListener('change', render);
+
+        // World
+        scene = new THREE.Scene();
+
+        // Lights
+        light = new THREE.DirectionalLight(0xffffff);
+        light.position.set(1, 1, 1);
+        scene.add(light);
+
+        spotLight = new THREE.SpotLight(0xffffff);
+        spotLight.position.set(-1000, -1000, 1000);
+        spotLight.castShadow = true;
+        scene.add(spotLight);
+
+        ambientLight = new THREE.AmbientLight(0x333333);
+        scene.add(ambientLight);
+
+        // Renderer
+        renderer = new THREE.WebGLRenderer({antialias: true});
+        renderer.setPixelRatio( window.devicePixelRatio );
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setClearColor(0xffffff, 1);
+        container.appendChild(renderer.domElement);
+
+        // Shadows
+        renderer.shadowMapEnabled = true;
+        renderer.shadowMapSoft = true;
+        renderer.shadowCameraNear = 1;
+        renderer.shadowCameraFar = camera.far;
+        renderer.shadowCameraFov = 60;
+        renderer.shadowMapBias = 0.0025;
+        renderer.shadowMapDarkness = 0.5;
+        renderer.shadowMapWidth = 1024;
+        renderer.shadowMapHeight = 1024;
+
+        window.addEventListener('resize', onWindowResize, false);
+        onWindowResize();
+        render();
+
+        update();
+      }
+
+      function clearGroups() {
+        if (json) {
+          if (json.type === 'FeatureCollection') {
+            json.features.forEach(function(feature) {
+              scene.remove(feature._group);
+            });
+          }
+        }
+        render();
+      }
+
+      function update() {
+        clearGroups();
+
+        var width = container.clientWidth;
+        var height = container.clientHeight;
+
+
+
+        d3.json(url, function(data) {
+          json = data;
+
+          var functions = {};
+          if (json.type === 'FeatureCollection') {
+
+            var projection = getProjection(json, width, height);
+
+            json.features.forEach(function(feature) {
+              var group = addFeature(feature, projection, functions);
+              feature._group = group;
+            });
+          } else {
+            console.log('This tutorial only renders TopoJSON and GeoJSON FeatureCollections')
+          }
+
+          render();
+        });
+      }
+
+      function addShape(group, shape, extrudeSettings, material, color, x, y, z, rx, ry, rz, s) {
+        var geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+
+        var mesh = new THREE.Mesh(geometry, materials[material](color));
+
+        // Add shadows
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
+
+        mesh.position.set(x, y, z);
+        mesh.rotation.set(rx, ry, rz);
+        mesh.scale.set(s, s, s);
+        group.add(mesh);
+      }
+
+      function addFeature(feature, projection, functions) {
+        var group = new THREE.Group();
+        scene.add(group);
+
+        var color;
+        var amount;
+
+        try {
+          var pop_diff = feature.properties["out"];
+          if (pop_diff < 1000.0) {
+            color = "#ffd5ea";
+          } else if(pop_diff < 5000.0) {
+            color = "#ff80bf";
+          } else if (pop_diff < 9000.0) {
+            color = "#ff2b95";
+          } else {
+            color = "#d5006a";
+          }
+        } catch(err) {
+          console.log(err);
+        }
+
+        try {
+          amount = feature.properties["out"] * 1e-2;
+        } catch(err) {
+          console.log(err);
+        }
+
+        var extrudeSettings = {
+          amount: amount,
+          bevelEnabled: false
+        };
+
+        var material = 'phong';
+
+        if (feature.geometry.type === 'Polygon') {
+          var shape = createPolygonShape(feature.geometry.coordinates, projection);
+          addShape(group, shape, extrudeSettings, material, color, 0, 0, amount, Math.PI, 0, 0, 1);
+        } else if (feature.geometry.type === 'MultiPolygon') {
+          feature.geometry.coordinates.forEach(function(polygon) {
+            var shape = createPolygonShape(polygon, projection);
+            addShape(group, shape, extrudeSettings, material, color, 0, 0, amount, Math.PI, 0, 0, 1);
+          });
+        } else {
+          console.log('This tutorial only renders Polygons and MultiPolygons')
+        }
+
+        return group;
+      }
+
+      function showFlat() {
+        var width = $("#flat").width();
+        var height = $("#flat").height();
+        var svg = d3.select("#flat").append("svg")
+          .attr("width", width)
+          .attr("height", height);
+
+        var color = d3.scale.category20();
+
+        var mercator = d3.geo.mercator()
+          .center([139.7,37.2])
+          .translate([width/2, height/2])
+          .scale(height * 20.0);
+        var geopath = d3.geo.path().projection(mercator);
+
+        d3.json(url, function(error, geoJp) {
+          svg.selectAll("path")
+            .data(geoJp.features)
+            .enter().append("path")
+            .on("mouseover", function(d) {
+              // console.log(d.properties["nam_ja"]);
+              $("#detail").css("visibility", "visible");
+              $("#detail_title").text(d.properties["ward_en"]);
+              $("#detail_description").text(d.properties["out"]);
+              var t = d3.select(this);
+              t.attr("fill", function(d) {
+                return "#ffff00";
+              });
+            })
+            .on("mouseout", function(d) {
+              $("#detail").css("visibility", "hidden");
+              var t = d3.select(this);
+              t.attr("fill", function(d) {
+                var pop_diff = d.properties["out"];
+                if (pop_diff < 1000.0) {
+                  color = "#ffd5ea";
+                } else if(pop_diff < 5000.0) {
+                  color = "#ff80bf";
+                } else if (pop_diff < 9000.0) {
+                  color = "#ff2b95";
+                } else {
+                  color = "#d5006a";
+                }
+                return color;
+              });
+            })
+            .attr("class", function(d) { return d.id; })
+            .attr("d", geopath)
+            .attr("fill", function(d){
+              var pop_diff = d.properties["out"];
+              if (pop_diff < 1000.0) {
+                color = "#ffd5ea";
+              } else if(pop_diff < 5000.0) {
+                color = "#ff80bf";
+              } else if (pop_diff < 9000.0) {
+                color = "#ff2b95";
+              } else {
+                color = "#d5006a";
+              }
+              return color;
+            });
+        });
+      }
+
+      init();
+      animate();
+      showFlat();
+    </script>
+
+  </body>
+</html>
