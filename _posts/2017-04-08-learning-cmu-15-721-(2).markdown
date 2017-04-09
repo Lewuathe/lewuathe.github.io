@@ -1,0 +1,127 @@
+---
+title: "Learning CMU 15-721 (2)"
+layout: post
+date: 2017-04-08 13:45:56 +0900
+image: 'images/'
+description:
+tag: ["Database", "SQL"]
+blog: true
+jemoji:
+author: "lewuathe"
+---
+
+2回目はIn-Memory Databaseに関する講義。第1回目に関しては[ここ](http://www.lewuathe.com/learning-cmu-15-721-(1).html)で書いた。
+
+![background1](images/posts/2017-04-09-cmu2/background1.png)
+
+データを永続化した状態で保存するためには不揮発性のストレージにデータを保存する必要がある。ところがDiskは遅いのでいかにしてDiskアクセスを減らしてデータにアクセスするかという技術が不可欠だった。現在では大容量のDRAMが安価に手に入るようになったので、こいつをキャッシュとして使い、Diskアクセスを減らそうとしたのが**Disk-Oriented DBMS**.
+
+## Disk Oriented DBMS
+
+![Disk-Oriented](images/posts/2017-04-09-cmu2/disk-oriented-dbms.png)
+
+DBMSではBuffer-Poolと呼ばれるメモリ領域にDisk（不揮発性のストレージ）からのPageをキャッシュする。データはPageと呼ばれる単位で管理されるがDiskにはSlotted-Pageと呼ばれるレイアウトで配置される。
+
+
+![Slotted-Page](images/posts/2017-04-09-cmu2/slotted-page.png)
+
+Slotted Pageは先頭にchecksumやtupleの種類などの情報が入ったheaderがある。図の通り可変長のデータは先頭から、固定長のデータは後ろから詰まっていく。可変長データへの参照は固定長のデータのtupleに含まれている。この形式はとても効率的で多くのシステムで採用されているフォーマットだがひとつ欠点があるとすれば、可変長データの終わりと固定長データの先頭との間にデータをいれることのできない隙間ができる可能性がある。この領域は使いみちが無いのでストレージ容量の無駄になってしまう。
+
+![page access](images/posts/2017-04-09-cmu2/page-access.png)
+
+このSlotted-Pageがどのようにアクセスされるかを示したのが上図。まずIndexを辿って必要なtupleが入ったPage IDとその中でのSlotの番号を取得する。Page Tableを参照して、参照先のBuffer Pool内のpageを見に行く。この時Buffer Poolに該当のpageが無い場合はDiskにあるSlotted-Pageを読み出して、Buffer-Poolに格納する。もしFree Frame(Buffer-Poolの空きスペース)がなければ、何らかのアルゴリズム(LRUとか)でevictするpageを決める。もしこのpageが**dirty**（何らかの更新がされている）場合にはDiskに書き戻してあげる必要がある。Free Frameができたら該当のpage（この場合page1）を読み出すことができる。最後に忘れてはいけないのは新しいpageがBuffer-Poolに入ったのでPage Tableのpage1の参照先を書き換える必要がある。これは全部buffer pool managerが行う。
+
+図で鍵マークがついているが、これは**latch**を表す。Page Tableやその参照先にBuffer Poolの領域は変更される可能性があるのでlatchを取得しておく必要がある。講義ではlockとlatchの違いも説明していた。基本的な役割は同じだけれど
+
+- **lock**: DBMSのハイレベルなabstractionに対しての"ロック"。例えばテーブルとかレコード。
+- **latch**: 内部的に使うprimitiveなデータ構造に対する"ロック"。例えばpageとか、indexとか。
+
+この使い分けはデータベースの世界での使い方らしい。
+
+![Buffer Pool](images/posts/2017-04-09-cmu2/buffer-pool.png)
+
+というわけで全てのtupleへのアクセスはBuffer Poolを介して透過的に行われる。Buffer-Poolにどのデータが乗っているかはbuffer pool managerが管理してくれる。必要なデータがいつもメモリ上(Buffer Pool)にのっていると期待できるのはbuffer pool managerが該当pageのlatchを取得してDiskへのswapをしないようにしてくれるから。
+
+どうしてこのような仕組みのDBMSが今でも使われているかというとDBMSはメモリ上にすべてのデータがのるかどうかを予め知っておくことはできないので、乗り切らなかった場合にもデータが保存されるようなアーキテクチャになっているから。そのため巨大なDRAMが手に入るような時代になってもこのようなシステムは今でも使われている。
+
+例は挙げられてなかったけれどPosgreSQLやMySQLはこのDisk Oriented Databaseの代表格なんだろうか。だとするとまだまだこのタイプのシステムは普通に使われているような気がする。
+
+![Concurrency Control](images/posts/2017-04-09-cmu2/concurrency-control.png)
+
+Buffer Poolにデータが無い場合buffer pool managerがデータをDiskから読み出すのでトランザクションは待たされる可能性がある。そのためDBMSは複数のトランザクションが走ることを許しているが、このときACID特性とDiskへのswapを防ぐために必ず該当するデータ構造のlatchを取得するようになっている。これで**Concurrency Control**を実現している。
+
+![Logging](images/posts/2017-04-09-cmu2/logging.png)
+
+多くのDBMSはSTEALとNO-FORCEというbuffer pool policyを採用している。
+
+- **STEAL**: トランザクションが行った更新がそのトランザクションがコミットする前にDiskに書き込まれなければいけない
+- **NO-FORCE**: トランザクションがコミットしたときでもそれがflushされることまでは要求しない
+
+つまりDiskに更新が書き込まれることまでは待ってトランザクションをコミットするけれども、それが最終的にflushされるタイミングはOSに任せるというポリシー。こうすることでIOコストとのバランスをとることができる。そしてこれを実現するために**WAL**(Write Ahead Logging)が必要。WALはデータベースに対する変更操作をすべて記録したログを実際の操作の前に書き込んでおく仕組み。こうすることで障害発生時のrecoveryに使うことができる。
+
+## In-Memory DBMS
+
+先述のような仕組みのDBMSはとてもオーバヘッドが大きい。下記を見ると
+
+![Overhead](images/posts/2017-04-09-cmu2/overhead.png)
+
+88%程はアプリケーションと関係ない処理に費やされている。いわば必要悪なのでなくて済むのであればなくしたい。ここで考えられたのがIn-Memory DBMS。そもそもメモリを永続的なストレージとして使ってしまおうというもの。アイデアとしては1980年代からあったけれど、DRAMの大容量化と低コストで実現可能になった。
+
+![In-Memory DBMS Organization](images/posts/2017-04-09-cmu2/in-memory-organization.png)
+
+In-Memory DBMSではBlockという単位でtupleを管理する。Disk-Oriented DBMSと違う点は
+
+- record IDだけではなくメモリ上へのポインタでtupleを指定することもできる
+- 固定長、可変長データそれぞれのBuffer Poolを用意することができる。混ぜなくていい
+
+![In-Memory DBMS Organization](images/posts/2017-04-09-cmu2/in-memory-organization2.png)
+
+仕組みもすっきりして、固定長と可変長データそれぞれのBuffer Poolを持ってそれぞれにtupleをいれておくだけ。Slot IDやevictionの必要もない。
+
+![In-Memory DBMS Concurrency](images/posts/2017-04-09-cmu2/in-memory-concurrency.png)
+
+またデータアクセスのコストが下がったため相対的にlockの取得コスト無視できなくなった。In-Memory DBMSではlockの取得の仕方でconcurrencyの度合いも変えられる。
+
+![In-Memory DBMS Lock](images/posts/2017-04-09-cmu2/in-memory-lock.png)
+
+lockに関する情報もtupleのそばにおいておくことができる。これのよいところはCache Localityが効きやすいのでtupleがあれば、lockの取得、解放のコストも低くなる。そのため全体としては同時に複数トランザクションがアクセスするときのcontentionがボトルネックになる。
+
+![Query Processing](images/posts/2017-04-09-cmu2/query-processing.png)
+
+クエリ実行のための最適プランもDisk-Orientedな場合と異なる。すべてのデータがメモリにのっているのでSequentialアクセスが必ずしもよいとは限らず、ひとつひとつのtupleを逐次走査するモデルは関数呼び出しのためオーバヘッドの大きいモデルになった。そこで一度に複数のtupleを処理して次にオペレータに渡す、**Operator-at-a-time** や **Vector-at-a-time** といったモデルが使われるようになった。
+
+PrestoとかHiveのVectorizationのような分散クエリエンジンだとこのモデルで動いている気がする。
+
+![In-Memory logging](images/posts/2017-04-09-cmu2/in-memory-logging.png)
+
+In-Memory DBMSも不揮発性ストレージでのWALは必要で、データアクセスへのコストと比較してオーバヘッドが大きくならないよう **Group Commit** というテクニックでまとめてログのflushを行う。またrecovery timeを早くするために定期的にcheck pointを走らせてデータベースイメージのsnapshotをとっておく。こうすることでリプレイするログを減らすことができる。
+
+- "Copy-on-Write"モードでデータベースイメージのコピーをとりDiskに書き出しておく
+- DBMSのプロセスからForkしたプロセスは同じメモリイメージを持つので子プロセスにdumpを任せる
+
+といった方法がある。
+
+## mmap
+
+ここまでIn-Memory DBMSの話をしたけれど、面白かったのがmmapの話。Disk-Orientedなストレージを単純にmmapしてメモリに載せたらだめなのだろうかという問題提起。
+
+![mmap](images/posts/2017-04-09-cmu2/mmap.png)
+
+結論からいうとこれは基本的にはやらない方がいい方法。理由としては
+
+- Non-Blockingなメモリアクセスができなくなる。mmapはアクセスする際Page Faultが起きると呼んだスレッドをblockしてPageをSwap inしてまたスレッドを起動する。
+- Disk上のデータレイアウトとメモリ上でのレイアウトを同じにしないといけない
+- DBMS自体はどのデータがメモリにあるのかわからなくなる
+
+つまりDBMSはきめ細かい管理をできなくなるため使わないケースが多い。mmapを使っているデータベースとしてはWiredTigerを使う前の[MongoDB](https://docs.mongodb.com/)(以前はmmapv1というストレージエンジン)やMonetDBというものがあるらしい。というわけでmmapはつかわないのが一般的。
+
+## まとめ
+
+![parting thoughts](images/posts/2017-04-09-cmu2/parting-thoughts.png)
+
+ほとんどのデータは単一マシンのDRAM上に収まるようになり、In-Memory DBMSが主流になってきた。でもmmapは使わないように！
+
+## Reference
+
+- [slide](http://15721.courses.cs.cmu.edu/spring2017/slides/02-inmemory.pdf)
+- [video](https://www.youtube.com/watch?v=fZHvESD3gPY)
