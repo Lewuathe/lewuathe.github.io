@@ -1,0 +1,112 @@
+---
+title: "Learning CMU 15-721 (1)"
+layout: post
+date: 2017-03-26 09:33:01 +0900
+image: 'images/'
+description:
+tag: ["Database", "RDBMS"]
+blog: true
+jemoji:
+author: "lewuathe"
+---
+
+普段分散システムやデータベースの開発やメンテナンスをしているけれど、体系立ってデータベースのアカデミックな研究に触れたことがなかったので[CMU 15-721](http://15721.courses.cs.cmu.edu/spring2017/schedule.html)を一通り見てみようと思った。なぜこれを勉強してみようと思ったかというと周りの人が何人もおすすめをしていたからだ。少しずつ勉強してみたい。
+
+初回はデータベース研究の歴史が主だった。が、私にとっては知らない、聞いたこと無いシステムがたくさんあったので面白かった。スライドは[ここ](http://15721.courses.cs.cmu.edu/spring2017/slides/01-intro.pdf)。講義の映像は[ここ](https://www.youtube.com/watch?v=UGMLKsma_VU&feature=youtu.be)にある。
+
+## 1960s - IBM IMS
+
+![IBM IMS](images/posts/2017-03-25-cmu-1/ibm-ims.png)
+
+世界で初めてできた商用データベースと呼ばれるものはこのIBM IMSというものらしい。アポロ計画の部品管理、目録作成のために作られたらしい。IMSを使ったことはないけれど聞いた感じ私が知っているRDBとはきっと似ても似つかないもののようだ。少なくとも１９６０年代当時では。というのも
+
+> Programmer-defined physical storage format.
+
+現在テーブルとして抽象化されているメカニズムは当時はなかったらしく、プログラマが自分でデータをどのように保存するか(B+ treeとかHash Tableとか)定義しなければいけなかった。
+
+> Tuple-at-a-time queries.
+
+クエリに関しても同様で私達が慣れ親しむSQLはリレーショナルモデルに基いて宣言的にデータを走査する仕組みを与えてくれるが当時はTuple(レコード)を一行ずつ走査するようなforループを書くものだったらしい。ただ講義でも触れていたけど現在でもこのような走査メカニズムは生きていてそのひとつがHadoop MapReduceだ。確かにレコードをひとつずつ走査するようにMapReduceアプリケーションは書かれる。なので、めんどくさい ;(。
+
+![Supplier and Part](images/posts/2017-03-25-cmu-1/supplier-part-1.png)
+
+次のスライドがよくわからなったのだけれど、[Supplier and Part](https://en.wikipedia.org/wiki/Suppliers_and_Parts_database)というのはリレーションモデルの説明をするときによく使われる具体例のひとつなのだそうな。暗号関連でいえばAliceとBobって感じなのかな。IMSが採用していたHierarchical Data Modelというのは例えばこのSupplier and Part例を使うと上記のようにSupplierの下にPartが入るような形になる。こうするとSupplierのTupleはPartのTupleを含んだAttributeを持つことになる。外部キー参照みたいだけれど、入っているのは参照ではなく、実際の値だ。なので同じようなデータをいくつも生じ得て無駄がある。
+
+## 1970s - CODASYL
+
+![CODASYL](images/posts/2017-03-25-cmu-1/codasyl.png)
+
+次に出てきたのがCODASYL。"コダシル"と読まれてた。ここからデータベースのモデリングとかアクセスのための言語の標準化といった動きがでてくる。今日でいうJDBCとかODBCみたいなものだけれど、主にCOBOLプログラムでの開発を念頭においていたみたい。CODASYLは聞いたこともなかったけど、COBOLでの話と言われて納得してしまった。実際講義室にはCOBOLですら聞いたこともないという人が多かったみたい。
+
+## 1970s - Relational Model
+
+そしてCODASYLは後にでてくる、Relational Model、SQLに取って代わられ衰退していく。IMSやCODASYLプログラムはスキーマや物理レイアウトが変更になる度にコードを修正する必要があり、時間が無駄になっていた。そこでIBM Researchで働いていたTed Coddが考えたのが私達がよく知るRelational Model。データベースに保存されているデータに十分な抽象化を施そうという試み。
+
+![Relation Model](images/posts/2017-03-25-cmu-1/relational-model.png)
+
+- リレーションというシンプルなデータ構造
+- データベースにアクセスするための高水準言語
+- 実際のデータの物理レイアウトは隠蔽し実装に任せる
+
+を特徴とする。これで以下のようにリレーションをくっつけてCross Referenceすることが容易になった。
+
+![Relation Model Cross Reference](images/posts/2017-03-25-cmu-1/relational-cross-reference.png)
+
+私からするととても慣れ親しんだ概念と設計なので特に違和感ないけれど、当時は結構物議を醸した。特に高水準言語のところ。当時は賢いコンパイラやOptimizerもなかったので人間が書くプログラムよりも効率良くデータにアクセスするプランをコンピュータが生成するなんてことは"SF (Science Fiction)"だった。
+
+ただまだ動くものがなかったので、なかなかこのモデルがよいか悪いかという判断も難しかったのだと思う。そこでRDBMSの最初の実装がでてくる。
+
+## 1970s - Early Implementations
+
+![Early Implementations](images/posts/2017-03-25-cmu-1/implementations.png)
+
+System R, INGRESそしてOracle。私はOracleしか知らない。そして1980年代に入るとRelational Modelが完全に市場を席巻し企業に次々採用されていく。
+
+
+![Implementations2](images/posts/2017-03-25-cmu-1/implementations2.png)
+
+Postgresを作ったのはさっきINGRESを作ったStonebraker先生。INGRESの次に作ったから**"Post"**gresなんだそうな。そうだったのか！
+
+## 1980s - Object-Oriented Databases
+
+1980年代に入るとまた違ったデータベースモデルが現れる。Object-Oriented Modelだ。ちょうどC++とかSmalltalkといったオブジェクト指向プログラミング言語が出てきた頃でオブジェクトをそのままデータベースに突っ込めたらよさそうということで考えられた。
+
+![Object Oriendted](images/posts/2017-03-25-cmu-1/object-oriented.png)
+
+ただこの時作られたものはほとんど残っていない。残っていたとしても使われていない。なぜならSQLのような標準化されたインターフェースがなかったし、実装毎に言語を学ばなければならなかった。ただこの時開発された技術はRDBMSにも生きていて、これによりJSONやXMLサポートが実現されている。
+
+## 2000s - Internet Boom
+
+2000年代に入ると少し知っている内容がでてきた。
+
+![Internet Boom](images/posts/2017-03-25-cmu-1/internet-boom.png)
+
+インターネットスケールでデータは増えたため既存の商用RDBMSだと割高になってきた。Open Source SoftwareとなっているRDBMSも必要な機能がなかなか開発されず（MySQLのMyISAMはトランザクションをサポートしていなかった）、自前でスケールさせるための仕組みを作り出していた。
+
+![Data Warehouse](images/posts/2017-03-25-cmu-1/data-warehouse.png)
+
+というわけで出てきたのがプロプライエタリなOLAPシステム。VERTICAは聞いたことある。
+
+![NoSQL](images/posts/2017-03-25-cmu-1/nosql.png)
+
+NoSQLもこの頃出て来る。Schemaless、Non-Relational Model、No ACIDサポートということでそもそもユースケースも大きく変わってきていることがわかる。さっき出てきたObject Oriented Databaseと通じるものがある気がするけれど今回流行った理由は何なんだろう。
+
+## 2010s - Hybrid System
+
+![Hybrid System](images/posts/2017-03-25-cmu-1/hybrid.png)
+
+2010年代に入ると従来Datawarehouseが担ってきたOLAPとRDBMSが担ってきたOLTPをひとつのシステムでできるようなHybrid Systemが出て来る。商用製品もあればOSSもあるけれど、こういったシステムも今後チェックしてみたい。大体知らない名前だ。
+
+## まとめ
+
+というわけで駆け足だったけれど、Database Systemがどのような歴史を辿って作られてきたかよくわかった。
+
+> IBM was the vanguard during 1970-1980s but now Google is current trendsetter.
+
+と最後に述べられていて今はインターネットの会社が強い分野なんだろうかと思った。それともGoogleだから？
+
+次回は[In-Memory Databases](http://15721.courses.cs.cmu.edu/spring2017/slides/02-inmemory.pdf)に関する話題。
+
+## Reference
+
+- [http://15721.courses.cs.cmu.edu/spring2017/schedule.html](http://15721.courses.cs.cmu.edu/spring2017/schedule.html)
