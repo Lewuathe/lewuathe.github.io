@@ -48,7 +48,7 @@ But this code cannot be compiled because [ImmutableMap.of](https://google.github
         (actual and formal argument lists differ in length))
 ```
 
-Then how can we create arbitary length ImmutableMap? You can use [ImmutableMap.Builder](https://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableMap.Builder.html).
+Then how can we create arbitrary length ImmutableMap? You can use [ImmutableMap.Builder](https://google.github.io/guava/releases/snapshot/api/docs/com/google/common/collect/ImmutableMap.Builder.html).
 
 
 ```java
