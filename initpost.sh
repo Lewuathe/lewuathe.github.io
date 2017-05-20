@@ -117,7 +117,7 @@ echo "image: 'images/'"
 echo "description:"
 echo "tag:"
 echo "blog: true"
-echo "author:"
+echo "author: \"lewuathe\""
 echo "---"
 
 }
