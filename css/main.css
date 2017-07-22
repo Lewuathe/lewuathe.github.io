@@ -9,7 +9,7 @@ body {
   line-height: 1.75rem;
 }
 
-@media (max-width: 30em) {
+@media (max-width: 40em) {
   body {
     font-size: 14px;
     line-height: 1.5rem;
@@ -106,7 +106,7 @@ blockquote p {
 
 @media (max-width: 1366px) {
   .container {
-    width: 45vw;
+    width: 60vw;
   }
 }
 
