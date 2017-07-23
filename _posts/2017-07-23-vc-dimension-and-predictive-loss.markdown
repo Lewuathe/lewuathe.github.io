@@ -37,7 +37,7 @@ Then define empirical loss.
 \hat{R(h)} = \frac{1}{n} \sum_{i=1}^{n} l(h(X_i), Y_i)
 \end{equation}
 
-$$(X_i, Y_i)$$ are observed data generated from probability distribution $$D$$. We can calculate this value, but we want to optimize predictive loss. If we optimized empirical loss but not predictive loss, our model must be overfitting.
+$$(X_i, Y_i)$$ are observed data generated from probability distribution $$D$$. We can calculate this value with given sampled datasets, but we want to optimize predictive loss to make the model sufficiently general. If our model provides low empirical loss but high predictive loss, our model must be overfitting.
 
 ## Bayes rule
 
@@ -79,7 +79,7 @@ We can also think it may be difficult to find a such hypothesis if the number of
 VCdim(\mathscr{H}) = max \\{ n \in \boldsymbol{N} | max_{x_1,...x_n \in \mathscr{X}} \\ \Pi_{\mathscr{H}} (x_1, ..., x_n) = 2^n \\}
 \end{equation}
 
-It means that VC dimension is the max data size where the model can generate a hypothesis that satisfies whole label assignment. If $$d \leq VCdim(\mathscr{H})$$, the training can make a progress finely. But at the same time, it can be overfitting because which can provides a model that satisfies noise label assignment too.
+It means that VC dimension is the max data size where the model can generate a hypothesis that satisfies whole label assignment. If $$d \leq VCdim(\mathscr{H})$$, the training can make a progress finely. The empirical loss should be minimum. But at the same time, it can be overfitting because such model can provides a hypothesis that satisfies noise label assignment too.
 
 ## A theorem
 
@@ -137,7 +137,7 @@ Please note that $$h_S$$ is obtained through training process of empirical loss.
 
 * If we increase the sample size, $$R(h_S)$$ can be similar to ideal $$R(h_0)$$
 * We need to find a optimal value about $$VCDim = d$$ to bound the $$R(h_S)$$ value.
-* Predictive loss is basically relates to the ratio of sample size $$n$$ and VC dimension $$d$$. 
+* Predictive loss is basically relates to the ratio of sample size $$n$$ and VC dimension $$d$$.
 
 ## Reference
 
