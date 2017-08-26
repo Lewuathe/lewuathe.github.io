@@ -5,7 +5,7 @@ description:
 baseurl:            "/"
 url:                "https://www.lewuathe.com"
 github:
-  url:               #"https://github.com/Lewuathe"
+  url:               "https://www.lewuathe.com"
 author:
   name:              "Kai Sasaki"
   twitter:           "Lewuathe"
