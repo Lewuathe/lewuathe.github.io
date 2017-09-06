@@ -3,7 +3,7 @@ title:               The First Cry of Atom
 tagline:             Today is the first day of the rest of my life.
 description:
 baseurl:            "/"
-url:                "https://www.lewuathe.com"
+# url:                "https://www.lewuathe.com"
 github:
   url:               "https://www.lewuathe.com"
 author:
