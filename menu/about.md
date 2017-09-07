@@ -17,6 +17,7 @@ I'm sure that it can be achieved.
 
 ## Talks
 
+* *Optimizing Presto Connector on Cloud Storage* at [DB Tech Showcase Tokyo 2017](https://www.slideshare.net/lewuathe/optimizing-presto-connector-on-cloud-storage)
 * *Running 100 Million Queries Reliably on In-Memory Distributed SQL Engine* at [IMCS EU 2017](Running 100 Million Queries Reliably on In-Memory Distributed SQL Engine)
 * *Managing multi tenant resource toward Hive 2.0* at [DB Tech showcase Tokyo 2016](https://www.slideshare.net/lewuathe/managing-multi-tenant-resource-toward-hive-20)
 * *Maintainable Cloud Architecture of Hadoop* at [Hadoop/Spark Conference Japan 2016](http://hadoop.apache.jp/hcj2016-program/)
