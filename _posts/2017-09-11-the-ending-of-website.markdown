@@ -16,14 +16,14 @@ After a long time, I wrote a module on [npm](https://www.npmjs.com/).
 ## Background
 
 My father asked me to record his friend website in PDF. Since he died, there is no way to access
-his website and source code. But my father wanted to keep the website for his family. The reason why
-we need to record them in PDF format is here.
+his website and source code. But my father wanted to keep the website for his family. The reasons why
+we need to record them in PDF format are :
 
 * His family are not good at computer. Keeping webpage source code in HTML, CSS is not desirable.
 * PDF can be easily read and printed by his family.
 
-His website is not so large. There are 20~30 pages in total. But I wanted to write a code to crawl webpage
-and take a screenshot in PDF by using [Puppetteer](https://github.com/GoogleChrome/puppeteer) recently released
+His website is not so large. There are 20~30 pages in total. So I can take a screenshot each page manually.
+But I wanted to write a code to crawl webpage and take a screenshot in PDF by using [Puppetteer](https://github.com/GoogleChrome/puppeteer) which is recently released
 by Google. Then site-snapshot was created.
 
 ## Usage
@@ -87,8 +87,6 @@ $ siteshot --help
 ## Never ending website
 
 20~30 years has passed since internet had been widely used. There are amazingly a lot of website around the world.
-Some are actively maintained, the others are ruined. Some are be able to reached from Google first page, the others are not. Some are popular, others are not. But all websites have their own history and maintainers. The end of the history
-won't come even after the maintainer has died. Because there are readers on that website. Even if the server is stopped,
-the website will keep living in PDF or in your heart.
+Some are actively maintained, the others are ruined. Some are able to be reached from the Google first page, the others are not. Some are popular, others are not. But all websites have their own history and maintainers. Now I found the end of the history won't come even after the maintainer has died. Because there are readers on that website. Even if the server is stopped, the website will keep living in PDF or in your heart.
 
-I hope I can write such a website. 
+I hope I can write such a website.
