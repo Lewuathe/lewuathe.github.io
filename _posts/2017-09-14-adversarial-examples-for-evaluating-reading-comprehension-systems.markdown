@@ -60,7 +60,7 @@ ParagraphとQuestionから正しいPredictionを得ることができれば成�
 
 文章理解のタスクでも比較的容易にAdversarial Exampleが作れることがわかる論文でした。
 
-ただ文章理解のDeep Learningモデルが*Overly stable*という傾向を持つというのは興味深いのですが、論文ではモデルのこの特徴を考慮してAdversarial Exampleを作ったとあります。オリジナルな文章とcompatibleな文章を付け足した誤答させるには*Oversensitivity*の方を考慮したという方が適切なんじゃないかと思うのですがどうなんでしょうか。
+ただ文章理解のDeep Learningモデルが*Overly stable*という傾向を持つというのは興味深いのですが、論文ではモデルのこの特徴を考慮してAdversarial Exampleを作ったとあります。オリジナルな文章とcompatibleな文を付け足して誤答させるには*Oversensitivity*の方を考慮したという方が適切なんじゃないかと思うのですがどうなんでしょうか。
 
 ## Reference
 
