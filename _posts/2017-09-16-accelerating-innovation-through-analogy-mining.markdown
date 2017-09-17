@@ -74,16 +74,16 @@ $$p_i^{t}$$は単語$$t$$にPurposeアノテーションが付与されていれ
 プロダクトの記述$$x_i$$(これはGloVeのリストで表現される)が得られたら先程の($$\mathbf{p_i}$$, $$\mathbf{m_i}$$)のペアを返すようなモデルを作ります。そうすれば、未知のプロダクトアイデアに対して、同様のPurposeを持ったもの、異なるMechanismを持ったものを探すことができます。つまり訓練データとして
 
 \begin{equation}
-X_N = \{ \mathbf{x_1}, \mathbf{x_2}, ..., \mathbf{x_N} \}
+X_N = \\{ \mathbf{x_1}, \mathbf{x_2}, ..., \mathbf{x_N} \\}
 \end{equation}
 
 と教師データ
 
 \begin{equation}
-Y_N = \{ (p_1, m_1), (p_2, m_2), ..., (p_N, m_N) \}
+Y_N = \\{ (p_1, m_1), (p_2, m_2), ..., (p_N, m_N) \\}
 \end{equation}
 
-から訓練させます。モデルにはGRUを使ったBiRNNを用います。BiRNNを使うことで単語毎の前方への依存と後方への依存を考慮することができます。このBiRNNレイヤーはPurposeベクトル、Mechanismベクトル双方で共通で、この隠れ状態に対して$$W_p$$と$$W_p$$の重みの全結合層をMSE(Mean Squared Error)で最適化します。
+から訓練させます。モデルには[GRU](http://localhost:4000/accelerating-innovation-through-analogy-mining.html)を使ったBiRNNを用います。BiRNNを使うことで単語毎の前方への依存と後方への依存を考慮することができます。このBiRNNレイヤーはPurposeベクトル、Mechanismベクトル双方で共通で、この隠れ状態に対して$$W_p$$と$$W_p$$の重みの全結合層をくっつけて出力とします。$$p_i$$と$$m_i$$をターゲットとしているので、MSE(Mean Squared Error)で最適化します。
 
 ## 評価
 
