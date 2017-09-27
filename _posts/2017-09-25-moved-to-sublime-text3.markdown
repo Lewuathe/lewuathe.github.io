@@ -24,7 +24,7 @@ But why did I move to Sublime Text?
 
 ## Slow launching
 
-I liked the speed of Atom very much but now Atom (at least to me) does not provides sufficient speed of launching, editing and saving of a file as it did.
+I liked the speed of Atom very much but now Atom (at least to me) does not provide sufficient speed of launching, editing and saving of a file as it did.
 Especially, after I installed several plugins and themes, I could not use Atom as lightweight simple text editor because it took 15+ seconds to be ready. 
 I double the plugins I installed. But after removed some of them, the experience of using Atom was not improved. 
 
