@@ -9,7 +9,11 @@ blog: true
 author: "lewuathe"
 ---
 
-I'm now trying to convert [td-client-node](https://github.com/treasure-data/td-client-node) codebase to ES6. Since ES6 provides us bunch of useful features and syntax which are not available in ES5. But nodejs (and backend V8) does not support full functionalities of ES6. You can check the overview of supported ECMAScript features by nodejs in [this website](http://node.green/). [This blog post](https://nodejs.org/en/docs/es6/) explained the detail of milestone to support ES6 features.
+I'm now trying to convert [td-client-node](https://github.com/treasure-data/td-client-node) codebase to ES6. 
+
+* [treasure-data/td-client-node #21](https://github.com/treasure-data/td-client-node/pull/21)
+
+Since ES6 provides us bunch of useful features and syntax which are not available in ES5. But nodejs (and backend V8) does not support full functionalities of ES6. You can check the overview of supported ECMAScript features by nodejs in [this website](http://node.green/). [This blog post](https://nodejs.org/en/docs/es6/) explained the detail of milestone to support ES6 features.
 
 So here is [Babel](https://babeljs.io/). Babel is a transpiler to convert ES6 codebase into ES5 code which can be run on nodejs. The usage of Babel is described [here](https://babeljs.io/docs/setup/) in detail. And overall Babel can convert my td-client-node codebase properly except for one thing. 
 
