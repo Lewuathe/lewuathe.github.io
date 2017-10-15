@@ -4,10 +4,7 @@
 
 body {
   font-family:Avenir , "Open Sans" , "Helvetica Neue" , Helvetica , Arial , Verdana , Roboto , "游ゴシック" , "Yu Gothic" , "游ゴシック体" , "YuGothic" , "ヒラギノ角ゴ Pro W3" , "Hiragino Kaku Gothic Pro" , "Meiryo UI" , "メイリオ" , Meiryo , "ＭＳ Ｐゴシック" , "MS PGothic" , sans-serif;
-  /*font-family: 'Roboto', sans-serif;*/
-  /*font-family: 'Roboto Slab', serif;*/
-  /*font-family: "PT Sans", "PT Serif", Georgia, "Times New Roman", serif;*/
-  font-size: 15px;
+  font-size: 19px;
   color: #515151;/*#3A3A3A;/*rgba(0,0,0,.8);/*#666;*/
   line-height: 1.75rem;
 }
