@@ -24,7 +24,7 @@ But do you know how to trim zero values from Python list? What I wanted to do wa
 [1, 2, 3]
 ```
 
-Numpy provided me a API to do exactly what I wanted to do. [`trim_zeros`](https://docs.scipy.org/doc/numpy-1.10.0/reference/generated/numpy.trim_zeros.html). 
+Numpy provided me an API to do exactly what I wanted to do. [`trim_zeros`](https://docs.scipy.org/doc/numpy-1.10.0/reference/generated/numpy.trim_zeros.html). 
 
 ```python
 >>> import numpy as np
