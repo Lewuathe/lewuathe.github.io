@@ -34,17 +34,11 @@ h1, h2, h3, h4, h5, h6 {
 
 a {
   text-decoration: underline;
-  /*border-bottom: 1px solid black;*/
-  color: #333;/*#FF333E;*/
-  -o-transition:.5s;
-    -ms-transition:.5s;
-    -moz-transition:.5s;
-    -webkit-transition:.5s;
-    transition: .5s;
+  color: #333;
 }
 
 a:hover {
-  color: black;/*#999;*/
+  color: black;
   border-bottom: none;
 }
 
@@ -53,27 +47,6 @@ img {
   height: auto;
   border-radius: 5px;
 }
-
-/*
-  Blockquote
-*/
-
-/*blockquote {
-  padding: 0rem 1rem;
-  margin: .8rem 0;
-  color: #999;
-  border-left: 0.25rem solid #ccc;
-}
-
-blockquote p:last-child {
-  margin-bottom: 0;
-}
-@media (min-width: 30em) {
-  blockquote {
-    padding-right: 5rem;
-    padding-left: 1.25rem;
-  }
-}*/
 
 blockquote {
   border-left: 0.25rem solid #ccc;
@@ -110,10 +83,11 @@ blockquote p {
   }
 }
 
+/*48em*/
 
-@media (max-width: 48em) {
+@media (max-width: 768px) {
   .container {
-    width: 75vw;
+    width: 90vw;
   }
 }
 
@@ -143,6 +117,21 @@ blockquote p {
 }
 
 /*
+  Thumbnail
+*/
+
+.thumbnail-container {
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.thumbnail-container img{
+  margin-top: -11.5%;
+  margin-bottom: -11.5%;
+}
+
+/*
   Post
 */
 
@@ -158,6 +147,7 @@ blockquote p {
 
 .post-date {
   display: block;
+  margin-top:3px;
   margin-bottom: 1rem;
   color: #9a9a9a;
   font-family: 'Quattrocento Sans', sans-serif;
@@ -265,7 +255,10 @@ blockquote p {
 @media (max-width: 30em) {
   .social-icons {
     float: left;
-    padding-top: 0.5rem;
+    padding-top: 0px;
+  }
+  .menu-content {
+    margin-bottom: 5px;
   }
 }
 
@@ -310,6 +303,22 @@ pre {
   word-wrap: normal;
 }
 
+/**
+ * Tables
+ */
+ table {
+     border-collapse: collapse;
+     margin-bottom: 30px;
+     width: 100%;
+ }
+
+ table, th, td {
+     border: 1px solid black;
+ }
+ th, td {
+     padding: 15px;
+     text-align: left;
+ }
 
 /*
   Social media icons
@@ -447,4 +456,17 @@ pre {
 
 .fa-codepen:hover {
 	color: black;
+}
+
+.fa-rss-square {
+  padding: 5px;
+	-o-transition:.5s;
+  	-ms-transition:.5s;
+  	-moz-transition:.5s;
+  	-webkit-transition:.5s;
+  	transition: .5s;
+}
+
+.fa-rss-square:hover {
+	color: #ff6600;
 }

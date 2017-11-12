@@ -2,16 +2,18 @@
 
   <title>
     {% if page.title == "Home" %}
-      {{ site.title }} | {{ site.tagline }}
+      {{ site.data.settings.title }} | {{ site.data.settings.tagline }}
     {% else %}
-      {{ page.title }} | {{ site.title }}
+      {{ page.title }} | {{ site.data.settings.title }}
     {% endif %}
   </title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="stylesheet" href="/css/main.css">
-  <link rel="stylesheet" href="/css/syntax.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/syntax.css">
+  <!-- <link rel="stylesheet" href="/css/main.css"> -->
+  <!-- <link rel="stylesheet" href="/css/syntax.css"> -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quattrocento+Sans">
@@ -21,6 +23,11 @@
     src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
   </script>
 
-  {% include google_analytics.html %}
+  {% include google-analytics.html %}
+  <!-- Use Atom -->
+  {% feed_meta %}
+
+  <!-- Use Jekyll SEO plugin -->
+  {% seo %}
 
 </head>
