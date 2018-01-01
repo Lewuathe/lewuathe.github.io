@@ -1,0 +1,39 @@
+---
+title: "From 2017 to 2018"
+layout: post
+date: 2018-01-01 22:07:30 +0900
+image: 'images/'
+description:
+tag: ["NewYear", "Career"]
+blog: true
+author: "lewuathe"
+---
+
+2017 is the year when I kept struggling. At least I felt so. There was a wishlist which describes 
+a bunch of what I wanted to do. Of course some of them were achieved but not all. It's always true. The problem is that I am not satisified with what I achieved in the year 2017. I have still a lot of tasks to be done or kept in progress in this year. As we usually do in the beginning of the new year, I am going to describe some of them. 
+
+Here is a list what I am going to do in this year. 
+
+## Improve my English skill
+
+I had a lot of chance to have communication in English both in formal and casual situations. Thanks to the daily practice of English (e.g. Listening English Podcast, Reading English materials etc), I successfully achieved what I want overall. I could communicate in English without being so nervous and be confident enough to have a beer talking in English. That is a part of progres I achieved in the last year. 
+
+But at the same time, I could see another horizon. I sometimes was not able to grasp what people said due to the speed they were talking or due to my lack of vocaburary. Understanding the detail must bring me more fun in our communication. I want to be able to talk English more correctly and accurately. 
+
+There are two things what I plan to do. One is improving vocabulary. I kept practicing listening and reading by using some free materials like Podcast or Hacker News. But I did not increase my English word vocabulary consciously. I realized that vocabulary was not improved unless we tried to cram new words into my head voluntarily. I found the importance of keep learning new word in foreigh language. 
+
+The second one I am going to do is studying English for formal test. Specifically, I will take a TOEFL test in this year. Preparing for TOEFL test can contribute to improve my English skill in a nice balanced way, I think. In addition to this, I have another reason for preparing TOEFL test but it will be talked later. 
+
+While keep improving basic English skill again, I also keep going on getting a chance to give a presentation in English or hacing a casual talk with my colleague.
+
+## Improve my Software Engineering knowledge
+
+I graduated the university about 6 years ago. My major was CS. Almost all of knowledge I acquired at the university is now used a lot. So I want to say that studying computer science in university is important for my career progress if I want to be a software engineer. 
+
+So I'm now considering taking a master of degree in computer science. Thanks to innovation around education industry including MOOCS, I may be able to get the degree just though online. Georgia tech is a university that provides such program for foreign students. [OMSCS](https://www.omscs.gatech.edu/) is a program provided by Geogia Institute of Technology to get a master just by online course. Its cost is also quite attractive to me. It costs just $7000 to get all credits for the master. I could get a master of degree in one of the highest level university in US without quitting my current work. What a great course I found!
+
+We need to prepare some recommenders, essays official transcripts and TOEFL score. I'm now preparing. This is another reason to have TOEFL test in my wishlist. 
+
+So overall, I hope 2018 will be filled with the chance and luck of improving my skills.
+
+Happy New Year!
