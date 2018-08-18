@@ -2,7 +2,7 @@
 title: "Use Benchto for evaluation of Presto"
 layout: post
 date: 2018-02-22 13:48:36 +0900
-image: 'images/'
+image: 'spools.jpg'
 description:
 tag: ['Benchto', 'Presto']
 blog: true

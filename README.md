@@ -56,7 +56,7 @@ Lagrange is a Jekyll theme that was built to be 100% compatible with [GitHub Pag
 
 ### What is Jekyll?
 
-Jekyll is a simple, blog-aware, static site generator for personal, project, or organization sites. Basically, Jekyll takes your page content along with template files and produces a complete website. For more information, visit the [official Jekyll site](https://jekyllrb.com/docs/home/) for their documentation.
+Jekyll is a simple, blog-aware, static site generator for personal, project, or organization sites. Basically, Jekyll takes your page content along with template files and produces a complete website. For more information, visit the [official Jekyll site](https://jekyllrb.com/docs/home/) for their documentation. Codecademy also offers a great course on [how to deploy a Jekyll site](https://www.codecademy.com/learn/deploy-a-website) for complete beginners.
 
 ### Never Used Jekyll Before?
 
@@ -66,7 +66,7 @@ The beauty of hosting your website on GitHub is that you don't have to actually 
 
 ### GitHub Pages Installation
 
-To start using Jekyll right away using GitHub Pages, [fork the Lagrange repository on GitHub](https://github.com/LeNPaul/Lagrange/fork). From there, you can rename your repository to 'USERNAME.github.io', where 'USERNAME' is your GitHub username, and edit the `settings.yml` file in the `_data` folder to your liking. Ensure that you have a branch named `gh-pages`. Your website should be ready immediately at 'http://USERNAME.github.io'. Note: if you are hosting several sites under the same GitHub username, then you will have to use [Project Pages instead of User Pages](https://help.github.com/articles/user-organization-and-project-pages/) - just change the repository name to something other than 'http://USERNAME.github.io'.
+To start using Jekyll right away with GitHub Pages, [fork the Lagrange repository on GitHub](https://github.com/LeNPaul/Lagrange/fork). From there, you can rename your repository to 'USERNAME.github.io', where 'USERNAME' is your GitHub username, and edit the `settings.yml` file in the `_data` folder to your liking. Ensure that you have a branch named `gh-pages`. Your website should be ready immediately at 'http://USERNAME.github.io'. Note: if you are hosting several sites under the same GitHub username, then you will have to use [Project Pages instead of User Pages](https://help.github.com/articles/user-organization-and-project-pages/) - just change the repository name to something other than 'http://USERNAME.github.io'.
 
 Head over to the `_posts` directory to view all the posts that are currently on the website, and to see examples of what post files generally look like. You can simply just duplicate the template post and start adding your own content.
 
@@ -81,7 +81,6 @@ If you are familiar with Jekyll, then the Lagrange directory structure shouldn't
 ```bash
 Lagrange/
 ├── _data                      # Data files
-|  └── authors.yml             # For managing multiple authors
 |  └── settings.yml            # Theme settings and custom text
 ├── _includes                  # Theme includes
 ├── _layouts                   # Theme layouts (see below for details)
@@ -93,7 +92,11 @@ Lagrange/
 |  └── img                     # Images go here
 ├── menu                       # Menu pages
 ├── _config.yml                # Site build settings
-└── index.md                   # Home page
+├── Gemfile                    # Ruby Gemfile for managing Jekyll plugins
+├── index.md                   # Home page
+├── LICENSE.md                 # License for this theme
+├── README.md                  # Includes all of the documentation for this theme
+└── rss-feed.xml               # Generates RSS 2.0 file which Jekyll points to
 ```
 
 ### Starting From Scratch
@@ -104,15 +107,15 @@ To completely start from scratch, simply delete all the files in the `_posts`, `
 
 ### Sample Posts
 
-Visit the [the demo site](https://lenpaul.github.io/Lagrange/) to find sample posts that show what different types of text formatting look like, as well as best practices for setting up your own site.
+Visit the [the demo site](https://lenpaul.github.io/Lagrange/) to find sample posts that show what different types of text formatting look like. You can find these posts in the `_posts` folder, which show what the best practices for setting up your own site are.
 
 ### Site Variables
 
-To change site build settings, edit the `_config.yml` file found in the root of your repository, which you can tweak however you like. More information on configuration settings and plugins can be found on [the Jekyll documentation site](https://jekyllrb.com/docs/configuration/).
+To change site build settings, edit the `_config.yml` file found in the root of your repository, which you can tweak however you like. More information on configuration settings and plugins can be found on [the Jekyll documentation site](https://jekyllrb.com/docs/configuration/). This is also where you will be able to customize the title, description, and the author/owner of your site.
 
 If you are hosting your site on GitHub Pages, then committing a change to the `_config.yml` file will force a rebuild of your site with Jekyll. Any changes made should be viewable soon after. If you are hosting your site locally, then you must run `jekyll serve` again for the changes to take place.
 
-In the `settings.yml` and `authors.yml` files found in the `_data` folder, you will be able to customize your site settings, such as the title of your site, what shows up in your menu, and social media information. To make author organization easier, especially if you have multiple authors, all author information is stored in the `authors.yml` file.
+In the `settings.yml` file found in the `_data` folder, you will be able to customize your site settings, such as setting Disqus comments, Google Analytics, what shows up in your menu, and social media information.
 
 ### Adding Menu Pages
 
@@ -122,7 +125,7 @@ The menu pages are found in the `menu` folder in the root directory, and can be 
 
 You will find example posts in your `_posts` directory. Go ahead and edit any post and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
 
-To add new posts, simply add a file in the `_posts` directory that follows the convention of `YYYY-MM-DD-name-of-post.md` and includes the necessary front matter. Take a look at any sample post to get an idea about how it works. If you already have a website built with Jekyll, simply copy over your posts to migrate to Lagrange. Note: Images were designed to be 1024x600 pixels, with teaser images being 1024x380 pixels.
+To add new posts, simply add a file in the `_posts` directory that follows the convention of `YYYY-MM-DD-name-of-post.md` and includes the necessary front matter. Take a look at any sample post to get an idea about how it works. If you already have a website built with Jekyll, simply copy over your posts to migrate to Lagrange.
 
 ### Layouts
 
@@ -137,9 +140,9 @@ title: "Example Post"
 
 Examples of what posts looks like can be found in the `_posts` directory, which includes this post you are reading right now. Posts are the basic blog post layout, which includes a header image, post content, author name, date published, social media sharing links, and related posts.
 
-Pages are essentially the post layout without any of the extra features of the posts layout. An example of what pages look like can be found at the [About](https://lenpaul.github.io/Lagrange/menu/about.html) and [Contacts](https://lenpaul.github.io/Lagrange/menu/contacts.html).
+Pages are essentially the post layout without any of the extra features of the posts layout. An example of what pages look like can be found at the [About](https://lenpaul.github.io/Lagrange/menu/about.html) and [Contacts](https://lenpaul.github.io/Lagrange/menu/contact.html).
 
-In addition to the two main layout options above, there are also custom layouts that have been created for the [home page](https://lenpaul.github.io/Lagrange/) and the [archives page](https://lenpaul.github.io/Lagrange/writing.html). These are simply just page layouts with some [Liquid template code](https://shopify.github.io/liquid/). Check out the `index.html` file in the root directory for what the code looks like.
+In addition to the two main layout options above, there are also custom layouts that have been created for the [home page](https://lenpaul.github.io/Lagrange/) and the [archives page](https://lenpaul.github.io/Lagrange/menu/writing.html). These are simply just page layouts with some [Liquid template code](https://shopify.github.io/liquid/). Check out the `index.html` file in the root directory for what the code looks like.
 
 ### YAML Front Block Matter
 
@@ -149,18 +152,14 @@ The recommended YAML front block is:
 ---
 layout:
 title:
+author:
 categories:
 tags: []
 image:
-  feature:
-  teaser:
-  credit:
-  creditlink:
-
 ---
 ```
 
-`layout` specifies which layout to use, `title` is the page or post title, `categories` can be used to better organize your posts, `tags` are used to show related posts, as well as indicate what topics are related in a given post, and `image` specifies which images to use. There are two main types of images that can be used in a given post, the `feature` and the `teaser`, which are typically the same image, except the teaser image is cropped for the home page. You can give credit to images under `credit`, and provide a link if possible under `creditlink`.
+`layout` specifies which layout to use, `title` is the page or post title, `categories` can be used to better organize your posts, `tags` are used when generating related posts based on the topic of the post, and `image` specifies which images to use. Have a look at some posts in the `_posts` directory to see how these variables are set.
 
 ## Features
 
@@ -170,7 +169,7 @@ Lagrange was designed to be a minimalist theme in order for the focus to remain 
 
 ### Disqus
 
-Lagrange supports comments at the end of posts through [Disqus](https://disqus.com/). In order to activate Disqus commenting, set `disqus.comments` to true in the `settings.yml` file under `_data`. If you do not have a Disqus account already, you will have to set one up, and create a profile for your website. You will be given a `disqus_shortname` that will be used to generate the appropriate comments sections for your site. More information on [how to set up Disqus](http://www.perfectlyrandom.org/2014/06/29/adding-disqus-to-your-jekyll-powered-github-pages/).
+Lagrange supports comments at the end of posts through [Disqus](https://disqus.com/). In order to activate Disqus commenting, set `disqus.comments` to true in the `_data/settings.yml` file. If you do not have a Disqus account already, you will have to set one up, and create a profile for your website. You will be given a `disqus_shortname` that will be used to generate the appropriate comments sections for your site. More information on [how to set up Disqus](http://www.perfectlyrandom.org/2014/06/29/adding-disqus-to-your-jekyll-powered-github-pages/).
 
 ### Google Analytics
 
@@ -178,8 +177,17 @@ It is possible to track your site statistics through [Google Analytics](https://
 
 ### RSS Feeds
 
-Atom is supported through [Jekyll-Feed](https://github.com/jekyll/jekyll-feed) and RSS 2.0 is supported through [RSS autodiscovery](http://www.rssboard.org/rss-autodiscovery).
+Atom is supported by default through [jekyll-feed](https://github.com/jekyll/jekyll-feed). With jekyll-feed, you can set configuration variables such as 'title', 'description', and 'author', in the `_config.yml` file.
 
+RSS 2.0 is also supported through [RSS auto-discovery](http://www.rssboard.org/rss-autodiscovery). The `rss-feed.xml` file (based on the template found at [jekyll-rss-feeds](https://github.com/snaptortoise/jekyll-rss-feeds)) that the feed path points to when using RSS 2.0 is automatically generated based on the appropriate configuration variables found in `_data/settings.yml`.
+
+To use RSS 2.0, ensure the following is done:
+
+* Uncomment the last two lines in the `_config.yml` file.
+
+* In `_data/settings.yml`, under 'social', comment out the rss-square that points to `feed.xml`, and uncomment the rss-square that points to `rss-feed.xml`.
+
+* In `_includes/head.html`, comment out `{% feed_meta %}` and uncomment the line under the RSS 2.0 comment.
 
 ### Social Media Icons
 
@@ -229,6 +237,8 @@ This theme is completely free and open source software. You may use it however y
 
 ### Contributors
 
+* [nikolalukovic](https://github.com/nikolalukovic)
+
 * [gmemstr](https://github.com/gmemstr)
 
 * [lynn9388](https://github.com/lynn9388)
@@ -244,6 +254,10 @@ This theme is completely free and open source software. You may use it however y
 * [Hguimaraes](https://github.com/Hguimaraes)
 
 * [ilhamadun](https://github.com/ilhamadun)
+
+* [brianclemens](https://github.com/brianclemens)
+
+* [leyhline](https://github.com/leyhline)
 
 ### Icons + Demo Images
 
