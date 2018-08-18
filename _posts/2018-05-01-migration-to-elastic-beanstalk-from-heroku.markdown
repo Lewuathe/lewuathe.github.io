@@ -2,7 +2,7 @@
 title: "Migration to Elastic Beanstalk from Heroku"
 layout: post
 date: 2018-05-01 21:22:19 +0900
-image: 'images/'
+image: 'cutting.jpg'
 description:
 tag: ["Rails", "AWS", "Heroku"]
 blog: true

@@ -2,7 +2,7 @@
 title: "Changing the VOLUME within Dockerfile"
 layout: post
 date: 2018-03-08 09:21:56 +0900
-image: 'images/'
+image: 'mountains.jpg'
 description:
 tag: ['Docker', 'Container', 'Software']
 blog: true

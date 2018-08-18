@@ -2,7 +2,7 @@
 title: "Environment Variable in IntelliJ IDEA"
 layout: post
 date: 2018-05-29 21:34:07 +0900
-image: 'images/'
+image: 'cards.jpg'
 description:
 tag: ["IntelliJ IDEA", "IDE", "Shell"]
 blog: true

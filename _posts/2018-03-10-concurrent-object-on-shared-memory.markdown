@@ -2,7 +2,7 @@
 title: "Concurrent Object on Shared Memory"
 layout: post
 date: 2018-03-10 21:31:30 +0900
-image: 'images/'
+image: 'forest.jpg'
 description:
 tag: ['Java', 'Memory', 'Multiprocessor', 'Programming']
 blog: true
