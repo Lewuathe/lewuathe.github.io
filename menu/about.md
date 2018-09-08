@@ -30,6 +30,7 @@ I'm sure that it can be achieved.
 
 ## Publications
 
+* [Deep Learning in the Browser](https://bleedingedgepress.com/product/deep-learning-in-the-browser/)
 * [Spark: Big Data Cluster Computing in Production](http://as.wiley.com/WileyCDA/WileyTitle/productCd-1119254019.html)
 * [Professional Hadoop](http://as.wiley.com/WileyCDA/WileyTitle/productCd-111926717X.html)
 * [マーケティング＆サービス向上に役立つ ログ＆データ分析基盤入門 in Software Design 3月号 2017](http://gihyo.jp/magazine/SD/archive/2017/201703)
