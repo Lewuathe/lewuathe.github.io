@@ -19,6 +19,8 @@ I'm sure that it can be achieved.
 
 ## Talks
 
+* *Infrastructure for auto scaling distributed system* at [Big Data Conference Vilnius](https://www.slideshare.net/lewuathe/infrastructure-for-auto-scaling-distributed-system)
+* *Continuous Optimization for Distributed BigData Analysis* at [HighLoad++](https://www.slideshare.net/lewuathe/continuous-optimization-for-distributed-bigdata-analysis)
 * *Deep Dive into deeplearn.js* at [TensorFlow User Group](https://www.slideshare.net/lewuathe/deep-dive-into-deeplearnjs)
 * *Optimizing Presto Connector on Cloud Storage* at [DB Tech Showcase Tokyo 2017](https://www.slideshare.net/lewuathe/optimizing-presto-connector-on-cloud-storage)
 * *Running 100 Million Queries Reliably on In-Memory Distributed SQL Engine* at [IMCS EU 2017](Running 100 Million Queries Reliably on In-Memory Distributed SQL Engine)
@@ -26,7 +28,6 @@ I'm sure that it can be achieved.
 * *Maintainable Cloud Architecture of Hadoop* at [Hadoop/Spark Conference Japan 2016](http://hadoop.apache.jp/hcj2016-program/)
 * *Embulk makes Japan visible* at [GREE Tech Talk #10](http://labs.gree.jp/blog/2016/03/15924/)
 * *図でわかるHDFS Erausre Coding* at [Cloudera World Tokyo 2015](https://www.slideshare.net/lewuathe/hdfs-erasure-coding)
-
 
 ## Publications
 
@@ -40,4 +41,5 @@ I'm sure that it can be achieved.
 * [@Lewuathe at GitHub](https://github.com/Lewuathe)
 * [@Lewuathe at Twitter](https://twitter.com/Lewuathe)
 * [@kaisasaki at LinkedIn](https://www.linkedin.com/in/kaisasaki/)
+* [Blog in Japanese](https://note.mu/lewuathe)
 
