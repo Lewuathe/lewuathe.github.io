@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Welcome to Lagrange!
+title: Welcome Here!
 ---
 Hi, my name is Kai Sasaki. I am a software engineer who has a passion for creating
 artificial intelligence by processing large scale data. By using web technologies, mathematics and big data,
@@ -11,6 +11,8 @@ I'm sure that it can be achieved.
 * Working at **[Treasure Data](http://www.treasuredata.com/)** from 2015
 * Contributor of **[TensorFlow.js](https://js.tensorflow.org/)**
   - Awarded [Google Open Source Peer Bonus Program](https://opensource.googleblog.com/2018/08/congratulations-to-open-source-peer-bonus-winners.html)
+* Developer of [BuffettCode](https://www.buffett-code.com/)
+  - Web service to provide information accelerating analysis of corporate finance and business.
 * Contributor of **[Apache Hadoop](https://github.com/apache/hadoop)**
 * Contributor of **[Apache Spark](https://github.com/apache/spark)**
 * Committer of **[Apache Hivemall](https://github.com/apache/incubator-hivemall)**
