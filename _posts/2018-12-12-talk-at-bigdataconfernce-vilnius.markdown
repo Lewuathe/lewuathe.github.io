@@ -2,7 +2,7 @@
 title: "Talk at BigDataConfernce Vilnius"
 layout: post
 date: 2018-12-12 10:19:13 +0900
-image: 'posts/2018-12-12-talk-at-bigdataconfernce-vilnius/trakai.jpg'
+image: 'assets/img/posts/2018-12-12-talk-at-bigdataconfernce-vilnius/trakai.jpg'
 description:
 tag: ['Conference', 'Presentation', 'BigData']
 blog: true

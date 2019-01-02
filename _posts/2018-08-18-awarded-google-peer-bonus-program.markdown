@@ -2,7 +2,7 @@
 title: "Awarded Google Peer Bonus Program"
 layout: post
 date: 2018-08-18 10:52:31 +0900
-image: 'tfjs.png'
+image: 'assets/img/tfjs.png'
 description:
 tag: ['TensorFlow', 'TypeScript', 'OSS']
 blog: true

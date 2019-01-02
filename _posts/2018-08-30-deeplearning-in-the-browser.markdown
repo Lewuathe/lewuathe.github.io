@@ -2,7 +2,7 @@
 title: "DeepLearning in the Browser"
 layout: post
 date: 2018-08-30 09:13:31 +0900
-image: 'posts/2018-08-30-deeplearning-in-the-browser/sharon-mccutcheon-532782-unsplash.jpg'
+image: 'assets/img/posts/2018-08-30-deeplearning-in-the-browser/sharon-mccutcheon-532782-unsplash.jpg'
 description:
 tag: ["DeepLearning", "Book"]
 blog: true
