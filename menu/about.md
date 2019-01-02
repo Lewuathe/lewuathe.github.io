@@ -12,6 +12,7 @@ I'm sure that it can be achieved.
 * Contributor of **[TensorFlow.js](https://js.tensorflow.org/)**
   - Awarded [Google Open Source Peer Bonus Program](https://opensource.googleblog.com/2018/08/congratulations-to-open-source-peer-bonus-winners.html)
 * Developer of [BuffettCode](https://www.buffett-code.com/)
+  - [@buffett_code](https://twitter.com/buffett_code)
   - Web service to provide information accelerating analysis of corporate finance and business.
 * Contributor of **[Apache Hadoop](https://github.com/apache/hadoop)**
 * Contributor of **[Apache Spark](https://github.com/apache/spark)**
