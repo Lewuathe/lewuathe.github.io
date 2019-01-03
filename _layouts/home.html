@@ -1,7 +1,8 @@
 ---
-layout: home
+layout: default
 title: Home
 ---
+
 {% for post in paginator.posts %}
 <div class="posts">
   <h1>
@@ -9,7 +10,7 @@ title: Home
   </h1>
   {% if post.image %}
   <div class="thumbnail-container">
-    <a href="{{ site.github.url }}{{ post.url }}"><img src="{{ site.github.url }}/{{ post.image }}"></a>
+    <a href="{{ site.github.url }}{{ post.url }}"><img src="{{ site.github.url }}/assets/img/{{ post.image }}"></a>
   </div>
   {% endif %}
   <p>
@@ -22,7 +23,7 @@ title: Home
 <!-- Pagination links -->
 <div class="pagination">
   {% if paginator.next_page %}
-    <a class="pagination-button pagination-active" href="{{ site.github.url }}{{ paginator.next_page_path }}" class="next">{{ site.data.settings.pagination.previous_page }}</a>
+    <a class="pagination-button pagination-active next" href="{{ site.github.url }}{{ paginator.next_page_path }}">{{ site.data.settings.pagination.previous_page }}</a>
   {% else %}
     <span class="pagination-button">{{ site.data.settings.pagination.previous_page }}</span>
   {% endif %}
