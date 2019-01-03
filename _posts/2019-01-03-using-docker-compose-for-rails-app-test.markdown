@@ -9,7 +9,7 @@ blog: true
 author: "lewuathe"
 ---
 
-[BuffettCode](https://www.buffett-code.com/) that is one my hobby project is built by Ruby on Rails (RoR). 
+[BuffettCode](https://www.buffett-code.com/) that is one of my hobby projects is built by Ruby on Rails (RoR). 
 Ruby on Rails is so useful that we can accelerate prototyping the initial work quickly. Though it was the first time for me to use RoR in a service used by other people, I am still confident that it's not wrong to choose RoR as our web application framework.
 
 But we have found one problem after a while. Testing. I do not mean a unit test. We had several times when we want to run RoR application server in our local machine and check everything running correctly including DB schema and migration. It's a kind of thing existing between a unit test and integration test. We found [docker-compose](https://docs.docker.com/compose/) a suitable tool for stuff like that. This is the article to make testing of RoR easy by using docker-compose. 
