@@ -117,7 +117,7 @@ echo "image: 'assets/img/posts/${CURRENT_DATE}-${POST_NAME}/catch.jpg'"
 echo "description:"
 echo "tag:"
 echo "blog: true"
-echo "author: \"lewuathe\""
+echo "author: \"Kai Sasaki\""
 echo "---"
 
 }
