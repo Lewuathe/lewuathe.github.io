@@ -54,6 +54,12 @@ lewuathe/my-app     latest              6fc6e4e7a8ee        6 days ago          
 
 Since docker image can be easily converted into the portable format, deploying a docker image in CodeDeploy package probably the easiest way. The good news is that it is sufficiently stable as a way to deploy your docker application in AWS environment. We already run that kind of application in our production system because CodeDeploy is working not only EC2 instances but also our on-premise instances existing in other cloud services. So it's also portable in terms of cross-cloud environment. If you want to use another cloud service, it must not be so difficult to do so. Please try it.
 
+The docker subcommands that can accelerate your operational work are described in [this book](https://www.amazon.com/gp/product/1633430235/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1633430235&linkCode=as2&tag=lewuathe-20&linkId=ae3b274f8da8a0743cf5bf6c741fc593). "Docker in action" is a good book to learn the list of tools and subcommands provided by Docker. Although it's a little old, you will be able to get the basic usage of Docker. 
+
+<div style='text-align: center;'>
+<a target="_blank"  href="https://www.amazon.com/gp/product/1633430235/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1633430235&linkCode=as2&tag=lewuathe-20&linkId=0fbfeb8fdafb97cc20a8dfa311f0857a"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=1633430235&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=lewuathe-20" ></a><img src="//ir-na.amazon-adsystem.com/e/ir?t=lewuathe-20&l=am2&o=1&a=1633430235" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+</div>
+
 Thanks.
 
 
