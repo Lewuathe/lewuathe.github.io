@@ -38,7 +38,7 @@ $    aws deploy push \
 This command will create a CodeDeploy package based on the current directory specified by `--source` option. That contains `my-app-docker.tar.gz`. This command will also upload the package to the S3 bucket specified by `--s3-location`. 
 
 It's necessary to load the docker image in the docker engine running in the EC2 instance where the package is deployed.
-You can use [`load`](https://docs.docker.com/engine/reference/commandline/load/)
+You can use [`load`](https://docs.docker.com/engine/reference/commandline/load/) command. It will be useful to write this command in a hook script triggered in ApplicationStart lifecycle. 
 
 ```
 $ docker load -i /path/to/package/my-app-docker.tar.gz
