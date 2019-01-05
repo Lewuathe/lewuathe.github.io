@@ -17,7 +17,9 @@ I was a contributor of [TensorFlow.js](https://js.tensorflow.org/) and also had 
 > This book is at the crossroads of web development and deep learning. Both technologies are beginning to meet, and this honeymoon will produce new fantastic applications that you cannot even imagine yet.
 > In this book you will see how to concretely use the main JavaScript deep learning frameworks and web programming in the browser with the capture of inputs and the WebGL implementation. Deep learning in the browser is currently at an embryonic stage, but this is the best time to bet on it before it becomes a giant, and this book will get you in on the action.
 
-[![](assets/img/posts/2018-08-30-deeplearning-in-the-browser/deeplearning-in-the-browser.png)](https://bleedingedgepress.com/product/deep-learning-in-the-browser/)
+<div style='text-align: center;'>
+<a target="_blank"  href="https://www.amazon.com/gp/product/B07GNZPP2P/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B07GNZPP2P&linkCode=as2&tag=lewuathe-20&linkId=cfa56f29cabdfde7abecb4b6b0c3ca42"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=B07GNZPP2P&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=lewuathe-20" ></a><img src="//ir-na.amazon-adsystem.com/e/ir?t=lewuathe-20&l=am2&o=1&a=B07GNZPP2P" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+</div>
 
 This book covers following topics.
 

@@ -34,9 +34,9 @@ I'm sure that it can be achieved.
 
 ## Publications
 
-* [Deep Learning in the Browser](https://bleedingedgepress.com/product/deep-learning-in-the-browser/)
-* [Spark: Big Data Cluster Computing in Production](http://as.wiley.com/WileyCDA/WileyTitle/productCd-1119254019.html)
-* [Professional Hadoop](http://as.wiley.com/WileyCDA/WileyTitle/productCd-111926717X.html)
+* <a target="_blank" href="https://www.amazon.com/gp/product/B07GNZPP2P/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B07GNZPP2P&linkCode=as2&tag=lewuathe-20&linkId=94ad42bb8cd4aacda00843fb491f583c">Deep Learning in the Browser</a><img src="//ir-na.amazon-adsystem.com/e/ir?t=lewuathe-20&l=am2&o=1&a=B07GNZPP2P" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+* <a target="_blank" href="https://www.amazon.com/gp/product/B01DNVSLBW/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B01DNVSLBW&linkCode=as2&tag=lewuathe-20&linkId=bfb08ab0045c29a21acf9ce7e79f3bd4">Spark: Big Data Cluster Computing in Production</a><img src="//ir-na.amazon-adsystem.com/e/ir?t=lewuathe-20&l=am2&o=1&a=B01DNVSLBW" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+* <a target="_blank" href="https://www.amazon.com/gp/product/B01F69Z1PS/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B01F69Z1PS&linkCode=as2&tag=lewuathe-20&linkId=7af933faf2241272299bab4cab5884f7">Professional Hadoop</a><img src="//ir-na.amazon-adsystem.com/e/ir?t=lewuathe-20&l=am2&o=1&a=B01F69Z1PS" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
 * [マーケティング＆サービス向上に役立つ ログ＆データ分析基盤入門 in Software Design 3月号 2017](http://gihyo.jp/magazine/SD/archive/2017/201703)
 
 ## Links
