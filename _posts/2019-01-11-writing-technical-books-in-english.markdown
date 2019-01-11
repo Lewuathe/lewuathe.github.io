@@ -14,6 +14,12 @@ Of course, there is no doubt that someone wrote the technical document, but for 
 
 However, I got the opportunity to write a technical document several times. Moreover, in English.
 
+# Table Of Contents
+
+1. Surprising News
+2. Books I involved
+3. What Technology Gave Me
+
 # Surprising News
 
 I am contributing to open source software and I was involved in developing a framework for distributed systems such as Hadoop and Spark. I mainly expanded the distributed file system called HDFS and machine learning library which runs on Spark called MLlib.
