@@ -61,6 +61,8 @@ Let's try to get the MAC addresses of the devices!
 Here is the code to get the list of MAC address around the router. Although it's written in [TypeScript](https://www.typescriptlang.org/), you can use JavaScript too.
 Please make sure your laptop is connected to a Huawei wifi router beforehand. The program can access the router by the IP `192.168.128.1`. 
 
+![wifi](assets/img/posts/2019-01-12-querying-huawei-4g-router-to-get-the-devices/wifi.png)
+
 ```ts
 import * as router from 'dialog-router-api';
 
