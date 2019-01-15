@@ -185,12 +185,12 @@ by `site.json` so that we don't need to worry about the infinite loop caused by 
 
 # site-snapshot
 
-Actually, this crawler is published in npm with name **site-snapshot**. I created this tool to make PDFs of the pages our own web site.
+Actually, this crawler is published in npm with name **site-snapshot**. The complete source code is kept here. Please take a look at the repository for more detail information.
 
 <div class="iframely-embed"><div class="iframely-responsive" style="height: 168px; padding-bottom: 0;"><a href="https://github.com/Lewuathe/site-snapshot" data-iframely-url="//cdn.iframe.ly/eAl8ioZ"></a></div></div><script async src="//cdn.iframe.ly/embed.js" charset="utf-8"></script>
 
-The background I created the tool was described here.
+I created this tool to make PDFs of the pages our own web site. I described the background here. You may want to keep your web site in a physical format someday.
 
-[The end of website has not come](https://www.lewuathe.com/the-ending-of-website.html)
+<div class="iframely-embed"><div class="iframely-responsive" style="height: 168px; padding-bottom: 0;"><a href="https://www.lewuathe.com/the-ending-of-website.html" data-iframely-url="//cdn.iframe.ly/api/iframe?url=https%3A%2F%2Fwww.lewuathe.com%2Fthe-ending-of-website.html&amp;key=bdc42bc7d0ac2cb711b2a2dd9dadd063"></a></div></div><script async src="//cdn.iframe.ly/embed.js" charset="utf-8"></script>
 
 I hope you enjoy the web crawling with Puppeteer. Thanks!
