@@ -2,7 +2,7 @@
 title: "The end of website has not come"
 layout: post
 date: 2017-09-11 09:11:31 +0900
-image: 'images/'
+image: 'assets/img/posts/2017-09-11-the-ending-of-website/catch.jpg'
 description:
 tag: ["Node", "JavaScript", "TypeScript"]
 blog: true
