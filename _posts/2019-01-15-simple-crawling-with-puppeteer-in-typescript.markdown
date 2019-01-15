@@ -185,7 +185,7 @@ by `site.json` so that we don't need to worry about the infinite loop caused by 
 
 # site-snapshot
 
-Actually, this crawler is published in npm with name **site-snapshot**. The complete source code is kept here. Please take a look at the repository for more detail information.
+Actually, this crawler is published in npm with name [**site-snapshot**](https://www.npmjs.com/package/site-snapshot). The complete source code is kept here. Please take a look at the repository for more detail information.
 
 <div class="iframely-embed"><div class="iframely-responsive" style="height: 168px; padding-bottom: 0;"><a href="https://github.com/Lewuathe/site-snapshot" data-iframely-url="//cdn.iframe.ly/eAl8ioZ"></a></div></div><script async src="//cdn.iframe.ly/embed.js" charset="utf-8"></script>
 
