@@ -21,7 +21,7 @@ plugins:             [jekyll-paginate, jekyll-sitemap, jekyll-feed, jekyll-seo-t
 
 # Customise atom feed settings (this is where Jekyll-Feed gets configuration information)
 title:               The First Cry of Atom
-description:             Today is the first day of the rest of my life.
+description:         Today is the first day of the rest of my life.
 author:              'Kai Sasaki'
 
 defaults:
