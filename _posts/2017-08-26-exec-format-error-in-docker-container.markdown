@@ -2,19 +2,26 @@
 title: "exec format error in Docker container"
 layout: post
 date: 2017-08-26 09:44:36 +0900
-image: 'images/'
+image: 'assets/img/posts/2017-08-26-exec-format-error-in-docker-container/catch.png'
 description:
-tag: ["Docker", "bash"]
+tag: ["Docker", "bash", "script", "Error", "Linux"]
 blog: true
 author: "lewuathe"
 ---
 
-You may see such error when you launched your docker container.
+When you use docker, you may see such error when you launched your docker container like me.
 
 ```
 $ docker run lewuathe/test
 standard_init_linux.go:187: exec user process caused "exec format error"
 ```
+
+I found a workaround for this now. In this post, I'll try to explain how to resolve the issue.
+
+# Table of Contents
+- Dockerfile
+- shebang
+
 
 My `Dockerfile` is this.
 
@@ -78,3 +85,5 @@ echo "This is a script"
 ```
 
 But I'm still not sure why `test.sh` works in host OS or through bash in Docker container. 
+
+A catch image came from [docker.com](https://www.docker.com/legal).
