@@ -24,6 +24,12 @@ title:               The First Cry of Atom
 description:             Today is the first day of the rest of my life.
 author:              'Kai Sasaki'
 
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: assets/img/tower.jpg  
+
 # RSS 2.0 can be used instead of Atom by uncommenting following two lines
 #feed:
 #  path: rss-feed.xml
