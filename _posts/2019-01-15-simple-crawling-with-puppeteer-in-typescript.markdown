@@ -193,4 +193,12 @@ I created this tool to make PDFs of the pages our own web site. I described the 
 
 <div class="iframely-embed"><div class="iframely-responsive" style="height: 168px; padding-bottom: 0;"><a href="https://www.lewuathe.com/the-ending-of-website.html" data-iframely-url="//cdn.iframe.ly/api/iframe?url=https%3A%2F%2Fwww.lewuathe.com%2Fthe-ending-of-website.html&amp;key=bdc42bc7d0ac2cb711b2a2dd9dadd063"></a></div></div><script async src="//cdn.iframe.ly/embed.js" charset="utf-8"></script>
 
-I hope you enjoy the web crawling with Puppeteer. Thanks!
+I hope you enjoy the web crawling with Puppeteer. 
+
+If you are interested in TypeScript, [**"Mastering TypeScript"**](https://amzn.to/2W5kgCs) is the best book probably. Though I was not familiar with TypeScript at the beginning, this book provided me comprehensive information and overview of the language. Thanks to this book, I was also able to start contributing to [TensorFlow.js](https://github.com/tensorflow/tfjs-core/graphs/contributors). 
+
+<div style='text-align: center;'>
+<a href="https://www.amazon.com/Mastering-TypeScript-Second-Nathan-Rozentals/dp/1786468719/ref=as_li_ss_il?ie=UTF8&qid=1547894847&sr=8-1-spons&keywords=typescript&psc=1&linkCode=li3&tag=lewuathe-20&linkId=528667ecc2ad7d098f44ca0b0174f27e" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1786468719&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=lewuathe-20" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=lewuathe-20&l=li3&o=1&a=1786468719" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+</div>
+
+You may want to learn new programming language. TypeScript should be the one empowering you. Thanks!
