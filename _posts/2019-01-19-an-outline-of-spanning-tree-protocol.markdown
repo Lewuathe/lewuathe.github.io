@@ -15,7 +15,9 @@ As described here, I have started OMSCS program in the last year. I've already t
 <div class="iframely-embed"><div class="iframely-responsive" style="height: 168px; padding-bottom: 0;"><a href="https://www.lewuathe.com/started-omscs-in-gatech.html" data-iframely-url="//cdn.iframe.ly/api/iframe?url=https%3A%2F%2Fwww.lewuathe.com%2Fstarted-omscs-in-gatech.html&amp;key=bdc42bc7d0ac2cb711b2a2dd9dadd063"></a></div></div><script async src="//cdn.iframe.ly/embed.js" charset="utf-8"></script>
 
 The reason why I choose these courses was that I'm familiar with these topics. I studied the detail of operating system programming and learned machine learning mathematics during my first company. I thought it might be the good start of OMSCS because I thought I need to get used to the process
-and know what OMSCS looks like. But in this semester, I choose a program I'm not familiar with, **Computer Network**. [CS6250](https://www.omscs.gatech.edu/cs-6250-computer-networks) is a class exploring the research topics in computer networking, especially the IP layer and above. Since I'm not a network engineer, I'm not so familiar with these topics. It may be a good chance to learn them. Knowledge of computer networking should be useful even in the age when cloud computing is so natural. To be honest, we can often create software or web services without knowing the detail of the underlying networking structure. So I decided to take the course in Spring 2019.
+and know what OMSCS looks like. 
+
+But in this semester, I choose a program I'm not familiar with, **Computer Network**. [CS6250](https://www.omscs.gatech.edu/cs-6250-computer-networks) is a class exploring the research topics in computer networking, especially the IP layer and above. Since I'm not a network engineer, I'm not so familiar with these topics. It may be a good chance to learn them. Knowledge of computer networking should be useful even in the age when cloud computing is so natural. To be honest, we can often create software or web services without knowing the detail of the underlying networking structure. So I decided to take the course in Spring 2019.
 
 # What is Spanning Tree Protocol?
 
