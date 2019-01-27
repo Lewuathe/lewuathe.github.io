@@ -71,7 +71,7 @@ Although the introduction has become longer, let's take a look into [HADOOP-1327
 
 I found a unit test `TestTextInputFormat.testSplitableCodecs()` failed when the seed is 1313094493.
 
-```
+```java
 java.lang.AssertionError: Key in multiple partitions.
 at org.junit.Assert.fail (Assert.java: 88)
 at org.junit.Assert.assertTrue (Assert.java: 41)
