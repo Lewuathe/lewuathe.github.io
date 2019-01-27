@@ -121,7 +121,7 @@ A marker is usually 48 bits (= 6 bytes), but at the beginning of the file, it se
 
 We already read the compressed block containing `start`. But as we went back too far according to the `adjStart`, we found the same marker again. **Data duplication has occurred** here. The cause was simple. Actually, we return 10 bytes where we have to go back only by 6 bytes. The fix itself was simple and it only had to go back 6 bytes in such case. Now the `InputFormat` for bzip2 compression algorithm always returns the consistent result. 
 
-I thought that bugs related to `InputFormat` are critical part once again because they can cause data missing and duplication. 
+I thought that bugs related to `InputFormat` are critical part once again because they can cause data missing and duplication. But please be relieved. It's an old bug fixed in 2017. If you are using Hadoop 2.7 or later, you can safely use bzip2 InputFormat.
 
 Thanks!
 
