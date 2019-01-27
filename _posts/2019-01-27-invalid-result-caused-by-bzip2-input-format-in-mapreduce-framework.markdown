@@ -4,7 +4,7 @@ layout: post
 date: 2019-01-27 19:36:56 +0900
 image: 'assets/img/posts/2019-01-27-invalid-result-caused-by-bzip2-input-format-in-mapreduce-framework/catch.png'
 description:
-tag: ['Hadoop', 'Bug', 'HDFS', 'DistributedSystem', 'Java']
+tag: ['Hadoop', 'Bug', 'HDFS', 'DistributedSystem', 'Java', 'MapReduce']
 blog: true
 author: "Kai Sasaki"
 ---
