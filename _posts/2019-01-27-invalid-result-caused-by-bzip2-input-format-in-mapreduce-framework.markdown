@@ -81,7 +81,7 @@ at org.apache.hadoop.mapred.TestTextInputFormat.testSplitableCodecs (TestTextInp
 
 I do not use bzip2 in my production environment, but if the data is missing or duplicated, the data analysis on top of it is meaningless. That may be a critical bug I thought. And it also seems to be interesting purely. So I tried to find out the cause.
 
-The problem existed in the class named [[Bzip2Codec`](https://github.com/apache/hadoop/blob/9a44a832a99eb967aa4e34338dfa75baf35f9845/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/io/compress/ BZip2Codec.java). This class creates an `InputStream` starting at the most recent marker from the given offset. The original implementation looked like this.
+The problem existed in the class named [Bzip2Codec`](https://github.com/apache/hadoop/blob/9a44a832a99eb967aa4e34338dfa75baf35f9845/hadoop-common-project/hadoop-common/src/main/java/org/apache/hadoop/io/compress/ BZip2Codec.java). This class creates an `InputStream` starting at the most recent marker from the given offset. The original implementation looked like this.
 
 ```java
 public SplitCompressionInputStream createInputStream(
