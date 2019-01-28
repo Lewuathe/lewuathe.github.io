@@ -123,6 +123,12 @@ We already read the compressed block containing `start`. But as we went back too
 
 I thought that bugs related to `InputFormat` are critical part once again because they can cause data missing and duplication. But please be relieved. It's an old bug fixed in 2017. If you are using Hadoop 2.7 or later, you can safely use bzip2 InputFormat.
 
+If you want to know the detailed understructure of Hadoop such as `InputFormat`, you must not miss <a target="_blank" href="https://www.amazon.com/gp/product/1491901632/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1491901632&linkCode=as2&tag=lewuathe-20&linkId=438f9858cfe124ece436abfbbddb487c">Hadoop: The Definitive Guide: Storage and Analysis at Internet Scale</a><img src="//ir-na.amazon-adsystem.com/e/ir?t=lewuathe-20&l=am2&o=1&a=1491901632" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />. This is the bible to learn about Hadoop and its ecosystem. The book is often refered as **"The elephant book"**. Please take a look into this if you get a chance. It must give you a nice insight around Hadoop.
+
+<div style="text-align: center;">
+<a target="_blank"  href="https://www.amazon.com/gp/product/1491901632/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1491901632&linkCode=as2&tag=lewuathe-20&linkId=de6c8c05ba7ef2eced6c43df92867bf8"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=1491901632&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=lewuathe-20" ></a><img src="//ir-na.amazon-adsystem.com/e/ir?t=lewuathe-20&l=am2&o=1&a=1491901632" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+</div>
+
 Thanks!
 
 Image: [xkcd: tar](https://xkcd.com/1168/)
