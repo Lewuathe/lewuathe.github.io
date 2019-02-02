@@ -2,7 +2,7 @@
 title: "Multi node Presto cluster on docker"
 layout: post
 date: 2016-08-06 21:02:10 +0900
-image: 'images/'
+image: 'assets/img/posts/2019-02-02-accessing-presto-cluster-on-docker/catch.png'
 description:
 tag: ["Presto", "SQL"]
 blog: true
