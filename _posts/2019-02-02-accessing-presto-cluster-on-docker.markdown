@@ -46,7 +46,7 @@ Of course, you can use any kind of Preto client libraries. Here is the list of c
 |Node|[tagomoris/presto-client-node](https://github.com/tagomoris/presto-client-node)|
 |Go|[prestodb/presto-go-client](https://github.com/prestodb/presto-go-client)|
 |C|[easydatawarehousing/prestoclient](https://github.com/easydatawarehousing/prestoclient/tree/master/C)|
-|Java|[JDBC Driver](https://prestodb.github.io/docs/current/installation/jdbc.html)|
+|Java|[JDBC Driver](https://prestosql.io/docs/current/installation/jdbc.html)|
 |PHP|[360d-io-labs/PhpPrestoClient](https://github.com/360d-io-labs/PhpPrestoClient)|
 |Python|[easydatawarehousing/prestoclient/](https://github.com/easydatawarehousing/prestoclient/tree/master/python)|
 |R|[prestodb/RPresto](https://github.com/prestodb/RPresto)|
