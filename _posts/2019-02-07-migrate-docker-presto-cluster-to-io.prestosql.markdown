@@ -1,5 +1,5 @@
 ---
-title: "Migrate docker-presto-cluster to io.prestosql"
+title: "Use the latest community Presto in docker-presto-cluster"
 layout: post
 date: 2019-02-07 19:14:26 +0900
 image: 'assets/img/posts/2019-02-07-migrate-docker-presto-cluster-to-io/catch.png'
@@ -9,7 +9,7 @@ blog: true
 author: "Kai Sasaki"
 ---
 
-At the beginning of this month, new **Presto Software Foundation** was launched. This foundation was created for ensuring the openness of Presto as open source software.
+At the beginning of this month, new **Presto Software Foundation** (PSF) was launched. This foundation was created for ensuring the openness of Presto as open source software.
 
 <div style='text-align: center;'>
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">We are pleased to announce the launch of the Presto Software Foundation, a not-for-profit organization dedicated to the advancement of the Presto open source distributed SQL engine. We&#39;ll be announcing soon about the first community meeting.<a href="https://t.co/QnOldnXlT5">https://t.co/QnOldnXlT5</a></p>&mdash; Presto (@prestosql) <a href="https://twitter.com/prestosql/status/1091016345800658945?ref_src=twsrc%5Etfw">January 31, 2019</a></blockquote>
@@ -17,9 +17,9 @@ At the beginning of this month, new **Presto Software Foundation** was launched.
 </div>
 
 
-Since the source code was forked from the original repository [prestodb/prestodb](https://github.com/prestodb/presto) to **[prestosql/presto](https://github.com/prestosql/presto)**. And there are already several released published after the fork. The latest version is [302](https://twitter.com/prestosql/status/1093368972576092160).
+Since the source code was forked from the original repository [prestodb/prestodb](https://github.com/prestodb/presto) to **[prestosql/presto](https://github.com/prestosql/presto)**, we may need to choose either of them. Even just after the fork, there are already several packages released in the new PSF community. The latest version is [302](https://twitter.com/prestosql/status/1093368972576092160).
 
-I decided to migrate [docker-presto-cluster](https://github.com/Lewuathe/docker-presto-cluster) to new Presto. The latest version published in [DockerHub](https://hub.docker.com/).
+Therefore I decided to migrate [docker-presto-cluster](https://github.com/Lewuathe/docker-presto-cluster) to new Presto. The latest version of docker images were published in [DockerHub](https://hub.docker.com/).
 
 |image|url|
 |:---|:---|
