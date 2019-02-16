@@ -9,7 +9,9 @@ blog: true
 author: "lewuathe"
 ---
 
-I had a trouble to use Docker `VOLUME` yesterday. This is my note to describe what the problem was and the way how to solve it. Volumes in Docker is a mechanism which enables us to generate data into host machine directory. [Volumes](https://docs.docker.com/storage/volumes/) are managed mainly by docker daemon, on the other hand [bind mounts](https://docs.docker.com/storage/bind-mounts/) is created on the user managed directory on the host machine. Official documentation says volumes have several advantages:
+Docker is a great tool to make our development much easier by introducing immutable and portable environment. But I had trouble to use Docker `VOLUME` yesterday. So basically, this is my note to describe what the problem was and the way how to solve it. 
+
+Volumes in Docker is a mechanism which enables us to generate data into host machine directory. [Volumes](https://docs.docker.com/storage/volumes/) are managed mainly by docker daemon, on the other hand, [bind mounts](https://docs.docker.com/storage/bind-mounts/) is created on the user managed directory on the host machine. Official documentation says volumes have several advantages:
 
 - Volumes are easier to back up or migrate than bind mounts.
 - Volumes can be more safely shared among multiple containers.
@@ -17,7 +19,7 @@ I had a trouble to use Docker `VOLUME` yesterday. This is my note to describe wh
 
 [![docker volumes](https://docs.docker.com/storage/images/types-of-mounts-volume.png)](https://docs.docker.com/storage/volumes/)
 
-But we need to pay attention to the writability when we use `VOLUME` directive in Dockerfile. Let's say we are using a Dockerfile that looks like this:
+But we need to pay attention to the writability when we use `VOLUME` directive in Dockerfile. That may cause unnecessary trouble if you understand correctly like me. Let's say we are using a Dockerfile that looks like this:
 
 ```
 FROM ubuntu:16.04
@@ -39,7 +41,7 @@ You won't be able to find the file `hello`. Why? [The official documentation](ht
 
 > Changing the volume from within the Dockerfile: If any build steps change the data within the volume after it has been declared, those changes will be discarded.
 
-So you cannot change the directory/file that is created by `VOLUME` from Dockerfile. Of course you can change the content from the process in runtime container after it launches. That must be the limitation of `VOLUME` in Dockerfile. 
+So you cannot change the directory/file that is created by `VOLUME` from Dockerfile. Of course, you can change the content from the process in running container after it launches. That must be the limitation of `VOLUME` in Dockerfile. 
 
 This is one solution.
 
@@ -51,7 +53,7 @@ RUN echo 'Hello World' >> /myvol/hello
 VOLUME /myvol
 ```
 
-You can write anything before creating volumes. Creating volumes at the last will enable you to do what you want. 
+You can write anything before creating volumes. Creating volumes at the last will enable you to do what you want. So please keep in mind that **the changes done before the volume creation will be discarded**. 
 
 
 Thanks.
