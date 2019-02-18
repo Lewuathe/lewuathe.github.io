@@ -10,9 +10,7 @@ jemoji:
 author: "lewuathe"
 ---
 
-AWS CLI is a utility for manipulating your infrastructure on AWS. It enables us to launch EC2 or check instances 
-without leaving out your command line. But it is not easy to use because the output is JSON as default. Though JSON is a format
-which is useful for machine and also human, it is not suitable as an output of command line tools. Let me see.
+[AWS CLI](https://aws.amazon.com/cli/) is a utility for manipulating your infrastructure on AWS. For example, it enables us to launch EC2 or check the state of the instances without leaving out your command line. But it is not easy to use it because the output is JSON as default. Though JSON is a format which is useful for the machine and also human, it is not good input for some command line tools. Let me take a look into an example.
 
 ```
 {
@@ -34,11 +32,9 @@ which is useful for machine and also human, it is not suitable as an output of c
 }
 ```
 
-Hmm, I cannot grasp how many instaces are launched or check the instances which is running now. Even redirecting the format to 
-ordinal UNIX command, we cannot solve the situation. UNIX command is good at manipulating the data per **line** not JSON.
+Hmm, I cannot grasp how many instances are launched or check the instances which are running now at a glance. Even redirecting the format to ordinal UNIX command, we cannot solve the situation. UNIX command is good at manipulating or traversing the data per **line** not JSON.
 
-But I found a good tool for manipulating JSON from command line. [JQ](https://stedolan.github.io/jq/). JQ enables us to 
-filter, map and count etc agaist JSON data. For example 
+But I found a good tool for manipulating JSON from the command line. [**JQ**](https://stedolan.github.io/jq/). JQ enables us to filter, map and count and so on against JSON data. For example 
 
 ```
 $ cat sample.json
@@ -61,7 +57,7 @@ $ cat sample.json | jq '.id'
 "123456"
 ```
 
-Count the number of language
+Count the number of languages
 
 ```sh
 $ cat sample.json | jq '.language | length'
@@ -69,7 +65,7 @@ $ cat sample.json | jq '.language | length'
 ```
 
 
-So you can filter and map the running instance IDs which is tagged as web api server to csv like this.
+So you can filter and map the running instance IDs which is tagged as web API server to csv like this.
 
 
 ```sh
@@ -78,8 +74,8 @@ $ aws ec2 describe-instances \
   jq -r '.Reservations[].Instances[] | [.InstanceId, .PrivateIpAddress, .Tags[].Value] | @csv'
 ```
 
-After converted csv or line based data, you can use UNIX command line tools as you like for checking statistics.
-Since JQ has a lot of useful options and functionalities, I want to be familiar with tool more.
+After it's converted into csv or line based data, you can use UNIX command line tools as you like for checking statistics as usual.
+Since JQ has a lot of useful options and functionalities, I want to be familiar with the tool more.
 Please check [the official documentation](https://stedolan.github.io/jq/) for more detail.
 
 Thanks.
