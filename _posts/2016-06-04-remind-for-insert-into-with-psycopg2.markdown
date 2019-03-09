@@ -1,20 +1,22 @@
 ---
 layout: post
 blog: true
-title: "Remind for INSERT INTO with psycopg2"
+title: "How to INSERT INTO with psycopg2"
 date: 2016-06-04 21:36:40 +0900
 comments: true
+image: assets/img/posts/2016-06-04-remind-for-insert-into-with-psycopg2/catch.png
 categories: ["python", "PostgreSQL"]
+tag: ["Python", "PostgreSQL", "Database"]
 author: Kai Sasaki
 blog: true
 ---
 
 The most famous library to connect PostgreSQL from Python might be [psycopg2](http://initd.org/psycopg/docs/).
-psycopg2 is a simple and easy to use library for who want to manipulate SQL simply. When I want to put a record into
-a table, I wrote a query like this.
-
+psycopg2 is a simple and easy library for the people who want to manipulate SQL simply. The usage is basically pretty straightforward but I got stuck when I tried to a record into PostgreSQL via psycogpg2. Here I wrote a query like this.
 
 ```python
+import psycopg2
+
 conn = psycopg2.connect(host=pg_credential.hostname,
                         port=pg_credential.port,
                         user=pg_credential.username,
@@ -27,14 +29,14 @@ cursor.close()
 conn.close()
 ```
 
-<!-- more -->
-
-But I cannot see any data in `a_table`. The query seems fine itself because we can insert into with the query.
-I took some time to search an answer and finally find a solution.
+But I cannot see any data in `a_table`. The query seems fine itself because we can insert into with the query. Why the data was not inserted properly?
+I took some time to search for an answer and finally find a solution.
 
 We need to call `commit` of cursor object. In short, we need to write code like below.
 
 ```python
+import psycopg2
+
 conn = psycopg2.connect(host=pg_credential.hostname,
                         port=pg_credential.port,
                         user=pg_credential.username,
@@ -48,7 +50,7 @@ cursor.close()
 conn.close()
 ```
 
-Since I usually use `commit` with only transactional operation, I have thought it won't necessary to call it to simply inserting data.
+Since I usually use `commit` with the only transactional operation, I have thought it won't necessary to call it to simply inserting data when I don't use transaction. 
 So that was my bad. We should check the documentation carefully especially when we use a new library for us.
 psycopg2 documentation is [here](http://initd.org/psycopg/docs/).
 
