@@ -84,7 +84,7 @@ x_0 \\\ x_1 \\\ x_2 \\\ x_3
 
 # FFT in WebGL Platform
 
-Let's assume $$\omega = e^{-2\pi i/ N}$$. An input data with N elements can be converted by NxN complex matrix. Here is the tensor calculation. Matrix multiplication is one of the most frequently used operations in TensorFlow so that it can be done pretty efficiently thanks to the sophisticated implementations. One pitfall we need to pay attention to is that we need to support multiplication for complex values. Current matrix multiplication operator in TensorFlow.js does not support complex value. That's why I created another kernel implementation just for fourier transform in TensorFlow.js.
+Let's assume $$\omega = e^{-2\pi i/ N}$$. An input data with N elements can be converted by NxN complex matrix. Here comes the tensor calculation. Matrix multiplication is one of the most frequently used operations in TensorFlow so that it can be done pretty efficiently thanks to the sophisticated implementations. One pitfall we need to pay attention to is that we need to support multiplication for complex values. Current matrix multiplication operator in TensorFlow.js does not support complex value. That's why I created another kernel implementation just for fourier transform in TensorFlow.js.
 
 Here is the WebGL kernel to compute fourier transform. TensorFlow.js calculate the fourier transform for real number and imaginary number separately. Due to the difference between the multiplication for real number and an imaginary number, `unaryOpComplex` function can have two type of implementation. 
 
