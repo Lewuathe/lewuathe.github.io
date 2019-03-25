@@ -9,14 +9,14 @@ blog: true
 author: "lewuathe"
 ---
 
-`ulimit` is a utility tool to set a limitation of user process. For example, you can set the maximum core file size by using `ulimit -c` command.
+`ulimit` is a utility tool to set some limitations of the user process. For example, you can set the maximum core file size by using `ulimit -c` command.
 
 ```
-# It sets the max number of blocks used for core file.
+# It sets the max number of blocks used for the core file.
 $ ulimit -c 100000
 ```
 
-But `ulimit` does not show the information of other process. You can check the resource limitation of arbitrary process by using `/proc` file system.
+But `ulimit` does not show information about other processes. You may want to check the resource limitation put on the running processes. You can check the resource limitation of an arbitrary process by using `/proc` file system.
 
 ```
 $ cat /proc/$PID/limits
@@ -27,5 +27,3 @@ Max data size             unlimited            unlimited            bytes
 Max core file size        0                    unlimited            bytes
 ...
 ```
-
-
