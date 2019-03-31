@@ -13,6 +13,8 @@ Creating a web application is often troublesome due to the complexity of the fra
 
 [**Parcel**](https://parceljs.org/) is a tool to bundle all assets needed for an application into one package. You can use it immediately without writing any configuration. I found it's so beneficial to use Parcel for creating TensorFlow.js application quickly. It cares to compile TypeScript, dependency resolution and package bundle on behalf of me. In this article, I'm going to introduce the way how to create TensorFlow.js application in a few minutes by using Parcel.
 
+<div class="iframely-embed"><div class="iframely-responsive" style="height: 140px; padding-bottom: 0;"><a href="https://parceljs.org/" data-iframely-url="//cdn.iframe.ly/api/iframe?url=https%3A%2F%2Fparceljs.org%2F&amp;key=bdc42bc7d0ac2cb711b2a2dd9dadd063"></a></div></div><script async src="//cdn.iframe.ly/embed.js" charset="utf-8"></script>
+
 First, you need to create the application directory in your machine. Then as you may usually do, you prepare the npm package in the directory. 
 
 ```
