@@ -34,6 +34,7 @@ I'm sure that it can be achieved.
 
 ## Publications
 
+* [Kai Sasaki - Amazon Author](https://amazon.com/author/lewuathe)
 * <a target="_blank" href="https://www.amazon.com/gp/product/B07GNZPP2P/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B07GNZPP2P&linkCode=as2&tag=lewuathe-20&linkId=94ad42bb8cd4aacda00843fb491f583c">Deep Learning in the Browser</a><img src="//ir-na.amazon-adsystem.com/e/ir?t=lewuathe-20&l=am2&o=1&a=B07GNZPP2P" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
   * <a target="_blank"  href="https://www.amazon.com/gp/product/B07GNZPP2P/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B07GNZPP2P&linkCode=as2&tag=note024-20&linkId=b7af90a8df0fbb30bab16b07d271d598"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=B07GNZPP2P&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL160_&tag=note024-20" ></a><img src="//ir-na.amazon-adsystem.com/e/ir?t=note024-20&l=am2&o=1&a=B07GNZPP2P" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
 * <a target="_blank" href="https://www.amazon.com/gp/product/B01DNVSLBW/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B01DNVSLBW&linkCode=as2&tag=lewuathe-20&linkId=bfb08ab0045c29a21acf9ce7e79f3bd4">Spark: Big Data Cluster Computing in Production</a><img src="//ir-na.amazon-adsystem.com/e/ir?t=lewuathe-20&l=am2&o=1&a=B01DNVSLBW" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
