@@ -51,13 +51,13 @@ Charles TLS proxy is listening to 8888 port as default and connection recording 
 
 ```
 $ ./presto-cli-317-SNAPSHOT-executable.jar \
-    --server https://your-presto-coordinator:8080 \
+    --server http://your-presto-coordinator:8080 \
     --http-proxy localhost:8888 \
     --catalog tpch \
     --execute "select 1234"
 ```
 
-Now, you can see all information about the HTTPS traffic in Charles console.
+Now, you can see all information about the HTTP traffic in Charles console.
 
 # What is Slow Down Problem?
 
