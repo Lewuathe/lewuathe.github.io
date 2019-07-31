@@ -18,9 +18,10 @@
 */
 
 body {
-  font-family:Avenir , "Open Sans" , "Helvetica Neue" , Helvetica , Arial , Verdana , Roboto , "游ゴシック" , "Yu Gothic" , "游ゴシック体" , "YuGothic" , "ヒラギノ角ゴ Pro W3" , "Hiragino Kaku Gothic Pro" , "Meiryo UI" , "メイリオ" , Meiryo , "ＭＳ Ｐゴシック" , "MS PGothic" , sans-serif;
-  font-size: 17px;
-  color: #515151;/*#3A3A3A;/*rgba(0,0,0,.8);/*#666;*/
+  font-family: "Roboto Slab",Georgia,Times,serif;
+  font-size: 18px;
+  font-weight: 100;
+  color: #555;
   line-height: 1.75rem;
 }
 
@@ -43,7 +44,7 @@ h1 a {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Quattrocento Sans", sans-serif;
+  font-family: "Roboto Slab",Georgia,Times,serif;
   color: #333;
 }
 
@@ -107,7 +108,7 @@ hr {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   margin-bottom: 4rem;
-  font-family: "Quattrocento Sans", sans-serif;
+  font-family: "Roboto Slab",Georgia,Times,serif;
 }
 
 .masthead a:hover {
