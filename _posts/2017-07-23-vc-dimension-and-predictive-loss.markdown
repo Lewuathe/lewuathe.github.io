@@ -2,7 +2,7 @@
 title: "VC dimension and predictive loss"
 layout: post
 date: 2017-07-23 09:26:31 +0900
-image: 'images/'
+image: 'assets/img/posts/2017-07-23-vc-dimension-and-predictive-loss/overfitting.png'
 description:
 tag: ["Machine Learning", "VC Dimension", "Math"]
 blog: true
@@ -15,9 +15,6 @@ to the sample space. We want to optimize the loss in whole data space instead of
 
 It means that we need to know the balance between model complexity and the possibility of overfitting.
 
-![overfitting](images/posts/2017-07-23-vc-dimension-and-predictive-loss/overfitting.png)
-
-- [Overfitting from wikipedia](https://en.wikipedia.org/wiki/Overfitting)
 
 The prediction by green line model is overfitting to sample data set. It's not enough general. The main purpose of this article to understand the relationship between predictive loss and model complexity.
 
@@ -141,6 +138,7 @@ Please note that $$h_S$$ is obtained through training process of empirical loss.
 
 ## Reference
 
+* [Overfitting from wikipedia](https://en.wikipedia.org/wiki/Overfitting)
 * [統計的学習理論　MLPシリーズ](https://www.amazon.co.jp/%E7%B5%B1%E8%A8%88%E7%9A%84%E5%AD%A6%E7%BF%92%E7%90%86%E8%AB%96-%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92%E3%83%97%E3%83%AD%E3%83%95%E3%82%A7%E3%83%83%E3%82%B7%E3%83%A7%E3%83%8A%E3%83%AB%E3%82%B7%E3%83%AA%E3%83%BC%E3%82%BA-%E9%87%91%E6%A3%AE-%E6%95%AC%E6%96%87/dp/4061529056)
 * [-統計的学習理論の基礎— by 金森敬文](http://www.math.cm.is.nagoya-u.ac.jp/~kanamori/lecture/lec_2015_1st_oosaka-univ/note_03.pdf)
 * [VC dimension](https://en.wikipedia.org/wiki/VC_dimension)

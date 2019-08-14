@@ -4,7 +4,7 @@ layout: post
 date: 2019-08-11 13:24:24 +0900
 image: 'assets/img/posts/2019-08-11-youtube-to-learn-science/catch.jpg'
 description:
-tag:
+tag: ['Learning', 'YouTube', 'Science', 'Math']
 blog: true
 author: "Kai Sasaki"
 ---
