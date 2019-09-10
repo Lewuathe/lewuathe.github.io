@@ -81,6 +81,20 @@ client.cluster.health()
 
 Of course, the IAM role set in the environment must be the one you allowed previously. Now you should be able to access the cluster safely.
 
+You can learn more about Elasticsearch itself by <a target="_blank" href="https://www.amazon.com/gp/product/1449358543/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1449358543&linkCode=as2&tag=lewuathe-20&linkId=a304ab7ef0f95f4e397ec721458c48e9">Elasticsearch: The Definitive Guide: A Distributed Real-Time Search and Analytics Engine</a><img src="//ir-na.amazon-adsystem.com/e/ir?t=lewuathe-20&l=am2&o=1&a=1449358543" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />.
+
+<p style='text-align: center'>
+<a target="_blank"  href="https://www.amazon.com/gp/product/1449358543/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1449358543&linkCode=as2&tag=lewuathe-20&linkId=e8c4e4b54b6560d4e34c59fcfad96c30"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=1449358543&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=lewuathe-20" ></a><img src="//ir-na.amazon-adsystem.com/e/ir?t=lewuathe-20&l=am2&o=1&a=1449358543" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+</p>
+
+The official guide of Elasticsearch service (<a target="_blank" href="https://www.amazon.com/gp/product/B0764757RL/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B0764757RL&linkCode=as2&tag=lewuathe-20&linkId=663efc6d9a9a19bec903e1a090de5113">Amazon Elasticsearch Service: Developer Guide</a><img src="//ir-na.amazon-adsystem.com/e/ir?t=lewuathe-20&l=am2&o=1&a=B0764757RL" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />) is of course helpful to learn how to configure the cluster.
+
+<p style='text-align: center'>
+<a target="_blank"  href="https://www.amazon.com/gp/product/B0764757RL/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B0764757RL&linkCode=as2&tag=lewuathe-20&linkId=dd514be1dfb004a89f7fc3f4213cc376"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=B0764757RL&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=lewuathe-20" ></a><img src="//ir-na.amazon-adsystem.com/e/ir?t=lewuathe-20&l=am2&o=1&a=B0764757RL" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+</p>
+
+
+
 Thanks.
 
 
