@@ -22,6 +22,7 @@ I'm sure that it can be achieved.
 
 ## Talks
 
+* Interview: *[TensorFlow.js contributor Kai Sasaki on how TensorFlow.js eases web-based machine learning application development](https://hub.packtpub.com/tensorflow-js-contributor-kai-sasaki-on-how-tensorflow-js-eases-web-based-machine-learning-application-development/)*
 * *Infrastructure for auto scaling distributed system* at [Big Data Conference Vilnius](https://www.slideshare.net/lewuathe/infrastructure-for-auto-scaling-distributed-system)
 * *Continuous Optimization for Distributed BigData Analysis* at [HighLoad++](https://www.slideshare.net/lewuathe/continuous-optimization-for-distributed-bigdata-analysis)
 * *Deep Dive into deeplearn.js* at [TensorFlow User Group](https://www.slideshare.net/lewuathe/deep-dive-into-deeplearnjs)
