@@ -84,6 +84,11 @@ So after I rewrote `test.sh` to remove first empty line, the image worked as exp
 echo "This is a script"
 ```
 
-But I'm still not sure why `test.sh` works in host OS or through bash in Docker container. 
+But I'm still not sure why `test.sh` works in host OS or through bash in Docker container.
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-na.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=US&source=ac&ref=qf_sp_asin_til&ad_type=product_link&tracking_id=lewuathe-20&marketplace=amazon&region=US&placement=1521822808&asins=1521822808&linkId=72a88d2b077145c841575b87262a936f&show_border=false&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=fafafa">
+    </iframe>
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-na.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=US&source=ac&ref=qf_sp_asin_til&ad_type=product_link&tracking_id=lewuathe-20&marketplace=amazon&region=US&placement=1617294764&asins=1617294764&linkId=f877edf94a3e3c61a630172ef0872d24&show_border=false&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=fafafa">
+    </iframe>
 
 A catch image came from [docker.com](https://www.docker.com/legal).

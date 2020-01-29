@@ -50,8 +50,13 @@ cursor.close()
 conn.close()
 ```
 
-Since I usually use `commit` with the only transactional operation, I have thought it won't necessary to call it to simply inserting data when I don't use transaction. 
+Since I usually use `commit` with the only transactional operation, I have thought it won't necessary to call it to simply inserting data when I don't use transaction.
 So that was my bad. We should check the documentation carefully especially when we use a new library for us.
 psycopg2 documentation is [here](http://initd.org/psycopg/docs/).
 
 Thanks!
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-na.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=US&source=ac&ref=qf_sp_asin_til&ad_type=product_link&tracking_id=lewuathe-20&marketplace=amazon&region=US&placement=1449355730&asins=1449355730&linkId=821d014eded5702990704ba84efa3acc&show_border=false&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=fafafa">
+    </iframe>
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-na.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=US&source=ac&ref=qf_sp_asin_til&ad_type=product_link&tracking_id=lewuathe-20&marketplace=amazon&region=US&placement=1491963417&asins=1491963417&linkId=2dc898cf772980fdf3d0a5dc423f3144&show_border=false&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=fafafa">
+    </iframe>

@@ -14,7 +14,7 @@ we can touch the page which could not be accessed without web browsers. Puppetee
 
 <div class="iframely-embed"><div class="iframely-responsive" style="height: 168px; padding-bottom: 0;"><a href="https://github.com/GoogleChrome/puppeteer" data-iframely-url="//cdn.iframe.ly/2KLWi8I"></a></div></div><script async src="//cdn.iframe.ly/embed.js" charset="utf-8"></script>
 
-So it's also true that we can control Puppeteer by using [TypeScript](https://www.typescriptlang.org/) which is a superset of JavaScript language. 
+So it's also true that we can control Puppeteer by using [TypeScript](https://www.typescriptlang.org/) which is a superset of JavaScript language.
 The code in TypeScript has its own type system and at the same time, it can be compiled into JavaScript. Instead of using directly JavaScript to control Puppeteer,
 it's far better to use TypeScript, I think. In this blog post, I tried to create a simple web crawler to capture the PDFs of each web page.
 
@@ -58,8 +58,8 @@ As you may already know, TypeScript can be easily integrated with the npm packag
 }
 ```
 
-As you can see later, the compiler will generate JavaScript files under the directory `dist`. So the path to the main file is set to `./dist/index.js`. 
-Another thing you may notice is about type definition file. `@types/node` and `puppeteer-tsd` are the files keeping the type information of classes used in node and Puppeteer respectively. 
+As you can see later, the compiler will generate JavaScript files under the directory `dist`. So the path to the main file is set to `./dist/index.js`.
+Another thing you may notice is about type definition file. `@types/node` and `puppeteer-tsd` are the files keeping the type information of classes used in node and Puppeteer respectively.
 The compiler may produce type check failure without these files. Please don't forget to include them.
 
 TypeScript compiler reads `tsconfig.json` file in order to refer compile options. You can customize the configuration but please keep in mind to include the type definition file written as `node_modules/puppeteer-tsd/src/index.d.ts`. The compiler cannot find the type definition of Puppeteer classes without it.
@@ -91,7 +91,7 @@ TypeScript compiler reads `tsconfig.json` file in order to refer compile options
 }
 ```
 
-Source files in TypeScript are positioned `src` directly so that TypeScript compiler can compile source files along with the type definition of Puppeteer. 
+Source files in TypeScript are positioned `src` directly so that TypeScript compiler can compile source files along with the type definition of Puppeteer.
 
 # Crawler Implementation
 
@@ -112,8 +112,8 @@ It's hard to crawl all web pages existing in the world. Only Google can achieve 
 }
 ```
 
-This file tells the crawler to visit [`https://www.lewuathe.com/`](https://www.lewuathe.com/) first and then keep traversing the links specified by the `children` tags. 
-`selector` is a pointer to the HTML element to be visited by the crawler. As you can see, children can be defined in a nested manner. Here is the implementation of our crawler. 
+This file tells the crawler to visit [`https://www.lewuathe.com/`](https://www.lewuathe.com/) first and then keep traversing the links specified by the `children` tags.
+`selector` is a pointer to the HTML element to be visited by the crawler. As you can see, children can be defined in a nested manner. Here is the implementation of our crawler.
 
 ```ts
 import {URL} from 'url';
@@ -126,16 +126,16 @@ export class Crawer {
   constructor(baseUrl: string) {
     this.baseUrl = baseUrl;
   }
- 
+
   crawl(site: any) {
     (async () => {
       // Wait for browser launching.
      const browser = await puppeteer.launch();
      // Wait for creating the new page.
      const page = await browser.newPage();
-  
+
      await this.crawlInternal(page, `${this.baseUrl}/index.html`, site["children"], site["name"]);
-  
+
      browser.close();
     })();
   }
@@ -154,12 +154,12 @@ export class Crawer {
     let url = new URL(path);
     await page.goto(path, {waitUntil: 'networkidle'});
     // Take a snapshot in PDF format.
-    await page.pdf({path: 
+    await page.pdf({path:
       `${dirname}/${url.pathname.slice(1).replace("/", "-")}.pdf`, format: 'A4'});
     if (selectors.length == 0) {
       return;
     }
-  
+
        // Traversing in an order of BFS.
     let items: [string] = await page.evaluate((sel) => {
       let ret = [];
@@ -169,17 +169,17 @@ export class Crawer {
        }
        return ret;
     }, selectors[0]["selector"]);
-  
+
     for (let item of items) {
       console.log(`Capturing ${item}`);
-      await this.crawlInternal(page, 
+      await this.crawlInternal(page,
         `${item}`, selectors[0]["children"], `${dirname}/${selectors[0]["name"]}`)
     }
   }
 }
 ```
 
-Puppeteer APIs are basically called asynchronous manner. If you want to call the crawling synchronously, you need to write `await` keyword in each call. 
+Puppeteer APIs are basically called asynchronous manner. If you want to call the crawling synchronously, you need to write `await` keyword in each call.
 The crawler visits all pages with [depth first search algorithm](https://en.wikipedia.org/wiki/Depth-first_search). The crawler just checks every page specified
 by `site.json` so that we don't need to worry about the infinite loop caused by the circular linkage between pages.
 
@@ -193,12 +193,17 @@ I created this tool to make PDFs of the pages our own web site. I described the 
 
 <div class="iframely-embed"><div class="iframely-responsive" style="height: 168px; padding-bottom: 0;"><a href="https://www.lewuathe.com/the-ending-of-website.html" data-iframely-url="//cdn.iframe.ly/api/iframe?url=https%3A%2F%2Fwww.lewuathe.com%2Fthe-ending-of-website.html&amp;key=bdc42bc7d0ac2cb711b2a2dd9dadd063"></a></div></div><script async src="//cdn.iframe.ly/embed.js" charset="utf-8"></script>
 
-I hope you enjoy the web crawling with Puppeteer. 
+I hope you enjoy the web crawling with Puppeteer.
 
-If you are interested in TypeScript, [**"Mastering TypeScript"**](https://amzn.to/2W5kgCs) is the best book probably. Though I was not familiar with TypeScript at the beginning, this book provided me comprehensive information and overview of the language. Thanks to this book, I was also able to start contributing to [TensorFlow.js](https://github.com/tensorflow/tfjs-core/graphs/contributors). 
+If you are interested in TypeScript, [**"Mastering TypeScript"**](https://amzn.to/2W5kgCs) is the best book probably. Though I was not familiar with TypeScript at the beginning, this book provided me comprehensive information and overview of the language. Thanks to this book, I was also able to start contributing to [TensorFlow.js](https://github.com/tensorflow/tfjs-core/graphs/contributors).
 
 <div style='text-align: center;'>
 <a href="https://www.amazon.com/Mastering-TypeScript-Second-Nathan-Rozentals/dp/1786468719/ref=as_li_ss_il?ie=UTF8&qid=1547894847&sr=8-1-spons&keywords=typescript&psc=1&linkCode=li3&tag=lewuathe-20&linkId=528667ecc2ad7d098f44ca0b0174f27e" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1786468719&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=lewuathe-20" ></a><img src="https://ir-na.amazon-adsystem.com/e/ir?t=lewuathe-20&l=li3&o=1&a=1786468719" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
 </div>
 
 You may want to learn new programming language. TypeScript should be the one empowering you. Thanks!
+
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-na.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=US&source=ac&ref=qf_sp_asin_til&ad_type=product_link&tracking_id=lewuathe-20&marketplace=amazon&region=US&placement=1492037656&asins=1492037656&linkId=6db87816f1758ee4336f4ffa23376ac3&show_border=false&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=fafafa">
+    </iframe>
+<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-na.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=US&source=ac&ref=qf_sp_asin_til&ad_type=product_link&tracking_id=lewuathe-20&marketplace=amazon&region=US&placement=1492053740&asins=1492053740&linkId=faa1f0fc49b3161d09cc325c0baf73bc&show_border=false&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=fafafa">
+    </iframe>
