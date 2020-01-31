@@ -17,7 +17,15 @@ Financial data is always interesting enough to attract data scientists and softw
 
 We can easily collect financial metrics with this library such as [**net sales**](https://www.investopedia.com/terms/n/netsales.asp), [**CCC**](https://www.investopedia.com/terms/c/cashconversioncycle.asp)
 
-I'm going to introduce how Omaha enables us to collect financial metrics without much trouble here.
+I'm going to introduce how Omaha enables us to collect financial metrics without much trouble here alongside the examples.
+
+# Table Of Contents
+
+- Prerequisites
+- How to use it
+- Collect Aggregated Metrics by Industry
+- Illustration of Aggregated Financial Metrics
+- Reference
 
 # Prerequisites
 
@@ -28,7 +36,7 @@ Both services require us to register to use the API service. Please take a look 
 - [Buffett Code](https://www.buffett-code.com/) (Written in Japanese)
 - [Quandl](https://www.quandl.com/)
 
-# How to use
+# How to use it
 
 Omaha is a library converting the data obtained from the API to another format. [Pandas DataFrame](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html) is a typical format. Many data scientists are familiar with Pandas usage nowadays so that they can quickly get used to Omaha too. Let's install the library first. As is often the case, you can install Omaha with pip.
 
