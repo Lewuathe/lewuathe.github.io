@@ -142,7 +142,7 @@ Thanks as usual!
 
 - [Omaha in PyPi](https://pypi.org/project/omaha/)
 - [Omaha Documentation](https://www.lewuathe.com/omaha/)
-- [Buffett Code](https://buffett-code.com/)
+- [Buffett Code](https://www.buffett-code.com/)
 - [Quandl](https://www.quandl.com/)
 
 <iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-na.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=US&source=ac&ref=qf_sp_asin_til&ad_type=product_link&tracking_id=lewuathe-20&marketplace=amazon&region=US&placement=1492024333&asins=1492024333&linkId=a3ae273ea3afa9b1b15bccb697cf01ee&show_border=false&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=fafafa">
