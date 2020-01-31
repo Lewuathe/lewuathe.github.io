@@ -1,5 +1,5 @@
 ---
-title: "Omaha: Lightweight financial data collection module"
+title: "Omaha: Unified view of financial metrics of public companies"
 layout: post
 date: 2020-01-31 15:47:52 +0900
 image: 'assets/img/posts/2020-01-31-omaha:-lightweight-financial-data-collection-module/catch.jpg'
@@ -17,7 +17,7 @@ Financial data is always interesting enough to attract data scientists and softw
 
 We can easily collect financial metrics with this library such as [**net sales**](https://www.investopedia.com/terms/n/netsales.asp), [**CCC**](https://www.investopedia.com/terms/c/cashconversioncycle.asp)
 
-I'm going to introduce how Omaha enables us to collect financial metrics without much trouble here alongside the examples.
+I'm going to introduce how Omaha enables us to collect financial metrics without much trouble here alongside the.
 
 # Table Of Contents
 
