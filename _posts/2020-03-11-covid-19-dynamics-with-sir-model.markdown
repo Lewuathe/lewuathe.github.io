@@ -4,7 +4,7 @@ layout: post
 date: 2020-03-11 17:41:46 +0900
 image: 'assets/img/posts/2020-03-11-covid-19-dynamics-with-sir-model/catch.jpg'
 description:
-tag: ['Python', 'Math']
+tag: ['Python', 'Math', 'COVID-19']
 blog: true
 author: "Kai Sasaki"
 ---
