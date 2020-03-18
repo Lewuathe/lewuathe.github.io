@@ -13,6 +13,10 @@ The outbreak of the [novel coronavirus disease (Covid-19)](https://www.who.int/e
 
 I have found there is a simple mathematical model named SIR model describing the structure of how the infectious disease. The assertion by the model is so interesting to me even it is simple to explain. This post aims to deliver an overview of the SIR model and the outcome of my simulation by using the dataset of Covid-19.
 
+Please refer to the repository used in this simulation for more detail.
+
+- [Lewuathe/COVID19-SIR](https://github.com/Lewuathe/COVID19-SIR)
+
 
 ```
 - What is SIR model
@@ -233,11 +237,16 @@ Anyway, one important thing here is that **it's not the official one**. Not surp
 
 Last but not least, please be sure to wash your hand regularly and keep away from the crowded area as general guidance says. I hope the outbreak will be over soon.
 
+The full code used in this simulation is available in GitHub.
+
+- [Lewuathe/COVID19-SIR](https://github.com/Lewuathe/COVID19-SIR)
+
 
 # References
 
 - [Compartmental models in epidemiology](https://en.wikipedia.org/wiki/Compartmental_models_in_epidemiology)
 - [Novel Coronavirus (COVID-19) Cases](https://data.humdata.org/dataset/novel-coronavirus-2019-ncov-cases)
 - [COVID-19 from WHO](https://www.who.int/emergencies/diseases/novel-coronavirus-2019/)
+- [Lewuathe/COVID19-SIR](https://github.com/Lewuathe/COVID19-SIR)
 
 Image by <a href="https://pixabay.com/users/geralt-9301/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=4030721">Gerd Altmann</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=4030721">Pixabay</a>
