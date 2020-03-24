@@ -32992,338 +32992,386 @@ module.exports = {
     "confirmed": 159,
     "hospital": 575,
     "beds_per_100th": 1792,
-    "doctors_per_100th": 229
+    "doctors_per_100th": 229,
+    "social_welfare_spending": 114435724
   },
   "青森県": {
     "population": 1335000,
     "confirmed": 2,
     "hospital": 101,
     "beds_per_100th": 1342,
-    "doctors_per_100th": 191
+    "doctors_per_100th": 191,
+    "social_welfare_spending": 31258233
   },
   "岩手県": {
     "population": 1295000,
     "confirmed": 0,
     "hospital": 92,
     "beds_per_100th": 1371,
-    "doctors_per_100th": 193
+    "doctors_per_100th": 193,
+    "social_welfare_spending": 28423252
   },
   "宮城県": {
     "population": 2328000,
     "confirmed": 1,
     "hospital": 142,
     "beds_per_100th": 1094,
-    "doctors_per_100th": 222
+    "doctors_per_100th": 222,
+    "social_welfare_spending": 39221340
   },
   "秋田県": {
     "population": 1050000,
     "confirmed": 1,
     "hospital": 73,
     "beds_per_100th": 1500,
-    "doctors_per_100th": 213
+    "doctors_per_100th": 213,
+    "social_welfare_spending": 24237928
   },
   "山形県": {
     "population": 1141000,
     "confirmed": 0,
     "hospital": 68,
     "beds_per_100th": 1317,
-    "doctors_per_100th": 221
+    "doctors_per_100th": 221,
+    "social_welfare_spending": 19885951
   },
   "福島県": {
     "population": 1946000,
     "confirmed": 2,
     "hospital": 128,
     "beds_per_100th": 1343,
-    "doctors_per_100th": 191
+    "doctors_per_100th": 191,
+    "social_welfare_spending": 36989248
   },
   "茨城県": {
     "population": 2931000,
     "confirmed": 5,
     "hospital": 183,
     "beds_per_100th": 1102,
-    "doctors_per_100th": 166
+    "doctors_per_100th": 166,
+    "social_welfare_spending": 53085593
   },
   "栃木県": {
     "population": 1986000,
     "confirmed": 4,
     "hospital": 109,
     "beds_per_100th": 1092,
-    "doctors_per_100th": 215
+    "doctors_per_100th": 215,
+    "social_welfare_spending": 32991634
   },
   "群馬県": {
     "population": 1984000,
     "confirmed": 11,
     "hospital": 131,
     "beds_per_100th": 1245,
-    "doctors_per_100th": 216
+    "doctors_per_100th": 216,
+    "social_welfare_spending": 35217963
   },
   "埼玉県": {
     "population": 7222000,
     "confirmed": 48,
     "hospital": 342,
     "beds_per_100th": 856,
-    "doctors_per_100th": 148
+    "doctors_per_100th": 148,
+    "social_welfare_spending": 109515822
   },
   "千葉県": {
     "population": 6192000,
     "confirmed": 44,
     "hospital": 279,
     "beds_per_100th": 923,
-    "doctors_per_100th": 170
+    "doctors_per_100th": 170,
+    "social_welfare_spending": 89265529
   },
   "東京都": {
     "population": 13300000,
     "confirmed": 138,
     "hospital": 646,
     "beds_per_100th": 959,
-    "doctors_per_100th": 303
+    "doctors_per_100th": 303,
+    "social_welfare_spending": 298957374
   },
   "神奈川県": {
     "population": 9079000,
     "confirmed": 68,
     "hospital": 342,
     "beds_per_100th": 815,
-    "doctors_per_100th": 195
+    "doctors_per_100th": 195,
+    "social_welfare_spending": 122050183
   },
   "新潟県": {
     "population": 2330000,
     "confirmed": 15,
     "hospital": 131,
     "beds_per_100th": 1251,
-    "doctors_per_100th": 191
+    "doctors_per_100th": 191,
+    "social_welfare_spending": 37790330
   },
   "富山県": {
     "population": 1076000,
     "confirmed": 0,
     "hospital": 109,
     "beds_per_100th": 1581,
-    "doctors_per_100th": 241
+    "doctors_per_100th": 241,
+    "social_welfare_spending": 16520132
   },
   "石川県": {
     "population": 1159000,
     "confirmed": 5,
     "hospital": 98,
     "beds_per_100th": 1616,
-    "doctors_per_100th": 266
+    "doctors_per_100th": 266,
+    "social_welfare_spending": 23892422
   },
   "福井県": {
     "population": 795000,
     "confirmed": 1,
     "hospital": 70,
     "beds_per_100th": 1401,
-    "doctors_per_100th": 238
+    "doctors_per_100th": 238,
+    "social_welfare_spending": 15797125
   },
   "山梨県": {
     "population": 847000,
     "confirmed": 2,
     "hospital": 60,
     "beds_per_100th": 1312,
-    "doctors_per_100th": 218
+    "doctors_per_100th": 218,
+    "social_welfare_spending": 17269279
   },
   "長野県": {
     "population": 2122000,
     "confirmed": 3,
     "hospital": 130,
     "beds_per_100th": 1141,
-    "doctors_per_100th": 213
+    "doctors_per_100th": 213,
+    "social_welfare_spending": 38085328
   },
   "岐阜県": {
     "population": 2051000,
     "confirmed": 7,
     "hospital": 103,
     "beds_per_100th": 1014,
-    "doctors_per_100th": 194
+    "doctors_per_100th": 194,
+    "social_welfare_spending": 39622325
   },
   "静岡県": {
     "population": 3723000,
     "confirmed": 3,
     "hospital": 180,
     "beds_per_100th": 1035,
-    "doctors_per_100th": 190
+    "doctors_per_100th": 190,
+    "social_welfare_spending": 57519864
   },
   "愛知県": {
     "population": 7443000,
     "confirmed": 134,
     "hospital": 325,
     "beds_per_100th": 908,
-    "doctors_per_100th": 203
+    "doctors_per_100th": 203,
+    "social_welfare_spending": 112749231
   },
   "三重県": {
     "population": 1833000,
     "confirmed": 6,
     "hospital": 103,
     "beds_per_100th": 1123,
-    "doctors_per_100th": 198
+    "doctors_per_100th": 198,
+    "social_welfare_spending": 32388512
   },
   "滋賀県": {
     "population": 1416000,
     "confirmed": 6,
     "hospital": 58,
     "beds_per_100th": 1034,
-    "doctors_per_100th": 211
+    "doctors_per_100th": 211,
+    "social_welfare_spending": 24556248
   },
   "京都府": {
     "population": 2617000,
     "confirmed": 21,
     "hospital": 173,
     "beds_per_100th": 1374,
-    "doctors_per_100th": 302
+    "doctors_per_100th": 302,
+    "social_welfare_spending": 52511787
   },
   "大阪府": {
     "population": 8849000,
     "confirmed": 117,
     "hospital": 535,
     "beds_per_100th": 1226,
-    "doctors_per_100th": 260
+    "doctors_per_100th": 260,
+    "social_welfare_spending": 179252469
   },
   "兵庫県": {
     "population": 5558000,
     "confirmed": 82,
     "hospital": 352,
     "beds_per_100th": 1167,
-    "doctors_per_100th": 226
+    "doctors_per_100th": 226,
+    "social_welfare_spending": 91158369
   },
   "奈良県": {
     "population": 1383000,
     "confirmed": 5,
     "hospital": 75,
     "beds_per_100th": 1190,
-    "doctors_per_100th": 220
+    "doctors_per_100th": 220,
+    "social_welfare_spending": 23241107
   },
   "和歌山県": {
     "population": 979000,
     "confirmed": 15,
     "hospital": 86,
     "beds_per_100th": 1414,
-    "doctors_per_100th": 270
+    "doctors_per_100th": 270,
+    "social_welfare_spending": 22693947
   },
   "鳥取県": {
     "population": 578000,
     "confirmed": 0,
     "hospital": 45,
     "beds_per_100th": 1525,
-    "doctors_per_100th": 287
+    "doctors_per_100th": 287,
+    "social_welfare_spending": 13817035
   },
   "島根県": {
     "population": 702000,
     "confirmed": 0,
     "hospital": 53,
     "beds_per_100th": 1573,
-    "doctors_per_100th": 264
+    "doctors_per_100th": 264,
+    "social_welfare_spending": 16417738
   },
   "岡山県": {
     "population": 1930000,
     "confirmed": 1,
     "hospital": 170,
     "beds_per_100th": 1522,
-    "doctors_per_100th": 282
+    "doctors_per_100th": 282,
+    "social_welfare_spending": 30546704
   },
   "広島県": {
     "population": 2840000,
     "confirmed": 3,
     "hospital": 248,
     "beds_per_100th": 1438,
-    "doctors_per_100th": 248
+    "doctors_per_100th": 248,
+    "social_welfare_spending": 49264780
   },
   "山口県": {
     "population": 1420000,
     "confirmed": 2,
     "hospital": 148,
     "beds_per_100th": 1921,
-    "doctors_per_100th": 247
+    "doctors_per_100th": 247,
+    "social_welfare_spending": 25289986
   },
   "徳島県": {
     "population": 770000,
     "confirmed": 0,
     "hospital": 114,
     "beds_per_100th": 1939,
-    "doctors_per_100th": 304
+    "doctors_per_100th": 304,
+    "social_welfare_spending": 15873975
   },
   "香川県": {
     "population": 985000,
     "confirmed": 1,
     "hospital": 92,
     "beds_per_100th": 1566,
-    "doctors_per_100th": 266
+    "doctors_per_100th": 266,
+    "social_welfare_spending": 18585194
   },
   "愛媛県": {
     "population": 1405000,
     "confirmed": 2,
     "hospital": 143,
     "beds_per_100th": 1621,
-    "doctors_per_100th": 244
+    "doctors_per_100th": 244,
+    "social_welfare_spending": 27955895
   },
   "高知県": {
     "population": 745000,
     "confirmed": 11,
     "hospital": 131,
     "beds_per_100th": 2473,
-    "doctors_per_100th": 285
+    "doctors_per_100th": 285,
+    "social_welfare_spending": 17849603
   },
   "福岡県": {
     "population": 5090000,
     "confirmed": 6,
     "hospital": 464,
     "beds_per_100th": 1699,
-    "doctors_per_100th": 288
+    "doctors_per_100th": 288,
+    "social_welfare_spending": 73293100
   },
   "佐賀県": {
     "population": 840000,
     "confirmed": 1,
     "hospital": 108,
     "beds_per_100th": 1799,
-    "doctors_per_100th": 256
+    "doctors_per_100th": 256,
+    "social_welfare_spending": 20208429
   },
   "長崎県": {
     "population": 1397000,
     "confirmed": 0,
     "hospital": 159,
     "beds_per_100th": 1934,
-    "doctors_per_100th": 284
+    "doctors_per_100th": 284,
+    "social_welfare_spending": 34304778
   },
   "熊本県": {
     "population": 1801000,
     "confirmed": 6,
     "hospital": 214,
     "beds_per_100th": 1956,
-    "doctors_per_100th": 270
+    "doctors_per_100th": 270,
+    "social_welfare_spending": 35889655
   },
   "大分県": {
     "population": 1178000,
     "confirmed": 15,
     "hospital": 158,
     "beds_per_100th": 1704,
-    "doctors_per_100th": 256
+    "doctors_per_100th": 256,
+    "social_welfare_spending": 24446549
   },
   "宮崎県": {
     "population": 1120000,
     "confirmed": 3,
     "hospital": 141,
     "beds_per_100th": 1723,
-    "doctors_per_100th": 233
+    "doctors_per_100th": 233,
+    "social_welfare_spending": 24759846
   },
   "鹿児島県": {
     "population": 1680000,
     "confirmed": 0,
     "hospital": 259,
     "beds_per_100th": 2054,
-    "doctors_per_100th": 242
+    "doctors_per_100th": 242,
+    "social_welfare_spending": 37632696
   },
   "沖縄県": {
     "population": 1415000,
     "confirmed": 3,
     "hospital": 94,
     "beds_per_100th": 1332,
-    "doctors_per_100th": 235
+    "doctors_per_100th": 235,
+    "social_welfare_spending": 44833834
   },
   "日本": {
     "population": 127297000,
     "confirmed": 959,
     "hospital": 8540,
     "beds_per_100th": 1411.0,
-    "doctors_per_100th": 234.14893617021278
+    "doctors_per_100th": 234.14893617021278,
+    "social_welfare_spending": 2331554046
   },
-  "updated_date": "2020-03-24T22:03:10.017903"
+  "updated_date": "2020-03-24T22:14:15.736045"
 };
 },{}],"data/japan.json":[function(require,module,exports) {
 module.exports = {
@@ -33937,6 +33985,24 @@ var methods = {
       desc: "Number of Doctors / 100,000 population",
       toFixed: 0
     }
+  },
+  social_welfare_spending: {
+    formula: function formula(name, dProp) {
+      return data[name]['social_welfare_spending'] / data[name]['population'];
+    },
+    dataDefault: data['日本']['social_welfare_spending'] / data['日本']['population'],
+    style: {
+      paint: d3.scalePow().interpolate(function () {
+        return d3.interpolateMagma;
+      }).exponent(0.99).domain([10, 30]),
+      interpolation: d3.interpolateMagma
+    },
+    properties: {
+      title: "Social Welfare Spending per Capita",
+      abbv: "人口一人あたり社会福祉費",
+      desc: "Social welfare spending (thousand yen) per capita",
+      toFixed: 0
+    }
   }
 };
 
@@ -33981,7 +34047,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57842" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58281" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
