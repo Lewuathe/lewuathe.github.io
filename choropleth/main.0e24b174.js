@@ -32989,19 +32989,21 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 module.exports = {
   "北海道": {
     "population": 5431000,
-    "confirmed": 154,
+    "confirmed": 159,
     "hospital": 575,
     "beds_per_100th": 1792,
     "doctors_per_100th": 229
   },
   "青森県": {
     "population": 1335000,
+    "confirmed": 2,
     "hospital": 101,
     "beds_per_100th": 1342,
     "doctors_per_100th": 191
   },
   "岩手県": {
     "population": 1295000,
+    "confirmed": 0,
     "hospital": 92,
     "beds_per_100th": 1371,
     "doctors_per_100th": 193
@@ -33022,6 +33024,7 @@ module.exports = {
   },
   "山形県": {
     "population": 1141000,
+    "confirmed": 0,
     "hospital": 68,
     "beds_per_100th": 1317,
     "doctors_per_100th": 221
@@ -33035,69 +33038,70 @@ module.exports = {
   },
   "茨城県": {
     "population": 2931000,
-    "confirmed": 3,
+    "confirmed": 5,
     "hospital": 183,
     "beds_per_100th": 1102,
     "doctors_per_100th": 166
   },
   "栃木県": {
     "population": 1986000,
-    "confirmed": 3,
+    "confirmed": 4,
     "hospital": 109,
     "beds_per_100th": 1092,
     "doctors_per_100th": 215
   },
   "群馬県": {
     "population": 1984000,
-    "confirmed": 10,
+    "confirmed": 11,
     "hospital": 131,
     "beds_per_100th": 1245,
     "doctors_per_100th": 216
   },
   "埼玉県": {
     "population": 7222000,
-    "confirmed": 38,
+    "confirmed": 48,
     "hospital": 342,
     "beds_per_100th": 856,
     "doctors_per_100th": 148
   },
   "千葉県": {
     "population": 6192000,
-    "confirmed": 33,
+    "confirmed": 44,
     "hospital": 279,
     "beds_per_100th": 923,
     "doctors_per_100th": 170
   },
   "東京都": {
     "population": 13300000,
-    "confirmed": 104,
+    "confirmed": 138,
     "hospital": 646,
     "beds_per_100th": 959,
     "doctors_per_100th": 303
   },
   "神奈川県": {
     "population": 9079000,
-    "confirmed": 57,
+    "confirmed": 68,
     "hospital": 342,
     "beds_per_100th": 815,
     "doctors_per_100th": 195
   },
   "新潟県": {
     "population": 2330000,
-    "confirmed": 14,
+    "confirmed": 15,
     "hospital": 131,
     "beds_per_100th": 1251,
     "doctors_per_100th": 191
   },
   "富山県": {
     "population": 1076000,
+    "confirmed": 0,
     "hospital": 109,
     "beds_per_100th": 1581,
     "doctors_per_100th": 241
   },
   "石川県": {
     "population": 1159000,
-    "confirmed": 4,
+    "confirmed": 5,
     "hospital": 98,
     "beds_per_100th": 1616,
     "doctors_per_100th": 266
@@ -33125,7 +33129,7 @@ module.exports = {
   },
   "岐阜県": {
     "population": 2051000,
-    "confirmed": 2,
+    "confirmed": 7,
     "hospital": 103,
     "beds_per_100th": 1014,
     "doctors_per_100th": 194
@@ -33139,7 +33143,7 @@ module.exports = {
   },
   "愛知県": {
     "population": 7443000,
-    "confirmed": 125,
+    "confirmed": 134,
     "hospital": 325,
     "beds_per_100th": 908,
     "doctors_per_100th": 203
@@ -33153,80 +33157,84 @@ module.exports = {
   },
   "滋賀県": {
     "population": 1416000,
-    "confirmed": 5,
+    "confirmed": 6,
     "hospital": 58,
     "beds_per_100th": 1034,
     "doctors_per_100th": 211
   },
   "京都府": {
     "population": 2617000,
-    "confirmed": 17,
+    "confirmed": 21,
     "hospital": 173,
     "beds_per_100th": 1374,
     "doctors_per_100th": 302
   },
   "大阪府": {
     "population": 8849000,
-    "confirmed": 103,
+    "confirmed": 117,
     "hospital": 535,
     "beds_per_100th": 1226,
     "doctors_per_100th": 260
   },
   "兵庫県": {
     "population": 5558000,
-    "confirmed": 66,
+    "confirmed": 82,
     "hospital": 352,
     "beds_per_100th": 1167,
     "doctors_per_100th": 226
   },
   "奈良県": {
     "population": 1383000,
-    "confirmed": 4,
+    "confirmed": 5,
     "hospital": 75,
     "beds_per_100th": 1190,
     "doctors_per_100th": 220
   },
   "和歌山県": {
     "population": 979000,
-    "confirmed": 14,
+    "confirmed": 15,
     "hospital": 86,
     "beds_per_100th": 1414,
     "doctors_per_100th": 270
   },
   "鳥取県": {
     "population": 578000,
+    "confirmed": 0,
     "hospital": 45,
     "beds_per_100th": 1525,
     "doctors_per_100th": 287
   },
   "島根県": {
     "population": 702000,
+    "confirmed": 0,
     "hospital": 53,
     "beds_per_100th": 1573,
     "doctors_per_100th": 264
   },
   "岡山県": {
     "population": 1930000,
+    "confirmed": 1,
     "hospital": 170,
     "beds_per_100th": 1522,
     "doctors_per_100th": 282
   },
   "広島県": {
     "population": 2840000,
-    "confirmed": 1,
+    "confirmed": 3,
     "hospital": 248,
     "beds_per_100th": 1438,
     "doctors_per_100th": 248
   },
   "山口県": {
     "population": 1420000,
-    "confirmed": 1,
+    "confirmed": 2,
     "hospital": 148,
     "beds_per_100th": 1921,
     "doctors_per_100th": 247
   },
   "徳島県": {
     "population": 770000,
+    "confirmed": 0,
     "hospital": 114,
     "beds_per_100th": 1939,
     "doctors_per_100th": 304
@@ -33254,7 +33262,7 @@ module.exports = {
   },
   "福岡県": {
     "population": 5090000,
-    "confirmed": 5,
+    "confirmed": 6,
     "hospital": 464,
     "beds_per_100th": 1699,
     "doctors_per_100th": 288
@@ -33268,6 +33276,7 @@ module.exports = {
   },
   "長崎県": {
     "population": 1397000,
+    "confirmed": 0,
     "hospital": 159,
     "beds_per_100th": 1934,
     "doctors_per_100th": 284
@@ -33281,7 +33290,7 @@ module.exports = {
   },
   "大分県": {
     "population": 1178000,
-    "confirmed": 3,
+    "confirmed": 15,
     "hospital": 158,
     "beds_per_100th": 1704,
     "doctors_per_100th": 256
@@ -33295,6 +33304,7 @@ module.exports = {
   },
   "鹿児島県": {
     "population": 1680000,
+    "confirmed": 0,
     "hospital": 259,
     "beds_per_100th": 2054,
     "doctors_per_100th": 242
@@ -33308,11 +33318,12 @@ module.exports = {
   },
   "日本": {
     "population": 127297000,
-    "confirmed": 812,
+    "confirmed": 959,
     "hospital": 8540,
     "beds_per_100th": 1411.0,
     "doctors_per_100th": 234.14893617021278
-  }
+  },
+  "updated_date": "2020-03-24T22:03:10.017903"
 };
 },{}],"data/japan.json":[function(require,module,exports) {
 module.exports = {
@@ -33739,6 +33750,7 @@ var data = require("../data/data.json");
 var japan = require("./../data/japan.json");
 
 var topoData = topojson.feature(japan, japan.objects.japan).features;
+d3.select(".updated_at").html(data['updated_date']);
 var projection = d3.geoMercator().scale(2000).center([136.883565, 41.565725]);
 var path = d3.geoPath().projection(projection);
 document.body.addEventListener("mousemove", function (e) {
@@ -33969,7 +33981,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55876" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57842" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
