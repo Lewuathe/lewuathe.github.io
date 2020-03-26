@@ -32989,7 +32989,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 module.exports = {
   "北海道": {
     "population": 5431000,
-    "confirmed": 159,
+    "confirmed": 160,
     "hospital": 575,
     "beds_per_100th": 1792,
     "doctors_per_100th": 229,
@@ -33053,7 +33053,7 @@ module.exports = {
   },
   "栃木県": {
     "population": 1986000,
-    "confirmed": 4,
+    "confirmed": 6,
     "hospital": 109,
     "beds_per_100th": 1092,
     "doctors_per_100th": 215,
@@ -33061,7 +33061,7 @@ module.exports = {
   },
   "群馬県": {
     "population": 1984000,
-    "confirmed": 11,
+    "confirmed": 13,
     "hospital": 131,
     "beds_per_100th": 1245,
     "doctors_per_100th": 216,
@@ -33069,7 +33069,7 @@ module.exports = {
   },
   "埼玉県": {
     "population": 7222000,
-    "confirmed": 48,
+    "confirmed": 55,
     "hospital": 342,
     "beds_per_100th": 856,
     "doctors_per_100th": 148,
@@ -33077,7 +33077,7 @@ module.exports = {
   },
   "千葉県": {
     "population": 6192000,
-    "confirmed": 44,
+    "confirmed": 45,
     "hospital": 279,
     "beds_per_100th": 923,
     "doctors_per_100th": 170,
@@ -33085,7 +33085,7 @@ module.exports = {
   },
   "東京都": {
     "population": 13300000,
-    "confirmed": 138,
+    "confirmed": 155,
     "hospital": 646,
     "beds_per_100th": 959,
     "doctors_per_100th": 303,
@@ -33093,7 +33093,7 @@ module.exports = {
   },
   "神奈川県": {
     "population": 9079000,
-    "confirmed": 68,
+    "confirmed": 73,
     "hospital": 342,
     "beds_per_100th": 815,
     "doctors_per_100th": 195,
@@ -33101,7 +33101,7 @@ module.exports = {
   },
   "新潟県": {
     "population": 2330000,
-    "confirmed": 15,
+    "confirmed": 16,
     "hospital": 131,
     "beds_per_100th": 1251,
     "doctors_per_100th": 191,
@@ -33133,7 +33133,7 @@ module.exports = {
   },
   "山梨県": {
     "population": 847000,
-    "confirmed": 2,
+    "confirmed": 4,
     "hospital": 60,
     "beds_per_100th": 1312,
     "doctors_per_100th": 218,
@@ -33141,7 +33141,7 @@ module.exports = {
   },
   "長野県": {
     "population": 2122000,
-    "confirmed": 3,
+    "confirmed": 4,
     "hospital": 130,
     "beds_per_100th": 1141,
     "doctors_per_100th": 213,
@@ -33149,7 +33149,7 @@ module.exports = {
   },
   "岐阜県": {
     "population": 2051000,
-    "confirmed": 7,
+    "confirmed": 11,
     "hospital": 103,
     "beds_per_100th": 1014,
     "doctors_per_100th": 194,
@@ -33165,7 +33165,7 @@ module.exports = {
   },
   "愛知県": {
     "population": 7443000,
-    "confirmed": 134,
+    "confirmed": 137,
     "hospital": 325,
     "beds_per_100th": 908,
     "doctors_per_100th": 203,
@@ -33189,7 +33189,7 @@ module.exports = {
   },
   "京都府": {
     "population": 2617000,
-    "confirmed": 21,
+    "confirmed": 23,
     "hospital": 173,
     "beds_per_100th": 1374,
     "doctors_per_100th": 302,
@@ -33197,7 +33197,7 @@ module.exports = {
   },
   "大阪府": {
     "population": 8849000,
-    "confirmed": 117,
+    "confirmed": 125,
     "hospital": 535,
     "beds_per_100th": 1226,
     "doctors_per_100th": 260,
@@ -33205,7 +33205,7 @@ module.exports = {
   },
   "兵庫県": {
     "population": 5558000,
-    "confirmed": 82,
+    "confirmed": 85,
     "hospital": 352,
     "beds_per_100th": 1167,
     "doctors_per_100th": 226,
@@ -33301,7 +33301,7 @@ module.exports = {
   },
   "福岡県": {
     "population": 5090000,
-    "confirmed": 6,
+    "confirmed": 9,
     "hospital": 464,
     "beds_per_100th": 1699,
     "doctors_per_100th": 288,
@@ -33333,7 +33333,7 @@ module.exports = {
   },
   "大分県": {
     "population": 1178000,
-    "confirmed": 15,
+    "confirmed": 17,
     "hospital": 158,
     "beds_per_100th": 1704,
     "doctors_per_100th": 256,
@@ -33357,7 +33357,7 @@ module.exports = {
   },
   "沖縄県": {
     "population": 1415000,
-    "confirmed": 3,
+    "confirmed": 4,
     "hospital": 94,
     "beds_per_100th": 1332,
     "doctors_per_100th": 235,
@@ -33365,13 +33365,13 @@ module.exports = {
   },
   "日本": {
     "population": 127297000,
-    "confirmed": 959,
+    "confirmed": 1024,
     "hospital": 8540,
     "beds_per_100th": 1411.0,
     "doctors_per_100th": 234.14893617021278,
     "social_welfare_spending": 2331554046
   },
-  "updated_date": "2020-03-24T22:14:15.736045"
+  "updated_date": "2020-03-26T16:32:39.510930"
 };
 },{}],"data/japan.json":[function(require,module,exports) {
 module.exports = {
@@ -34047,7 +34047,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58281" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59716" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
