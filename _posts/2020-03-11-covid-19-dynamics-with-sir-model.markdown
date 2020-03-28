@@ -63,6 +63,10 @@ p_c = 1 - \frac{1}{R_0}
 
 Therefore, $$p_c$$ is the HIT to stop the spread of the infectious disease. We can stop the outbreak by vaccinating the population to increase herd immunity.
 
+The video provided by 3Blue1Brown is also a great resource to learn the SIR model visually.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/gxAaO2rsdIs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 We have got the basics of the SIR model and what each metric means in terms of the dynamics of the spread of the infectious disease. Now it's time to apply the model to COVID-19 case.
 
 # Simulation with COVID-19 data
