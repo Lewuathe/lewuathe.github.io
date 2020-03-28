@@ -33371,7 +33371,7 @@ module.exports = {
     "doctors_per_100th": 234.14893617021278,
     "social_welfare_spending": 2331554046
   },
-  "updated_date": "2020-03-26T16:32:39.510930"
+  "updated_date": "2020-03-28T14:52:29.188359"
 };
 },{}],"data/japan.json":[function(require,module,exports) {
 module.exports = {
@@ -34047,7 +34047,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59716" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56746" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
