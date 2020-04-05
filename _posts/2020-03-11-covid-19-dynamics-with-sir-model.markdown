@@ -239,6 +239,12 @@ Now the SIR model is well-fitting the actual data for both confirmed and recover
 
 Anyway, one important thing here is that **it's not the official one**. Not surprisingly, it can be wrong. This experiment is done for satisfying my interest in the SIR model fitting to the COVID-19 dataset to see the dynamics of the spread of new disease-causing the widespread pandemic. I would be glad if this article is helpful for those who are also interested in the mechanism of the spread of infectious disease in general.
 
+To learn more about SIR model and mechanism of the spread of infectious disease, please take a look at the "<a target="_blank" href="https://www.amazon.com/gp/product/3030308995/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=3030308995&linkCode=as2&tag=lewuathe-20&linkId=da660a8c3518f0b7212b551a0bc4835c">Stochastic Epidemic Models With Inference (Lecture Notes in Mathematics)</a><img src="//ir-na.amazon-adsystem.com/e/ir?t=lewuathe-20&l=am2&o=1&a=3030308995" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />. Although the book is heavy to read through, there is no better book to learn the basic of the mechanism from my point of view.
+
+<p style='text-align: center;'>
+<a target="_blank"  href="https://www.amazon.com/gp/product/3030308995/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=3030308995&linkCode=as2&tag=lewuathe-20&linkId=3bcaea3dba2bb4b951e2faa3b8655c5a"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=3030308995&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL250_&tag=lewuathe-20" ></a><img src="//ir-na.amazon-adsystem.com/e/ir?t=lewuathe-20&l=am2&o=1&a=3030308995" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+</p>
+
 Last but not least, please be sure to wash your hand regularly and keep away from the crowded area as general guidance says. I hope the outbreak will be over soon.
 
 The full code used in this simulation is available in GitHub.
@@ -252,5 +258,6 @@ The full code used in this simulation is available in GitHub.
 - [Novel Coronavirus (COVID-19) Cases](https://data.humdata.org/dataset/novel-coronavirus-2019-ncov-cases)
 - [COVID-19 from WHO](https://www.who.int/emergencies/diseases/novel-coronavirus-2019/)
 - [Lewuathe/COVID19-SIR](https://github.com/Lewuathe/COVID19-SIR)
+- <a target="_blank" href="https://www.amazon.com/gp/product/3030308995/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=3030308995&linkCode=as2&tag=lewuathe-20&linkId=da660a8c3518f0b7212b551a0bc4835c">Stochastic Epidemic Models With Inferenc (Lecture Notes in Mathematics)</a><img src="//ir-na.amazon-adsystem.com/e/ir?t=lewuathe-20&l=am2&o=1&a=3030308995" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
 
 Image by <a href="https://pixabay.com/users/geralt-9301/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=4030721">Gerd Altmann</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=4030721">Pixabay</a>
