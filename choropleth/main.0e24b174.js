@@ -32990,6 +32990,7 @@ module.exports = {
   "北海道": {
     "population": 5431000,
     "confirmed": 370,
+    "pcr_num": 3735,
     "hospital": 575,
     "beds_per_100th": 1792,
     "doctors_per_100th": 229,
@@ -32998,6 +32999,7 @@ module.exports = {
   "青森県": {
     "population": 1335000,
     "confirmed": 22,
+    "pcr_num": 447,
     "hospital": 101,
     "beds_per_100th": 1342,
     "doctors_per_100th": 191,
@@ -33006,6 +33008,7 @@ module.exports = {
   "岩手県": {
     "population": 1295000,
     "confirmed": 0,
+    "pcr_num": 205,
     "hospital": 92,
     "beds_per_100th": 1371,
     "doctors_per_100th": 193,
@@ -33014,6 +33017,7 @@ module.exports = {
   "宮城県": {
     "population": 2328000,
     "confirmed": 75,
+    "pcr_num": 1109,
     "hospital": 142,
     "beds_per_100th": 1094,
     "doctors_per_100th": 222,
@@ -33022,6 +33026,7 @@ module.exports = {
   "秋田県": {
     "population": 1050000,
     "confirmed": 16,
+    "pcr_num": 688,
     "hospital": 73,
     "beds_per_100th": 1500,
     "doctors_per_100th": 213,
@@ -33030,6 +33035,7 @@ module.exports = {
   "山形県": {
     "population": 1141000,
     "confirmed": 50,
+    "pcr_num": 1276,
     "hospital": 68,
     "beds_per_100th": 1317,
     "doctors_per_100th": 221,
@@ -33038,6 +33044,7 @@ module.exports = {
   "福島県": {
     "population": 1946000,
     "confirmed": 49,
+    "pcr_num": 924,
     "hospital": 128,
     "beds_per_100th": 1343,
     "doctors_per_100th": 191,
@@ -33046,6 +33053,7 @@ module.exports = {
   "茨城県": {
     "population": 2931000,
     "confirmed": 123,
+    "pcr_num": 2883,
     "hospital": 183,
     "beds_per_100th": 1102,
     "doctors_per_100th": 166,
@@ -33054,6 +33062,7 @@ module.exports = {
   "栃木県": {
     "population": 1986000,
     "confirmed": 42,
+    "pcr_num": 1233,
     "hospital": 109,
     "beds_per_100th": 1092,
     "doctors_per_100th": 215,
@@ -33062,6 +33071,7 @@ module.exports = {
   "群馬県": {
     "population": 1984000,
     "confirmed": 109,
+    "pcr_num": 1924,
     "hospital": 131,
     "beds_per_100th": 1245,
     "doctors_per_100th": 216,
@@ -33070,6 +33080,7 @@ module.exports = {
   "埼玉県": {
     "population": 7222000,
     "confirmed": 535,
+    "pcr_num": 3836,
     "hospital": 342,
     "beds_per_100th": 856,
     "doctors_per_100th": 148,
@@ -33078,6 +33089,7 @@ module.exports = {
   "千葉県": {
     "population": 6192000,
     "confirmed": 539,
+    "pcr_num": 3006,
     "hospital": 279,
     "beds_per_100th": 923,
     "doctors_per_100th": 170,
@@ -33086,6 +33098,7 @@ module.exports = {
   "東京都": {
     "population": 13300000,
     "confirmed": 2606,
+    "pcr_num": 6814,
     "hospital": 646,
     "beds_per_100th": 959,
     "doctors_per_100th": 303,
@@ -33094,6 +33107,7 @@ module.exports = {
   "神奈川県": {
     "population": 9079000,
     "confirmed": 673,
+    "pcr_num": 3682,
     "hospital": 342,
     "beds_per_100th": 815,
     "doctors_per_100th": 195,
@@ -33102,6 +33116,7 @@ module.exports = {
   "新潟県": {
     "population": 2330000,
     "confirmed": 47,
+    "pcr_num": 1910,
     "hospital": 131,
     "beds_per_100th": 1251,
     "doctors_per_100th": 191,
@@ -33110,6 +33125,7 @@ module.exports = {
   "富山県": {
     "population": 1076000,
     "confirmed": 65,
+    "pcr_num": 1177,
     "hospital": 109,
     "beds_per_100th": 1581,
     "doctors_per_100th": 241,
@@ -33118,6 +33134,7 @@ module.exports = {
   "石川県": {
     "population": 1159000,
     "confirmed": 146,
+    "pcr_num": 903,
     "hospital": 98,
     "beds_per_100th": 1616,
     "doctors_per_100th": 266,
@@ -33126,6 +33143,7 @@ module.exports = {
   "福井県": {
     "population": 795000,
     "confirmed": 103,
+    "pcr_num": 918,
     "hospital": 70,
     "beds_per_100th": 1401,
     "doctors_per_100th": 238,
@@ -33134,6 +33152,7 @@ module.exports = {
   "山梨県": {
     "population": 847000,
     "confirmed": 43,
+    "pcr_num": 1367,
     "hospital": 60,
     "beds_per_100th": 1312,
     "doctors_per_100th": 218,
@@ -33142,6 +33161,7 @@ module.exports = {
   "長野県": {
     "population": 2122000,
     "confirmed": 45,
+    "pcr_num": 1219,
     "hospital": 130,
     "beds_per_100th": 1141,
     "doctors_per_100th": 213,
@@ -33150,6 +33170,7 @@ module.exports = {
   "岐阜県": {
     "population": 2051000,
     "confirmed": 132,
+    "pcr_num": 1727,
     "hospital": 103,
     "beds_per_100th": 1014,
     "doctors_per_100th": 194,
@@ -33158,6 +33179,7 @@ module.exports = {
   "静岡県": {
     "population": 3723000,
     "confirmed": 48,
+    "pcr_num": 1867,
     "hospital": 180,
     "beds_per_100th": 1035,
     "doctors_per_100th": 190,
@@ -33166,6 +33188,7 @@ module.exports = {
   "愛知県": {
     "population": 7443000,
     "confirmed": 364,
+    "pcr_num": 5008,
     "hospital": 325,
     "beds_per_100th": 908,
     "doctors_per_100th": 203,
@@ -33174,6 +33197,7 @@ module.exports = {
   "三重県": {
     "population": 1833000,
     "confirmed": 26,
+    "pcr_num": 1092,
     "hospital": 103,
     "beds_per_100th": 1123,
     "doctors_per_100th": 198,
@@ -33182,6 +33206,7 @@ module.exports = {
   "滋賀県": {
     "population": 1416000,
     "confirmed": 57,
+    "pcr_num": 715,
     "hospital": 58,
     "beds_per_100th": 1034,
     "doctors_per_100th": 211,
@@ -33190,6 +33215,7 @@ module.exports = {
   "京都府": {
     "population": 2617000,
     "confirmed": 225,
+    "pcr_num": 2464,
     "hospital": 173,
     "beds_per_100th": 1374,
     "doctors_per_100th": 302,
@@ -33198,6 +33224,7 @@ module.exports = {
   "大阪府": {
     "population": 8849000,
     "confirmed": 1021,
+    "pcr_num": 3903,
     "hospital": 535,
     "beds_per_100th": 1226,
     "doctors_per_100th": 260,
@@ -33206,6 +33233,7 @@ module.exports = {
   "兵庫県": {
     "population": 5558000,
     "confirmed": 453,
+    "pcr_num": 4851,
     "hospital": 352,
     "beds_per_100th": 1167,
     "doctors_per_100th": 226,
@@ -33214,6 +33242,7 @@ module.exports = {
   "奈良県": {
     "population": 1383000,
     "confirmed": 54,
+    "pcr_num": 733,
     "hospital": 75,
     "beds_per_100th": 1190,
     "doctors_per_100th": 220,
@@ -33222,6 +33251,7 @@ module.exports = {
   "和歌山県": {
     "population": 979000,
     "confirmed": 38,
+    "pcr_num": 2239,
     "hospital": 86,
     "beds_per_100th": 1414,
     "doctors_per_100th": 270,
@@ -33230,6 +33260,7 @@ module.exports = {
   "鳥取県": {
     "population": 578000,
     "confirmed": 1,
+    "pcr_num": 477,
     "hospital": 45,
     "beds_per_100th": 1525,
     "doctors_per_100th": 287,
@@ -33238,6 +33269,7 @@ module.exports = {
   "島根県": {
     "population": 702000,
     "confirmed": 14,
+    "pcr_num": 558,
     "hospital": 53,
     "beds_per_100th": 1573,
     "doctors_per_100th": 264,
@@ -33246,6 +33278,7 @@ module.exports = {
   "岡山県": {
     "population": 1930000,
     "confirmed": 18,
+    "pcr_num": 748,
     "hospital": 170,
     "beds_per_100th": 1522,
     "doctors_per_100th": 282,
@@ -33254,6 +33287,7 @@ module.exports = {
   "広島県": {
     "population": 2840000,
     "confirmed": 118,
+    "pcr_num": 2733,
     "hospital": 248,
     "beds_per_100th": 1438,
     "doctors_per_100th": 248,
@@ -33262,6 +33296,7 @@ module.exports = {
   "山口県": {
     "population": 1420000,
     "confirmed": 29,
+    "pcr_num": 885,
     "hospital": 148,
     "beds_per_100th": 1921,
     "doctors_per_100th": 247,
@@ -33270,6 +33305,7 @@ module.exports = {
   "徳島県": {
     "population": 770000,
     "confirmed": 3,
+    "pcr_num": 277,
     "hospital": 114,
     "beds_per_100th": 1939,
     "doctors_per_100th": 304,
@@ -33278,6 +33314,7 @@ module.exports = {
   "香川県": {
     "population": 985000,
     "confirmed": 21,
+    "pcr_num": 833,
     "hospital": 92,
     "beds_per_100th": 1566,
     "doctors_per_100th": 266,
@@ -33286,6 +33323,7 @@ module.exports = {
   "愛媛県": {
     "population": 1405000,
     "confirmed": 41,
+    "pcr_num": 708,
     "hospital": 143,
     "beds_per_100th": 1621,
     "doctors_per_100th": 244,
@@ -33294,6 +33332,7 @@ module.exports = {
   "高知県": {
     "population": 745000,
     "confirmed": 62,
+    "pcr_num": 1039,
     "hospital": 131,
     "beds_per_100th": 2473,
     "doctors_per_100th": 285,
@@ -33302,6 +33341,7 @@ module.exports = {
   "福岡県": {
     "population": 5090000,
     "confirmed": 459,
+    "pcr_num": 6110,
     "hospital": 464,
     "beds_per_100th": 1699,
     "doctors_per_100th": 288,
@@ -33310,6 +33350,7 @@ module.exports = {
   "佐賀県": {
     "population": 840000,
     "confirmed": 15,
+    "pcr_num": 489,
     "hospital": 108,
     "beds_per_100th": 1799,
     "doctors_per_100th": 256,
@@ -33318,6 +33359,7 @@ module.exports = {
   "長崎県": {
     "population": 1397000,
     "confirmed": 16,
+    "pcr_num": 1258,
     "hospital": 159,
     "beds_per_100th": 1934,
     "doctors_per_100th": 284,
@@ -33326,6 +33368,7 @@ module.exports = {
   "熊本県": {
     "population": 1801000,
     "confirmed": 31,
+    "pcr_num": 2131,
     "hospital": 214,
     "beds_per_100th": 1956,
     "doctors_per_100th": 270,
@@ -33334,6 +33377,7 @@ module.exports = {
   "大分県": {
     "population": 1178000,
     "confirmed": 50,
+    "pcr_num": 2325,
     "hospital": 158,
     "beds_per_100th": 1704,
     "doctors_per_100th": 256,
@@ -33342,6 +33386,7 @@ module.exports = {
   "宮崎県": {
     "population": 1120000,
     "confirmed": 17,
+    "pcr_num": 802,
     "hospital": 141,
     "beds_per_100th": 1723,
     "doctors_per_100th": 233,
@@ -33350,6 +33395,7 @@ module.exports = {
   "鹿児島県": {
     "population": 1680000,
     "confirmed": 4,
+    "pcr_num": 657,
     "hospital": 259,
     "beds_per_100th": 2054,
     "doctors_per_100th": 242,
@@ -33358,6 +33404,7 @@ module.exports = {
   "沖縄県": {
     "population": 1415000,
     "confirmed": 86,
+    "pcr_num": 1025,
     "hospital": 94,
     "beds_per_100th": 1332,
     "doctors_per_100th": 235,
@@ -33366,12 +33413,13 @@ module.exports = {
   "日本": {
     "population": 127297000,
     "confirmed": 9061,
+    "pcr_num": 86910,
     "hospital": 8540,
     "beds_per_100th": 1411.0,
     "doctors_per_100th": 234.14893617021278,
     "social_welfare_spending": 2331554046
   },
-  "updated_date": "2020-04-19T10:55:22.840626"
+  "updated_date": "2020-04-19T11:01:09.659710"
 };
 },{}],"data/japan.json":[function(require,module,exports) {
 module.exports = {
@@ -33892,6 +33940,25 @@ var methods = {
       toFixed: 0
     }
   },
+  pcr_num: {
+    formula: function formula(name, dProp) {
+      var pcr_num = data[name]['pcr_num'];
+      return pcr_num;
+    },
+    dataDefault: data['日本']['pcr_num'],
+    style: {
+      paint: d3.scalePow().interpolate(function () {
+        return d3.interpolatePiYG;
+      }).exponent(0.5).domain([0, 10000]),
+      interpolation: d3.interpolatePiYG
+    },
+    properties: {
+      title: "Total Number of PCR Test",
+      abbv: "PCR検査人数",
+      desc: "Total Number of PCR Test",
+      toFixed: 0
+    }
+  },
   ratio: {
     formula: function formula(name, dProp) {
       var population = data[name]['population'];
@@ -34047,7 +34114,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52092" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52413" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
