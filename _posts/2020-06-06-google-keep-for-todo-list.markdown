@@ -4,7 +4,7 @@ layout: post
 date: 2020-06-06 20:25:57 +0900
 image: 'assets/img/posts/2020-06-06-google-keep-for-todo-list/catch.jpg'
 description:
-tag:
+tag: ['Google', 'Life', 'TODO']
 blog: true
 author: "Kai Sasaki"
 ---
