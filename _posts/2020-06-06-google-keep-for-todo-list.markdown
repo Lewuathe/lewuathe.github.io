@@ -28,7 +28,7 @@ Although Todoist, Wunderlist, Evernote provide me many features, most of them ar
 
 Is there some TODO app satisfying these requirements?
 
-# [Google Keep](https://keep.google.com/)
+## [Google Keep](https://keep.google.com/)
 
 ![TODO](assets/img/posts/2020-06-06-google-keep-for-todo-list/todo.png)
 
