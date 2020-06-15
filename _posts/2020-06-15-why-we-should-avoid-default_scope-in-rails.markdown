@@ -40,7 +40,7 @@ This `default_scope` is always applied to the model query. In other words, you d
 User.all # It will return the visible users, excluding hidden ones.
 ```
 
-That is good. You do not need to specify the same where conditions many times. `default_scope` automatically creates the basis of all queries.
+That is good. You do not need to specify the same `where` conditions many times. `default_scope` automatically creates the basis of all queries.
 
 Practically, `default_scope` is often not recommended in Rails.
 
