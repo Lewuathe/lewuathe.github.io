@@ -24,6 +24,7 @@ title:               The First Cry of Atom
 description:         ""
 author:              'Kai Sasaki'
 baseurl:             '/'
+gh_baseurl:          '/'
 
 defaults:
   - scope:
