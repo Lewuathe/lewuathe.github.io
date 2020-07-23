@@ -42,19 +42,19 @@ Here is the development plan happening in the near future in the Presto project.
 
 **Aria** is a project to collect a number of performance-related experiments. One of them is to create a new memory layout for slice and pages used in Presto internally. People who are familiar with the Apache Arrow may easily grasp what it means. That would be able to reduce the memory pressure and CPU usage significantly. Another thing in Aria is an approach to make the push down better. It's achieved by passing various kind of information to the connector side so that the splits created by the connector can do read skipping accordingly. There is also an interesting plan in Aria, vectorization. Supporting vectorization execution in Presto will make use of CPU resource more efficiently. Overall project Aria will pursue the potential to improve the basic performance of Presto further. 
 
-![Aria](assets/img/posts/2019-03-14-presto-summit-2019/aria.png)
+![Aria](/assets/img/posts/2019-03-14-presto-summit-2019/aria.png)
 
 ## Presto Unlimited
 
 **Unlimited** is another project to make the potential of Presto wider. It aims to remove the limitation of memory in each node by using materialized exchange join or aggregation operators. Since the join or aggregation are operators which consume a lot of memory and they tend to hit the local memory limit. Once an operator hits the memory limit, the whole query execution fails in Presto. In order to improve the reliability of query execution, partial recovery will be also introduced so that Presto can retry the part of the task instead of the whole query execution. Presto unlimited project will be able to eliminate the limitation in terms of memory and fault tolerance. 
 
-![Unlimited](assets/img/posts/2019-03-14-presto-summit-2019/unlimited.png)
+![Unlimited](/assets/img/posts/2019-03-14-presto-summit-2019/unlimited.png)
 
 ## Coordinator Scalability
 
 Coordinator currently does a lot of work, query analysis, planning, optimization, service discovery and worker management. Offloading some of these tasks can improve the scalability of the coordinator process. The scalability of coordinator will be much improved by this offload with high availability mechanism of Presto coordinator. Additionally, supporting various kind of transport encoding should be able to improve the scalability of the coordinator.
 
-![Transport Encoding](assets/img/posts/2019-03-14-presto-summit-2019/transport-encoding.png)
+![Transport Encoding](/assets/img/posts/2019-03-14-presto-summit-2019/transport-encoding.png)
 
 
 # Others
@@ -65,16 +65,16 @@ Additionally, we can hear several interesting use cases of Presto in big tech co
   - Row-based permission is now on-going in Twitter
   - Apache ranger support will come in the community
 - Alibaba may be the biggest user of Presto who uses Presto as a backend of AnalyticDB of Alibaba cloud
-![AnalyticDB Overview](assets/img/posts/2019-03-14-presto-summit-2019/analyticdb-overview.png)
+![AnalyticDB Overview](/assets/img/posts/2019-03-14-presto-summit-2019/analyticdb-overview.png)
   - 100K queries are running per second
   - Supporting GPU operators make the speed 10 times faster
   - Additionally, they already implement many advanced features (e.g. HA of coordinator, GPU operator, CBO) by themselves
 - Uber has 2000 notes cluster running 160k queries per day
   - They actively keep contributing to geospatial functions in Presto
   - These functions are leveraged by the geo index optimization
-  ![Uber Contributions](assets/img/posts/2019-03-14-presto-summit-2019/user-contributions.png)
+  ![Uber Contributions](/assets/img/posts/2019-03-14-presto-summit-2019/user-contributions.png)
 - LinkedIn has its own query identification system to apply fine-grained optimization based on past history
-  ![Query Identification](assets/img/posts/2019-03-14-presto-summit-2019/query-identification.png)
+  ![Query Identification](/assets/img/posts/2019-03-14-presto-summit-2019/query-identification.png)
   - It considers not only the query signature but also the properties of the query (e.g. filtering condition)
   - That may also enable us to choose the specific cluster based on the category the given query belongs to
 

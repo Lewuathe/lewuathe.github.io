@@ -58,7 +58,7 @@ $ docker push <Your Docker Regitry>/:latest
 
 You can check the actual command by referring `View push commands` displayed in the repository page in the AWS console.
 
-![Push commands](assets/img/posts/2019-01-21-simple-etl-running-on-docker-and-ecs/push-commands.png)
+![Push commands](/assets/img/posts/2019-01-21-simple-etl-running-on-docker-and-ecs/push-commands.png)
 
 # Create Task Definition
 
@@ -70,13 +70,13 @@ A task is a unit of the job running on an ECS cluster. Task definition decides t
 - Task Size (Memory and CPU)
 - Container Definitions
 
-![Docker Image](assets/img/posts/2019-01-21-simple-etl-running-on-docker-and-ecs/image.png)
+![Docker Image](/assets/img/posts/2019-01-21-simple-etl-running-on-docker-and-ecs/image.png)
 
 Since we can attach any IAM role to the task definition, we can control what the task can do against the AWS resources. That indicates container running in ECS can easily access to the AWS resource just by attaching proper IAM role. 
 
 We need to make sure the resources allocated for the task is lower than the available resource in the instance. For example, an instance with [1 CPU core has 1024 CPU units](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html). Tasks running in the instance cannot be allocated more than 1024 CPU units. Moreover, there is some resource that should be allocated to the system side. A task cannot use 1024 units anyway. In this case, we allocate 512 CPU unit to the task. You can run multiple Docker containers in one task. Such a case, you also need to specify the allocated resources respectively by image.
 
-![Docker ENTRYPOINT](assets/img/posts/2019-01-21-simple-etl-running-on-docker-and-ecs/entrypoint.png)
+![Docker ENTRYPOINT](/assets/img/posts/2019-01-21-simple-etl-running-on-docker-and-ecs/entrypoint.png)
 
 By rewriting `Entry point` configuration, you can change the command running in the container. It's also overridden at runtime which means you can change the running command when you run the task. For example, you can create a task definition without `Entry point`. At runtime, you will be able to pass the following `ENTRYPOINT` to the task definition. This task will process the data generated in 2018 specified from `2018-01-01` to `2019-01-01`.
 
@@ -93,7 +93,7 @@ How can we do that with ECS?
 
 We can set the scheduled job in each ECS cluster. By giving scheduled task settings to the cluster, the cluster will launch a container at a specific time and run the job. 
 
-![Scheduled Job](assets/img/posts/2019-01-21-simple-etl-running-on-docker-and-ecs/cron.png)
+![Scheduled Job](/assets/img/posts/2019-01-21-simple-etl-running-on-docker-and-ecs/cron.png)
 
 The good thing about it is ECS cluster automatically handles the required resource. If there are no instances belonging the cluster, the auto-scaling group of the cluster will launch instance sufficient to run the task. Although it takes some overhead time to start the task, it provides you with more efficiency and elasticity. 
 

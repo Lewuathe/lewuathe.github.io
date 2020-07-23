@@ -26,7 +26,7 @@ Fortunately, many scientific efforts are happening to deal with COVID-19. Variou
 - Cases in Tokyo
   - [https://github.com/tokyo-metropolitan-gov/covid19](https://github.com/tokyo-metropolitan-gov/covid19)
 
-[![tokyo](assets/img/posts/2020-03-18-open-dataset-for-covid-19/tokyo.png)](https://stopcovid19.metro.tokyo.lg.jp/)
+[![tokyo](/assets/img/posts/2020-03-18-open-dataset-for-covid-19/tokyo.png)](https://stopcovid19.metro.tokyo.lg.jp/)
 
 - Cases in Italy
   - [https://github.com/pcm-dpc/COVID-19](https://github.com/pcm-dpc/COVID-19)
@@ -42,7 +42,7 @@ Open-source software or applications for public usage related to the COVID-19 is
 - Spread Map in Wuhan
   - [https://github.com/ncovis/choropleth](https://github.com/ncovis/choropleth)
 
-[![wuhan](assets/img/posts/2020-03-18-open-dataset-for-covid-19/wuhan.png)](https://ncovis.github.io/choropleth/)
+[![wuhan](/assets/img/posts/2020-03-18-open-dataset-for-covid-19/wuhan.png)](https://ncovis.github.io/choropleth/)
 
 - Spread Map for Poland
   - [https://github.com/konradkalemba/korona.ws](https://github.com/konradkalemba/korona.ws)
@@ -61,7 +61,7 @@ A new competition is launched using the CORD-19 dataset. Correctly, it's not a c
 
 - [https://www.kaggle.com/allen-institute-for-ai/CORD-19-research-challenge](https://www.kaggle.com/allen-institute-for-ai/CORD-19-research-challenge)
 
-[![Challenge](assets/img/posts/2020-03-18-open-dataset-for-covid-19/challenge.png)](https://www.kaggle.com/allen-institute-for-ai/CORD-19-research-challenge/kernels)
+[![Challenge](/assets/img/posts/2020-03-18-open-dataset-for-covid-19/challenge.png)](https://www.kaggle.com/allen-institute-for-ai/CORD-19-research-challenge/kernels)
 
 # Last but not least...
 

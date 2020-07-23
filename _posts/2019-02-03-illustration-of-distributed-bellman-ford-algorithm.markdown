@@ -18,7 +18,7 @@ I want to try to make use of this chance to review my knowledge on the algorithm
 The normal version of Bellman-Ford algorithm is used to find the shortest path from a source node to every node in the target graph. A graph consists of multiple nodes and edges.
 For example, the following diagram shows the shortest path cost from the source node A. 
 
-![Sample Graph](assets/img/posts/2019-02-03-illustration-of-distributed-bellman-ford-algorithm/sample_graph.png)
+![Sample Graph](/assets/img/posts/2019-02-03-illustration-of-distributed-bellman-ford-algorithm/sample_graph.png)
 
 You can use the shortest path cost from the specified source node by using Bellman-Ford algorithm. [Dijkstra's algorithm](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm) is also a famous one to find the shortest path in the given graph. While Dijkstra's algorithm is faster than Bellman-Ford algorithm, it's versatile and can handle the case with some edges with negative costs. This is the simple code of Bellman-Ford algorithm. 
 
@@ -67,7 +67,7 @@ $$
 
 Since we can make sure that the graph without any negative cycle converges, we can detect the negative cycle if it finds the shortest path furthermore. If a graph has a negative cycle, there is no shortest path because we can decrease the cost infinitely by visiting the negative cycle forever.
 
-![Negatice Cycle](assets/img/posts/2019-02-03-illustration-of-distributed-bellman-ford-algorithm/negative_cycle.png)
+![Negatice Cycle](/assets/img/posts/2019-02-03-illustration-of-distributed-bellman-ford-algorithm/negative_cycle.png)
 
 In this case, there is a negative cycle (B->C->D). Therefore, there is no shortest path from A->F because you can keep decreasing the cost by visiting B->C->D forever. So please keep in mind that Bellman-Ford algorithm cannot find the shortest path if the graph has a negative cycle.
 
@@ -109,7 +109,7 @@ class Node(object):
 The algorithm itself is simple. When a node receives a message, it traverses all nodes reachable from the origin node. If the current cost to the node is greater than the sum of cost to the origin and cost in the given routing table, it should be updated. 
 Let's take a look into how the algorithm progresses. 
 
-![initial state](assets/img/posts/2019-02-03-illustration-of-distributed-bellman-ford-algorithm/initial-state.png)
+![initial state](/assets/img/posts/2019-02-03-illustration-of-distributed-bellman-ford-algorithm/initial-state.png)
 
 In the next step, node A receives a message from B and D including their routing tables. Then the routing table of A will look like this.
 
@@ -121,18 +121,18 @@ In the next step, node A receives a message from B and D including their routing
 
 Every other node processes the messages came from incoming neighbors similarly. Then the routing table will look like this overall.
 
-![step2](assets/img/posts/2019-02-03-illustration-of-distributed-bellman-ford-algorithm/step2.png)
+![step2](/assets/img/posts/2019-02-03-illustration-of-distributed-bellman-ford-algorithm/step2.png)
 
 Since E does not have any outgoing links, its routing table is not updated. Other nodes which have outgoing links can receive the routing table information from its neighbors. Then the messages are sent to each other as long as its own routing table is updated. 
 Here is the illustration after the next step.
 
-![step3](assets/img/posts/2019-02-03-illustration-of-distributed-bellman-ford-algorithm/step3.png)
+![step3](/assets/img/posts/2019-02-03-illustration-of-distributed-bellman-ford-algorithm/step3.png)
 
 Since C gets a message from D routing to E, it knows it can reach to E via D with total cost 5. B also updates its routing table but it gets the non-optimal routing table from C. So it still does not know the optimal routing to E. 
 
 In this case, the routing table is converged as follows.
 
-![final state](assets/img/posts/2019-02-03-illustration-of-distributed-bellman-ford-algorithm/final.png)
+![final state](/assets/img/posts/2019-02-03-illustration-of-distributed-bellman-ford-algorithm/final.png)
 
 We need to take care of the case of the negative cycle. Unlikely with normal Bellman-Ford algorithm, distributed version cannot handle properly the negative cycle simply because it causes the infinite loop. Each node keeps sending the message each other as long as it sees the updates in its own routing table. If there is a negative cycle in the graph, the routing table is updated forever. In the normal case, there is an upper bound of the number of iterations. But the distributed algorithm does not have such limit so that a negative cycle in a graph can cause the infinite loop. We need to treat them carefully. 
 

@@ -61,10 +61,10 @@ By running the ML application on the client side, we can eliminate the overhead 
 
 TensorFlow Lite is a project to create a lightweight TensorFlow model running in the edge device. By delegating the processing to [**Edge TPU**](https://cloud.google.com/edge-tpu/), they achieve 62x faster inference time at maximum combining with quantization.
 
-![Edge TPU](assets/img/posts/2019-03-06-annoucements-in-tensorflow-dev-summit-2019/edge-tpu.png)
+![Edge TPU](/assets/img/posts/2019-03-06-annoucements-in-tensorflow-dev-summit-2019/edge-tpu.png)
 
 They have also a super tiny model that is only tens of kilobytes so that we can put it into the microcontrollers. [Sparkfun](https://www.sparkfun.com/products/15170) is an edge demo board powered by TensorFlow. Exciting thing is that we could get the board as a gift of attending the conference. 
-![Sparkfun](assets/img/posts/2019-03-06-annoucements-in-tensorflow-dev-summit-2019/sparkfun.png)
+![Sparkfun](/assets/img/posts/2019-03-06-annoucements-in-tensorflow-dev-summit-2019/sparkfun.png)
 
 This kind of gift always makes me fun because we can try to use what we've learned. So I'm going to try the tiny model running on the microcontroller later. In my opinion, the evolution of the ML in the edge device is the most interesting field. Please take look into the video for more detail around TensorFlow Lite. 
 
@@ -84,7 +84,7 @@ Those libraries enable us to have a similar experience using TensorFlow core lib
 
 Here is another interesting slide. The performance of TensorFlow.js in Chrome browser is becoming faster since its initial release. Therefore, TensorFlow.js can be said to be a production-ready platform that supports client-side ML application sufficiently. 
 
-![Performance](assets/img/posts/2019-03-06-annoucements-in-tensorflow-dev-summit-2019/performance.png)
+![Performance](/assets/img/posts/2019-03-06-annoucements-in-tensorflow-dev-summit-2019/performance.png)
 
 I also had a chance to talk with TensorFlow.js team members about the enhancements and development plan happening in near future. At the same time, I'm looking forward to these kinds of things, I want to contribute these things to make TensorFlow.js more powerful. Here is the video about the announcement of TensorFlow.js 1.0.
 

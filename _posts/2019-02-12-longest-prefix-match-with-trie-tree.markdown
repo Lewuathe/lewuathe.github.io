@@ -37,15 +37,15 @@ The more entries the routing table has, the longer it takes to lookup. How can w
 
 Using trie is one solution to find the longest match prefix. [**Trie**](https://en.wikipedia.org/wiki/Trie) is a data structure whose nodes have a part of the prefix. By the nature of the tree data structure, we can search the prefix efficiently by traversing the tree. Let's take a look at the following simple example.
 
-![Lookup with Trie](assets/img/posts/2019-02-12-longest-prefix-match-with-trie-tree/lookup-with-trie.png)
+![Lookup with Trie](/assets/img/posts/2019-02-12-longest-prefix-match-with-trie-tree/lookup-with-trie.png)
 
 The left table represents the routing table. This routing table can be described as the right trie tree. Let's say we have *1011* as input. It will be traversed as follows then find the node **C** as the next destination.
 
-![Traverse Trie](assets/img/posts/2019-02-12-longest-prefix-match-with-trie-tree/traverse-trie.png)
+![Traverse Trie](/assets/img/posts/2019-02-12-longest-prefix-match-with-trie-tree/traverse-trie.png)
 
 If *1000* comes, **B** will be picked up as the next destination because the node is the last node in the traversed route. Looking up the trie tree is very fast because the number of nodes to be visited is **logarithm order**.
 
-![Traverse Trie 2](assets/img/posts/2019-02-12-longest-prefix-match-with-trie-tree/traverse-trie2.png)
+![Traverse Trie 2](/assets/img/posts/2019-02-12-longest-prefix-match-with-trie-tree/traverse-trie2.png)
 
 But using this kind of trie is still inefficient when it comes the number of memory access. It needs to visit up to 32 nodes for each IP address as IPv4 address has 32 bits. It grows more in case of IPv6. That is a huge overhead. 
 

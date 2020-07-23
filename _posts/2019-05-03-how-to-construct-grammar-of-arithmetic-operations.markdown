@@ -84,7 +84,7 @@ add = term
 add = term "+" add
 ```
 
-![Right Op](assets/img/posts/2019-05-03-how-to-construct-grammar-of-arithmetic-operations/right-op.png)
+![Right Op](/assets/img/posts/2019-05-03-how-to-construct-grammar-of-arithmetic-operations/right-op.png)
 
 On the other hand, this grammar leads the left operand is evaluated first.
 
@@ -93,7 +93,7 @@ add = term
 add = add "+" term
 ```
 
-![Left Op](assets/img/posts/2019-05-03-how-to-construct-grammar-of-arithmetic-operations/left-op.png)
+![Left Op](/assets/img/posts/2019-05-03-how-to-construct-grammar-of-arithmetic-operations/left-op.png)
 
 So overall, the difference between `add "+" mul` and `mul "+" add` will lead the difference of the associativity of the same operators. Associativity of the most arithmetic operators is left to right. It's natural to use `add "+" mul` so that we can get the syntax tree with the deep left child.
 

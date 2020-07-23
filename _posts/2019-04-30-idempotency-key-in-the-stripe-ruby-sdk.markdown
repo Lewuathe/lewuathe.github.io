@@ -24,7 +24,7 @@ But as you may imagine, implementing this kind of solution is easier said than d
 
 One thing to make the system more reliable is the idea of **idempotent request** in Stripe. It's simple. Just adding a unique key in the request, Stripe ensures to return the same request without duplicating operation. Here is the simple diagram illustrating the flow of idempotent request.
 
-![Idempotent Request](assets/img/posts/2019-04-30-idempotency-key-in-the-stripe-ruby-sdk/idempotent-request.png)
+![Idempotent Request](/assets/img/posts/2019-04-30-idempotency-key-in-the-stripe-ruby-sdk/idempotent-request.png)
 
 The client sees an error due to timeout of `req1`. It retries with an idempotency key. Please be sure to use the same key as used in the first request `req1` so that Stripe can recognize them as identical. If an operation of `req1` succeeds, Stripe can return the response that should have been returned as the first response without any actual operation. You won't see any duplicated subscriptions in Stripe. By using idempotent request, you can retry the operation without worrying about the record duplication.
 

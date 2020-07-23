@@ -13,7 +13,7 @@ One thing I have found difficult again is that keep updating the blog constantly
 
 So I decided to start [another blog](https://note.mu/lewuathe) in Japanese. 
 
-[![blog](assets/img/posts/2019-01-02-just-started-another-blog-in-japanese/blog.png)](https://note.mu/lewuathe)
+[![blog](/assets/img/posts/2019-01-02-just-started-another-blog-in-japanese/blog.png)](https://note.mu/lewuathe)
 
 This is the challenge this year to keep updating both blogs and will compare how it is improved by writing in Japanese at the end of this year. I hope they are both attractive to readers.
 

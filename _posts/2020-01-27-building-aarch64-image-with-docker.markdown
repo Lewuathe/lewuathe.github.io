@@ -19,7 +19,7 @@ Nowadays, Docker is the first option to run our application quickly bundled with
 
 [Docker buildx](https://docs.docker.com/buildx/working-with-buildx/) is an experimental feature for the full support of [Moby BuildKit toolkit](https://github.com/moby/buildkit). It enables us to build a Docker image supporting multiple platforms, including Arm. The feature is so useful that we can quickly make the cross-platform Docker image with a one-line command. But the feature is not generally available in the typical installation of Docker. Enabling the experimental flag is necessary as follows in the case of macOS.
 
-![experimental](assets/img/posts/2020-01-27-building-aarch64-image-with-docker/docker-daemon.png)
+![experimental](/assets/img/posts/2020-01-27-building-aarch64-image-with-docker/docker-daemon.png)
 
 And make sure to restart the Docker daemon.
 
@@ -36,7 +36,7 @@ $ docker buildx build \
 
 `--push` option lets us upload the image without issuing another command to do so.
 
-![target platform](assets/img/posts/2020-01-27-building-aarch64-image-with-docker/platform.png)
+![target platform](/assets/img/posts/2020-01-27-building-aarch64-image-with-docker/platform.png)
 
 We will find the image supporting the target platform uploaded in the Docker Hub. The good thing is that the Docker engine automatically checks the target platform validity by using that information. It is helpful to search and run the image supporting our desired platform.
 

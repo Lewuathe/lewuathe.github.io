@@ -25,13 +25,13 @@ But in this semester, I choose a program I'm not familiar with, **Computer Netwo
 
 Spanning tree protocol is a distributed protocol to construct a spanning tree structure in the given network topology. This algorithm is expected to detect the minimum network topology excluding any internal loop. Let's say we have the following network including loop structure inside.
 
-![loop1](assets/img/posts/2019-01-19-an-outline-of-spanning-tree-protocol/loop1.png)
+![loop1](/assets/img/posts/2019-01-19-an-outline-of-spanning-tree-protocol/loop1.png)
 
 Each blue node represents a switch that basically broadcast all incoming packets. What happens if a node broadcast a package to other nodes? The network has a loop so that incoming packets are kept sent infinitely. A packet from 1 to 3 will be going to 4 and then 2. Other packet will traverse 1 -> 2 -> 4 -> 3 -> 1 -> ... So a loop in a network topology connected by switches can easily cause congestion. It's a situation famously known as a broadcast storm. It is necessary to remove the loop by excluding some edges. But how?
 
 Spanning tree protocol detects the minimum edges required to construct the network all nodes are connected. The following one is the spanning tree in the above network. Since there is no loop, all packets sent from a node will reach the end eventually.
 
-![loop2](assets/img/posts/2019-01-19-an-outline-of-spanning-tree-protocol/loop2.png)
+![loop2](/assets/img/posts/2019-01-19-an-outline-of-spanning-tree-protocol/loop2.png)
 
 Spanning tree protocol is a distributed algorithm to find the spanning tree of given network topology. You may already know [Kruskal's](https://en.wikipedia.org/wiki/Kruskal%27s_algorithm) and [Prim's](https://en.wikipedia.org/wiki/Prim%27s_algorithm) algorithms to find the minimum spanning tree. But spanning tree protocol is a different algorithm working in a distributed manner. There is no coordination between nodes so that each node can work completely independently. Just sending specific messages to each other, a network itself find the spanning tree in the network. 
 
@@ -39,7 +39,7 @@ Spanning tree protocol is a distributed algorithm to find the spanning tree of g
 
 So let's take a look into how the algorithm works. First, we are going to label all node with unique IDs. We can use distinct integers here. In the precedent case, we have labeled 4 nodes with 1, 2, 3 and 4. Basically, the spanning tree protocol is a process to find the path to the root node whose ID is the minimal one. In the aforementioned case, node 1 will be the root node.
 
-![tree](assets/img/posts/2019-01-19-an-outline-of-spanning-tree-protocol/tree.png)
+![tree](/assets/img/posts/2019-01-19-an-outline-of-spanning-tree-protocol/tree.png)
 
 When the algorithm starts, each node sends the initial message including the following information.
 
@@ -57,21 +57,21 @@ Initially, we assume every node regard itself as the root node. Every node will 
 
 For example node 2 will send `{'originNode': 2, 'rootNode': 2, 'distanceToRootNode': 0}` to every neighbor node. One note is that each node can send a message to only neighbor nodes. The state change in the node only conveyed to the nodes next to it. 
 
-![message1](assets/img/posts/2019-01-19-an-outline-of-spanning-tree-protocol/message1.png)
+![message1](/assets/img/posts/2019-01-19-an-outline-of-spanning-tree-protocol/message1.png)
 
 Other nodes check the message. If the origin node ID is lower than the node ID which it assumes the root, it will update the root node and corresponding the distance. In the following diagram, node 4 changes its own assumption about the root node. 
 
-![message2](assets/img/posts/2019-01-19-an-outline-of-spanning-tree-protocol/message2.png)
+![message2](/assets/img/posts/2019-01-19-an-outline-of-spanning-tree-protocol/message2.png)
 
 Each node only keeps the routes which lead to the root note. Node 4 receives the message from node 3 but it keeps assuming node 2 is the root because node 2 is lower than 3. So the route between node 3 and 4 will be dropped and then we will obtain the final spanning tree as shown in the beginning.
 
 Let's take a look into another topology.
 
-![loop3](assets/img/posts/2019-01-19-an-outline-of-spanning-tree-protocol/loop3.png)
+![loop3](/assets/img/posts/2019-01-19-an-outline-of-spanning-tree-protocol/loop3.png)
 
 In this topology, node 1 should be the root node. Although it may take some time due to the multiple possible root node in the halfway, the following message passing will make the network converge and find the spanning tree. Node 8 and node 6 will receive multiple ways to reach to the root node. They should always choose the shortest one. So 8 will keep the route to node 3, not node 7 because it takes more steps to reach node 1.
 
-![converge](assets/img/posts/2019-01-19-an-outline-of-spanning-tree-protocol/converge.png)
+![converge](/assets/img/posts/2019-01-19-an-outline-of-spanning-tree-protocol/converge.png)
 
 
 After removing the route marked red crosses, we get the spanning tree of the network topology. Of course, we have several other things to consider in reality. But grasping this kind of overview would be helpful to construct a more complicated one.

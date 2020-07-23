@@ -15,7 +15,7 @@ Have you ever heard about WAF before? You may but no, it's not web application *
 
 AWS WAF is a web application firewall to protect your application against scaping or DoS attacks. It can be easily integrated with your application running on AWS. WAF is provided with CloudFront (global) of regional application load balancers.
 
-[![waf](assets/img/posts/2019-04-27-protect-your-application-by-aws-waf/waf.png)](https://aws.amazon.com/waf/)
+[![waf](/assets/img/posts/2019-04-27-protect-your-application-by-aws-waf/waf.png)](https://aws.amazon.com/waf/)
 
 You can configure WAF based on the following characteristics of the traffic.
 
@@ -32,7 +32,7 @@ The benefit of using WAF is it can automatically detect the characteristics like
 
 You can put any user agent header to be blocked by using this feature. AWS WAF provides various kind of utilities to get things done easier. `Transformation` enables us to preprocess the header of an incoming request before applying the matching condition.
 
-![User agent matching](assets/img/posts/2019-04-27-protect-your-application-by-aws-waf/user-agent.png)
+![User agent matching](/assets/img/posts/2019-04-27-protect-your-application-by-aws-waf/user-agent.png)
 
 By using the transformation of `Convert to lowercase`, we can simply put blocking user agent in the lower case without caring about the case sensitivity. Of course, you can configure not only HTTP header but also query string, HTTP method, URI.
 
@@ -40,7 +40,7 @@ By using the transformation of `Convert to lowercase`, we can simply put blockin
 
 Another good thing of AWS WAF is dashboard to see how many requests are blocked at a glance.
 
-![dashboard](assets/img/posts/2019-04-27-protect-your-application-by-aws-waf/dashboard.png)
+![dashboard](/assets/img/posts/2019-04-27-protect-your-application-by-aws-waf/dashboard.png)
 
 As AWS WAF automatically keeps logs of blocked request including IP, header and query string so that we can check the configuration of WAF is effective or not. It's also helpful to detect the time when the abusive request tends to come to our application. We may be able to do auto scaling not to degrade the performance of the application around the time.
 

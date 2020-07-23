@@ -26,7 +26,7 @@ The tool used a choropleth map to illustrate the statistical measurement at a gl
 
 - **[https://www.lewuathe.com/choropleth/](https://www.lewuathe.com/choropleth/)**
 
-[![preview](assets/img/posts/2020-03-21-visualize-covid-19-situation-in-japan/preview.png)](https://www.lewuathe.com/choropleth/)
+[![preview](/assets/img/posts/2020-03-21-visualize-covid-19-situation-in-japan/preview.png)](https://www.lewuathe.com/choropleth/)
 
 The data was obtained from the following sites.
 

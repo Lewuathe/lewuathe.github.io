@@ -1,23 +1,15 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en-us">
 
-{% include head.html %}
+  {% include head.html %}
 
-<body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MXWPFC5"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-  <div class="container">
-    {% include header.html %}
+  <body>
 
-    <div class="post-container">
+    {% include sidebar.html %}
+
+    <div class="content container">
       {{ content }}
     </div>
 
-    {% include footer.html %}
-
-  </div>
-
-</body>
+  </body>
 </html>

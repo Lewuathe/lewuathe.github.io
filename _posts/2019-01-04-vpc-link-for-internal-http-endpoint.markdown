@@ -27,7 +27,7 @@ First, we need to create our Elastic Beanstalk application with the network load
 
 In the configuration of integration request, it is necessary to specify **VPC Link** type. You can do that in AWS console as follows.
 
-![VPC Link type](assets/img/posts/2019-01-04-vpc-link-for-internal-http-endpoint/vpclink.png)
+![VPC Link type](/assets/img/posts/2019-01-04-vpc-link-for-internal-http-endpoint/vpclink.png)
 
 It's also necessary to specify VPC link ID and endpoint as stage variables if you want to use different upstream endpoint by stages. All stage variables are stored in the parent object `stageVariables`. So your variable should be referred here such as `${stageVariables.vpcLinkId}`.
 
@@ -35,7 +35,7 @@ It's also necessary to specify VPC link ID and endpoint as stage variables if yo
 
 Then we can deploy the API Gateway implementation so that it can be visible from the public internet. 
 
-![deploy](assets/img/posts/2019-01-04-vpc-link-for-internal-http-endpoint/deploy.png)
+![deploy](/assets/img/posts/2019-01-04-vpc-link-for-internal-http-endpoint/deploy.png)
 
 The root path of the deployed endpoint will be the stage name. For example, if you deploy an API to the stage `development`, the URL visible from the public internet will be `https://<API Gateway ID>.execute-api.<Region>.amazonaws.com/development/path/to/resource`.
 
@@ -43,7 +43,7 @@ The root path of the deployed endpoint will be the stage name. For example, if y
 
 We need to specify the stage variables that are defined in step 2. This console is shown when you click the stage name in the `Stages` tab.
 
-![variable](assets/img/posts/2019-01-04-vpc-link-for-internal-http-endpoint/variable.png)
+![variable](/assets/img/posts/2019-01-04-vpc-link-for-internal-http-endpoint/variable.png)
 
 In this case, we need to define both `vpcLinkId` and `url` variables. 
 

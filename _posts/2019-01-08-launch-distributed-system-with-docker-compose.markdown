@@ -21,7 +21,7 @@ Docker should be a framework to change the situation. We do not need to launch p
 Both frameworks have a similar structure. There are base image and master, worker images. Hadoop and Presto use the same binary to run both
 master and worker processes and also there is some shared configuration set between these two processes. So I include these basic components in the base image called `hadoop-base` or `presto-base`. Here is the hierarchy of the images.
 
-![Basic Structure](assets/img/posts/2019-01-08-launch-distributed-system-with-docker-compose/structure.png)
+![Basic Structure](/assets/img/posts/2019-01-08-launch-distributed-system-with-docker-compose/structure.png)
 
 `hadoop-master` and `presto-coordinator` are the image for the master process. `hadoop-slave` and `presto-worker` are the images for the worker process. The difference between master and worker image are some part of the configuration and port number exposed to the host side. We can share the most code and configuration by sharing `*-base` image. 
 
