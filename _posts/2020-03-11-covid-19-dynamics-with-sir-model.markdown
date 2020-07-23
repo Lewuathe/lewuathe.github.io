@@ -35,11 +35,11 @@ SIR model is a kind of compartmental model describing the dynamics of infectious
 
 **Susceptible** is a group of people who are vulnerable to exposure with infectious people. They can be patient when the infection happens. The group of **infectious** represents the infected people. They can pass the disease to susceptible people and can be recovered in a specific period. **Recovered** people get immunity so that they are not susceptible to the same illness anymore. SIR model is a framework describing how the number of people in each group can change over time.
 
-![SIR](assets/img/posts/2020-03-11-covid-19-dynamics-with-sir-model/sir.png)
+![SIR](/assets/img/posts/2020-03-11-covid-19-dynamics-with-sir-model/sir.png)
 
 SIR model allows us to describe the number of people in each compartment with the ordinary differential equation. $$\beta$$ is a parameter controlling how much the disease can be transmitted through exposure. It is determined by the chance of contact and the probability of disease transmission. $$\gamma$$ is a parameter expressing how much the disease can be recovered in a specific period. Once the people are healed, they get immunity. There is no chance for them to go back susceptible again.
 
-![ODE](assets/img/posts/2020-03-11-covid-19-dynamics-with-sir-model/ode.png)
+![ODE](/assets/img/posts/2020-03-11-covid-19-dynamics-with-sir-model/ode.png)
 
 We do not consider the effect of the natural death or birth rate because the model assumes the outstanding period of the disease is much shorter than the lifetime of the human. It lets us know the importance of knowing two parameters, $$\beta$$ and $$\gamma$$. When we can estimate the two values, there are several insights derived from it. If the $$D$$ is the average days to recover from infectious, it is derived from $$\gamma$$.
 
@@ -188,10 +188,10 @@ I have run the estimation process for four countries.
 
 They are the major countries suffering from the CODIV-19 outbreak. The following images illustrate how the number of the compartment can be changed over time, according to the SIR model.
 
-![Japan](assets/img/posts/2020-03-11-covid-19-dynamics-with-sir-model/japan.png)
-![South Korea](assets/img/posts/2020-03-11-covid-19-dynamics-with-sir-model/south_korea.png)
-![Italy](assets/img/posts/2020-03-11-covid-19-dynamics-with-sir-model/italy.png)
-![Iran](assets/img/posts/2020-03-11-covid-19-dynamics-with-sir-model/iran.png)
+![Japan](/assets/img/posts/2020-03-11-covid-19-dynamics-with-sir-model/japan.png)
+![South Korea](/assets/img/posts/2020-03-11-covid-19-dynamics-with-sir-model/south_korea.png)
+![Italy](/assets/img/posts/2020-03-11-covid-19-dynamics-with-sir-model/italy.png)
+![Iran](/assets/img/posts/2020-03-11-covid-19-dynamics-with-sir-model/iran.png)
 
 |Country|$$\beta$$|$$\gamma$$|$$R_0$$|
 |:---|:---|:---|:---|
@@ -221,10 +221,10 @@ def loss(point, data, recovered):
 
 Here is the result, including the recovered people.
 
-![Japan](assets/img/posts/2020-03-11-covid-19-dynamics-with-sir-model/japan_2.png)
-![South Korea](assets/img/posts/2020-03-11-covid-19-dynamics-with-sir-model/south_korea_2.png)
-![Italy](assets/img/posts/2020-03-11-covid-19-dynamics-with-sir-model/italy_2.png)
-![Iran](assets/img/posts/2020-03-11-covid-19-dynamics-with-sir-model/iran_2.png)
+![Japan](/assets/img/posts/2020-03-11-covid-19-dynamics-with-sir-model/japan_2.png)
+![South Korea](/assets/img/posts/2020-03-11-covid-19-dynamics-with-sir-model/south_korea_2.png)
+![Italy](/assets/img/posts/2020-03-11-covid-19-dynamics-with-sir-model/italy_2.png)
+![Iran](/assets/img/posts/2020-03-11-covid-19-dynamics-with-sir-model/iran_2.png)
 
 |Country|$$\beta$$|$$\gamma$$|$$R_0$$|
 |:---|:---|:---|:---|

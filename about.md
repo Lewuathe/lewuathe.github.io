@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Welcome Here!
+title: About Me
 ---
 Hi, my name is Kai Sasaki. I am a software engineer who has a passion for creating
 artificial intelligence by processing large scale data. By using web technologies, mathematics and big data,

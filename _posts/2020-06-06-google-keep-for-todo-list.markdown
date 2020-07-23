@@ -30,7 +30,7 @@ Is there some TODO app satisfying these requirements?
 
 ## [Google Keep](https://keep.google.com/)
 
-![TODO](assets/img/posts/2020-06-06-google-keep-for-todo-list/todo.png)
+![TODO](/assets/img/posts/2020-06-06-google-keep-for-todo-list/todo.png)
 
 I found one of my colleagues using [Google Keep](https://keep.google.com) as a TODO app. Google keeps an application providing Post-It like user interface. We can maintain any resource (e.g., picture, text, link) there quickly. It's more like a simple memo application. But the notable thing of Google Keep is also providing the fine-grained search feature (as most of Google product does). We can search by text, labels we attached, and colors specifying the type of the note. Of course, Google provides mobile apps for Google Keep.
 

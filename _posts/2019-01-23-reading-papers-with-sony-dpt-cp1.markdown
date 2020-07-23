@@ -28,7 +28,7 @@ Table of Contents
 
 Here is the <a target="_blank" href="https://www.amazon.com/gp/product/B07BYKZ9P3/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B07BYKZ9P3&linkCode=as2&tag=lewuathe-20&linkId=f3f95e0d8f4cc7ff69cca60f7fa49bb9">Sony DPT-CP1/B 10” Digital Paper</a><img src="//ir-na.amazon-adsystem.com/e/ir?t=lewuathe-20&l=am2&o=1&a=B07BYKZ9P3" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />.
 
-[![DPT-CP1](assets/img/posts/2019-01-23-reading-papers-with-sony-dpt-cp1/dpt-cp1.jpg)](https://amzn.to/2W9gEQ2)
+[![DPT-CP1](/assets/img/posts/2019-01-23-reading-papers-with-sony-dpt-cp1/dpt-cp1.jpg)](https://amzn.to/2W9gEQ2)
 
 DPT-CP1 is an e-ink tablet reader. The specification of the device is
 
@@ -52,7 +52,7 @@ I found [DPT-CP1](https://amzn.to/2WeeRcj) is the device meeting these requireme
 
 Generally, there are multiple ways to copy the PDF to DPT-CP1. One is the way using wifi, Bluetooth and [NFC](https://en.wikipedia.org/wiki/Near-field_communication) which enable us to move a file wirelessly. If the device is connected the local network once, wifi is the easiest and faster one. But NFC is also interesting. If your mobile device supports NFC connection (such as iPhone 8), you can move a file through NFC. It has **N** mark in the right top corner. When you move the device close to the mark, your mobile device can access the DPT-CP1 via NFC.
 
-![NFC](assets/img/posts/2019-01-23-reading-papers-with-sony-dpt-cp1/nfc.jpg)
+![NFC](/assets/img/posts/2019-01-23-reading-papers-with-sony-dpt-cp1/nfc.jpg)
 
 Although it's a little slower than wifi connection, we can copy the file even if we don't have any local area network DPT-CP1 can connect to.
 
@@ -60,7 +60,7 @@ Although it's a little slower than wifi connection, we can copy the file even if
 
 The best feature DPT-CP1 has and I use many times is an enlargement. Sometimes we may want to magnify the text or image in the paper to look into the detail. DPT-CP1 provides an intuitive way to do that.
 
-![Magnify the target region](assets/img/posts/2019-01-23-reading-papers-with-sony-dpt-cp1/magnify.jpg)
+![Magnify the target region](/assets/img/posts/2019-01-23-reading-papers-with-sony-dpt-cp1/magnify.jpg)
 
 When we encircle the region, the target region is magnified. It's very intuitive to me and only takes a second to complete the operation so that we can keep reading without being frustrated with the small characters or images. 
 

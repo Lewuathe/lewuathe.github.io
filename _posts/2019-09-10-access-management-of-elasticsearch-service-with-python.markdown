@@ -18,9 +18,9 @@ Here I'd like to explain how to configure IAM based access management with Elast
 
 When you build the cluster with Elasticsearch service, you can select the template according to your requirement. To access the cluster, please make sure to select the `Public access`. `VPC access` makes the situation a little complicated.
 
-![network-configuration](assets/img/posts/2019-09-10-access-management-of-elasticsearch-service-with-python/network-configuration.png)
+![network-configuration](/assets/img/posts/2019-09-10-access-management-of-elasticsearch-service-with-python/network-configuration.png)
 
-![access-policy](assets/img/posts/2019-09-10-access-management-of-elasticsearch-service-with-python/access-policy.png)
+![access-policy](/assets/img/posts/2019-09-10-access-management-of-elasticsearch-service-with-python/access-policy.png)
 
 Let's take the first template to allow the specific IAM role to access to our cluster. You will see the policy written in JSON as follows.
 

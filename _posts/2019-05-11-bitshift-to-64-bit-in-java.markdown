@@ -48,6 +48,6 @@ I found an answer [StackOverflow](https://stackoverflow.com/questions/43763619/b
 
 The size of the long type is 64 bits so that it does not have any effect on the result by shifting 64 bit. Actually, the specific error message is shown by my IDE. We should shift the long value over 64 bit in general.
 
-![error](assets/img/posts/2019-05-11-bitshift-to-64-bit-in-java/error.png)
+![error](/assets/img/posts/2019-05-11-bitshift-to-64-bit-in-java/error.png)
 
 So please make sure to shift the value within the size of the data type in Java.

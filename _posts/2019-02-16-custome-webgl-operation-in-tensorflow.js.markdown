@@ -26,7 +26,7 @@ In this article, I'm going to briefly explain how to create a custom operator th
 
 First, it's necessary to know the structure of the kernel in TensorFlow.js. Each operator is implemented as the collection of multiple basic kernels. Kernels are the minimal unit of tensor manipulation. For example, [`tf.oneHot`](https://js.tensorflow.org/api/0.15.1/#oneHot) operator runs `oneHot` kernel implemented for CPU and WebGL respectively. If WebGL is available, TensorFlow.js chooses the WebGL backend transparently so that the application can be leveraged by WebGL acceleration without rewriting application code.
 
-[![Backend Structure](assets/img/posts/2019-02-16-custome-webgl-operation-in-tensorflow/backend.png)](https://arxiv.org/pdf/1901.05350.pdf)
+[![Backend Structure](/assets/img/posts/2019-02-16-custome-webgl-operation-in-tensorflow/backend.png)](https://arxiv.org/pdf/1901.05350.pdf)
 
 `backend` provides the interface to access the kernels. It has CPU and WebGL implementations. Once a kernel has WebGL implementation, it can be run on GPU without any modification to the above layer over `backend`. 
 
@@ -50,7 +50,7 @@ So how does WebGL look like?
 
 Since WebGL was originally designed for acceleration of graphical processing, it requires some tricky technique to use WebGL for tensor computation. Input tensors are copied as texture to GPU memory. It can be regarded as the simple square and the computation is executed as fragment shader in WebGL pipeline. The following example shows how adding two tensors is done in WebGL. As you can see, tensor A and tensor B are represented as 2x2 images in GPU memory buffer. Hence, each element of these tensors are the pixels of the texture. In general, the texture has RGBA in each element since it's an image. But it is redundant and memory consuming when it comes to GPGPU case. In the environment supporting WebGL 2.0, `gl.R32F` texture type is used to avoid allocating memory space for green, blue and alpha pixels. So basically WebGL backend only uses R channel in the tensor computation.
 
-[![texture](assets/img/posts/2019-02-16-custome-webgl-operation-in-tensorflow/texture.png)](https://arxiv.org/pdf/1901.05350.pdf)
+[![texture](/assets/img/posts/2019-02-16-custome-webgl-operation-in-tensorflow/texture.png)](https://arxiv.org/pdf/1901.05350.pdf)
 
 # Fragment Shader in TensorFlow.js
 

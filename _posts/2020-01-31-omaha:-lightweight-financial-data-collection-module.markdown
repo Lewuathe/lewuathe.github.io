@@ -13,7 +13,7 @@ Financial data is always interesting enough to attract data scientists and softw
 
 [Omaha](https://www.lewuathe.com/omaha/) is a Python library to make it easy to collect financial data from the internet.
 
-[![Doc](assets/img/posts/2020-01-31-omaha:-lightweight-financial-data-collection-module/doc.png)](https://www.lewuathe.com/omaha/)
+[![Doc](/assets/img/posts/2020-01-31-omaha:-lightweight-financial-data-collection-module/doc.png)](https://www.lewuathe.com/omaha/)
 
 We can easily collect financial metrics with this library such as [**net sales**](https://www.investopedia.com/terms/n/netsales.asp), [**CCC**](https://www.investopedia.com/terms/c/cashconversioncycle.asp)
 
@@ -120,15 +120,15 @@ In this way, we can collect the aggregated financial metrics of the specific ind
 
 We can do anything once the data is available in the DataFrame format. Let's take a look at the net sales of three industries, **"Services"**, **"Fishery, Agriculture & Forestry"**, and **"Mining"**. Here is the result. Y-axis represents the amount of net sales in yen.
 
-![net sales](assets/img/posts/2020-01-31-omaha:-lightweight-financial-data-collection-module/net_sales.png)
+![net sales](/assets/img/posts/2020-01-31-omaha:-lightweight-financial-data-collection-module/net_sales.png)
 
 We can see a sort of periodic trend by quarters, and the mining industry produces the most net sales among the three. Generally, net sales are the primary indicator to measure the success of the company. We are now going to look at how each indicator correlates to net sales each other. The following char is the scatter plot showing the relationship between net sales and [free cash flow](https://www.investopedia.com/terms/f/freecashflow.asp) (FCF).
 
-![CF vs Net Sales](assets/img/posts/2020-01-31-omaha:-lightweight-financial-data-collection-module/cf_net_sales.png)
+![CF vs Net Sales](/assets/img/posts/2020-01-31-omaha:-lightweight-financial-data-collection-module/cf_net_sales.png)
 
 We can find the mining industry shows the strongest correlations between net sales and FCF. Strong net sales produce a substantial amount of cash flow in general. But the other two sectors do not show a positive relationship as much as the mining industry. That's because these industries tend to have higher debt or investment than the mining industry.
 
-![financial leverage](assets/img/posts/2020-01-31-omaha:-lightweight-financial-data-collection-module/financial_leverage.png)
+![financial leverage](/assets/img/posts/2020-01-31-omaha:-lightweight-financial-data-collection-module/financial_leverage.png)
 
 As the above chart shows, the financial leverage of these two industries is higher than the mining industry. It can contribute to putting the pressure on the FCF payback of the debt.
 

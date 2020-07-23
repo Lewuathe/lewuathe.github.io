@@ -150,7 +150,7 @@ export class FFTProgram implements GPGPUProgram {
 Honestly, there is no special thing in this implementation. It's just a matrix multiplication supporting complex value. The algorithm is not even fast fourier transform such as [**Cooley–Tukey algorithm**](https://en.wikipedia.org/wiki/Fast_Fourier_transform) but it's much faster because it's accelerated by the high parallelism of GPU.
 Here is the result of micro-benchmark in my environment, Chrome: 71.0.3578.98 and macOS 10.13.6.
 
-![Benchmark](assets/img/posts/2019-02-18-webgl-implementation-of-fast-fourier-transform/benchmark.png)
+![Benchmark](/assets/img/posts/2019-02-18-webgl-implementation-of-fast-fourier-transform/benchmark.png)
 
 ```html
 <html>

@@ -20,7 +20,7 @@ Yesterday, I found these books written 2 years ago are translated into Chinese. 
 
 and also Hadoop book is available in Chinese. You can buy these books in [Amazon China](https://www.amazon.cn/dp/B071FK78G8) or [DangDang](http://product.dangdang.com/24242197.html). 
 
-[![Hadoop Book](assets/img/posts/2019-01-18-my-books-are-available-in-chinese/hadoop.png)](http://product.dangdang.com/24242197.html)
+[![Hadoop Book](/assets/img/posts/2019-01-18-my-books-are-available-in-chinese/hadoop.png)](http://product.dangdang.com/24242197.html)
 
 This is the first time for me to see my book translated into Chinese. Therefore it's an impressive experience too. 
 All languages I can use and read are Japanese and English so I do not have such a time when I wish I could read Chinese. 
