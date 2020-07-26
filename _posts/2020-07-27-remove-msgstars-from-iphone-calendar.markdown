@@ -4,7 +4,7 @@ layout: post
 date: 2020-07-27 07:06:46 +0900
 image: 'assets/img/posts/2020-07-27-remove-msgstars-from-iphone-calendar/catch.png'
 description:
-tag: ['iPhone', 'Msgstars', 'Spam']
+tag: ['iPhone', 'Msgstars', 'Life', 'iOS', 'Practice']
 blog: true
 author: "Kai Sasaki"
 ---
