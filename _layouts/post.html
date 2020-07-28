@@ -24,6 +24,7 @@ layout: default
               </a>
             </h3>
           </li>
+          {% assign listed_posts_urls = listed_posts_urls | push: post.url %}
         {% endif %}
       {% endfor %}
     {% endfor %}
