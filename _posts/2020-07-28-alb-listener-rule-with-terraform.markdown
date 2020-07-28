@@ -9,7 +9,7 @@ blog: true
 author: "Kai Sasaki"
 ---
 
-Terraform is once of the heavily-used infrastructure tool in my daily work recently. It allows us to write the wireframe of the cloud infrastructure we use by simple configuration language called [HCL](https://github.com/hashicorp/hcl). Thanks to that, we can safely modify the underlying infrastructure and quickly track the history of the change. Therefore, I'd like to collect some knowledge about the usage of Terraform based on the actual use cases.
+Terraform is one of the heavily-used infrastructure tool in my daily work recently. It allows us to write the wireframe of the cloud infrastructure we use by simple configuration language called [HCL](https://github.com/hashicorp/hcl). Thanks to that, we can safely modify the underlying infrastructure and quickly track the history of the change. Therefore, I'd like to collect some knowledge about the usage of Terraform based on the actual use cases.
 
 Today, I'm going to show you how to construct the application load balancer in AWS with Terraform. That is what I did to prepare the load balancer running in front of our service.
 
