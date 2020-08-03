@@ -22,14 +22,14 @@ if m1 = s.match(p1) || m2 = s.match(p2)
     puts "m1=#{m1}"
     puts "m2=#{m2}"
 end
-`"
+```
 
 It shows:
 
-`"
+```
 m1=hello
 m2=
-`"
+```
 
 Oops, I forgot that the logical operator `||` does the short-circuit evaluation. It makes `m2` nil. What I wanted to do was checking both regular expressions are matching with the given string. Here is the correct one.
 
