@@ -22,6 +22,7 @@ I'm sure that it can be achieved.
 
 ## Talks
 
+* *A Cost-Effective CDP Platform with Graviton2* at [Compute x AWS Graviton2 Webinar](https://pages.awscloud.com/JAPAN-event-OE-Compute-Graviton2-20201022-reg-event-LP.html)
 * Interview: *[TensorFlow.js contributor Kai Sasaki on how TensorFlow.js eases web-based machine learning application development](https://hub.packtpub.com/tensorflow-js-contributor-kai-sasaki-on-how-tensorflow-js-eases-web-based-machine-learning-application-development/)*
 * *Infrastructure for auto scaling distributed system* at [Big Data Conference Vilnius](https://www.slideshare.net/lewuathe/infrastructure-for-auto-scaling-distributed-system)
 * *Continuous Optimization for Distributed BigData Analysis* at [HighLoad++](https://www.slideshare.net/lewuathe/continuous-optimization-for-distributed-bigdata-analysis)
