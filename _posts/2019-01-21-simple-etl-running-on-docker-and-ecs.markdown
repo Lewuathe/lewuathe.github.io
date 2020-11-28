@@ -21,7 +21,7 @@ ECS is a container orchestration service provided by AWS. [Kubernetes](https://k
 
 # Preparing Docker Image
 
-ECS has its own image repository, [**ECR**](https://aws.amazon.com/ecr/). Of course, you can fetch the image from public Docker registry like [Docker Hub](https://hub.docker.com/) but using ECS may be better at the beginning because images
+ECS has its own image repository, [**ECR**](https://aws.amazon.com/ecr/). Of course, you can fetch the image from public Docker registry like [Docker Hub](https://hub.docker.com/) but using ECR may be better at the beginning because images
 will be private as default. If you want to make the image public, you can do it later. 
 
 The docker image you may want to run this time can look like this. 
