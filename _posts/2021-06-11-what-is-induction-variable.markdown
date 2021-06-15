@@ -1,5 +1,5 @@
 ---
-title: "What is Induction Variable"
+title: "What is Induction Variable?"
 layout: post
 date: 2021-06-11 15:15:22 +0900
 image: 'assets/img/posts/2021-06-11-what-is-induction-variable/catch.jpg'
@@ -27,7 +27,7 @@ for (i = 0; i < 10; ++i) {
 }
 ```
 
-`i' and `j` are both induction variables in the previous case.
+`i` and `j` are both induction variables in the previous case.
 
 Induction variables are represented as region argument in MLIR `mlir::scf::ForOp`. Hence they are assumed to be passed from the outside of the region.
 
