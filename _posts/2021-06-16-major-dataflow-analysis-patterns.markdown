@@ -80,7 +80,7 @@ $
 $
 
 $
-\text{OUT[n]} = (\text{IN[n]} - \text{KILL[n]}) \cap \text{GEN[n]}
+\text{OUT[n]} = (\text{IN[n]} - \text{KILL[n]}) \cup \text{GEN[n]}
 $
 
 These formulas remind us that the iteration goes forward from the predecessor to the node. We can calculate the input of the node from the output set of predecessors, and the node's output is based on the input and what type of assignment the node does. This type of algorithm is categorized as a type of **FORWARD** analysis algorithm.
@@ -108,7 +108,7 @@ $
 $
 
 $
-\text{OUT[n]} = (\text{IN[n]} - \text{KILL[n]}) \cap \text{GEN[n]}
+\text{OUT[n]} = (\text{IN[n]} - \text{KILL[n]}) \cup \text{GEN[n]}
 $
 
 In short, we can replace the part of the formula according to the category the analysis falls into. MAY uses union operator ($$\bigcup$$), MUST uses intersection operator ($$\bigcap$$). For the forward analysis, the input is computed from the output of *predecessors* while the backward analysis gets the output from the input of *successors*. That's it. These four algorithms should not show much difference.
