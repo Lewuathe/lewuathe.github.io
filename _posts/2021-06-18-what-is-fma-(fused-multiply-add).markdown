@@ -1,7 +1,7 @@
 ---
 title: "What is FMA (Fused multiply-add)"
 layout: post
-date: 2021-06-18 14:48:24 +0900
+date: 2021-06-25 14:48:24 +0900
 image: 'assets/img/posts/2021-06-18-what-is-fma-(fused-multiply-add)/catch.jpg'
 description:
 tag: ['CPU', 'Compiler', 'Math']
