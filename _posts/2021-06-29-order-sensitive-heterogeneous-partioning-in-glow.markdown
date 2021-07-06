@@ -1,7 +1,7 @@
 ---
 title: "Order Sensitive Heterogeneous Partitioning in Glow"
 layout: post
-date: 2021-06-29 14:59:14 +0900
+date: 2021-07-06 14:59:14 +0900
 image: 'assets/img/posts/2021-06-29-order-sensitive-heterogeneous-partioning-in-glow/catch.jpg'
 description:
 tag: ['Glow', 'Compiler', 'MachineLearning']
