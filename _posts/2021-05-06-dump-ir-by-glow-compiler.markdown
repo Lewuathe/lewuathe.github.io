@@ -59,7 +59,7 @@ if __name__ == '__main__':
 
 You can visualize the model with [Netron](https://netron.app/) as follows.
 
-![MyModel](assets/img/posts/2021-05-06-dump-ir-by-glow-compiler/mymodel.png)
+![MyModel](/assets/img/posts/2021-05-06-dump-ir-by-glow-compiler/mymodel.png)
 
 Glow allows us to compile the model with the `model-compiler` command-line tool. We can use [a docker image](https://github.com/pytorch/glow/tree/master/utils/docker) provided by the community to launch the environment for Glow development. [Since building the whole repository of Glow takes a far long time](https://github.com/pytorch/glow#configure-and-build), I highly recommend only compile `model-compiler` for this case.
 
