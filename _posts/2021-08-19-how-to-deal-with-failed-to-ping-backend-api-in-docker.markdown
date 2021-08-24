@@ -1,7 +1,7 @@
 ---
 title: "How to deal with 'Failed to ping backend API' in Docker"
 layout: post
-date: 2021-08-19 09:24:25 +0900
+date: 2021-08-24 09:24:25 +0900
 image: 'assets/img/posts/2021-08-19-how-to-deal-with-failed-to-ping-backend-api-in-docker/catch.jpg'
 description:
 tag: ['Docker', '']
