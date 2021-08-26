@@ -13,7 +13,7 @@ author: "Kai Sasaki"
 
 [`TF_LOG`](https://www.terraform.io/docs/internals/debugging.html) environment variable is the way to control what type of information is written to the stderr.
 
-![Variables](assets/img/posts/2021-06-21-control-log-level-of-terraform/variables.png)
+![Variables](/assets/img/posts/2021-06-21-control-log-level-of-terraform/variables.png)
 
 This variable is, of course, usable in the local Terraform. Additionally, we can make the environment variable effective by setting that in the *variables* pane in the dashboard of Terraform cloud.
 

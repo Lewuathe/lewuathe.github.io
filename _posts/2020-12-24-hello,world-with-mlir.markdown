@@ -38,7 +38,7 @@ We are going to walk through the series of articles working as practical tutoria
 
 Let's briefly describe MLIR first. MLIR is a compiler infrastructure supporting higher-level intermediate representation than LLVM. More accurately, MLIR is a framework to extend the compiler infrastructure itself. In the past, we had a bunch of front-end languages, optimization passes, and backend hardware. They are isolated, and the code which otherwise should be reused is reinvented again and again. LLVM successfully achieves to remove the code duplication and share the knowledge among developers. But fine-grained optimization process may require a higher-level understanding of the front-end language semantics and structure.
 
-![Modern Languages](assets/img/posts/2020-12-24-hello,world-with-mlir/modern_languages.png)
+![Modern Languages](/assets/img/posts/2020-12-24-hello,world-with-mlir/modern_languages.png)
 
 That's why many languages develop their own IR (e.g., SIL, MIR) for the optimization and transformation along awarding the high-level language structures. The motivation of MLIR is to remove this redundant work by introducing the comprehensive framework for the high-level transformation of IR.
 
@@ -62,7 +62,7 @@ cmake -G Ninja ../llvm \
   -DCMAKE_BUILD_TYPE=Release \
   -DLLVM_ENABLE_RTTI=ON \
   -DLLVM_TARGETS_TO_BUILD="host"
-  
+
 cmake --build . --target check-mlir
 ```
 

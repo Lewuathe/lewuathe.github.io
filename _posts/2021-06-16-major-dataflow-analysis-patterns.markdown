@@ -29,7 +29,7 @@ while (x != 1) {
 
 We can abstractly represent this program by using the CFG as follows.
 
-![CFG](assets/img/posts/2021-06-16-major-dataflow-analysis-patterns/cfg.png)
+![CFG](/assets/img/posts/2021-06-16-major-dataflow-analysis-patterns/cfg.png)
 
 Each blue block represents a code line, and basic blocks are the blue blocks until it reaches the end of the program or branch condition.
 
@@ -46,7 +46,7 @@ Let's take a look at how the reaching definition goes as an example.
 
 Reaching definition analysis clarifies which assignments (definition) have been made and not overwritten for each program point.
 
-![Program Point](assets/img/posts/2021-06-16-major-dataflow-analysis-patterns/program_point.png)
+![Program Point](/assets/img/posts/2021-06-16-major-dataflow-analysis-patterns/program_point.png)
 
 At the program point P1, for example, the assignment `x = 5` reaches. It means the value assigned by `x = 5` is alive at that point. On the other hand, the value is not active anymore at the point of P2 because `x -= 1` overwrites the value for `x`. This analysis helps us find the usage of uninitialized variables in the program.
 

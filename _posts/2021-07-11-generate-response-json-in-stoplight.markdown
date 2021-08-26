@@ -27,11 +27,11 @@ Today, I've found [Stoplight](https://stoplight.io/) provides an auto-generation
 
 It contains a unique ID for the request and user entries matching with the request query. Afterward, we can generate the model schema by just clicking the `Generate` button as follows.
 
-![Auto Generate](assets/img/posts/2021-07-11-generate-response-json-in-stoplight/auto-generate.png)
+![Auto Generate](/assets/img/posts/2021-07-11-generate-response-json-in-stoplight/auto-generate.png)
 
 We see the model schema like this.
 
-![Model](assets/img/posts/2021-07-11-generate-response-json-in-stoplight/model.png)
+![Model](/assets/img/posts/2021-07-11-generate-response-json-in-stoplight/model.png)
 
 The example value and type of each entry are also properly configured.
 
