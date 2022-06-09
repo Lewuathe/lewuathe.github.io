@@ -2,7 +2,7 @@
 layout: page
 title: About Me
 ---
-Hi there, my name is Kai Sasaki. I am a software engineer who has a passion for creating artificial intelligence by processing large-scale data. Using web technologies, mathematics, and big data, I’m sure that we can achieve it. That makes me go forward to learn deeper about connected technologies. I will let this place show what I learned daily for myself and all readers thankfully to visit this blog. 
+Hi there, my name is Kai Sasaki. I am a software engineer who has a passion for creating artificial intelligence by processing large-scale data. Using web technologies, mathematics, and big data, I’m sure that we can achieve it. That makes me go forward to learn deeper about connected technologies. I will let this place show what I learned daily for myself and all readers thankfully to visit this blog.
 
 ## Works
 
@@ -15,6 +15,7 @@ Hi there, my name is Kai Sasaki. I am a software engineer who has a passion for 
 * Contributor of **[Apache Hadoop](https://github.com/apache/hadoop)**
 * Contributor of **[Apache Spark](https://github.com/apache/spark)**
 * Committer of **[Apache Hivemall](https://github.com/apache/incubator-hivemall)**
+* LLVM Committer
 * [docker-hadoop-cluster](https://github.com/Lewuathe/docker-hadoop-cluster)
 * [dllib](https://github.com/Lewuathe/dllib)
 
