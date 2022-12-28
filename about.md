@@ -4,6 +4,10 @@ title: About Me
 ---
 Hi there, my name is Kai Sasaki. I am a software engineer who has a passion for creating artificial intelligence by processing large-scale data. Using web technologies, mathematics, and big data, I’m sure that we can achieve it. That makes me go forward to learn deeper about connected technologies. I will let this place show what I learned daily for myself and all readers thankfully to visit this blog.
 
+If you find this blog interesting and support me, I cannot thank you enough.
+
+<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="lewuathe" data-color="#FFDD00" data-emoji=""  data-font="Lato" data-text="Buy me a cup of coffee" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+
 ## Works
 
 * Working at **[Treasure Data](http://www.treasuredata.com/)** from 2015

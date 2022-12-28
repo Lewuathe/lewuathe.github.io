@@ -512,3 +512,7 @@ th, td {
 .fa-rss-square:hover {
 	color: #ff6600;
 }
+
+.support {
+  padding-bottom: 2rem;
+}
