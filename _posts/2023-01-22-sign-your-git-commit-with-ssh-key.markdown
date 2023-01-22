@@ -18,6 +18,7 @@ But you can use the SSH key to sign the commit alternatively. It's a better and 
 First, you tell Git to use the SSH key to sign commits and tags as a default way.
 
 ```
+$ git config --global commit.gpgsign true
 $ git config --global gpg.format ssh
 ```
 
