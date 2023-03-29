@@ -17,6 +17,8 @@ author: "Kai Sasaki"
 
 I have submitted a pull request to support [this](https://github.com/1Password/shell-plugins/pull/176) and it's merged into master branch.
 
+You can use this plugin with 1Password CLI [2.16.0](https://app-updates.agilebits.com/product_history/CLI2) or later.
+
 To use the 1Password plugin with the TreasureData Toolbelt, you must first set up the toolbelt in your environment. This involves [creating a TreasureData account](https://www.treasuredata.com/), [obtaining an API key](https://docs.treasuredata.com/display/public/PD/Getting+Your+API+Keys), and installing the toolbelt. Once the toolbelt is set up, you can build and test the TreasureData plugin locally using the instructions provided in the documentation.
 
 ```
