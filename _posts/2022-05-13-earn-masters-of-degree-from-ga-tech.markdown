@@ -15,7 +15,7 @@ Three years ago, I decided to admit into [the OMSCS program](https://omscs.gatec
 
 After enjoying three years of studying, I have finally earned a master's degree in computer science from the Georgia Institute of Technology.
 
-[![](assets/img/posts/2022-05-13-earn-masters-of-degree-from-ga-tech/commencement.png)](https://commencement.gatech.edu/graduate/masters/kai-sasaki)
+[![](/assets/img/posts/2022-05-13-earn-masters-of-degree-from-ga-tech/commencement.png)](https://commencement.gatech.edu/graduate/masters/kai-sasaki)
 
 I have learned a lot of things during these years. However, attaining credits from the courses along with my work, housekeeping, and child care was challenging. The fact I often saw a couple of people drop out of the class indicates the difficulty of completing this program. But laying the other rail along with my principal life should have opened the door to further possibilities in my career. So I concluded that going over the program was worth a try overall. If you are interested, let's give it a try. Your effort will be rewarded for sure at the end of the day.
 

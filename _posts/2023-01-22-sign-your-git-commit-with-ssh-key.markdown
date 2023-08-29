@@ -11,7 +11,7 @@ author: "Kai Sasaki"
 
 I used the [GPG](https://gnupg.org/) key to sign my Git commit. This is because it's beneficial to show my commit's identity and authenticity publicly. The signed commit, appropriately associated with the email registered in GitHub, will get the verified mark in the UI.
 
-![verified](assets/img/posts/2023-01-22-sign-your-git-commit-with-ssh-key/verified.png)
+![verified](/assets/img/posts/2023-01-22-sign-your-git-commit-with-ssh-key/verified.png)
 
 But you can use the SSH key to sign the commit alternatively. It's a better and easier way because most GitHub users already should register their SSH keys to push the code to GitHub. Therefore, we do not need to prepare another key only for signing the Git commit.
 

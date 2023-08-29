@@ -12,7 +12,7 @@ author: "Kai Sasaki"
 macOS is a powerful operating system to support multiple languages. Not only can you switch the display language, but also we can write any language possible by changing the input source. But the Chinese pinyin input system is a little bit tricky. So we need to get used to it when we get a chance.
 
 
-![Input Source](assets/img/posts/2022-11-04-chinese-pinyin-in-macos-keyboard/input_source.png)
+![Input Source](/assets/img/posts/2022-11-04-chinese-pinyin-in-macos-keyboard/input_source.png)
 
 It's easy to type kanjis once you learn the pinyin of characters. But Chinese is a tone language which means the tone of the voice has non-negligible semantics. So you may also need to study the tone of each character. For instance, when you say 马(mǎ), it means a horse, but 妈(mā) is mother. We do not talk about the detail of the tone here. Instead, we are interested in **how to type tones in macOS** like mā or mǎ.
 

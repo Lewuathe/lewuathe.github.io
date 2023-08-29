@@ -19,7 +19,7 @@ Today, you may find our approach to this challenge in the following paper. We de
 
 [Taro L. Saito, et al., "Journey of Migrating Millions of Queries on The Cloud", 2022](https://arxiv.org/abs/2205.08664)
 
-[![Architecture](assets/img/posts/2022-05-20-how-we-migrate-millions-of-queries-on-the-cloud/architecture.png)](https://arxiv.org/abs/2205.08664)
+[![Architecture](/assets/img/posts/2022-05-20-how-we-migrate-millions-of-queries-on-the-cloud/architecture.png)](https://arxiv.org/abs/2205.08664)
 
 I have contributed to initiating the framework to achieve the automatic query simulation. This framework proved helpful in the past five years and successfully lowered the hurdle to safely migrating running queries onto a new platform, an updated version of Trino.
 

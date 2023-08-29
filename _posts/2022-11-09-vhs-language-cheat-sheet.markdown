@@ -28,7 +28,7 @@ Enter
 Sleep 5s
 ```
 
-![hello](assets/img/posts/2022-11-09-vhs-language-cheat-sheet/hello.gif)
+![hello](/assets/img/posts/2022-11-09-vhs-language-cheat-sheet/hello.gif)
 
 This tool is so easy to use that I want to write here the basic usage of VHS as a sort of cheat sheet.
 
@@ -69,7 +69,7 @@ Type "100ms delay per character"
 Type@500ms "500ms delay per character"
 ```
 
-![delay](assets/img/posts/2022-11-09-vhs-language-cheat-sheet/delay.gif)
+![delay](/assets/img/posts/2022-11-09-vhs-language-cheat-sheet/delay.gif)
 
 You can choose any theme available [here](https://github.com/charmbracelet/vhs/blob/main/THEMES.md).
 
@@ -102,7 +102,7 @@ Enter
 Sleep 2s
 ```
 
-![python add](assets/img/posts/2022-11-09-vhs-language-cheat-sheet/python_add.gif)
+![python add](/assets/img/posts/2022-11-09-vhs-language-cheat-sheet/python_add.gif)
 
 ## Cursor Movement
 Move cursor `Left`, `Right`, `Up`, and `Down` respectively. You can set the number of types of these cursor movements following the command. The same rule applies to the following special keys as well.
@@ -123,7 +123,7 @@ Sleep 5s
 
 ```
 
-![cursor](assets/img/posts/2022-11-09-vhs-language-cheat-sheet/cursor.gif)
+![cursor](/assets/img/posts/2022-11-09-vhs-language-cheat-sheet/cursor.gif)
 
 ## Special Keys
 `Backspace`, `Enter`, `Tab`, and `Space` special keys are also available. They are especially critical to write the program in the VHS environment.
@@ -137,7 +137,7 @@ Wait for a certain amount of time.
 ## Showing/Hiding Type Movement
 `Hide` is helpful to keep the typing command from being recorded. This type of command may include some prerequisites or cleanup commands in this category. Note that the final thing we type is shown with `Hide` but not capturing frames. Exiting from the non-capturing mode, we can use `Show`.
 
-![python execute](assets/img/posts/2022-11-09-vhs-language-cheat-sheet/python_execute.gif)
+![python execute](/assets/img/posts/2022-11-09-vhs-language-cheat-sheet/python_execute.gif)
 
 # Recap
 
