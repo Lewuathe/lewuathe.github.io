@@ -9,7 +9,7 @@ blog: true
 author: "Kai Sasaki"
 ---
 
-I found an interesting fact about the word order in Spanish when I read [the following book](https://amzn.to/3ZfWdlw) about the Spanish grammar. When we use *ser* or *estar* which are corresponding to 'be' in English, the word order is different from English. In the English lesson at the school, I have learned the word order of the sentence is SVC (Subject-Verb-Complement). Therefore, we can say
+I found an interesting fact about the word order in Spanish when I read [the book](https://amzn.to/3ZfWdlw) about the Spanish grammar. When we use *ser* or *estar* which are corresponding to 'be' in English, the word order is different from English, which might not be surprising to some people already. In the English lesson at the school, I have learned the word order of the sentence is SVC (Subject-Verb-Complement) when we use 'be' verb. Therefore, we can say
 
 > This soup is good.
 
@@ -19,9 +19,9 @@ However, in Spanish, the word order is generally VCS (Verb-Complement-Subject).
 
 Looks like the verb is always regarded as the most important part of the sentence in Spanish even if it's just a 'be' verb. When we want to say the sentence in SVO order, we can say
 
-> Compro la sopa.
+> (Yo) Compro la sopa.
 
-which is in the same order as English. However, the word order is not always VCS. When we want to emphasize the subject, we can say
+which is in the same order as English. That is gramatically correct as well. Therefore, the word order is not always VCS. When we want to emphasize the subject, we can say
 
 > La sopa está buena.
 
