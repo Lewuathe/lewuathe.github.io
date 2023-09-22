@@ -1,5 +1,5 @@
 ---
-title: "フィンランド語は猫の言葉"
+title: "Suomi on kissan kieli"
 layout: post
 date: 2023-09-21 15:21:48 +0900
 image: 'assets/img/posts/2023-09-21-フィンランド語は猫の言葉/catch.jpg'
